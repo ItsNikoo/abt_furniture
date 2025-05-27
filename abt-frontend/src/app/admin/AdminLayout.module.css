@@ -1,0 +1,41 @@
+.MainContainer {
+    margin: 30px 100px;
+}
+
+.Title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.Container {
+    display: flex;
+    gap: 30px;
+}
+
+.Sidebar {
+    min-width: 200px;
+    border-right: 1px solid #ccc;
+    padding-right: 20px;
+}
+
+.MenuList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.MenuItem {
+    padding: 10px 0;
+    cursor: pointer;
+    font-weight: 500;
+    color: #303030;
+    transition: color 0.2s ease;
+    text-decoration: underline;
+}
+
+
+/* Основной контент рядом с меню */
+.Content {
+    flex: 1;
+}
