@@ -1,4 +1,4 @@
-export interface Photo{
+export interface Photo {
     id: number;
     photo_url: string;
 }
@@ -12,6 +12,7 @@ export interface Category {
     id: number;
     category_slug: string;
     category: string;
+    photo: string;
 }
 
 export interface Product {

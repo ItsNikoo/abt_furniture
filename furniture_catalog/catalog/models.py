@@ -5,6 +5,7 @@ from pony.orm.ormtypes import Array
 class Category(models.Model):
     category_slug = models.SlugField(max_length=200, unique=True)
     category = models.CharField(max_length=200, unique=True)
+    photo = models.URLField(max_length=500, blank=True, null=True)
 
     class Meta:
         verbose_name = "Категория"
