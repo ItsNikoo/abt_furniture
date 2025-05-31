@@ -6,6 +6,7 @@ import {Button} from "@/components/ui/button";
 import {useState} from "react";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {addCategory} from "@/lib/api/categories";
+import Image from "next/image";
 
 interface CategoryMutationParams {
     category: string;
@@ -39,7 +40,6 @@ export default function AddCategoryContainer() {
             setPhoto(null);
             setPreview(null);
             setError(null);
-            alert('Категория успешно добавлена!');
         },
         onError: (err: Error) => {
             console.error('Ошибка при добавлении категории:', err);
@@ -120,10 +120,12 @@ export default function AddCategoryContainer() {
                                 className="mt-1"
                             />
                             {preview && (
-                                <img
+                                <Image
                                     src={preview}
                                     alt="Превью"
                                     className="mt-2 max-w-[200px] rounded"
+                                    width={200}
+                                    height={500}
                                 />
                             )}
                         </div>

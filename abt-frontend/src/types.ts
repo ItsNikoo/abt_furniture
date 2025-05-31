@@ -15,12 +15,28 @@ export interface Category {
     photo: string;
 }
 
+export interface Material {
+    id: number;
+    material: string;
+}
+
 export interface Product {
     id: number;
     title: string;
     price: number;
     description: string;
-    category: Category;
-    styles?: Style[];
+    category: string;
+    material: string | null;
+    styles?: string[];
+    photos?: Photo[];
+}
+
+export interface ProductData {
+    title: string;
+    price: string;
+    description: string;
+    category: string;
+    material: string;
+    style?: string;
     photos?: Photo[];
 }

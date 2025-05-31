@@ -20,6 +20,14 @@ class Style(models.Model):
         verbose_name_plural = "Стили"
 
 
+class Material(models.Model):
+    material = models.CharField(max_length=100, unique=True)
+
+    class Meta:
+        verbose_name = "Материал"
+        verbose_name_plural = "Материалы"
+
+
 class Photo(models.Model):
     photo_url = models.URLField(max_length=500)
 
@@ -33,7 +41,8 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     description = models.TextField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    styles = models.ManyToManyField(Style, related_name='products', blank=True)
+    material = models.ForeignKey(Material, on_delete=models.CASCADE, related_name='products', null=True, blank=True)
+    style = models.ForeignKey(Style, on_delete=models.CASCADE, related_name='products', null=True, blank=True)
     photos = models.ManyToManyField(Photo, related_name='products', blank=True)
 
     class Meta:

@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from services.yandex_storage import upload_to_yandex_storage
+from services.yandex_storage import upload_to_yandex_storage, delete_from_yandex_storage
 import uuid
-from catalog.models import Category, Style, Photo, Product, FirstPage
+from catalog.models import Category, Style, Photo, Product, FirstPage, Material
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -93,15 +93,25 @@ class PhotoSerializer(serializers.ModelSerializer):
         fields = ['id', 'photo_url']
 
 
+class MaterialSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Material
+        fields = ['id', 'material']
+
+
 class ProductSerializer(serializers.ModelSerializer):
     category = serializers.SlugRelatedField(
-        slug_field='category_slug',
+        slug_field='category',
         queryset=Category.objects.all()
     )
-    styles = serializers.SlugRelatedField(
+    style = serializers.SlugRelatedField(
         slug_field='style',
         queryset=Style.objects.all(),
-        many=True,
+        required=False
+    )
+    material = serializers.SlugRelatedField(
+        slug_field='material',
+        queryset=Material.objects.all(),
         required=False
     )
     photos = PhotoSerializer(many=True, required=False)
@@ -109,7 +119,7 @@ class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ['id', 'title', 'price', 'description', 'category', 'styles', 'photos']
+        fields = ['id', 'title', 'price', 'description', 'category', 'material', 'style', 'photos']
 
 
 class FirstPageSerializer(serializers.ModelSerializer):

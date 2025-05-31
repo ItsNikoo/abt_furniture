@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from rest_framework import viewsets
 
-from catalog.models import Category, Style, Product
-from catalog.serializers import CategorySerializer, StyleSerializer, ProductSerializer
+from catalog.models import Category, Style, Product, Material
+from catalog.serializers import CategorySerializer, StyleSerializer, ProductSerializer, MaterialSerializer
 from services.yandex_storage import delete_from_yandex_storage
 
 
@@ -39,3 +39,7 @@ class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     lookup_field = 'id'
+
+class MaterialViewSet(viewsets.ModelViewSet):
+    queryset = Material.objects.all()
+    serializer_class = MaterialSerializer

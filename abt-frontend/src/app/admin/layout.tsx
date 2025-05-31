@@ -28,6 +28,11 @@ export default function AdminLayout({children}: { children: React.ReactNode }) {
                                 Стили
                             </Link>
                         </li>
+                        <li className={styles.MenuItem}>
+                            <Link href={'/admin/materials'}>
+                                Материалы
+                            </Link>
+                        </li>
                     </ul>
                 </nav>
                 <main className={styles.Content}>
