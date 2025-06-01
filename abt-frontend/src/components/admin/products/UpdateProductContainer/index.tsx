@@ -1,36 +1,32 @@
-"use client";
+"use client"
 
+import {useParams} from "next/navigation";
 import {useMutation, useQuery} from "@tanstack/react-query";
-import {Card, CardContent, CardHeader} from "@/components/ui/card";
-import {Input} from "@/components/ui/input";
-import {Label} from "@/components/ui/label";
-import {Textarea} from "@/components/ui/textarea";
-import {
-    Command,
-    CommandEmpty,
-    CommandGroup,
-    CommandInput,
-    CommandItem,
-    CommandList,
-} from "@/components/ui/command";
-import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
-import {Button} from "@/components/ui/button";
-import {Check, ChevronsUpDown} from "lucide-react";
-import {cn} from "@/lib/utils";
+import {addProduct, fetchProductById, patchProduct} from "@/lib/api/products";
+import {Category, Material, Product, ProductData, Style} from "@/types";
 import {fetchCategories} from "@/lib/api/categories";
 import {fetchMaterials} from "@/lib/api/materials";
 import {fetchStyles} from "@/lib/api/styles";
-import {useState} from "react";
-import {Category, Material, Style, ProductData} from "@/types";
-import {addProduct} from "@/lib/api/products";
+import {useEffect, useState} from "react";
+import {Card, CardContent, CardHeader} from "@/components/ui/card";
+import {Label} from "@/components/ui/label";
+import {Input} from "@/components/ui/input";
+import {Textarea} from "@/components/ui/textarea";
+import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
+import {Button} from "@/components/ui/button";
+import {Check, ChevronsUpDown} from "lucide-react";
+import {Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList} from "@/components/ui/command";
+import {cn} from "@/lib/utils";
 import {queryClient} from "../../../../../lib/react-query-client";
 
+export default function UpdateProductContainer() {
+    const {id} = useParams()
 
-export default function AddProductContainer() {
-    const [openCategory, setOpenCategory] = useState(false);
-    const [openMaterial, setOpenMaterial] = useState(false);
-    const [openStyle, setOpenStyle] = useState(false);
-    const [error, setError] = useState<string>("");
+    const {data, isLoading, isError} = useQuery<Product>({
+        queryFn: () => fetchProductById(Number(id)),
+        queryKey: ['product', id]
+    })
+
     const [formData, setFormData] = useState<ProductData>({
         title: "",
         price: 0,
@@ -39,10 +35,43 @@ export default function AddProductContainer() {
         material: "",
         style: "",
     });
+    const [openCategory, setOpenCategory] = useState(false);
+    const [openMaterial, setOpenMaterial] = useState(false);
+    const [openStyle, setOpenStyle] = useState(false);
+    const [error, setError] = useState<string>("");
+    const [success, setSuccess] = useState<string>("");
+
+    useEffect(() => {
+        if (data) {
+            setFormData({
+                title: data.title ?? "",
+                price: data.price ?? 0,
+                description: data.description ?? "",
+                category: data.category ?? "",
+                material: data.material ?? "",
+                style: data.style ?? "",
+            });
+        }
+    }, [data]);
+
+    const {mutate, isPending} = useMutation({
+        mutationFn: ({data, id}: { data: ProductData; id: number }) => patchProduct(data, id),
+        onSuccess: () => {
+            queryClient.invalidateQueries({queryKey: ["products"]});
+            setSuccess("Продукт успешно обновлён!");
+            setError("");
+            setTimeout(() => setSuccess(""), 3000); // Скрыть сообщение через 3 секунды
+        },
+        onError: (err: Error) => {
+            console.error("Ошибка при редактировании товара:", err);
+            setError(`Не удалось обновить товар: ${err.message}`);
+            setSuccess("");
+        },
+    });
 
     const {data: categories, isLoading: isLoadingCategories, isError: isErrorCategories} = useQuery({
         queryFn: fetchCategories,
-        queryKey: ["categories_for_add"],
+        queryKey: ["categories_for_update"],
         staleTime: 5 * 60 * 1000,
         gcTime: 10 * 60 * 1000,
         retry: 2,
@@ -50,7 +79,7 @@ export default function AddProductContainer() {
 
     const {data: materials, isLoading: isLoadingMaterials, isError: isErrorMaterials} = useQuery({
         queryFn: fetchMaterials,
-        queryKey: ["materials_for_add"],
+        queryKey: ["materials_for_update"],
         staleTime: 5 * 60 * 1000,
         gcTime: 10 * 60 * 1000,
         retry: 2,
@@ -58,60 +87,37 @@ export default function AddProductContainer() {
 
     const {data: styles, isLoading: isLoadingStyles, isError: isErrorStyles} = useQuery({
         queryFn: fetchStyles,
-        queryKey: ["styles_for_add"],
+        queryKey: ["styles_for_update"],
         staleTime: 5 * 60 * 1000,
         gcTime: 10 * 60 * 1000,
         retry: 2,
     });
 
-    const {mutate, isPending} = useMutation({
-        mutationFn: (formData: ProductData) => addProduct(formData),
-        onSuccess: () => {
-            queryClient.invalidateQueries({queryKey: ['products']})
-            setFormData({
-                title: "",
-                price: 0,
-                description: "",
-                category: "",
-                material: "",
-                style: "",
-            })
-        },
-        onError: (err: Error) => {
-            console.error('Ошибка при добавлении товара:', err);
-            setError('Не удалось добавить товар. Попробуйте снова.');
-        },
-    })
-
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    function handleInputChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
         const {name, value} = e.target;
         setFormData((prev) => ({...prev, [name]: value}));
-    };
-
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        if (!formData.title.trim() || !formData.price || !formData.category || !formData.description || !formData.material || !formData.style) {
-            setError("Все поля обязательны!");
-            return;
-        }
-        console.log("Отправляемые данные:", formData);
-        mutate(formData);
-    };
-
-    if (isLoadingCategories || isLoadingMaterials || isLoadingStyles) {
-        return <div className="flex justify-center items-center h-screen text-lg text-gray-500">Загрузка...</div>;
     }
 
-    if (isErrorCategories || isErrorMaterials || isErrorStyles) {
-        return <div className="flex justify-center items-center h-screen text-lg text-red-500">Ошибка загрузки
-            данных</div>;
+    function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+        console.log(formData);
+        mutate({data: formData, id: Number(id)});
+    }
+
+    // Обработка состояний загрузки и ошибок
+    if (isLoading || isLoadingCategories || isLoadingMaterials || isLoadingStyles) {
+        return <div className="text-center">Загрузка...</div>;
+    }
+
+    if (isError || isErrorCategories || isErrorMaterials || isErrorStyles) {
+        return <div className="text-center text-red-500">Непредвиденная ошибка...</div>;
     }
 
     return (
         <div className="flex items-center justify-center">
             <Card className="w-full max-w-md shadow-lg rounded-lg border border-gray-200">
                 <CardHeader className="bg-gray-50 p-4 rounded-t-lg">
-                    <h2 className="text-2xl font-bold text-gray-800">Добавить продукт</h2>
+                    <h2 className="text-2xl font-bold text-gray-800">Редактировать продукт {id}</h2>
                 </CardHeader>
                 <CardContent className="p-6 flex flex-col gap-3">
                     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -294,12 +300,10 @@ export default function AddProductContainer() {
                                 </PopoverContent>
                             </Popover>
                         </div>
-                        <p className='text-md text-red-500'>{error}</p>
-                        <Button type="submit"
-                                disabled={isPending}
-                        >
-                            {isPending ? "Добавление..." : "Добавить продукт"}
-                        </Button>
+                        {error && <p className="text-md text-red-500">{error}</p>}
+                        {success && <p className="text-md text-green-500">{success}</p>}
+                        <Button type='submit'
+                                disabled={isPending}>{isPending ? "Обновление..." : "Обновить продукт"}</Button>
                     </form>
                 </CardContent>
             </Card>

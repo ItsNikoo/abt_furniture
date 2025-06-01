@@ -27,13 +27,13 @@ export interface Product {
     description: string;
     category: string;
     material: string | null;
-    styles?: string[];
+    style?: string;
     photos?: Photo[];
 }
 
 export interface ProductData {
     title: string;
-    price: string;
+    price: number;
     description: string;
     category: string;
     material: string;
