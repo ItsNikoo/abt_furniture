@@ -1,9 +1,17 @@
 import AddProductContainer from "@/components/admin/products/AddProductContainer";
+import {Category, Material, Style} from "@/types";
+import {fetchCategories} from "@/lib/api/categories";
+import {fetchStyles} from "@/lib/api/styles";
+import {fetchMaterials} from "@/lib/api/materials";
 
-export default function AddProductPage(){
-    return(
+export default async function AddProductPage() {
+    const categories: Category[] = await fetchCategories();
+    const styles: Style[] = await fetchStyles();
+    const materials: Material[] = await fetchMaterials();
+
+    return (
         <>
-            <AddProductContainer />
+            <AddProductContainer categories={categories} styles={styles} materials={materials}/>
         </>
     )
 }

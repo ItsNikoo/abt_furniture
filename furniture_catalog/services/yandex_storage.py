@@ -21,11 +21,11 @@ def get_s3_client():
     return _session
 
 
-def upload_to_yandex_storage(file, filename):
+def upload_to_yandex_storage(file, filename, folder):
     try:
         s3 = get_s3_client()
         bucket = config('YANDEX_STORAGE_BUCKET')
-        file_path = f"categories/{filename}"
+        file_path = f"{folder}/{filename}"
 
         s3.upload_fileobj(
             file,

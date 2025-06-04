@@ -6,6 +6,7 @@ import {Button} from "@/components/ui/button";
 import Image from "next/image";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {deleteProduct} from "@/lib/api/products";
+import {Photo} from "@/types";
 
 interface ProductCardProps {
     product: Product;
@@ -59,21 +60,23 @@ export default function ProductCard({product}: ProductCardProps) {
                         <p className="text-md text-gray-600">
                             Описание: {product.description}
                         </p>
-                        {/*{product.photos && product.photos.length > 0 && (*/}
-                        {/*    <div className="mt-2">*/}
-                        {/*        <p className="text-sm text-gray-600">Фотографии:</p>*/}
-                        {/*        <div className="flex gap-2 mt-1">*/}
-                        {/*            {product.photos.map((photo, index) => (*/}
-                        {/*                <img*/}
-                        {/*                    key={index}*/}
-                        {/*                    src={photo}*/}
-                        {/*                    alt={`${product.title} photo ${index + 1}`}*/}
-                        {/*                    className="w-16 h-16 object-cover rounded-md"*/}
-                        {/*                />*/}
-                        {/*            ))}*/}
-                        {/*        </div>*/}
-                        {/*    </div>*/}
-                        {/*)}*/}
+                        {product.photos && product.photos.length > 0 && (
+                            <div className="mt-2">
+                                <p className="text-sm text-gray-600 mb-3">Фотографии:</p>
+                                <div className="grid grid-cols-3 gap-3">
+                                    {product.photos.map((photo: Photo, index) => (
+                                        <Image
+                                            key={index}
+                                            src={photo.photo_url}
+                                            width={200}
+                                            height={200}
+                                            alt={`${product.title} Фото ${index + 1}`}
+                                            className="w-32 h-32 object-cover rounded-md"
+                                        />
+                                    ))}
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </Link>
 

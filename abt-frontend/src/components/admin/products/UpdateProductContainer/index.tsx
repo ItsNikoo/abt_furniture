@@ -1,12 +1,9 @@
 "use client"
 
 import {useParams} from "next/navigation";
-import {useMutation, useQuery} from "@tanstack/react-query";
-import {addProduct, fetchProductById, patchProduct} from "@/lib/api/products";
-import {Category, Material, Product, ProductData, Style} from "@/types";
-import {fetchCategories} from "@/lib/api/categories";
-import {fetchMaterials} from "@/lib/api/materials";
-import {fetchStyles} from "@/lib/api/styles";
+import {useMutation} from "@tanstack/react-query";
+import {patchProduct} from "@/lib/api/products";
+import {Category, Material, Photo, Product, ProductData, Style} from "@/types";
 import {useEffect, useState} from "react";
 import {Card, CardContent, CardHeader} from "@/components/ui/card";
 import {Label} from "@/components/ui/label";
@@ -18,14 +15,18 @@ import {Check, ChevronsUpDown} from "lucide-react";
 import {Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList} from "@/components/ui/command";
 import {cn} from "@/lib/utils";
 import {queryClient} from "../../../../../lib/react-query-client";
+import Image from "next/image";
+import garbage from "../../../../../public/trash-svgrepo-com.svg";
 
-export default function UpdateProductContainer() {
+interface Props {
+    categories: Category[];
+    styles: Style[];
+    materials: Material[];
+    data: Product;
+}
+
+export default function UpdateProductContainer({categories, styles, materials, data}: Props) {
     const {id} = useParams()
-
-    const {data, isLoading, isError} = useQuery<Product>({
-        queryFn: () => fetchProductById(Number(id)),
-        queryKey: ['product', id]
-    })
 
     const [formData, setFormData] = useState<ProductData>({
         title: "",
@@ -34,6 +35,8 @@ export default function UpdateProductContainer() {
         category: "",
         material: "",
         style: "",
+        photos: [],
+        delete_photos: []
     });
     const [openCategory, setOpenCategory] = useState(false);
     const [openMaterial, setOpenMaterial] = useState(false);
@@ -50,6 +53,8 @@ export default function UpdateProductContainer() {
                 category: data.category ?? "",
                 material: data.material ?? "",
                 style: data.style ?? "",
+                photos: data.photos ?? [],
+                delete_photos: []
             });
         }
     }, [data]);
@@ -69,29 +74,6 @@ export default function UpdateProductContainer() {
         },
     });
 
-    const {data: categories, isLoading: isLoadingCategories, isError: isErrorCategories} = useQuery({
-        queryFn: fetchCategories,
-        queryKey: ["categories_for_update"],
-        staleTime: 5 * 60 * 1000,
-        gcTime: 10 * 60 * 1000,
-        retry: 2,
-    });
-
-    const {data: materials, isLoading: isLoadingMaterials, isError: isErrorMaterials} = useQuery({
-        queryFn: fetchMaterials,
-        queryKey: ["materials_for_update"],
-        staleTime: 5 * 60 * 1000,
-        gcTime: 10 * 60 * 1000,
-        retry: 2,
-    });
-
-    const {data: styles, isLoading: isLoadingStyles, isError: isErrorStyles} = useQuery({
-        queryFn: fetchStyles,
-        queryKey: ["styles_for_update"],
-        staleTime: 5 * 60 * 1000,
-        gcTime: 10 * 60 * 1000,
-        retry: 2,
-    });
 
     function handleInputChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
         const {name, value} = e.target;
@@ -102,15 +84,6 @@ export default function UpdateProductContainer() {
         e.preventDefault();
         console.log(formData);
         mutate({data: formData, id: Number(id)});
-    }
-
-    // Обработка состояний загрузки и ошибок
-    if (isLoading || isLoadingCategories || isLoadingMaterials || isLoadingStyles) {
-        return <div className="text-center">Загрузка...</div>;
-    }
-
-    if (isError || isErrorCategories || isErrorMaterials || isErrorStyles) {
-        return <div className="text-center text-red-500">Непредвиденная ошибка...</div>;
     }
 
     return (
@@ -300,6 +273,60 @@ export default function UpdateProductContainer() {
                                 </PopoverContent>
                             </Popover>
                         </div>
+                        {data.photos && data.photos.length > 0 && (
+                            <div className="mt-2">
+                                <p className="text-sm text-gray-600 mb-2">Фотографии:</p>
+                                <div className="grid grid-cols-3 gap-3">
+                                    {data.photos.map((photo: Photo, index) => {
+                                        const isMarkedForDeletion = formData.delete_photos?.includes(photo.photo_url);
+                                        return (
+                                            <button
+                                                key={index}
+                                                type="button"
+                                                className="relative w-32 h-32 group"
+                                                aria-label={`Фото ${index + 1} для ${data.title}`}
+                                                onClick={() => {
+                                                    setFormData((prev) => {
+                                                        const deletePhotos = prev.delete_photos ?? [];
+                                                        const alreadyMarked = deletePhotos.includes(photo.photo_url);
+                                                        return {
+                                                            ...prev,
+                                                            delete_photos: alreadyMarked
+                                                                ? deletePhotos.filter((url) => url !== photo.photo_url)
+                                                                : [...deletePhotos, photo.photo_url],
+                                                        };
+                                                    });
+                                                }}
+                                            >
+                                                <Image
+                                                    src={photo.photo_url}
+                                                    width={200}
+                                                    height={200}
+                                                    alt={`${data.title} Фото ${index + 1}`}
+                                                    className={cn(
+                                                        "w-32 h-32 object-cover rounded-md transition-opacity",
+                                                        "group-hover:opacity-80",
+                                                        isMarkedForDeletion && "border-4 border-red-500"
+                                                    )}
+                                                />
+                                                <div
+                                                    className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-white/60 rounded-md">
+                                                    <Image
+                                                        src={garbage}
+                                                        width={32}
+                                                        height={32}
+                                                        alt="Иконка действия"
+                                                        className="w-8 h-8"
+                                                    />
+                                                </div>
+                                            </button>
+                                        );
+                                    })}
+
+                                </div>
+                            </div>
+                        )}
+
                         {error && <p className="text-md text-red-500">{error}</p>}
                         {success && <p className="text-md text-green-500">{success}</p>}
                         <Button type='submit'

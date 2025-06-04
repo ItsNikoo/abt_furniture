@@ -39,4 +39,5 @@ export interface ProductData {
     material: string;
     style?: string;
     photos?: Photo[];
+    delete_photos?: string[];
 }

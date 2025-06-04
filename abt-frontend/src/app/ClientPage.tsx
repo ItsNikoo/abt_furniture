@@ -7,7 +7,6 @@ interface Props {
 }
 
 export default function ClientPage({initialData}: Props) {
-
     return (
         <div className="p-4">
             {initialData.map((product: Product) => (

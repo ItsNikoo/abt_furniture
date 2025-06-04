@@ -1,6 +1,6 @@
 "use client";
 
-import {useMutation, useQuery} from "@tanstack/react-query";
+import {useMutation} from "@tanstack/react-query";
 import {Card, CardContent, CardHeader} from "@/components/ui/card";
 import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
@@ -17,20 +17,24 @@ import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
 import {Button} from "@/components/ui/button";
 import {Check, ChevronsUpDown} from "lucide-react";
 import {cn} from "@/lib/utils";
-import {fetchCategories} from "@/lib/api/categories";
-import {fetchMaterials} from "@/lib/api/materials";
-import {fetchStyles} from "@/lib/api/styles";
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import {Category, Material, Style, ProductData} from "@/types";
 import {addProduct} from "@/lib/api/products";
 import {queryClient} from "../../../../../lib/react-query-client";
 
+interface Props {
+    categories: Category[];
+    styles: Style[];
+    materials: Material[];
+}
 
-export default function AddProductContainer() {
+export default function AddProductContainer({categories, styles, materials}: Props) {
     const [openCategory, setOpenCategory] = useState(false);
     const [openMaterial, setOpenMaterial] = useState(false);
     const [openStyle, setOpenStyle] = useState(false);
     const [error, setError] = useState<string>("");
+    const [photoFiles, setPhotoFiles] = useState<File[]>([]);
+    const [photoPreviews, setPhotoPreviews] = useState<string[]>([]);
     const [formData, setFormData] = useState<ProductData>({
         title: "",
         price: 0,
@@ -38,36 +42,13 @@ export default function AddProductContainer() {
         category: "",
         material: "",
         style: "",
-    });
-
-    const {data: categories, isLoading: isLoadingCategories, isError: isErrorCategories} = useQuery({
-        queryFn: fetchCategories,
-        queryKey: ["categories_for_add"],
-        staleTime: 5 * 60 * 1000,
-        gcTime: 10 * 60 * 1000,
-        retry: 2,
-    });
-
-    const {data: materials, isLoading: isLoadingMaterials, isError: isErrorMaterials} = useQuery({
-        queryFn: fetchMaterials,
-        queryKey: ["materials_for_add"],
-        staleTime: 5 * 60 * 1000,
-        gcTime: 10 * 60 * 1000,
-        retry: 2,
-    });
-
-    const {data: styles, isLoading: isLoadingStyles, isError: isErrorStyles} = useQuery({
-        queryFn: fetchStyles,
-        queryKey: ["styles_for_add"],
-        staleTime: 5 * 60 * 1000,
-        gcTime: 10 * 60 * 1000,
-        retry: 2,
+        photos: []
     });
 
     const {mutate, isPending} = useMutation({
-        mutationFn: (formData: ProductData) => addProduct(formData),
+        mutationFn: (formData: FormData) => addProduct(formData),
         onSuccess: () => {
-            queryClient.invalidateQueries({queryKey: ['products']})
+            queryClient.invalidateQueries({queryKey: ["products"]});
             setFormData({
                 title: "",
                 price: 0,
@@ -75,37 +56,65 @@ export default function AddProductContainer() {
                 category: "",
                 material: "",
                 style: "",
-            })
+            });
+            // Очищаем файлы и превью
+            photoPreviews.forEach((url) => URL.revokeObjectURL(url));
+            setPhotoFiles([]);
+            setPhotoPreviews([]);
+            setError("");
         },
-        onError: (err: Error) => {
-            console.error('Ошибка при добавлении товара:', err);
-            setError('Не удалось добавить товар. Попробуйте снова.');
+        onError: (err: any) => {
+            console.error("Ошибка при добавлении товара:", err);
+            const errorMessage = err.response?.data?.photo_files || err.response?.data?.non_field_errors || "Не удалось добавить товар. Попробуйте снова.";
+            setError(errorMessage);
         },
-    })
+    });
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const {name, value} = e.target;
         setFormData((prev) => ({...prev, [name]: value}));
     };
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        if (!formData.title.trim() || !formData.price || !formData.category || !formData.description || !formData.material || !formData.style) {
-            setError("Все поля обязательны!");
-            return;
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const files = e.target.files;
+        if (files) {
+            // Очищаем старые превью
+            photoPreviews.forEach((url) => URL.revokeObjectURL(url));
+            const newFiles = Array.from(files);
+            const newPreviews = newFiles.map((file) => URL.createObjectURL(file));
+            setPhotoFiles(newFiles);
+            setPhotoPreviews(newPreviews);
         }
-        console.log("Отправляемые данные:", formData);
-        mutate(formData);
     };
 
-    if (isLoadingCategories || isLoadingMaterials || isLoadingStyles) {
-        return <div className="flex justify-center items-center h-screen text-lg text-gray-500">Загрузка...</div>;
-    }
+    useEffect(() => {
+        // Очищаем URL при размонтировании компонента
+        return () => {
+            photoPreviews.forEach((url) => URL.revokeObjectURL(url));
+        };
+    }, [photoPreviews]);
 
-    if (isErrorCategories || isErrorMaterials || isErrorStyles) {
-        return <div className="flex justify-center items-center h-screen text-lg text-red-500">Ошибка загрузки
-            данных</div>;
-    }
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        if (!formData.title.trim() || !formData.price || !formData.category || !formData.description) {
+            setError("Поля 'Название', 'Цена', 'Описание' и 'Категория' обязательны!");
+            return;
+        }
+
+        const formDataToSend = new FormData();
+        formDataToSend.append("title", formData.title);
+        formDataToSend.append("price", formData.price.toString());
+        formDataToSend.append("description", formData.description);
+        formDataToSend.append("category", formData.category);
+        if (formData.material) formDataToSend.append("material", formData.material);
+        if (formData.style) formDataToSend.append("style", formData.style);
+        photoFiles.forEach((file, index) => {
+            formDataToSend.append(`photo_files[${index}]`, file);
+        });
+
+        console.log("Отправляемые данные:", Object.fromEntries(formDataToSend));
+        mutate(formDataToSend);
+    };
 
     return (
         <div className="flex items-center justify-center">
@@ -249,7 +258,7 @@ export default function AddProductContainer() {
                             </Popover>
                         </div>
                         <div>
-                            <Label htmlFor="styles" className="text-sm font-medium text-gray-700">
+                            <Label htmlFor="style" className="text-sm font-medium text-gray-700">
                                 Стиль
                             </Label>
                             <Popover open={openStyle} onOpenChange={setOpenStyle}>
@@ -294,10 +303,36 @@ export default function AddProductContainer() {
                                 </PopoverContent>
                             </Popover>
                         </div>
-                        <p className='text-md text-red-500'>{error}</p>
-                        <Button type="submit"
-                                disabled={isPending}
-                        >
+                        <div>
+                            <Label htmlFor="photos" className="text-sm font-medium text-gray-700">
+                                Фотографии
+                            </Label>
+                            <Input
+                                id="photos"
+                                type="file"
+                                multiple
+                                accept="image/png,image/jpeg,image/jpg"
+                                onChange={handleFileChange}
+                                className="mt-1"
+                            />
+                            {photoPreviews.length > 0 && (
+                                <div className="mt-2">
+                                    <p className="text-sm text-gray-600">Выбрано файлов: {photoPreviews.length}</p>
+                                    <div className="grid grid-cols-3 gap-2 mt-2">
+                                        {photoPreviews.map((preview, index) => (
+                                            <img
+                                                key={index}
+                                                src={preview}
+                                                alt={`Превью ${index + 1}`}
+                                                className="w-[100px] h-[100px] object-cover rounded-md border border-gray-200"
+                                            />
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                        {error && <p className="text-md text-red-500">{error}</p>}
+                        <Button type="submit" disabled={isPending}>
                             {isPending ? "Добавление..." : "Добавить продукт"}
                         </Button>
                     </form>
