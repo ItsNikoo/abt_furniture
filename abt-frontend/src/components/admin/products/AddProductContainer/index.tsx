@@ -21,6 +21,7 @@ import {useState, useEffect} from "react";
 import {Category, Material, Style, ProductData} from "@/types";
 import {addProduct} from "@/lib/api/products";
 import {queryClient} from "../../../../../lib/react-query-client";
+import {useRouter} from "next/navigation";
 
 interface Props {
     categories: Category[];
@@ -33,7 +34,7 @@ export default function AddProductContainer({categories, styles, materials}: Pro
     const [openMaterial, setOpenMaterial] = useState(false);
     const [openStyle, setOpenStyle] = useState(false);
     const [error, setError] = useState<string>("");
-    const [photoFiles, setPhotoFiles] = useState<File[]>([]);
+    const [success, setSuccess] = useState<string>("");
     const [photoPreviews, setPhotoPreviews] = useState<string[]>([]);
     const [formData, setFormData] = useState<ProductData>({
         title: "",
@@ -42,11 +43,14 @@ export default function AddProductContainer({categories, styles, materials}: Pro
         category: "",
         material: "",
         style: "",
-        photos: []
+        photos: [],
+        photo_files: []
     });
 
+    const router = useRouter();
+
     const {mutate, isPending} = useMutation({
-        mutationFn: (formData: FormData) => addProduct(formData),
+        mutationFn: (data: ProductData) => addProduct(data),
         onSuccess: () => {
             queryClient.invalidateQueries({queryKey: ["products"]});
             setFormData({
@@ -56,12 +60,14 @@ export default function AddProductContainer({categories, styles, materials}: Pro
                 category: "",
                 material: "",
                 style: "",
+                photos: [],
+                photo_files: []
             });
-            // Очищаем файлы и превью
             photoPreviews.forEach((url) => URL.revokeObjectURL(url));
-            setPhotoFiles([]);
             setPhotoPreviews([]);
             setError("");
+            setSuccess("Продукт успешно добавлен");
+            router.push("/admin/products");
         },
         onError: (err: any) => {
             console.error("Ошибка при добавлении товара:", err);
@@ -78,11 +84,13 @@ export default function AddProductContainer({categories, styles, materials}: Pro
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = e.target.files;
         if (files) {
-            // Очищаем старые превью
             photoPreviews.forEach((url) => URL.revokeObjectURL(url));
             const newFiles = Array.from(files);
             const newPreviews = newFiles.map((file) => URL.createObjectURL(file));
-            setPhotoFiles(newFiles);
+            setFormData((prev) => ({
+                ...prev,
+                photo_files: newFiles
+            }));
             setPhotoPreviews(newPreviews);
         }
     };
@@ -100,20 +108,8 @@ export default function AddProductContainer({categories, styles, materials}: Pro
             setError("Поля 'Название', 'Цена', 'Описание' и 'Категория' обязательны!");
             return;
         }
-
-        const formDataToSend = new FormData();
-        formDataToSend.append("title", formData.title);
-        formDataToSend.append("price", formData.price.toString());
-        formDataToSend.append("description", formData.description);
-        formDataToSend.append("category", formData.category);
-        if (formData.material) formDataToSend.append("material", formData.material);
-        if (formData.style) formDataToSend.append("style", formData.style);
-        photoFiles.forEach((file, index) => {
-            formDataToSend.append(`photo_files[${index}]`, file);
-        });
-
-        console.log("Отправляемые данные:", Object.fromEntries(formDataToSend));
-        mutate(formDataToSend);
+        console.log(formData);
+        mutate(formData);
     };
 
     return (
@@ -332,6 +328,7 @@ export default function AddProductContainer({categories, styles, materials}: Pro
                             )}
                         </div>
                         {error && <p className="text-md text-red-500">{error}</p>}
+                        {success && <p className="text-md text-green-500">{success}</p>}
                         <Button type="submit" disabled={isPending}>
                             {isPending ? "Добавление..." : "Добавить продукт"}
                         </Button>

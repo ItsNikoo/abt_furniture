@@ -1,5 +1,7 @@
 import axios from "axios";
 
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
 interface CategoryData {
     id?: number;
     category: string;
@@ -16,13 +18,13 @@ interface ErrorResponse {
 }
 
 export async function fetchCategories() {
-    const res = await fetch("http://127.0.0.1:8000/api/categories/")
+    const res = await fetch(`${BASE_URL}/categories/`)
     return res.json();
 }
 
 export const addCategory = async (formData: FormData): Promise<CategoryData> => {
     try {
-        const response = await axios.post("http://127.0.0.1:8000/api/categories/", formData, {
+        const response = await axios.post(`${BASE_URL}/categories/`, formData, {
             headers: {
                 "Content-Type": "multipart/form-data",
             },
@@ -51,11 +53,11 @@ export const addCategory = async (formData: FormData): Promise<CategoryData> => 
 };
 
 export async function deleteCategory(category_slug: string) {
-    const res = await axios.delete(`http://127.0.0.1:8000/api/categories/${category_slug}/`)
+    const res = await axios.delete(`${BASE_URL}/categories/${category_slug}/`)
     return res.data
 }
 
 export async function updateCategory(category: string, updated_data: { category: string, category_slug: string }) {
-    const res = await axios.patch(`http://127.0.0.1:8000/api/categories/${category}/`, updated_data);
+    const res = await axios.patch(`${BASE_URL}/categories/${category}/`, updated_data);
     return res.data
 }

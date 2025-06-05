@@ -36,13 +36,15 @@ export default function UpdateProductContainer({categories, styles, materials, d
         material: "",
         style: "",
         photos: [],
-        delete_photos: []
+        delete_photos: [],
+        photo_files: []
     });
     const [openCategory, setOpenCategory] = useState(false);
     const [openMaterial, setOpenMaterial] = useState(false);
     const [openStyle, setOpenStyle] = useState(false);
     const [error, setError] = useState<string>("");
     const [success, setSuccess] = useState<string>("");
+    const [photoPreviews, setPhotoPreviews] = useState<string[]>([]);
 
     useEffect(() => {
         if (data) {
@@ -54,7 +56,8 @@ export default function UpdateProductContainer({categories, styles, materials, d
                 material: data.material ?? "",
                 style: data.style ?? "",
                 photos: data.photos ?? [],
-                delete_photos: []
+                delete_photos: [],
+                photo_files: []
             });
         }
     }, [data]);
@@ -74,15 +77,27 @@ export default function UpdateProductContainer({categories, styles, materials, d
         },
     });
 
-
     function handleInputChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
         const {name, value} = e.target;
         setFormData((prev) => ({...prev, [name]: value}));
     }
 
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const files = e.target.files;
+        if (files) {
+            photoPreviews.forEach((url) => URL.revokeObjectURL(url));
+            const newFiles = Array.from(files);
+            const newPreviews = newFiles.map((file) => URL.createObjectURL(file));
+            setFormData((prev) => ({
+                ...prev,
+                photo_files: newFiles
+            }));
+            setPhotoPreviews(newPreviews);
+        }
+    };
+
     function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        console.log(formData);
         mutate({data: formData, id: Number(id)});
     }
 
@@ -322,7 +337,33 @@ export default function UpdateProductContainer({categories, styles, materials, d
                                             </button>
                                         );
                                     })}
+                                </div>
+                            </div>
+                        )}
+                        <div>
+                            <Label>Добавить фотографии (PNG, JPG, JPEG, до 5 МБ)</Label>
+                            <Input
+                                type="file"
+                                multiple
+                                accept=".png,.jpg,.jpeg,.WEBP"
+                                onChange={handleFileChange}
+                            />
+                        </div>
 
+                        {photoPreviews.length > 0 && (
+                            <div className="mt-2">
+                                <p className="text-sm text-gray-600 mb-2">Превью новых фотографий:</p>
+                                <div className="grid grid-cols-3 gap-3">
+                                    {photoPreviews.map((preview, index) => (
+                                        <Image
+                                            key={index}
+                                            src={preview}
+                                            width={200}
+                                            height={200}
+                                            alt={`Превью фото ${index + 1}`}
+                                            className="w-32 h-32 object-cover rounded-md"
+                                        />
+                                    ))}
                                 </div>
                             </div>
                         )}
