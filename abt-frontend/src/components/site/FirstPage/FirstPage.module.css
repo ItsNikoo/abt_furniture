@@ -1,0 +1,40 @@
+/*.Container{*/
+/*    display: flex;*/
+/*    flex-direction: row;*/
+/*    padding: 0 100px;*/
+/*    background-color: #6F63BA;*/
+/*    justify-content: space-between;*/
+/*    background-image: url("/background_image.webp");*/
+/*    background-repeat: no-repeat;*/
+/*    background-position: center;*/
+/*    background-size: cover;*/
+/*    height: 100vh;*/
+/*    opacity: 20%;*/
+/*    z-index: 1;*/
+/*    position: relative;*/
+/*}*/
+
+.Container {
+    display: flex;
+    flex-direction: row;
+    padding: 0 100px;
+    justify-content: space-between;
+    height: 100vh;
+    position: relative;
+    z-index: 1;
+}
+
+.Container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("/background_image.webp");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    opacity: 0.2; /* 20% opacity for the background image */
+    z-index: -1; /* Place the pseudo-element behind the content */
+}
