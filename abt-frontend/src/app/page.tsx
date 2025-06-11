@@ -1,6 +1,3 @@
-import ClientPage from './ClientPage';
-import {ContentWrapper} from "@/app/layout";
-import Header from "@/components/site/Header";
 import FirstPage from "@/components/site/FirstPage";
 
 export const revalidate = 10; // ISR

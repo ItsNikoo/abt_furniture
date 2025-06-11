@@ -53,7 +53,7 @@ class Product(models.Model):
 class FirstPage(models.Model):
     title = models.CharField(max_length=300)
     description = models.TextField()
-    photo = models.URLField(max_length=500)
+    photo = models.URLField(max_length=500, null = True, blank=True)
     link = models.URLField(max_length=500)
 
     class Meta:

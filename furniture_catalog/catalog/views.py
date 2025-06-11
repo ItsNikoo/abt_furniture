@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from rest_framework import viewsets
 
-from catalog.models import Category, Style, Product, Material
-from catalog.serializers import CategorySerializer, StyleSerializer, ProductSerializer, MaterialSerializer
+from catalog.models import Category, Style, Product, Material, FirstPage
+from catalog.serializers import CategorySerializer, StyleSerializer, ProductSerializer, MaterialSerializer, \
+    FirstPageSerializer
 from services.yandex_storage import delete_from_yandex_storage
 from logging import getLogger
 
@@ -63,3 +64,23 @@ class ProductViewSet(viewsets.ModelViewSet):
 class MaterialViewSet(viewsets.ModelViewSet):
     queryset = Material.objects.all()
     serializer_class = MaterialSerializer
+
+
+class FirstPageViewSet(viewsets.ModelViewSet):
+    queryset = FirstPage.objects.all()
+    serializer_class = FirstPageSerializer
+    lookup_field = 'id'
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        photo_url = instance.photo
+
+        response = super().destroy(request, *args, **kwargs)
+
+        if photo_url:
+            try:
+                delete_from_yandex_storage(photo_url)
+            except Exception as e:
+                logger.error(f"Ошибка при удалении файла: {str(e)}")
+
+        return response

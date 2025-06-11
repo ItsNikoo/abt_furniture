@@ -213,6 +213,45 @@ class ProductSerializer(serializers.ModelSerializer):
 
 
 class FirstPageSerializer(serializers.ModelSerializer):
+    photo_file = serializers.FileField(write_only=True, required=True)
+
     class Meta:
         model = FirstPage
-        fields = ['id', 'title', 'description', 'photo', 'link']
+        fields = ['id', 'title', 'description', 'photo', 'link', 'photo_file']
+        extra_kwargs = {
+            'photo': {'read_only': True}
+        }
+
+    def create(self, validated_data):
+        photo_file = validated_data.pop('photo_file', None)
+
+        instance = super().create(validated_data)
+
+        if photo_file:
+            try:
+                folder = "sales"
+                file_url = upload_to_yandex_storage(photo_file, photo_file.name, folder)
+                instance.photo = file_url
+                instance.save()
+            except Exception as e:
+                logger.error(f"Ошибка загрузки файла: {str(e)}")
+
+        return instance
+
+    def update(self, instance, validated_data):
+        photo_file = validated_data.pop('photo_file', None)
+
+        if photo_file:
+            # Удаляем старое фото, если оно есть
+            if instance.photo:
+                delete_from_yandex_storage(instance.photo)
+
+            # Загружаем новое фото
+            try:
+                folder = "sales"
+                file_url = upload_to_yandex_storage(photo_file, photo_file.name, folder)
+                validated_data['photo'] = file_url
+            except Exception as e:
+                logger.error(f"Ошибка загрузки файла: {str(e)}")
+
+        return super().update(instance, validated_data)

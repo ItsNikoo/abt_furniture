@@ -1,63 +1,76 @@
 "use client"
 
-import {useMutation, useQueryClient} from "@tanstack/react-query";
-import {useState} from "react";
-import {Card, CardContent, CardHeader} from "@/components/ui/card";
-import {Input} from "@/components/ui/input";
+
+import {Pencil} from "lucide-react";
 import {Button} from "@/components/ui/button";
-import {updateMaterial} from "@/lib/api/materials";
+import {
+    Dialog, DialogClose,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger
+} from "@/components/ui/dialog";
+import {Label} from "@/components/ui/label";
+import {Input} from "@/components/ui/input";
+import {useState} from "react";
+import {Material} from "@/types";
+import {patchMaterialAction} from "@/actions/materials";
 
-interface UpdateMaterialProps {
-    id: number,
-    material: string,
-    onClose: () => void
-}
+export default function UpdateMaterialContainer({material}:{material:Material}) {
+    const [isOpen, setIsOpen] = useState(false);
+    const [success, setSuccess] = useState<string | null>(null);
+    const [materialQuery, setMaterialQuery] = useState<string>(material.material);
 
-export default function UpdateMaterialContainer({id, material, onClose}: UpdateMaterialProps) {
-    const queryClient = useQueryClient();
-    const [newMaterial, setNewMaterial] = useState<string>(material);
-
-    const mutation = useMutation({
-        mutationFn: (newMaterial: string) => updateMaterial(id, {material: newMaterial}),
-        onSuccess: () => {
-            queryClient.invalidateQueries({queryKey: ['materials']});
-            onClose();
-        },
-        onError: (err) => {
-            console.error("Ошибка при обновлении материала:", err);
-            alert("Не удалось обновить материал");
-        },
-    })
-
-    function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-        e.preventDefault();
-        if (newMaterial.trim() !== "") {
-            mutation.mutate(newMaterial.trim());
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        try{
+            e.preventDefault()
+            patchMaterialAction(material.id, materialQuery);
+            setSuccess('Материал успешно обновлен!');
+            setMaterialQuery('');
+            setTimeout(() => {
+                setIsOpen(false);
+                setSuccess(null);
+            }, 2000);
+        }catch (error){
+            setSuccess('Произошла ошибка при обновлении материала: ' + error);
         }
     }
-
     return (
-        <Card className="w-1/3 mt-4">
-            <CardHeader>
-                <h2 className="text-2xl font-bold">Редактировать материал</h2>
-            </CardHeader>
-            <CardContent>
-                <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-                    <Input
-                        value={newMaterial}
-                        onChange={(e) => setNewMaterial(e.target.value)}
-                        placeholder="Новое название"
-                    />
-                    <div className="flex gap-2">
-                        <Button type="submit" disabled={mutation.isPending}>
-                            {mutation.isPending ? "Сохранение..." : "Сохранить"}
-                        </Button>
-                        <Button type="button" variant="secondary" onClick={onClose}>
-                            Отмена
-                        </Button>
-                    </div>
-                </form>
-            </CardContent>
-        </Card>
-    );
+        <Dialog open={isOpen} onOpenChange={setIsOpen}>
+            <DialogTrigger asChild>
+                <Button variant="ghost" size="icon">
+                    <Pencil className="h-4 w-4"/>
+                </Button>
+            </DialogTrigger>
+            <DialogContent>
+                <DialogHeader>
+                    <DialogTitle>Изменение материала</DialogTitle>
+                    <DialogDescription>
+                        Окно изменения материала
+                    </DialogDescription>
+                    <form onSubmit={handleSubmit} className='flex flex-col gap-2'>
+                        <div>
+                            <Label>Материал</Label>
+                            <Input
+                                id="title"
+                                name="title"
+                                type="text"
+                                value={materialQuery}
+                                onChange={(e) => setMaterialQuery(e.target.value)}
+                                required
+                            />
+                        </div>
+                        {success && <p className='text-green-500'>{success}</p>}
+                        <div className='flex justify-end gap-2'>
+                            <DialogClose asChild>
+                                <Button variant="secondary">Отмена</Button>
+                            </DialogClose>
+                            <Button type="submit">Изменить материал</Button>
+                        </div>
+                    </form>
+                </DialogHeader>
+            </DialogContent>
+        </Dialog>
+    )
 }

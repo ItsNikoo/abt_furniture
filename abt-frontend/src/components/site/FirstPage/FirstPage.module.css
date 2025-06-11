@@ -1,25 +1,8 @@
-/*.Container{*/
-/*    display: flex;*/
-/*    flex-direction: row;*/
-/*    padding: 0 100px;*/
-/*    background-color: #6F63BA;*/
-/*    justify-content: space-between;*/
-/*    background-image: url("/background_image.webp");*/
-/*    background-repeat: no-repeat;*/
-/*    background-position: center;*/
-/*    background-size: cover;*/
-/*    height: 100vh;*/
-/*    opacity: 20%;*/
-/*    z-index: 1;*/
-/*    position: relative;*/
-/*}*/
-
 .Container {
     display: flex;
     flex-direction: row;
     padding: 0 100px;
     justify-content: space-between;
-    height: 100vh;
     position: relative;
     z-index: 1;
 }

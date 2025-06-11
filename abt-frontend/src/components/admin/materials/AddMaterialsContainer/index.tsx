@@ -1,61 +1,72 @@
 "use client"
 
-import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {useState} from "react";
-import {Card, CardContent, CardHeader} from "@/components/ui/card";
-import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
-import {addMaterial} from "@/lib/api/materials";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger
+} from "@/components/ui/dialog";
+import {Label} from "@/components/ui/label";
+import {Input} from "@/components/ui/input";
+import {postMaterialAction} from "@/actions/materials";
 
 export default function AddMaterialsContainer() {
-    const queryClient = useQueryClient();
-    const [query, setQuery] = useState<string>("");
+    const [material, setMaterial] = useState<string>('');
+    const [isOpen, setIsOpen] = useState(false);
+    const [success, setSuccess] = useState<string | null>(null);
 
-    const postMutation = useMutation({
-        mutationFn: (material: string) => addMaterial(material),
-        onSuccess: () => {
-            queryClient.invalidateQueries({queryKey: ['materials']});
-            setQuery("");
-        },
-        onError: (err) => {
-            console.error('Ошибка при добавлении материала:', err);
-            alert('Не удалось добавить материал');
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        try {
+            e.preventDefault()
+            postMaterialAction(material);
+            setSuccess('Материал успешно добавлен!');
+            setMaterial('');
+            setTimeout(() => {
+                setIsOpen(false);
+                setSuccess(null);
+            }, 2000);
+        } catch (error) {
+            setSuccess('Произошла ошибка при добавлении материала: ' + error);
         }
-    })
 
-    function handleAddMaterial() {
-        if (query.trim() === "") {
-            alert("Введите материал")
-            return
-        }
-        postMutation.mutate(query.trim())
     }
 
+
     return (
-        <div className='w-1/3 mt-3'>
-            <Card className="shadow-xl border border-gray-200">
-                <CardHeader>
-                    <h2 className="text-2xl font-bold">Добавить материал</h2>
-                </CardHeader>
-                <CardContent>
-                    <form
-                        onSubmit={(e) => {
-                            e.preventDefault();
-                            handleAddMaterial();
-                        }}
-                        className="flex flex-col gap-4"
-                    >
-                        <Input
-                            value={query}
-                            onChange={(e) => setQuery(e.target.value)}
-                            placeholder="Введите материал"
-                        />
-                        <Button type="submit" disabled={postMutation.isPending}>
-                            {postMutation.isPending ? "Добавление..." : "Добавить"}
-                        </Button>
+        <Dialog open={isOpen} onOpenChange={setIsOpen}>
+            <DialogTrigger asChild>
+                <Button className='mb-5'>Добавить материал</Button>
+            </DialogTrigger>
+            <DialogContent>
+                <DialogHeader>
+                    <DialogTitle>Добавление материала</DialogTitle>
+                    <DialogDescription>
+                        Добавьте материал здесь
+                    </DialogDescription>
+                    <form onSubmit={handleSubmit} className='flex flex-col gap-2'>
+                        <div>
+                            <Label>Материал</Label>
+                            <Input
+                                id="title"
+                                name="title"
+                                type="text"
+                                value={material}
+                                onChange={(e) => setMaterial(e.target.value)}
+                                required
+                            />
+                        </div>
+                        {success && <p className='text-green-500'>{success}</p>}
+                        <div className='flex justify-end gap-2'>
+                            <Button variant="secondary" onClick={() => setIsOpen(false)}>Отмена</Button>
+                            <Button type="submit">Добавить материал</Button>
+                        </div>
                     </form>
-                </CardContent>
-            </Card>
-        </div>
+                </DialogHeader>
+            </DialogContent>
+        </Dialog>
     )
 }

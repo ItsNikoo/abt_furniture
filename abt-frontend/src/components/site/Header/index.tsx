@@ -7,9 +7,9 @@ import Link from "next/link";
 export default function Header() {
     return (
         <div className="mt-8 flex flex-row w-full ">
-            <div>
+            <Link href={'/'}>
                 <Image src={logo} alt="АБТ - мебель для кухни" width={350} height={100}/>
-            </div>
+            </Link>
             <div className="flex-1  flex flex-col justify-between my-3">
                 <p>Балашиха, Железнодорожный, Керамическая, 2Б | +7 (926) 723-28-80</p>
                 <div className="flex flex-row gap-8 ">

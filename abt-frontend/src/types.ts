@@ -42,3 +42,20 @@ export interface ProductData {
     photo_files?: File[];
     delete_photos?: string[];
 }
+
+export interface Sale {
+    id: string;
+    title: string;
+    description: string;
+    photo: string | null;
+    link: string;
+    photo_file: File | null;
+}
+
+export interface SaleData {
+    title: string;
+    description: string;
+    photo?: string | null;
+    photo_file: File | null;
+    link: string;
+}

@@ -16,12 +16,12 @@ export async function deleteMaterial(id: number) {
     return res.status
 }
 
-export async function addMaterial(material: string) {
+export async function postMaterial(material: string) {
     const res = await axios.post(`${BASE_URL}/materials/`, {material: material});
     return res.status
 }
 
-export async function updateMaterial(id: number, updatedData: { material: string }) {
-    const res = await axios.patch(`${BASE_URL}/materials/${id}/`, updatedData);
+export async function patchMaterial(id: number, material: string) {
+    const res = await axios.patch(`${BASE_URL}/materials/${id}/`, {material: material});
     return res.status
 }
