@@ -5,57 +5,73 @@ import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
 import {useState} from "react";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
-import {addStyle} from "@/lib/api/styles";
+import {postStyle} from "@/lib/api/styles";
+import {
+    Dialog, DialogClose,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger
+} from "@/components/ui/dialog";
+import {Label} from "@/components/ui/label";
+import {postMaterialAction} from "@/actions/materials";
+import {postStyleAction} from "@/actions/styles";
 
 export default function AddStyleContainer() {
-    const queryClient = useQueryClient();
-    const [query, setQuery] = useState<string>("");
+    const [isOpen, setIsOpen] = useState(false);
+    const [style, setStyle] = useState<string>('');
+    const [success, setSuccess] = useState<string | null>(null);
 
-    const postMutation = useMutation({
-        mutationFn: (style: string) => addStyle(style),
-        onSuccess: () => {
-            queryClient.invalidateQueries({queryKey: ['styles']}); // обновляем список стилей
-            setQuery(""); // очищаем поле ввода после успешного добавления
-        },
-        onError: (err) => {
-            console.error('Ошибка при добавлении стиля:', err);
-            alert('Не удалось добавить стиль');
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        try {
+            e.preventDefault()
+            postStyleAction(style);
+            setSuccess('Стиль успешно добавлен!');
+            setTimeout(() => {
+                setIsOpen(false);
+                setSuccess(null);
+                setStyle('');
+            }, 1000);
+        } catch (error) {
+            setSuccess('Произошла ошибка при добавлении стиля: ' + error);
         }
-    })
 
-    function handleAddStyle() {
-        if (query.trim() === "") {
-            alert("Введите название стиля");
-            return;
-        }
-        postMutation.mutate(query.trim());
     }
 
     return (
-        <div className='w-1/3 mt-3'>
-            <Card className="shadow-xl border border-gray-200">
-                <CardHeader>
-                    <h2 className="text-2xl font-bold">Добавить стиль</h2>
-                </CardHeader>
-                <CardContent>
-                    <form
-                        onSubmit={(e) => {
-                            e.preventDefault();
-                            handleAddStyle();
-                        }}
-                        className="flex flex-col gap-4"
-                    >
-                        <Input
-                            value={query}
-                            onChange={(e) => setQuery(e.target.value)}
-                            placeholder="Введите название стиля"
-                        />
-                        <Button type="submit" disabled={postMutation.isPending}>
-                            {postMutation.isPending ? "Добавление..." : "Добавить"}
-                        </Button>
+        <Dialog open={isOpen} onOpenChange={setIsOpen}>
+            <DialogTrigger asChild>
+                <Button className='mb-5'>Добавить стиль</Button>
+            </DialogTrigger>
+            <DialogContent>
+                <DialogHeader>
+                    <DialogTitle>Добавление стиля</DialogTitle>
+                    <DialogDescription>
+                        Добавьте стиль здесь
+                    </DialogDescription>
+                    <form onSubmit={handleSubmit} className='flex flex-col gap-2'>
+                        <div>
+                            <Label>Стиль</Label>
+                            <Input
+                                id="title"
+                                name="title"
+                                type="text"
+                                value={style}
+                                onChange={(e) => setStyle(e.target.value)}
+                                required
+                            />
+                        </div>
+                        {success && <p className='text-green-500'>{success}</p>}
+                        <div className='flex justify-end gap-2'>
+                            <DialogClose asChild>
+                                <Button variant="secondary">Отмена</Button>
+                            </DialogClose>
+                            <Button type="submit">Добавить стиль</Button>
+                        </div>
                     </form>
-                </CardContent>
-            </Card>
-        </div>
+                </DialogHeader>
+            </DialogContent>
+        </Dialog>
     )
 }

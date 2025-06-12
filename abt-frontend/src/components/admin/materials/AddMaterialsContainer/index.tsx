@@ -3,7 +3,7 @@
 import {useState} from "react";
 import {Button} from "@/components/ui/button";
 import {
-    Dialog,
+    Dialog, DialogClose,
     DialogContent,
     DialogDescription,
     DialogHeader,
@@ -61,7 +61,9 @@ export default function AddMaterialsContainer() {
                         </div>
                         {success && <p className='text-green-500'>{success}</p>}
                         <div className='flex justify-end gap-2'>
-                            <Button variant="secondary" onClick={() => setIsOpen(false)}>Отмена</Button>
+                            <DialogClose asChild>
+                                <Button variant="secondary">Отмена</Button>
+                            </DialogClose>
                             <Button type="submit">Добавить материал</Button>
                         </div>
                     </form>

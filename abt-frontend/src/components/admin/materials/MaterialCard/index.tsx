@@ -13,22 +13,20 @@ export default function MaterialCard({material, onDeleteAction}: {
     onDeleteAction: (id: number) => Promise<void>;
 }) {
     return (
-        <div>
-            <Card>
-                <CardHeader className='flex flex-row items-center justify-between'>
-                    <p className='text-xl font-bold'>{material.material}</p>
-                    <div>
-                        <UpdateMaterialContainer material={material} />
-                        <Button
-                            variant="ghost"
-                            size="icon"
-                            onClick={() => onDeleteAction(material.id)}
-                        >
-                            <Trash2 className="h-4 w-4"/>
-                        </Button>
-                    </div>
-                </CardHeader>
-            </Card>
-        </div>
+        <Card>
+            <CardHeader className='flex flex-row items-center justify-between'>
+                <p className='text-xl font-bold'>{material.material}</p>
+                <div>
+                    <UpdateMaterialContainer material={material} />
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => onDeleteAction(material.id)}
+                    >
+                        <Trash2 className="h-4 w-4"/>
+                    </Button>
+                </div>
+            </CardHeader>
+        </Card>
     )
 }
