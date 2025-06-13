@@ -18,8 +18,8 @@ class CategorySerializer(serializers.ModelSerializer):
             if value.size > 5 * 1024 * 1024:
                 raise serializers.ValidationError("Размер файла не должен превышать 5 МБ.")
             # Проверка расширения файла
-            if not value.name.lower().endswith(('.png', '.jpg', '.jpeg')):
-                raise serializers.ValidationError("Поддерживаются только файлы PNG, JPG, JPEG.")
+            if not value.name.lower().endswith(('.png', '.jpg', '.jpeg','.webp')):
+                raise serializers.ValidationError("Поддерживаются только файлы PNG, JPG, JPEG, WEBP")
         return value
 
     def validate_category_slug(self, value):

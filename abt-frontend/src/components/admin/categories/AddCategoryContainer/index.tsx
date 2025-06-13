@@ -1,141 +1,134 @@
 'use client'
 
-import {Card, CardContent, CardHeader} from "@/components/ui/card";
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import {useState} from "react";
-import {useMutation, useQueryClient} from "@tanstack/react-query";
-import {addCategory} from "@/lib/api/categories";
 import Image from "next/image";
-
-interface CategoryMutationParams {
-    category: string;
-    category_slug: string;
-    photo: File | null;
-}
+import {CategoryData} from "@/types";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger
+} from "@/components/ui/dialog";
+import {Label} from "@/components/ui/label";
+import {postCategoryAction} from "@/actions/categories";
 
 export default function AddCategoryContainer() {
-    const queryClient = useQueryClient();
-
-    const [category, setCategory] = useState<string>('');
-    const [slug, setSlug] = useState<string>('');
-    const [photo, setPhoto] = useState<File | null>(null);
-    const [preview, setPreview] = useState<string | null>(null);
+    const [formData, setFormData] = useState<CategoryData>({
+        category: '',
+        category_slug: '',
+        photo_file: null
+    })
+    const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [success, setSuccess] = useState<string | null>(null);
+    const [isOpen, setIsOpen] = useState(false);
+    const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
-    const postMutation = useMutation({
-        mutationFn: ({category, category_slug, photo}: CategoryMutationParams) => {
-            const formData = new FormData();
-            formData.append('category', category);
-            formData.append('category_slug', category_slug);
-            if (photo) {
-                formData.append('photo_file', photo);
-            }
-            return addCategory(formData);
-        },
-        onSuccess: () => {
-            queryClient.invalidateQueries({queryKey: ['categories']});
-            setCategory('');
-            setSlug('');
-            setPhoto(null);
-            setPreview(null);
-            setError(null);
-        },
-        onError: (err: Error) => {
-            console.error('Ошибка при добавлении категории:', err);
-            setError('Не удалось добавить категорию. Попробуйте снова.');
-        },
-    });
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const {name, value} = e.target;
+        setFormData(prev => ({...prev, [name]: value}));
+    };
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (file) {
-            if (file.size > 5 * 1024 * 1024) {
-                setError('Размер файла не должен превышать 5 МБ.');
-                setPhoto(null);
-                setPreview(null);
-                return;
-            }
-            if (!file.name.toLowerCase().match(/\.(png|jpg|jpeg)$/)) {
-                setError('Поддерживаются только файлы PNG, JPG, JPEG.');
-                setPhoto(null);
-                setPreview(null);
-                return;
-            }
-            setPhoto(file);
-            setPreview(URL.createObjectURL(file));
-            setError(null);
-        } else {
-            setPhoto(null);
-            setPreview(null);
-            setError('Пожалуйста, выберите файл изображения.');
+        if (e.target.files && e.target.files[0]) {
+            const file = e.target.files[0];
+            setFormData(prev => ({...prev, photo_file: file}));
+            setPreviewUrl(URL.createObjectURL(file));
         }
     };
 
-    const handleAddCategory = () => {
-        if (category.trim() === '' || slug.trim() === '') {
-            setError('Введите название категории и slug');
-            return;
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        try {
+            e.preventDefault();
+            setIsLoading(true);
+            postCategoryAction(formData)
+            setPreviewUrl(null);
+            setSuccess('Категория успешно создана!');
+            setTimeout(() => {
+                setIsOpen(false);
+                setSuccess(null);
+                setFormData({
+                    category: '',
+                    category_slug: '',
+                    photo_file: null
+                })
+            }, 1000);
+        } catch (error) {
+            setError('Не удалось создать категорию. Пожалуйста, попробуйте еще раз.' + error);
+        } finally {
+            setIsLoading(false);
         }
-        if (!photo) {
-            setError('Выберите изображение для категории');
-            return;
-        }
-        postMutation.mutate({category, category_slug: slug, photo});
     };
 
     return (
-        <div className="w-1/3 mt-3">
-            <Card className="shadow-xl border border-gray-200">
-                <CardHeader>
-                    <h2 className="text-2xl font-bold">Добавить Категорию</h2>
-                </CardHeader>
-                <CardContent>
-                    <form
-                        onSubmit={(e) => {
-                            e.preventDefault();
-                            handleAddCategory();
-                        }}
-                        className="flex flex-col gap-4"
-                    >
-                        <Input
-                            value={category}
-                            onChange={(e) => setCategory(e.target.value)}
-                            placeholder="Введите категорию"
-                        />
-                        <Input
-                            value={slug}
-                            onChange={(e) => setSlug(e.target.value)}
-                            placeholder="Введите slug категории"
-                        />
+        <Dialog open={isOpen} onOpenChange={setIsOpen}>
+            <DialogTrigger asChild>
+                <Button className='mb-5'>Добавить категорию</Button>
+            </DialogTrigger>
+            <DialogContent>
+                <DialogHeader>
+                    <DialogTitle>Добавление категории</DialogTitle>
+                    <DialogDescription>
+                        В этом окне вы можете создать категорию. Заполните ВСЕ поля, чтобы категория была создана.
+                    </DialogDescription>
+                    <form onSubmit={handleSubmit} className="flex flex-col gap-2">
                         <div>
-                            <label htmlFor="photo" className="block text-sm font-medium text-gray-700">
-                                Фото категории
-                            </label>
+                            <Label>Категория</Label>
                             <Input
-                                id="photo"
-                                type="file"
-                                accept="image/*"
-                                onChange={handleFileChange}
-                                className="mt-1"
+                                id="category"
+                                name="category"
+                                type="text"
+                                value={formData.category}
+                                onChange={handleChange}
+                                required
                             />
-                            {preview && (
+                        </div>
+                        <div>
+                            <Label>Идентификатор категории</Label>
+                            <Input
+                                id="category_slug"
+                                name="category_slug"
+                                type="text"
+                                value={formData.category_slug}
+                                onChange={handleChange}
+                                required/>
+                        </div>
+                        <div>
+                            <Label>Фотография</Label>
+                            <Input
+                                id="photo_file"
+                                name="photo_file"
+                                type="file"
+                                accept="image/jpeg, image/png, image/webp"
+                                onChange={handleFileChange}
+                                required
+                            />
+                            {previewUrl && (
                                 <Image
-                                    src={preview}
-                                    alt="Превью"
-                                    className="mt-2 max-w-[200px] rounded"
-                                    width={200}
-                                    height={500}
+                                    src={previewUrl}
+                                    alt="Предпросмотр"
+                                    className="mt-2 w-32 h-32 object-cover rounded-md border"
+                                    width={128}
+                                    height={128}
                                 />
                             )}
                         </div>
-                        {error && <p className="text-red-500 text-sm">{error}</p>}
-                        <Button type="submit" disabled={postMutation.isPending}>
-                            {postMutation.isPending ? 'Добавление...' : 'Добавить категорию'}
-                        </Button>
+                        {error && <p className="text-red-500">{error}</p>}
+                        {success && <p className="text-green-500">{success}</p>}
+                        <div className='flex justify-end gap-2'>
+                            <Button variant="secondary" onClick={() => setIsOpen(false)}>Отмена</Button>
+                            <Button type="submit" disabled={isLoading}>
+                                {isLoading ? "Создание..." : "Создать категорию"}
+                            </Button>
+                        </div>
                     </form>
-                </CardContent>
-            </Card>
-        </div>
-    );
+                </DialogHeader>
+            </DialogContent>
+        </Dialog>
+    )
 }

@@ -15,6 +15,13 @@ export interface Category {
     photo: string;
 }
 
+export interface CategoryData {
+    category_slug: string;
+    category: string;
+    photo?: string;
+    photo_file: File | null;
+}
+
 export interface Material {
     id: number;
     material: string;

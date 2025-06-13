@@ -1,14 +1,7 @@
 import axios from "axios";
+import {CategoryData} from "@/types";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-
-interface CategoryData {
-    id?: number;
-    category: string;
-    category_slug: string;
-    photo?: string | null;
-    photo_file?: File | null;
-}
 
 interface ErrorResponse {
     error?: string;
@@ -22,42 +15,53 @@ export async function fetchCategories() {
     return res.json();
 }
 
-export const addCategory = async (formData: FormData): Promise<CategoryData> => {
+export async function postCategory(data: CategoryData) {
     try {
-        const response = await axios.post(`${BASE_URL}/categories/`, formData, {
+        const formData = new FormData();
+        formData.append('category_slug', data.category_slug);
+        formData.append("category", data.category);
+        if (data.photo_file) {
+            formData.append('photo_file', data.photo_file);
+        }
+        const res = await axios.post(`${BASE_URL}/categories/`, formData, {
             headers: {
-                "Content-Type": "multipart/form-data",
+                'Content-Type': 'multipart/form-data',
             },
         });
-        return response.data;
-    } catch (error) {
-        let errorMessage = "Не удалось выполнить запрос к серверу";
-        if (axios.isAxiosError(error) && error.response) {
-            const errorData: ErrorResponse = error.response.data;
-            console.error("Ошибка сервера:", {
-                status: error.response.status,
-                statusText: error.response.statusText,
-                errorData,
-            });
-            errorMessage =
-                errorData.photo_file ||
-                errorData.category_slug ||
-                errorData.error ||
-                errorData.detail ||
-                `Ошибка HTTP: ${error.response.status}`;
-        } else {
-            console.error("Ошибка в addCategory:", error);
-        }
-        throw new Error(errorMessage);
+        return res.data;
+    } catch (err) {
+        console.log("Ошибка при добавлении категории" + err);
     }
-};
+}
 
-export async function deleteCategory(category_slug: string) {
-    const res = await axios.delete(`${BASE_URL}/categories/${category_slug}/`)
+export async function deleteCategory(id: number) {
+    const res = await axios.delete(`${BASE_URL}/categories/${id}/`)
     return res.data
 }
 
-export async function updateCategory(category: string, updated_data: { category: string, category_slug: string }) {
-    const res = await axios.patch(`${BASE_URL}/categories/${category}/`, updated_data);
-    return res.data
+export async function patchCategory(id: number, data: CategoryData) {
+    try {
+        const formData = new FormData();
+        formData.append('category', data.category);
+        formData.append('category_slug', data.category_slug);
+        if (data.photo_file) {
+            formData.append('photo_file', data.photo_file);
+        }
+
+        const res = await axios.patch(`${BASE_URL}/categories/${id}/`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+
+        return res.data;
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            console.error('Детали ошибки:', {
+                status: error.response?.status,
+                data: error.response?.data, // Важно: тут будет сообщение от Django
+            });
+        }
+        throw error;
+    }
 }

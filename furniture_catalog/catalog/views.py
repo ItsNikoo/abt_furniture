@@ -11,7 +11,7 @@ from logging import getLogger
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-    lookup_field = 'category_slug'
+    lookup_field = "id"
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()

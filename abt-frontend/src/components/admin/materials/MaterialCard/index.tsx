@@ -1,11 +1,9 @@
 "use client"
 
-import {Material, Sale} from "@/types";
+import {Material} from "@/types";
 import {Card, CardHeader} from "@/components/ui/card";
 import {Button} from "@/components/ui/button";
-import Image from "next/image";
-import trash from "../../../../../public/trash-svgrepo-com.svg";
-import {Pencil, Trash2} from "lucide-react";
+import {Trash2} from "lucide-react";
 import UpdateMaterialContainer from "@/components/admin/materials/UpdateMaterialContainer";
 
 export default function MaterialCard({material, onDeleteAction}: {
@@ -17,7 +15,7 @@ export default function MaterialCard({material, onDeleteAction}: {
             <CardHeader className='flex flex-row items-center justify-between'>
                 <p className='text-xl font-bold'>{material.material}</p>
                 <div>
-                    <UpdateMaterialContainer material={material} />
+                    <UpdateMaterialContainer material={material}/>
                     <Button
                         variant="ghost"
                         size="icon"
