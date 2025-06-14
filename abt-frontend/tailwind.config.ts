@@ -51,6 +51,7 @@ export default {
   				'5': 'hsl(var(--chart-5))'
   			},
 			mainPurple: "#6F63BA",
+			mainPurpleHovered: "#5A4F9C",
 			mainOrange: "#E59820"
   		},
   		borderRadius: {
