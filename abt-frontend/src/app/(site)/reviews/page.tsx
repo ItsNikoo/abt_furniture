@@ -1,4 +1,4 @@
-import {ContentWrapper} from "@/app/layout";
+import {ContentWrapper} from "@/app/(site)/layout";
 
 export default function ReviewsPage(){
     return(

@@ -1,7 +1,7 @@
 import type {Metadata} from "next";
 import {Montserrat, Orelega_One} from "next/font/google";
-import "./globals.css";
-import ReactQueryProvider from "@/app/react-query-provider";
+import "../globals.css";
+import ReactQueryProvider from "@/app/(site)/react-query-provider";
 import Header from "@/components/site/Header";
 
 // Настройка Orelega One

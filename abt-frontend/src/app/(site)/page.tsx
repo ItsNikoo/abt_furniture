@@ -1,4 +1,5 @@
 import FirstPage from "@/components/site/FirstPage";
+import ClientPage from "@/app/(site)/ClientPage";
 
 export const revalidate = 10; // ISR
 
@@ -11,6 +12,7 @@ export default async function Home() {
     return (
         <>
             <FirstPage />
+            <ClientPage initialData={products} />
         </>
     );
 }
