@@ -5,12 +5,14 @@ import {fetchStyles} from "@/lib/api/styles";
 import {fetchMaterials} from "@/lib/api/materials";
 import {fetchProductById} from "@/lib/api/products";
 
-export default async function ProductPage({params}: { params: { id: string } }) {
+export default async function ProductPage({ params }: { params: { id: string } }) {
+    const { id } = params;  // без await
     const categories: Category[] = await fetchCategories();
     const styles: Style[] = await fetchStyles();
     const materials: Material[] = await fetchMaterials();
-    const product: Product = await fetchProductById(Number(params.id));
+    const product: Product = await fetchProductById(Number(id));
+
     return (
         <UpdateProductContainer categories={categories} styles={styles} materials={materials} data={product} />
-    )
+    );
 }

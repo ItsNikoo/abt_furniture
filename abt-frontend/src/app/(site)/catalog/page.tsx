@@ -1,9 +1,14 @@
-import {ContentWrapper} from "@/app/(site)/layout";
+// page.tsx (или CatalogPage.tsx)
+import { ContentWrapper } from "@/app/(site)/layout";
+import Catalog from "../../../components/site/Catalog";
+import { fetchCategories } from "@/lib/api/categories";
 
-export default function CatalogPage(){
-    return(
+export default function CatalogPage() {
+    const categoriesPromise = fetchCategories();
+
+    return (
         <ContentWrapper>
-            <h1>This is catalog page</h1>
+            <Catalog categoriesPromise={categoriesPromise} />
         </ContentWrapper>
-    )
+    );
 }

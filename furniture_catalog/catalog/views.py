@@ -1,5 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from rest_framework import viewsets
+from rest_framework.generics import ListAPIView
+from rest_framework.permissions import AllowAny
 
 from catalog.models import Category, Style, Product, Material, FirstPage
 from catalog.serializers import CategorySerializer, StyleSerializer, ProductSerializer, MaterialSerializer, \
@@ -59,6 +61,15 @@ class ProductViewSet(viewsets.ModelViewSet):
         # Удаляем продукт
         response = super().destroy(request, *args, **kwargs)
         return response
+
+class ProductsByCategorySlugView(ListAPIView):
+    serializer_class = ProductSerializer
+    permission_classes = [AllowAny]
+
+    def get_queryset(self):
+        category_slug = self.kwargs['category_slug']
+        category = get_object_or_404(Category, category_slug=category_slug)
+        return Product.objects.filter(category=category)
 
 
 class MaterialViewSet(viewsets.ModelViewSet):

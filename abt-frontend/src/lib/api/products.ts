@@ -95,3 +95,8 @@ export async function deleteProduct(id: number) {
     const response = await axios.delete(`${BASE_URL}/products/${id}/`)
     return response.status;
 }
+
+export async function fetchProductsByCategory(categorySlug: string) {
+    const res = await axios.get(`${BASE_URL}/products/${categorySlug}/`);
+    return res.data;
+}

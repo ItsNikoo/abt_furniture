@@ -1,16 +1,23 @@
 import FirstPage from "@/components/site/FirstPage";
 import {fetchSales} from "@/lib/api/sales";
 import SalesContainer from "@/components/site/SalesContainer";
+import {fetchCategories} from "@/lib/api/categories";
+import {ContentWrapper} from "@/app/(site)/layout";
+import CategoriesGrid from "@/components/site/CategoriesGrid";
 
 export const revalidate = 10; // ISR
 
-export default function Home() {
+export default async function Home() {
     const salesPromise = fetchSales();
+    const categoriesPromise = fetchCategories();
 
     return (
         <>
             <SalesContainer promise={salesPromise}/>
-            <FirstPage />
+            <FirstPage/>
+            <ContentWrapper>
+                <CategoriesGrid promise={categoriesPromise}/>
+            </ContentWrapper>
         </>
     );
 }
