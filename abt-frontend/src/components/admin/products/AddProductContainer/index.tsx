@@ -38,13 +38,14 @@ export default function AddProductContainer({categories, styles, materials}: Pro
     const [photoPreviews, setPhotoPreviews] = useState<string[]>([]);
     const [formData, setFormData] = useState<ProductData>({
         title: "",
+        productSlug: "",
         price: 0,
         description: "",
         category: "",
         material: "",
         style: "",
         photos: [],
-        photo_files: []
+        photoFiles: []
     });
 
     const router = useRouter();
@@ -55,13 +56,14 @@ export default function AddProductContainer({categories, styles, materials}: Pro
             queryClient.invalidateQueries({queryKey: ["products"]});
             setFormData({
                 title: "",
+                productSlug: "",
                 price: 0,
                 description: "",
                 category: "",
                 material: "",
                 style: "",
                 photos: [],
-                photo_files: []
+                photoFiles: []
             });
             photoPreviews.forEach((url) => URL.revokeObjectURL(url));
             setPhotoPreviews([]);
@@ -71,7 +73,7 @@ export default function AddProductContainer({categories, styles, materials}: Pro
         },
         onError: (err: any) => {
             console.error("Ошибка при добавлении товара:", err);
-            const errorMessage = err.response?.data?.photo_files || err.response?.data?.non_field_errors || "Не удалось добавить товар. Попробуйте снова.";
+            const errorMessage = err.response?.data?.photoFiles || err.response?.data?.non_field_errors || "Не удалось добавить товар. Попробуйте снова.";
             setError(errorMessage);
         },
     });
@@ -89,7 +91,7 @@ export default function AddProductContainer({categories, styles, materials}: Pro
             const newPreviews = newFiles.map((file) => URL.createObjectURL(file));
             setFormData((prev) => ({
                 ...prev,
-                photo_files: newFiles
+                photoFiles: newFiles
             }));
             setPhotoPreviews(newPreviews);
         }
@@ -104,8 +106,8 @@ export default function AddProductContainer({categories, styles, materials}: Pro
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (!formData.title.trim() || !formData.price || !formData.category || !formData.description) {
-            setError("Поля 'Название', 'Цена', 'Описание' и 'Категория' обязательны!");
+        if (!formData.title.trim() || !formData.price || !formData.category || !formData.description || !formData.productSlug) {
+            setError("Поля 'Название', '[productIdentificator]', 'Цена', 'Описание' и 'Категория' обязательны!");
             return;
         }
         console.log(formData);
@@ -131,6 +133,20 @@ export default function AddProductContainer({categories, styles, materials}: Pro
                                 value={formData.title}
                                 onChange={handleInputChange}
                                 placeholder="Введите название"
+                                className="mt-1"
+                            />
+                        </div>
+                        <div>
+                            <Label htmlFor="title" className="text-sm font-medium text-gray-700">
+                                Идентификатор(slug)
+                            </Label>
+                            <Input
+                                id="productSlug"
+                                name="productSlug"
+                                type="text"
+                                value={formData.productSlug}
+                                onChange={handleInputChange}
+                                placeholder="Введите productSlug"
                                 className="mt-1"
                             />
                         </div>

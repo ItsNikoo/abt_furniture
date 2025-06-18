@@ -25,10 +25,10 @@ export default function UpdateCategoryContainer({category}: { category: Category
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [formData, setFormData] = useState<CategoryData>({
-        category_slug: category.category_slug,
+        categorySlug: category.categorySlug,
         category: category.category,
         photo: category.photo,
-        photo_file: null
+        photoFile: null
     })
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -57,7 +57,7 @@ export default function UpdateCategoryContainer({category}: { category: Category
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
             const file = e.target.files[0];
-            setFormData(prev => ({...prev, photo_file: file}));
+            setFormData(prev => ({...prev, photoFile: file}));
             setPreviewUrl(URL.createObjectURL(file));
         }
     };
@@ -89,10 +89,10 @@ export default function UpdateCategoryContainer({category}: { category: Category
                         <div>
                             <Label>Идентификатор категории</Label>
                             <Input
-                                id="category_slug"
-                                name="category_slug"
+                                id="categorySlug"
+                                name="categorySlug"
                                 type="text"
-                                value={formData.category_slug}
+                                value={formData.categorySlug}
                                 onChange={handleChange}
                                 required
                             />
@@ -106,8 +106,8 @@ export default function UpdateCategoryContainer({category}: { category: Category
                             <div>
                                 <Label>Добавить фото</Label>
                                 <Input
-                                    id="photo_file"
-                                    name="photo_file"
+                                    id="photoFile"
+                                    name="photoFile"
                                     type="file"
                                     accept="image/jpeg, image/png, image/webp"
                                     onChange={handleFileChange}

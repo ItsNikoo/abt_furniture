@@ -53,7 +53,7 @@ export default function FirstCarousel({slides}: { slides: Sale[] }) {
                             <div key={slide.id} className="embla__slide flex-[0_0_100%] min-w-0 ">
                                 <div className="flex flex-row">
                                     <div className="w-1/2 flex flex-col items-center justify-between pt-5 pb-10 px-3">
-                                        <h1 className="text-5xl font-orelega-one text-center">{slide.title}</h1>
+                                        <h1 className="text-5xl font-overpass font-extrabold text-center">{slide.title}</h1>
                                         <div className='flex flex-col items-center'>
                                             <Link
                                                 href={slide.link}

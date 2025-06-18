@@ -20,7 +20,7 @@ export default function AddSaleContainer() {
     const [formData, setFormData] = useState<SaleData>({
         title: '',
         description: '',
-        photo_file: null,
+        photoFile: null,
         link: ''
     })
     const [isLoading, setIsLoading] = useState(false);
@@ -38,7 +38,7 @@ export default function AddSaleContainer() {
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
             const file = e.target.files[0];
-            setFormData(prev => ({...prev, photo_file: file}));
+            setFormData(prev => ({...prev, photoFile: file}));
             setPreviewUrl(URL.createObjectURL(file));
         }
     };
@@ -51,7 +51,7 @@ export default function AddSaleContainer() {
             setFormData({
                 title: '',
                 description: '',
-                photo_file: null,
+                photoFile: null,
                 link: ''
             });
             setPreviewUrl(null);
@@ -103,8 +103,8 @@ export default function AddSaleContainer() {
                         <div>
                             <Label>Фотография</Label>
                             <Input
-                                id="photo_file"
-                                name="photo_file"
+                                id="photoFile"
+                                name="photoFile"
                                 type="file"
                                 accept="image/jpeg, image/png, image/webp"
                                 onChange={handleFileChange}

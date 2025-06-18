@@ -124,6 +124,9 @@
     font-family: var(--font-orelega-one);
 }
 
+.font-overpass {
+    font-family: var(--font-overpass);
+}
 
 @layer base {
     * {
@@ -134,11 +137,15 @@
         @apply bg-background text-foreground;
     }
 
-    .font-montserrat {
-        font-family: var(--font-montserrat);
+    /*.font-montserrat {*/
+    /*    font-family: var(--font-montserrat);*/
+    /*}*/
+
+    .font-overpass {
+        font-family: var(--font-overpass);
     }
 
     div, p {
-        font-family: var(--font-montserrat);
+        font-family: var(--font-overpass);
     }
 }

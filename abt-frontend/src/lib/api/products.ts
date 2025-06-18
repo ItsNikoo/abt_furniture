@@ -17,6 +17,7 @@ export async function addProduct(data: ProductData) {
     try {
         const formData = new FormData();
         formData.append("title", data.title);
+        formData.append("productSlug", data.productSlug);
         formData.append("price", data.price.toString());
         formData.append("description", data.description);
         formData.append("category", data.category);
@@ -25,9 +26,9 @@ export async function addProduct(data: ProductData) {
             formData.append("style", data.style);
         }
 
-        if (data.photo_files && data.photo_files.length > 0) {
-            data.photo_files.forEach((file) => {
-                formData.append(`photo_files`, file);
+        if (data.photoFiles && data.photoFiles.length > 0) {
+            data.photoFiles.forEach((file) => {
+                formData.append(`photoFiles`, file);
             });
         }
 
@@ -53,6 +54,7 @@ export async function patchProduct(data: ProductData, id: number) {
     try {
         const formData = new FormData();
         formData.append("title", data.title);
+        formData.append("productSlug", data.productSlug);
         formData.append("price", data.price.toString());
         formData.append("description", data.description);
         formData.append("category", data.category);
@@ -61,15 +63,15 @@ export async function patchProduct(data: ProductData, id: number) {
             formData.append("style", data.style);
         }
 
-        if (data.delete_photos && data.delete_photos.length > 0) {
-            data.delete_photos.forEach((url) => {
-                formData.append("delete_photos", url); // Добавляем каждый URL отдельно
+        if (data.deletePhotos && data.deletePhotos.length > 0) {
+            data.deletePhotos.forEach((url) => {
+                formData.append("deletePhotos", url); // Добавляем каждый URL отдельно
             });
         }
 
-        if (data.photo_files && data.photo_files.length > 0) {
-            data.photo_files.forEach((file) => {
-                formData.append(`photo_files`, file);
+        if (data.photoFiles && data.photoFiles.length > 0) {
+            data.photoFiles.forEach((file) => {
+                formData.append(`photoFiles`, file);
             });
         }
 
@@ -97,6 +99,6 @@ export async function deleteProduct(id: number) {
 }
 
 export async function fetchProductsByCategory(categorySlug: string) {
-    const res = await axios.get(`${BASE_URL}/products/${categorySlug}/`);
+    const res = await axios.get(`${BASE_URL}/products/?category=${categorySlug}`);
     return res.data;
 }

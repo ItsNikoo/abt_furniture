@@ -19,8 +19,8 @@ import {postCategoryAction} from "@/actions/categories";
 export default function AddCategoryContainer() {
     const [formData, setFormData] = useState<CategoryData>({
         category: '',
-        category_slug: '',
-        photo_file: null
+        categorySlug: '',
+        photoFile: null
     })
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -37,7 +37,7 @@ export default function AddCategoryContainer() {
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
             const file = e.target.files[0];
-            setFormData(prev => ({...prev, photo_file: file}));
+            setFormData(prev => ({...prev, photoFile: file}));
             setPreviewUrl(URL.createObjectURL(file));
         }
     };
@@ -54,8 +54,8 @@ export default function AddCategoryContainer() {
                 setSuccess(null);
                 setFormData({
                     category: '',
-                    category_slug: '',
-                    photo_file: null
+                    categorySlug: '',
+                    photoFile: null
                 })
             }, 1000);
         } catch (error) {
@@ -91,18 +91,18 @@ export default function AddCategoryContainer() {
                         <div>
                             <Label>Идентификатор категории</Label>
                             <Input
-                                id="category_slug"
-                                name="category_slug"
+                                id="categorySlug"
+                                name="categorySlug"
                                 type="text"
-                                value={formData.category_slug}
+                                value={formData.categorySlug}
                                 onChange={handleChange}
                                 required/>
                         </div>
                         <div>
                             <Label>Фотография</Label>
                             <Input
-                                id="photo_file"
-                                name="photo_file"
+                                id="photoFile"
+                                name="photoFile"
                                 type="file"
                                 accept="image/jpeg, image/png, image/webp"
                                 onChange={handleFileChange}

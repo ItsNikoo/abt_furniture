@@ -21,7 +21,7 @@ export default function CategoryCard({category, onDeleteAction}: {
             </CardHeader>
             <CardContent className='flex flex-row gap-2.5 justify-between'>
                 <div>
-                    <p className={'text-gray-600 text-sm'}>{category.category_slug}</p>
+                    <p className={'text-gray-600 text-sm'}>{category.categorySlug}</p>
                     <h1 className={"text-xl font-bold"}>{category.category}</h1>
                 </div>
                 <div className="flex gap-2">

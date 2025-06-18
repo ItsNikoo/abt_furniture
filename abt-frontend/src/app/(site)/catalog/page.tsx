@@ -1,5 +1,4 @@
-// page.tsx (или CatalogPage.tsx)
-import { ContentWrapper } from "@/app/(site)/layout";
+import ContentWrapper from "@/components/ContentWrapper";
 import Catalog from "../../../components/site/Catalog";
 import { fetchCategories } from "@/lib/api/categories";
 

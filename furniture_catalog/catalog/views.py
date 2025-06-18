@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from rest_framework import viewsets
+from rest_framework.decorators import action
 from rest_framework.generics import ListAPIView
 from rest_framework.permissions import AllowAny
 
@@ -61,6 +62,25 @@ class ProductViewSet(viewsets.ModelViewSet):
         # Удаляем продукт
         response = super().destroy(request, *args, **kwargs)
         return response
+
+    def get_queryset(self):
+        category_slug = self.request.query_params.get('category')
+        if category_slug:
+            return self.queryset.filter(category__category_slug=category_slug)
+        return self.queryset
+
+    def get_object(self):
+        # по умолчанию вернёт по pk
+        return super().get_object()
+
+    @action(detail=False, methods=["get"], url_path="category")
+    def by_category(self, request):
+        category_slug = request.query_params.get('category')
+        if category_slug:
+            queryset = self.get_queryset()
+            serializer = self.get_serializer(queryset, many=True)
+            return Response(serializer.data)
+        return Response({"detail": "category param required"}, status=400)
 
 class ProductsByCategorySlugView(ListAPIView):
     serializer_class = ProductSerializer

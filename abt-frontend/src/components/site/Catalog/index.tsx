@@ -1,35 +1,44 @@
 "use client";
 
-import {use} from "react"; // React 18+ use hook для промисов
+import {use} from "react";
 import Link from "next/link";
 import {Category, Product} from "@/types";
 import {useEffect, useState} from "react";
-import {useQuery} from "@tanstack/react-query";
-import {fetchProductsByCategory} from "@/lib/api/products";
-import PhotoCarousel from "@/components/ui/Embla/PhotoCarousel"; // твоя функция для получения продуктов
+import {useQuery, useQueryClient} from "@tanstack/react-query";
+import {fetchProductById, fetchProductsByCategory} from "@/lib/api/products";
+import {usePathname} from "next/navigation";
+import CatalogCard from "@/components/site/Catalog/CatalogCard"; // добавим usePathname
 
 export default function Catalog({
                                     categoriesPromise,
                                     selectedCategory,
                                 }: {
     categoriesPromise: Promise<Category[]>;
-    selectedCategory?: string; // необязательный проп
+    selectedCategory?: string;
 }) {
-    const categories = use(categoriesPromise); // "разворачиваем" промис
+    const queryClient = useQueryClient();
+    const categories = use(categoriesPromise);
+    const pathname = usePathname(); // получаем текущий путь
 
     const [currentCategory, setCurrentCategory] = useState<string>(
-        selectedCategory ?? categories[0]?.category_slug
+        selectedCategory ?? categories[0]?.categorySlug
     );
 
     useEffect(() => {
-        if (selectedCategory) {
-            setCurrentCategory(selectedCategory);
-        } else if (categories.length > 0 && !currentCategory) {
-            setCurrentCategory(categories[0].category_slug);
-        }
-    }, [categories, selectedCategory]);
+        // Извлекаем slug категории из URL
+        const pathParts = pathname.split('/');
+        const categorySlugFromUrl = pathParts[pathParts.length - 1];
 
-    // useQuery для загрузки продуктов по текущей категории
+        // Проверяем, что такая категория существует
+        const categoryExists = categories.some(cat => cat.categorySlug === categorySlugFromUrl);
+
+        if (categoryExists) {
+            setCurrentCategory(categorySlugFromUrl);
+        } else if (categories.length > 0) {
+            setCurrentCategory(categories[0].categorySlug);
+        }
+    }, [pathname, categories]); // следим за изменениями pathname и categories
+
     const {data: products, isLoading, isError} = useQuery({
         queryKey: [`products`, currentCategory],
         queryFn: async ({queryKey}) => {
@@ -42,17 +51,16 @@ export default function Catalog({
 
     return (
         <>
-            <h1 className="font-orelega-one text-7xl mt-10">Каталог</h1>
-            <ul className="flex flex-row gap-8 font-bold text-base mt-6">
+            <h1 className="font-bold text-7xl mt-10">Каталог</h1>
+            <ul className="flex flex-row gap-8 font-medium text-base mt-6">
                 {categories.map((category) => (
                     <li key={category.id}>
                         <Link
-                            href={`/catalog/${category.category_slug}`}
-                            onClick={() => setCurrentCategory(category.category_slug)}
+                            href={`/catalog/${category.categorySlug}`}
                             className={`rounded-md transition cursor-pointer ${
-                                currentCategory === category.category_slug
+                                currentCategory === category.categorySlug
                                     ? "text-mainPurple"
-                                    : "text-gray-700"
+                                    : "text-black"
                             }`}
                         >
                             {category.category}
@@ -61,33 +69,24 @@ export default function Catalog({
                 ))}
             </ul>
 
+            {/* остальной код остается без изменений */}
             <div className="mt-10">
                 {isLoading && <p>Загрузка продуктов...</p>}
                 {isError && <p>Ошибка при загрузке продуктов</p>}
                 {products && products.length > 0 && (
                     <div className="grid grid-cols-2 gap-6 mt-6">
                         {products.map((product: Product) => (
-                            <div key={product.id} className="bg-backgroundGray rounded-xl">
-                                {product.photos &&
-                                    <div className='mb-3 rounded-xl overflow-hidden relative'>
-                                        <PhotoCarousel photos={product.photos}/>
-                                        <div
-                                            className="absolute top-2 left-2 bg-mainPurple text-white text-xs font-semibold px-2 py-1 rounded-md z-20 select-none"
-                                            style={{pointerEvents: 'none'}} // чтобы не мешал кликам
-                                        >
-                                            {product.style}
-                                        </div>
-                                    </div>
-                                }
-                                <div className='flex flex-col gap-0 px-4 mb-2'>
-                                    <p className='text-gray-400'>{product.category}</p>
-                                    <h2 className="text-2xl font-semibold">{product.title}</h2>
-                                    <div className='flex flex-row gap-1.5'>
-                                        <p className='text-gray-400'>Цена за погонный метр - </p>
-                                        <p>{product.price} руб.</p>
-                                    </div>
-                                </div>
-                            </div>
+                            <Link key={product.id}
+                                  href={`/catalog/${currentCategory}/${product.id}-${product.productSlug}`}
+                                  onMouseEnter={() => {
+                                      queryClient.prefetchQuery({
+                                          queryKey: ['product', product.id],
+                                          queryFn: () => fetchProductById(product.id),
+                                      });
+                                  }}
+                            >
+                                <CatalogCard product={product}/>
+                            </Link>
                         ))}
                     </div>
                 )}

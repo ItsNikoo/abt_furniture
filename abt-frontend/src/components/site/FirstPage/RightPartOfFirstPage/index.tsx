@@ -21,7 +21,7 @@ export default function RightPartOfFirstPage() {
                             </Label>
                             <Input type="file" placeholder={"Отправьте эскиз"}/>
                         </div>
-                        <Button className={'py-[25px] bg-mainPurple text-white text-md font-bold hover:bg-mainPurple hover:shadow-xl'}>Рассчитать стоимость</Button>
+                        <Button className={'py-[25px] bg-mainPurple text-white text-md font-bold hover:bg-mainPurpleHovered'}>Рассчитать стоимость</Button>
                     </form>
                 </div>
             </div>

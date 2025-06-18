@@ -8,10 +8,10 @@ export default function CategoriesGrid({promise}: { promise: Promise<Category[]>
 
     return (
         <>
-            <h1 className="text-5xl font-orelega-one text-center my-10">Каталог продукции</h1>
+            <h1 className="text-5xl font-extrabold text-center my-10">Каталог продукции</h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
                 {categories.map((category) => (
-                    <Link key={category.id} href={`/catalog/${category.category_slug}`}>
+                    <Link key={category.id} href={`/catalog/${category.categorySlug}`}>
                         <div
                              className="relative rounded-3xl shadow-xl overflow-hidden bg-white hover:shadow-2xl transition-shadow">
                             {/* Фиолетовая полоска сверху */}
@@ -19,7 +19,7 @@ export default function CategoriesGrid({promise}: { promise: Promise<Category[]>
 
                             {/* Контент */}
                             <div className="flex flex-col p-10 pt-8">
-                                <h2 className="text-3xl mb-3 font-orelega-one">{category.category}</h2>
+                                <h2 className="text-3xl mb-3 font-extrabold">{category.category}</h2>
 
                                 {/* Квадратный контейнер под изображение */}
                                 <div className="w-full aspect-square relative overflow-hidden rounded-lg">

@@ -30,14 +30,15 @@ export default function UpdateProductContainer({categories, styles, materials, d
 
     const [formData, setFormData] = useState<ProductData>({
         title: "",
+        productSlug: "",
         price: 0,
         description: "",
         category: "",
         material: "",
         style: "",
         photos: [],
-        delete_photos: [],
-        photo_files: []
+        deletePhotos: [],
+        photoFiles: []
     });
     const [openCategory, setOpenCategory] = useState(false);
     const [openMaterial, setOpenMaterial] = useState(false);
@@ -50,14 +51,15 @@ export default function UpdateProductContainer({categories, styles, materials, d
         if (data) {
             setFormData({
                 title: data.title ?? "",
+                productSlug: data.productSlug ?? "",
                 price: data.price ?? 0,
                 description: data.description ?? "",
                 category: data.category ?? "",
                 material: data.material ?? "",
                 style: data.style ?? "",
                 photos: data.photos ?? [],
-                delete_photos: [],
-                photo_files: []
+                deletePhotos: [],
+                photoFiles: []
             });
         }
     }, [data]);
@@ -90,7 +92,7 @@ export default function UpdateProductContainer({categories, styles, materials, d
             const newPreviews = newFiles.map((file) => URL.createObjectURL(file));
             setFormData((prev) => ({
                 ...prev,
-                photo_files: newFiles
+                photoFiles: newFiles
             }));
             setPhotoPreviews(newPreviews);
         }
@@ -120,6 +122,20 @@ export default function UpdateProductContainer({categories, styles, materials, d
                                 value={formData.title}
                                 onChange={handleInputChange}
                                 placeholder="Введите название"
+                                className="mt-1"
+                            />
+                        </div>
+                        <div>
+                            <Label htmlFor="title" className="text-sm font-medium text-gray-700">
+                                Идентификатор(slug)
+                            </Label>
+                            <Input
+                                id="productSlug"
+                                name="productSlug"
+                                type="text"
+                                value={formData.productSlug}
+                                onChange={handleInputChange}
+                                placeholder="Введите productSlug"
                                 className="mt-1"
                             />
                         </div>
@@ -293,7 +309,7 @@ export default function UpdateProductContainer({categories, styles, materials, d
                                 <p className="text-sm text-gray-600 mb-2">Фотографии:</p>
                                 <div className="grid grid-cols-3 gap-3">
                                     {data.photos.map((photo: Photo, index) => {
-                                        const isMarkedForDeletion = formData.delete_photos?.includes(photo.photo_url);
+                                        const isMarkedForDeletion = formData.deletePhotos?.includes(photo.photoUrl);
                                         return (
                                             <button
                                                 key={index}
@@ -302,19 +318,19 @@ export default function UpdateProductContainer({categories, styles, materials, d
                                                 aria-label={`Фото ${index + 1} для ${data.title}`}
                                                 onClick={() => {
                                                     setFormData((prev) => {
-                                                        const deletePhotos = prev.delete_photos ?? [];
-                                                        const alreadyMarked = deletePhotos.includes(photo.photo_url);
+                                                        const deletePhotos = prev.deletePhotos ?? [];
+                                                        const alreadyMarked = deletePhotos.includes(photo.photoUrl);
                                                         return {
                                                             ...prev,
-                                                            delete_photos: alreadyMarked
-                                                                ? deletePhotos.filter((url) => url !== photo.photo_url)
-                                                                : [...deletePhotos, photo.photo_url],
+                                                            deletePhotos: alreadyMarked
+                                                                ? deletePhotos.filter((url) => url !== photo.photoUrl)
+                                                                : [...deletePhotos, photo.photoUrl],
                                                         };
                                                     });
                                                 }}
                                             >
                                                 <Image
-                                                    src={photo.photo_url}
+                                                    src={photo.photoUrl}
                                                     width={200}
                                                     height={200}
                                                     alt={`${data.title} Фото ${index + 1}`}

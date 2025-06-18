@@ -2,7 +2,7 @@ import FirstPage from "@/components/site/FirstPage";
 import {fetchSales} from "@/lib/api/sales";
 import SalesContainer from "@/components/site/SalesContainer";
 import {fetchCategories} from "@/lib/api/categories";
-import {ContentWrapper} from "@/app/(site)/layout";
+import ContentWrapper from "@/components/ContentWrapper";
 import CategoriesGrid from "@/components/site/CategoriesGrid";
 
 export const revalidate = 10; // ISR

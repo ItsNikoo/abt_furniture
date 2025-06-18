@@ -125,7 +125,7 @@ class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ['id', 'title', 'price', 'description', 'category', 'material', 'style', 'photos', 'photo_files',
+        fields = ['id', 'title', 'product_slug', 'price', 'description', 'category', 'material', 'style', 'photos', 'photo_files',
                   'delete_photos']
 
     def validate_photo_files(self, value):

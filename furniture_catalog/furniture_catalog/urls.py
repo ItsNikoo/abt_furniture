@@ -14,6 +14,5 @@ router.register(r'sales', FirstPageViewSet, basename='first_page')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/products/<slug:category_slug>/', ProductsByCategorySlugView.as_view(), name='products-by-category'),
     path('api/', include(router.urls)),
 ]

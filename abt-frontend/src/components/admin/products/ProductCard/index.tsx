@@ -38,6 +38,7 @@ export default function ProductCard({product}: ProductCardProps) {
             <CardHeader className="flex flex-row items-center justify-between p-4 rounded-t-lg">
                 <div>
                     <h1 className="font-bold text-xl text-gray-800">{product.title}</h1>
+                    <p className="text-base text-gray-600">{product.productSlug}</p>
                     <p className="text-sm text-gray-500">{product.category}</p>
                 </div>
                 <Button size='icon' className="bg-gray-200 hover:bg-gray-300"
@@ -67,7 +68,7 @@ export default function ProductCard({product}: ProductCardProps) {
                                     {product.photos.map((photo: Photo, index) => (
                                         <Image
                                             key={index}
-                                            src={photo.photo_url}
+                                            src={photo.photoUrl}
                                             width={200}
                                             height={200}
                                             alt={`${product.title} Фото ${index + 1}`}

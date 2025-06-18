@@ -1,6 +1,6 @@
 export interface Photo {
     id: number;
-    photo_url: string;
+    photoUrl: string;
 }
 
 export interface Style {
@@ -10,16 +10,16 @@ export interface Style {
 
 export interface Category {
     id: number;
-    category_slug: string;
+    categorySlug: string;
     category: string;
     photo: string;
 }
 
 export interface CategoryData {
-    category_slug: string;
+    categorySlug: string;
     category: string;
     photo?: string;
-    photo_file: File | null;
+    photoFile: File | null;
 }
 
 export interface Material {
@@ -30,6 +30,7 @@ export interface Material {
 export interface Product {
     id: number;
     title: string;
+    productSlug: string;
     price: number;
     description: string;
     category: string;
@@ -40,14 +41,15 @@ export interface Product {
 
 export interface ProductData {
     title: string;
+    productSlug: string;
     price: number;
     description: string;
     category: string;
     material: string;
     style?: string;
     photos?: Photo[];
-    photo_files?: File[];
-    delete_photos?: string[];
+    photoFiles?: File[];
+    deletePhotos?: string[];
 }
 
 export interface Sale {
@@ -56,13 +58,13 @@ export interface Sale {
     description: string;
     photo: string | null;
     link: string;
-    photo_file: File | null;
+    photoFile: File | null;
 }
 
 export interface SaleData {
     title: string;
     description: string;
     photo?: string | null;
-    photo_file: File | null;
+    photoFile: File | null;
     link: string;
 }

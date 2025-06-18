@@ -3,13 +3,6 @@ import {CategoryData} from "@/types";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-interface ErrorResponse {
-    error?: string;
-    detail?: string;
-    photo_file?: string;
-    category_slug?: string;
-}
-
 export async function fetchCategories() {
     const res = await fetch(`${BASE_URL}/categories/`)
     return res.json();
@@ -18,10 +11,10 @@ export async function fetchCategories() {
 export async function postCategory(data: CategoryData) {
     try {
         const formData = new FormData();
-        formData.append('category_slug', data.category_slug);
+        formData.append('categorySlug', data.categorySlug);
         formData.append("category", data.category);
-        if (data.photo_file) {
-            formData.append('photo_file', data.photo_file);
+        if (data.photoFile) {
+            formData.append('photoFile', data.photoFile);
         }
         const res = await axios.post(`${BASE_URL}/categories/`, formData, {
             headers: {
@@ -43,9 +36,9 @@ export async function patchCategory(id: number, data: CategoryData) {
     try {
         const formData = new FormData();
         formData.append('category', data.category);
-        formData.append('category_slug', data.category_slug);
-        if (data.photo_file) {
-            formData.append('photo_file', data.photo_file);
+        formData.append('categorySlug', data.categorySlug);
+        if (data.photoFile) {
+            formData.append('photoFile', data.photoFile);
         }
 
         const res = await axios.patch(`${BASE_URL}/categories/${id}/`, formData, {
