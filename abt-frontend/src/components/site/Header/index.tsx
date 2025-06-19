@@ -4,6 +4,8 @@ import {Button} from "../../ui/button";
 import styles from "./Header.module.css"
 import Link from "next/link";
 import ContentWrapper from "@/components/ContentWrapper";
+import MainOrderContainer from "@/components/site/Orders/MainOrderContainer";
+import ProductOrderContainer from "@/components/site/Orders/ProductOrderContainer";
 
 export default function Header() {
     return (
@@ -22,9 +24,10 @@ export default function Header() {
                     </div>
                 </div>
                 <div className="flex items-center justify-center">
-                    <Button className={styles.OrderButton}>
-                        Заказать проект
-                    </Button>
+                    {/*<Button className={styles.OrderButton}>*/}
+                    {/*    Заказать проект*/}
+                    {/*</Button>*/}
+                    <MainOrderContainer />
                 </div>
             </div>
         </ContentWrapper>
