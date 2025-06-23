@@ -1,6 +1,6 @@
 'use client'
 
-import { useParams } from 'next/navigation'
+import {redirect, useParams} from 'next/navigation'
 import { useMutation } from '@tanstack/react-query'
 import { patchProduct } from '@/lib/api/products'
 import { Category, Material, Photo, Product, ProductData, Style } from '@/types'
@@ -67,6 +67,7 @@ export default function UpdateProductContainer({ categories, styles, materials, 
     mutationFn: ({ data, id }: { data: ProductData; id: number }) => patchProduct(data, id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['products'] })
+      queryClient.refetchQueries({ queryKey: ['products'] })
       setSuccess('Продукт успешно обновлён!')
       setError('')
       setTimeout(() => setSuccess(''), 3000) // Скрыть сообщение через 3 секунды
@@ -100,6 +101,7 @@ export default function UpdateProductContainer({ categories, styles, materials, 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     mutate({ data: formData, id: Number(id) })
+    setTimeout(() => redirect(`/admin/products`), 2000)
   }
 
   return (

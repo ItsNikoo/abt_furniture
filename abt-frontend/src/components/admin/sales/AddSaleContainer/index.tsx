@@ -46,7 +46,7 @@ export default function AddSaleContainer() {
     try {
       e.preventDefault()
       setIsLoading(true)
-      postSaleAction(formData)
+      await postSaleAction(formData)
       setFormData({
         title: '',
         description: '',

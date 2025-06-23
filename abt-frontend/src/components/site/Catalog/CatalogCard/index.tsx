@@ -3,12 +3,12 @@ import { Product } from '@/types'
 
 export default function CatalogCard({ product }: { product: Product }) {
   return (
-    <div className="bg-backgroundGray rounded-xl overflow-hidden">
+    <div className="overflow-hidden">
       {product.photos && (
-        <div className="relative rounded-2xl overflow-hidden">
+        <div className="relative overflow-hidden">
           {/* Обертка карусели с относительным позиционированием */}
-          <div className="relative pointer-events-auto m-5 rounded-2xl">
-            <PhotoCarousel photos={product.photos} withPreview={false}/>
+          <div className="relative pointer-events-auto m-5">
+            <PhotoCarousel photos={product.photos} />
 
             {/* Фиолетовый бейдж - теперь позиционируется относительно карусели */}
             <div

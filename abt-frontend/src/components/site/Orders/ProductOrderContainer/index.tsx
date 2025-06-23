@@ -1,6 +1,6 @@
 'use client'
 
-import { Product } from '@/types'
+import {Product} from '@/types'
 import {
   Dialog,
   DialogClose,
@@ -10,25 +10,24 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { useState } from 'react'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Button } from '@/components/ui/button'
+import {useState} from 'react'
+import {Input} from '@/components/ui/input'
+import {Label} from '@/components/ui/label'
+import {Button} from '@/components/ui/button'
 
-export default function ProductOrderContainer({ product }: { product: Product }) {
+export default function ProductOrderContainer({product}: { product: Product }) {
   const [isOpen, setIsOpen] = useState(false)
   const [formData, setFormData] = useState({
     product: product.title,
     phone: '',
-    comment: '',
-    file: null as File | null,
+    comment: ''
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [success, setSuccess] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const { name, value, files } = e.target
+    const {name, value, files} = e.target
     setFormData(prev => ({
       ...prev,
       [name]: files ? files[0] : value,
@@ -41,7 +40,6 @@ export default function ProductOrderContainer({ product }: { product: Product })
       console.log('Отправленные данные:', {
         phone: formData.phone,
         comment: formData.comment,
-        fileName: formData.file?.name || 'Файл не прикреплен',
         product: formData.product,
       })
       setIsSubmitting(true)
@@ -49,7 +47,6 @@ export default function ProductOrderContainer({ product }: { product: Product })
       setFormData({
         phone: '',
         comment: '',
-        file: null,
         product: product.title,
       })
 
@@ -66,7 +63,7 @@ export default function ProductOrderContainer({ product }: { product: Product })
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button className={'my-3 font-bold bg-mainPurple rounded-xl text-base hover:bg-mainPurpleHovered'}>Заказать
+        <Button className={'my-3 font-bold rounded-xl text-base'}>Заказать
           проект</Button>
       </DialogTrigger>
       <DialogContent>
@@ -91,27 +88,17 @@ export default function ProductOrderContainer({ product }: { product: Product })
             value={formData.comment}
             onChange={handleChange}
             className={'py-6'}
-            placeholder="Комментарий или пожелания..."
+            placeholder="Комментарий, пожелания или желаемые размеры..."
           />
-          <div className="space-y-2">
-            <Label className="text-gray-500 text-sm">
-              Отправьте эскиз или фото
-            </Label>
-            <Input
-              name="file"
-              onChange={handleChange}
-              type="file"
-              accept="image/*,.pdf"
-            />
-            {formData.file && (
-              <p className="text-sm text-gray-600">
-                Выбран файл: {formData.file.name}
-              </p>
-            )}
-          </div>
           {success && <p className={'text-green-400 text-sm'}>{success}</p>}
           {error && <p className={'text-red-400 text-sm'}>{error}</p>}
-          <div className="flex justify-end gap-2 mt-4">
+          <div className="flex flex-col gap-2">
+            <Button
+              type="submit"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? 'Отправка...' : 'Заказать проект'}
+            </Button>
             <DialogClose asChild>
               <Button
                 type="button"
@@ -121,13 +108,6 @@ export default function ProductOrderContainer({ product }: { product: Product })
                 Отмена
               </Button>
             </DialogClose>
-            <Button
-              type="submit"
-              className={'py-6 bg-mainPurple text-white text-md font-bold hover:bg-mainPurpleHovered'}
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? 'Отправка...' : 'Заказать проект'}
-            </Button>
           </div>
         </form>
       </DialogContent>

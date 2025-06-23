@@ -62,7 +62,7 @@ export default function MainOrderContainer() {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button className="mb-5 font-bold bg-mainPurple rounded-xl px-20 py-8 text-base hover:bg-mainPurpleHovered">
+        <Button className="mb-5 font-bold rounded-xl px-20 py-8 text-base">
           Заказать проект
         </Button>
       </DialogTrigger>
@@ -108,7 +108,13 @@ export default function MainOrderContainer() {
           </div>
           {success && <p className={'text-green-400 text-sm'}>{success}</p>}
           {error && <p className={'text-red-400 text-sm'}>{error}</p>}
-          <div className="flex justify-end gap-2 mt-4">
+          <div className="flex flex-col gap-2">
+            <Button
+              type="submit"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? 'Отправка...' : 'Заказать проект'}
+            </Button>
             <DialogClose asChild>
               <Button
                 type="button"
@@ -118,13 +124,6 @@ export default function MainOrderContainer() {
                 Отмена
               </Button>
             </DialogClose>
-            <Button
-              type="submit"
-              className={'py-6 bg-mainPurple text-white text-md font-bold hover:bg-mainPurpleHovered'}
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? 'Отправка...' : 'Заказать проект'}
-            </Button>
           </div>
         </form>
       </DialogContent>

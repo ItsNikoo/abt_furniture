@@ -45,7 +45,7 @@ export default function AddCategoryContainer() {
     try {
       e.preventDefault()
       setIsLoading(true)
-      postCategoryAction(formData)
+      await postCategoryAction(formData)
       setPreviewUrl(null)
       setSuccess('Категория успешно создана!')
       setTimeout(() => {

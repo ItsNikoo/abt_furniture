@@ -12,7 +12,7 @@ import { Check, ChevronsUpDown } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useEffect, useState } from 'react'
 import { Category, Material, ProductData, Style } from '@/types'
-import { addProduct } from '@/lib/api/products'
+import { postProduct } from '@/lib/api/products'
 import { queryClient } from '@/lib/react-query-client'
 import { useRouter } from 'next/navigation'
 
@@ -44,7 +44,7 @@ export default function AddProductContainer({ categories, styles, materials }: P
   const router = useRouter()
 
   const { mutate, isPending } = useMutation({
-    mutationFn: (data: ProductData) => addProduct(data),
+    mutationFn: (data: ProductData) => postProduct(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['products'] })
       setFormData({
@@ -102,7 +102,7 @@ export default function AddProductContainer({ categories, styles, materials }: P
     e.preventDefault()
     if (!formData.title.trim() || !formData.price || !formData.category || !formData.description ||
         !formData.productSlug) {
-      setError('Поля \'Название\', \'[productIdentificator]\', \'Цена\', \'Описание\' и \'Категория\' обязательны!')
+      setError('Поля \'Название\', \'slug\', \'Цена\', \'Описание\' и \'Категория\' обязательны!')
       return
     }
     console.log(formData)

@@ -32,7 +32,7 @@ export async function patchSale(id: string, data: SaleData) {
     formData.append('description', data.description)
     formData.append('link', data.link)
     if (data.photoFile) {
-      formData.append('photoFile', data.photoFile)
+      formData.append('photo_file', data.photoFile)
     }
 
     const res = await axios.patch(`${BASE_URL}/sales/${id}/`, formData, {
@@ -54,7 +54,7 @@ export async function postSale(data: SaleData) {
     formData.append('title', data.title)
     formData.append('description', data.description)
     if (data.photoFile) {
-      formData.append('photoFile', data.photoFile)
+      formData.append('photo_file', data.photoFile)
     }
     formData.append('link', data.link)
 

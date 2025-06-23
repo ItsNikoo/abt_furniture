@@ -2,8 +2,8 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
-from catalog.views import CategoryViewSet, StylesViewSet, ProductViewSet, MaterialViewSet, FirstPageViewSet, \
-    ProductsByCategorySlugView
+from catalog.views import CategoryViewSet, StylesViewSet, ProductViewSet, MaterialViewSet, FirstPageViewSet
+    #ProductsByCategorySlugView
 
 router = DefaultRouter()
 router.register(r'categories', CategoryViewSet, basename='category')

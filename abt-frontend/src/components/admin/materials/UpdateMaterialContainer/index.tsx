@@ -25,7 +25,7 @@ export default function UpdateMaterialContainer({ material }: { material: Materi
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault()
-      patchMaterialAction(material.id, materialQuery)
+      await patchMaterialAction(material.id, materialQuery)
       setSuccess('Материал успешно обновлен!')
       setMaterialQuery('')
       setTimeout(() => {

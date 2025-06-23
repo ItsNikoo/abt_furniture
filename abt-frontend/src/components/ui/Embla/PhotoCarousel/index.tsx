@@ -42,7 +42,7 @@ export default function PhotoCarousel({ photos }: { photos: Photo[] }) {
   }, [emblaApi])
 
   return (
-    <div className={`relative w-full max-w-4xl mx-auto group rounded-xl overflow-hidden`}>
+    <div className={`relative w-full max-w-4xl mx-auto group overflow-hidden aspect-video`}>
       {/* Карусель */}
       <div className="overflow-hidden" ref={emblaRef}>
         <div className="flex">

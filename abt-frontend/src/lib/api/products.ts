@@ -1,23 +1,27 @@
 import axios from 'axios'
-import { ProductData } from '@/types'
+import {ProductData} from '@/types'
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
 export async function fetchProducts() {
-  const res = await fetch(`${BASE_URL}/products/`)
+  const res = await fetch(`${BASE_URL}/products/`, {
+    next: {revalidate: 60},
+  })
   return res.json()
 }
 
 export async function fetchProductById(id: number) {
-  const res = await fetch(`${BASE_URL}/products/${id}/`)
+  const res = await fetch(`${BASE_URL}/products/${id}/`, {
+    next: {revalidate: 60},
+  })
   return res.json()
 }
 
-export async function addProduct(data: ProductData) {
+export async function postProduct(data: ProductData) {
   try {
     const formData = new FormData()
     formData.append('title', data.title)
-    formData.append('productSlug', data.productSlug)
+    formData.append('product_slug', data.productSlug)
     formData.append('price', data.price.toString())
     formData.append('description', data.description)
     formData.append('category', data.category)
@@ -28,7 +32,7 @@ export async function addProduct(data: ProductData) {
 
     if (data.photoFiles && data.photoFiles.length > 0) {
       data.photoFiles.forEach((file) => {
-        formData.append(`photoFiles`, file)
+        formData.append(`photo_files`, file)
       })
     }
 
@@ -37,16 +41,14 @@ export async function addProduct(data: ProductData) {
         'Content-Type': 'multipart/form-data',
       },
     })
-
-    console.log('Ответ от сервера:', response.data)
     return response.data
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      console.error('Ошибка при создании продукта:', error.response?.data || error.message)
-      throw new Error(error.response?.data?.message || 'Ошибка при создании продукта')
+      console.error('Ошибка при добавлении продукта:', error.response?.data || error.message)
+      throw new Error(error.response?.data?.message || 'Ошибка при добавлении продукта')
     }
     console.error('Неизвестная ошибка:', error)
-    throw new Error('Неизвестная ошибка при создании продукта')
+    throw new Error('Неизвестная ошибка при добавлении продукта')
   }
 }
 
@@ -54,7 +56,7 @@ export async function patchProduct(data: ProductData, id: number) {
   try {
     const formData = new FormData()
     formData.append('title', data.title)
-    formData.append('productSlug', data.productSlug)
+    formData.append('product_slug', data.productSlug)
     formData.append('price', data.price.toString())
     formData.append('description', data.description)
     formData.append('category', data.category)
@@ -65,13 +67,13 @@ export async function patchProduct(data: ProductData, id: number) {
 
     if (data.deletePhotos && data.deletePhotos.length > 0) {
       data.deletePhotos.forEach((url) => {
-        formData.append('deletePhotos', url) // Добавляем каждый URL отдельно
+        formData.append('delete_photos', url) // Добавляем каждый URL отдельно
       })
     }
 
     if (data.photoFiles && data.photoFiles.length > 0) {
       data.photoFiles.forEach((file) => {
-        formData.append(`photoFiles`, file)
+        formData.append(`photo_files`, file)
       })
     }
 

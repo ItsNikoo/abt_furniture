@@ -9,6 +9,7 @@ export default function MainGridContainer() {
   const { data, isLoading, isError } = useQuery({
     queryFn: fetchProducts,
     queryKey: ['products'],
+    refetchInterval: 1000,
   })
 
   if (isLoading) {
