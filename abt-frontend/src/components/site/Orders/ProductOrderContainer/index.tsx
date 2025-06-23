@@ -1,134 +1,116 @@
 'use client'
 
-import {Product} from "@/types";
+import {Product} from '@/types'
 import {
-    DialogContent,
-    DialogDescription,
-    Dialog,
-    DialogClose,
-    DialogTrigger,
-    DialogTitle, DialogHeader
-} from "@/components/ui/dialog";
-import {useState} from "react";
-import {Input} from "@/components/ui/input";
-import {Label} from "@/components/ui/label";
-import {Button} from "@/components/ui/button";
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
+import {useState} from 'react'
+import {Input} from '@/components/ui/input'
+import {Label} from '@/components/ui/label'
+import {Button} from '@/components/ui/button'
 
 export default function ProductOrderContainer({product}: { product: Product }) {
-    const [isOpen, setIsOpen] = useState(false);
-    const [formData, setFormData] = useState({
-        product: product.title,
+  const [isOpen, setIsOpen] = useState(false)
+  const [formData, setFormData] = useState({
+    product: product.title,
+    phone: '',
+    comment: ''
+  })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [success, setSuccess] = useState<string | null>(null)
+  const [error, setError] = useState<string | null>(null)
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const {name, value, files} = e.target
+    setFormData(prev => ({
+      ...prev,
+      [name]: files ? files[0] : value,
+    }))
+  }
+
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    try {
+      e.preventDefault()
+      console.log('Отправленные данные:', {
+        phone: formData.phone,
+        comment: formData.comment,
+        product: formData.product,
+      })
+      setIsSubmitting(true)
+      setSuccess('Ваш запрос успешно отправлен! Мы свяжемся с вами в ближайшее время.')
+      setFormData({
         phone: '',
         comment: '',
-        file: null as File | null
-    });
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const [success, setSuccess] = useState<string | null>(null);
-    const [error, setError] = useState<string | null>(null);
+        product: product.title,
+      })
 
-    function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-        const {name, value, files} = e.target;
-        setFormData(prev => ({
-            ...prev,
-            [name]: files ? files[0] : value
-        }));
+      setTimeout(() => {
+        setIsOpen(false)
+        setSuccess(null)
+        setIsSubmitting(false)
+      }, 3000)
+    } catch (e) {
+      setError(`Произошла ошибка при отправке данных. Пожалуйста, попробуйте еще раз. (${e})`)
     }
+  }
 
-    function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-        try {
-            e.preventDefault();
-            console.log('Отправленные данные:', {
-                phone: formData.phone,
-                comment: formData.comment,
-                fileName: formData.file?.name || 'Файл не прикреплен',
-                product: formData.product
-            });
-            setIsSubmitting(true);
-            setSuccess("Ваш запрос успешно отправлен! Мы свяжемся с вами в ближайшее время.");
-            setFormData({
-                phone: '',
-                comment: '',
-                file: null,
-                product: product.title
-            });
-
-            setTimeout(() => {
-                setIsOpen(false);
-                setSuccess(null);
-                setIsSubmitting(false);
-            }, 3000);
-        } catch (e) {
-            setError(`Произошла ошибка при отправке данных. Пожалуйста, попробуйте еще раз. (${e})`);
-        }
-    }
-
-    return (
-        <Dialog open={isOpen} onOpenChange={setIsOpen}>
-            <DialogTrigger asChild>
-                <Button className={'my-3 font-bold bg-mainPurple rounded-xl text-base hover:bg-mainPurpleHovered'}>Заказать проект</Button>
-            </DialogTrigger>
-            <DialogContent>
-                <DialogHeader>
-                    <DialogTitle className={'font-bold text-xl'}>{product.title}</DialogTitle>
-                    <DialogDescription>
-                        Напишите нам, если хотите этот проект.
-                    </DialogDescription>
-                </DialogHeader>
-                <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
-                    <Input
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleChange}
-                        className={'py-6'}
-                        placeholder="Введите номер телефона"
-                        type="tel"
-                        required
-                    />
-                    <Input
-                        name="comment"
-                        value={formData.comment}
-                        onChange={handleChange}
-                        className={'py-6'}
-                        placeholder="Комментарий или пожелания..."
-                    />
-                    <div className="space-y-2">
-                        <Label className="text-gray-500 text-sm">
-                            Отправьте эскиз или фото
-                        </Label>
-                        <Input
-                            name="file"
-                            onChange={handleChange}
-                            type="file"
-                            accept="image/*,.pdf"
-                        />
-                        {formData.file && (
-                            <p className="text-sm text-gray-600">
-                                Выбран файл: {formData.file.name}
-                            </p>
-                        )}
-                    </div>
-                    {success && <p className={'text-green-400 text-sm'}>{success}</p>}
-                    {error && <p className={'text-red-400 text-sm'}>{error}</p>}
-                    <div className='flex justify-end gap-2 mt-4'>
-                        <DialogClose asChild>
-                            <Button
-                                type="button"
-                                variant="secondary"
-                                disabled={isSubmitting}
-                            >
-                                Отмена
-                            </Button>
-                        </DialogClose>
-                        <Button
-                            type="submit"
-                            className={'py-6 bg-mainPurple text-white text-md font-bold hover:bg-mainPurpleHovered'}
-                            disabled={isSubmitting}
-                        >
-                            {isSubmitting ? 'Отправка...' : 'Заказать проект'}
-                        </Button>
-                    </div>
-                </form>
-            </DialogContent>
-        </Dialog>
-    )
+  return (
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <DialogTrigger asChild>
+        <Button className={'my-3 font-bold rounded-xl text-base'}>Заказать
+          проект</Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle className={'font-bold text-xl'}>{product.title}</DialogTitle>
+          <DialogDescription>
+            Напишите нам, если хотите этот проект.
+          </DialogDescription>
+        </DialogHeader>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <Input
+            name="phone"
+            value={formData.phone}
+            onChange={handleChange}
+            className={'py-6'}
+            placeholder="Введите номер телефона"
+            type="tel"
+            required
+          />
+          <Input
+            name="comment"
+            value={formData.comment}
+            onChange={handleChange}
+            className={'py-6'}
+            placeholder="Комментарий, пожелания или желаемые размеры..."
+          />
+          {success && <p className={'text-green-400 text-sm'}>{success}</p>}
+          {error && <p className={'text-red-400 text-sm'}>{error}</p>}
+          <div className="flex flex-col gap-2">
+            <Button
+              type="submit"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? 'Отправка...' : 'Заказать проект'}
+            </Button>
+            <DialogClose asChild>
+              <Button
+                type="button"
+                variant="secondary"
+                disabled={isSubmitting}
+              >
+                Отмена
+              </Button>
+            </DialogClose>
+          </div>
+        </form>
+      </DialogContent>
+    </Dialog>
+  )
 }

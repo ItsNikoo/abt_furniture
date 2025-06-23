@@ -3,6 +3,9 @@ from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.generics import ListAPIView
 from rest_framework.permissions import AllowAny
+from rest_framework.request import Request
+from rest_framework.response import Response
+from rest_framework.viewsets import ModelViewSet
 
 from catalog.models import Category, Style, Product, Material, FirstPage
 from catalog.serializers import CategorySerializer, StyleSerializer, ProductSerializer, MaterialSerializer, \
@@ -33,13 +36,13 @@ class CategoryViewSet(viewsets.ModelViewSet):
         return response
 
 
-class StylesViewSet(viewsets.ModelViewSet):
+class StylesViewSet(ModelViewSet):
     queryset = Style.objects.all()
     serializer_class = StyleSerializer
     lookup_field = 'id'
 
 
-class ProductViewSet(viewsets.ModelViewSet):
+class ProductViewSet(ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     lookup_field = 'id'
@@ -64,40 +67,28 @@ class ProductViewSet(viewsets.ModelViewSet):
         return response
 
     def get_queryset(self):
-        category_slug = self.request.query_params.get('category')
-        if category_slug:
-            return self.queryset.filter(category__category_slug=category_slug)
-        return self.queryset
-
-    def get_object(self):
-        # по умолчанию вернёт по pk
-        return super().get_object()
-
-    @action(detail=False, methods=["get"], url_path="category")
-    def by_category(self, request):
+        request: Request = self.request
         category_slug = request.query_params.get('category')
+        style = request.query_params.get('style')
+        material = request.query_params.get('material')
+        base_qs = Product.objects.all()
         if category_slug:
-            queryset = self.get_queryset()
-            serializer = self.get_serializer(queryset, many=True)
-            return Response(serializer.data)
-        return Response({"detail": "category param required"}, status=400)
+            base_qs = base_qs.filter(category__category_slug=category_slug)
 
-class ProductsByCategorySlugView(ListAPIView):
-    serializer_class = ProductSerializer
-    permission_classes = [AllowAny]
+        if style:
+            base_qs = base_qs.filter(style__style=style)
 
-    def get_queryset(self):
-        category_slug = self.kwargs['category_slug']
-        category = get_object_or_404(Category, category_slug=category_slug)
-        return Product.objects.filter(category=category)
+        if material:
+            base_qs = base_qs.filter(material__material=material)
+        return base_qs
 
 
-class MaterialViewSet(viewsets.ModelViewSet):
+class MaterialViewSet(ModelViewSet):
     queryset = Material.objects.all()
     serializer_class = MaterialSerializer
 
 
-class FirstPageViewSet(viewsets.ModelViewSet):
+class FirstPageViewSet(ModelViewSet):
     queryset = FirstPage.objects.all()
     serializer_class = FirstPageSerializer
     lookup_field = 'id'

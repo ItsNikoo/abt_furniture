@@ -134,8 +134,8 @@ class ProductSerializer(serializers.ModelSerializer):
             if file.size > 5 * 1024 * 1024:
                 raise serializers.ValidationError(f"Файл {file.name} превышает 5 МБ.")
             # Проверка расширения файла
-            if not file.name.lower().endswith(('.png', '.jpg', '.jpeg')):
-                raise serializers.ValidationError(f"Файл {file.name} должен быть в формате PNG, JPG или JPEG.")
+            if not file.name.lower().endswith(('.png', '.jpg', '.jpeg', 'webp')):
+                raise serializers.ValidationError(f"Файл {file.name} должен быть в формате PNG, JPG, WEBP или JPEG.")
         return value
 
     def validate_title(self, value):
