@@ -3,11 +3,21 @@ import {ProductData} from '@/types'
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
-export async function fetchProducts() {
-  const res = await fetch(`${BASE_URL}/products/`, {
-    next: {revalidate: 60},
-  })
-  return res.json()
+export async function fetchProducts(filters: { category?: string, style?: string, material?: string } = {}) {
+  try {
+    const params = new URLSearchParams()
+    if (filters.category) params.append('category', filters.category)
+    if (filters.style) params.append('style', filters.style)
+    if (filters.material) params.append('material', filters.material)
+
+    const url = `${BASE_URL}/products/?${params.toString()}`
+    const res = await fetch(url, {
+      next: {revalidate: 60},
+    })
+    return res.json()
+  }catch (error: any) {
+    throw new Error(`Непредвиденная ошибка в GET запросе продуктов`);
+  }
 }
 
 export async function fetchProductById(id: number) {

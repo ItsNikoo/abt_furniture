@@ -52,7 +52,7 @@ export default function PhotoCarousel({ photos }: { photos: Photo[] }) {
                 <Image
                   src={photo.photoUrl}
                   alt={`Фото ${photo.id}`}
-                  className="object-center"
+                  className="object-cover"
                   fill
                 />
               </div>
