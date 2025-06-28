@@ -7,7 +7,7 @@ import ProductCard from '@/components/admin/products/ProductCard'
 
 export default function MainGridContainer() {
   const { data, isLoading, isError } = useQuery({
-    queryFn: fetchProducts,
+    queryFn: () => fetchProducts(),
     queryKey: ['products'],
     refetchInterval: 1000,
   })

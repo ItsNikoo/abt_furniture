@@ -1,4 +1,3 @@
-import styles from './LeftPartOfFirstPage.module.css'
 import { advantagesList } from '@/lib/advantages-list'
 import Image from 'next/image'
 
@@ -9,8 +8,8 @@ interface Advantage {
 
 export default function LeftPartOfFirstPage() {
   return (
-    <div className={styles.Content}>
-      <h1 className="font-overpass font-extrabold text-6xl">ДЕЛАЕМ МЕБЕЛЬ С ДУШОЙ — КАК ДЛЯ СВОЕГО ДОМА</h1>
+    <div className='relative lg:w-1/2 py-20'>
+      <h1 className="font-overpass font-extrabold text-6xl mb-3">ДЕЛАЕМ МЕБЕЛЬ С ДУШОЙ — КАК ДЛЯ СВОЕГО ДОМА</h1>
       <p className="text-xl">Мы не просто производим мебель — мы создаем уютные пространства, в которых хочется
         жить.</p>
       <p className="text-xl">Мы воплощаем вашу идею в реальность и сопровождаем вас на каждом этапе: начиная от

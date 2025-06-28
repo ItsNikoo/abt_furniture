@@ -1,9 +1,7 @@
-import ContentWrapper from '@/app/(site)/layout'
+import Contacts from "@/components/site/Contacts";
 
 export default function ContactsPage() {
   return (
-    <ContentWrapper>
-      <h1>This is contacts page</h1>
-    </ContentWrapper>
+    <Contacts />
   )
 }

@@ -1,9 +1,7 @@
-import ContentWrapper from '@/app/(site)/layout'
+import AboutUs from "@/components/site/AboutUs"
 
 export default function AboutPage() {
   return (
-    <ContentWrapper>
-      <h1>This is about page</h1>
-    </ContentWrapper>
+    <AboutUs />
   )
 }
