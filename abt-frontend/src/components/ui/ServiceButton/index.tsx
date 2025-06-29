@@ -37,7 +37,7 @@ export default function ServiceButton() {
       onMouseLeave={() => setIsOpen(false)}
     >
       <Link
-        className="font-semibold"
+        className="font-semibold font-overpass"
         href='/services'
       >
         Услуги
@@ -51,7 +51,7 @@ export default function ServiceButton() {
             <Link
               key={index}
               href={service.link}
-              className="block px-4 py-2 text-gray-700 hover:bg-gray-50 transition-colors duration-300"
+              className="block px-4 py-2 text-gray-700 hover:bg-gray-50 transition-colors duration-300 font-overpass"
             >
               {service.title}
             </Link>

@@ -1,10 +1,4 @@
-import { Montserrat, Orelega_One, Overpass } from 'next/font/google'
-
-export const orelegaOne = Orelega_One({
-  weight: ['400'],
-  subsets: ['latin', 'cyrillic'],
-  variable: '--font-orelega-one',
-})
+import { Montserrat, Overpass } from 'next/font/google'
 
 export const montserrat = Montserrat({
   weight: ['400', '500', '700'],

@@ -8,13 +8,13 @@ interface Advantage {
 
 export default function LeftPartOfFirstPage() {
   return (
-    <div className='relative lg:w-1/2 py-20'>
-      <h1 className="font-overpass font-extrabold text-6xl mb-3">ДЕЛАЕМ МЕБЕЛЬ С ДУШОЙ — КАК ДЛЯ СВОЕГО ДОМА</h1>
-      <p className="text-xl">Мы не просто производим мебель — мы создаем уютные пространства, в которых хочется
+    <div className='relative lg:w-1/2 sm:py-20 py-10'>
+      <h1 className="font-extrabold sm:text-6xl mb-3 text-4xl">ДЕЛАЕМ МЕБЕЛЬ С ДУШОЙ — КАК ДЛЯ СВОЕГО ДОМА</h1>
+      <p className="sm:text-xl font-montserrat mb-2">Мы не просто производим мебель — мы создаем уютные пространства, в которых хочется
         жить.</p>
-      <p className="text-xl">Мы воплощаем вашу идею в реальность и сопровождаем вас на каждом этапе: начиная от
+      <p className="sm:text-xl font-montserrat mb-2">Мы воплощаем вашу идею в реальность и сопровождаем вас на каждом этапе: начиная от
         замера и заканчивая установкой</p>
-      <div className="grid grid-cols-2">
+      <div className="sm:grid sm:grid-cols-2 flex flex-col gap-3 mt-10">
         {advantagesList.map((advantage: Advantage, index) => (
           <div key={index} className="flex items-center gap-3 py-3 pr-5">
             <div
@@ -27,7 +27,7 @@ export default function LeftPartOfFirstPage() {
                 className="text-white"
               />
             </div>
-            <p className="text-base">{advantage.title}</p>
+            <p className="sm:text-base font-montserrat text-sm">{advantage.title}</p>
           </div>
         ))}
       </div>

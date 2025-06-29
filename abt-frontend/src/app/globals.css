@@ -117,11 +117,12 @@
 
     body {
         @apply bg-background text-foreground;
+        font-family: var(--font-montserrat), serif, sans-serif;
     }
 }
 
-.font-orelega-one {
-    font-family: var(--font-orelega-one), serif;
+.font-montserrat {
+    font-family: var(--font-montserrat), Serif, sans-serif;
 }
 
 .font-overpass {
@@ -137,14 +138,14 @@
         @apply bg-background text-foreground;
     }
 
-    /*.font-montserrat {*/
-    /*    font-family: var(--font-montserrat);*/
-    /*}*/
+    .font-montserrat {
+        font-family: var(--font-montserrat);
+    }
     .font-overpass {
         font-family: var(--font-overpass), serif;
     }
 
     div, p {
-        font-family: var(--font-overpass), serif;
+        font-family: var(--font-montserrat), serif;
     }
 }

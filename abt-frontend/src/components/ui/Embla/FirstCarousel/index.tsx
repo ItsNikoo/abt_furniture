@@ -7,6 +7,7 @@ import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { Sale } from '@/types'
 import Link from 'next/link'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 export default function FirstCarousel({ slides }: { slides: Sale[] }) {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [Autoplay({ delay: 4000 })]) // Луп и автопрокрутка
@@ -43,34 +44,34 @@ export default function FirstCarousel({ slides }: { slides: Sale[] }) {
   }, [emblaApi])
 
   return (
-    <div className="relative mx-auto max-w-[80%]">
+    <div className="relative mx-auto max-w-[95%] sm:max-w-[90%] lg:max-w-[80%]">
       {/* Контейнер для карусели */}
       <div className="embla">
-        <div className="embla__viewport overflow-hidden my-5 rounded-xl shadow-xl" ref={emblaRef}>
+        <div className="embla__viewport overflow-hidden my-3 sm:my-5 rounded-lg sm:rounded-xl shadow-lg sm:shadow-xl" ref={emblaRef}>
           <div className="embla__container flex">
             {slides && slides.map((slide) => (
               <div key={slide.id} className="embla__slide flex-[0_0_100%] min-w-0 ">
-                <div className="flex flex-row">
-                  <div className="w-1/2 flex flex-col items-center justify-between pt-5 pb-10 px-3">
-                    <h1 className="text-5xl font-overpass font-extrabold text-center">{slide.title}</h1>
-                    <div className="flex flex-col items-center">
+                <div className="flex flex-col sm:flex-row">
+                  <div className="w-full sm:w-1/2 flex flex-col items-center justify-between pt-3 sm:pt-5 pb-5 sm:pb-10 px-2 sm:px-3">
+                    <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-overpass font-extrabold text-center">{slide.title}</h1>
+                    <div className="flex flex-col items-center mt-4 sm:mt-0">
                       <Link
                         href={slide.link}
-                        className="rounded-full bg-mainPurple p-2 w-10 h-10 flex items-center justify-center hover:bg-mainPurpleHovered"
+                        className="rounded-full bg-mainPurple p-1.5 sm:p-2 w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center hover:bg-mainPurpleHovered"
                         target="_blank"
                         rel="noopener noreferrer">
                         <Image
                           src="/star.svg"
                           alt="Star icon"
-                          width={32}
-                          height={32}
-                          className="object-contain"
+                          width={24}
+                          height={24}
+                          className="sm:w-8 sm:h-8 object-contain"
                         />
                       </Link>
-                      <p className="mt-2 text-gray-400 font-montserrat">{slide.description}</p>
+                      <p className="mt-2 text-sm sm:text-base text-gray-400 font-montserrat text-center px-2">{slide.description}</p>
                     </div>
                   </div>
-                  <div className="w-1/2 h-[550px] bg-gray-400">
+                  <div className="w-full sm:w-1/2 h-[250px] sm:h-[350px] md:h-[450px] lg:h-[550px] bg-gray-400">
                     <Link href={slide.link}
                           target="_blank"
                           rel="noopener noreferrer">
@@ -91,11 +92,11 @@ export default function FirstCarousel({ slides }: { slides: Sale[] }) {
         </div>
 
         {/* Точки навигации */}
-        <div className="mt-4 flex justify-center gap-2">
+        <div className="mt-2 sm:mt-4 flex justify-center gap-1.5 sm:gap-2">
           {slides.map((_, index) => (
             <button
               key={index}
-              className={`h-3 w-3 rounded-full ${
+              className={`h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full ${
                 index === selectedIndex ? 'bg-mainPurple' : 'bg-gray-300'
               }`}
               onClick={() => scrollTo(index)}
@@ -105,32 +106,20 @@ export default function FirstCarousel({ slides }: { slides: Sale[] }) {
         </div>
       </div>
 
-      {/* Кнопки навигации вне контейнера embla */}
+      {/* Кнопки навигации вне контейнера embla - скрываем на мобильных */}
       <Button
-        className="absolute left-[-50px] top-1/2 -translate-y-1/2 bg-mainPurple p-2 w-10 h-10 hover:bg-mainPurpleHovered"
+        className="hidden sm:flex absolute left-[-30px] lg:left-[-50px] top-1/2 -translate-y-1/2 bg-mainPurple p-2 w-8 h-8 lg:w-10 lg:h-10 hover:bg-mainPurpleHovered transition-colors duration-200 items-center justify-center shadow-lg"
         onClick={scrollPrev}
         aria-label="Предыдущий слайд"
       >
-        <Image
-          src="/arrow-left.svg"
-          alt="Назад"
-          width={32}
-          height={32}
-          className="object-contain"
-        />
+        <ChevronLeft className="w-5 h-5 lg:w-6 lg:h-6 text-white" />
       </Button>
       <Button
-        className="absolute right-[-50px] top-1/2 -translate-y-1/2 bg-mainPurple p-2 w-10 h-10 hover:bg-mainPurpleHovered"
+        className="hidden sm:flex absolute right-[-30px] lg:right-[-50px] top-1/2 -translate-y-1/2 bg-mainPurple p-2 w-8 h-8 lg:w-10 lg:h-10 hover:bg-mainPurpleHovered transition-colors duration-200 items-center justify-center shadow-lg"
         onClick={scrollNext}
         aria-label="Следующий слайд"
       >
-        <Image
-          src="/arrow-right.svg"
-          alt="Вперед"
-          width={32}
-          height={32}
-          className="object-contain"
-        />
+        <ChevronRight className="w-5 h-5 lg:w-6 lg:h-6 text-white" />
       </Button>
     </div>
   )

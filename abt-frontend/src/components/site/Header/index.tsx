@@ -56,7 +56,7 @@ export default function Header() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="font-semibold text-sm xl:text-base hover:text-black"
+                  className="font-semibold text-sm xl:text-base hover:text-black font-overpass"
                 >
                   {link.label}
                 </Link>
@@ -112,7 +112,7 @@ export default function Header() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="font-semibold hover:text-black"
+                className="font-semibold hover:text-black font-overpass"
               >
                 {link.label}
               </Link>
@@ -142,7 +142,7 @@ export default function Header() {
                     <Link
                       key={link.href}
                       href={link.href}
-                      className="font-semibold py-3 border-b border-gray-100 last:border-b-0 hover:text-black"
+                      className="font-semibold py-3 border-b border-gray-100 last:border-b-0 hover:text-black font-overpass"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       {link.label}

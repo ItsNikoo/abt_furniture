@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import { montserrat, orelegaOne } from './fonts'
+import {montserrat, overpass} from './fonts'
 
 export const metadata: Metadata = {
   title: 'АБТ - мебель для кухни',
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ru">
-    <body className={`${orelegaOne.variable} ${montserrat.variable} antialiased`}>
+    <body className={`${overpass.variable} ${montserrat.variable} antialiased`}>
     {children}
     </body>
     </html>

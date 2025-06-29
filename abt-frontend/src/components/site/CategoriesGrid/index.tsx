@@ -8,8 +8,8 @@ export default function CategoriesGrid({ promise }: { promise: Promise<Category[
 
   return (
     <>
-      <h1 className="text-5xl font-extrabold text-center my-10">Каталог продукции</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
+      <h1 className="sm:text-5xl text-3xl font-extrabold text-center my-10">Каталог продукции</h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 sm:gap-8 gap-4">
         {categories.map((category) => (
           <Link key={category.id} href={`/catalog/${category.categorySlug}`}>
             <div

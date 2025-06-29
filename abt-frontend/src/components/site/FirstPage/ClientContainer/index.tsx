@@ -56,13 +56,13 @@ export default function ClientContainer() {
             }
                         `}
           >
-            <h2 className="text-xl font-bold">{item.title}</h2>
+            <h2 className="text-xl font-bold font-montserrat">{item.title}</h2>
             <div
               className={`overflow-hidden transition-all duration-300 ease-in-out ${
                 isActive ? 'max-h-[200px] opacity-100 mt-2' : 'max-h-0 opacity-0'
               }`}
             >
-              <p className="text-base leading-relaxed">{item.description}</p>
+              <p className="text-base leading-relaxed font-montserrat">{item.description}</p>
             </div>
           </div>
         )
