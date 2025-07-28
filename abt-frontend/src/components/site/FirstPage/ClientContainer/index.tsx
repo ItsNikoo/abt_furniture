@@ -16,8 +16,8 @@ const data = [
   },
   {
     id: 2,
-    title: 'Подтверждение заказа с менеджером',
-    description: 'Менеджер ответит на все вопросы, уточнит сроки, поможет доукомплектовать заказ при необходимости и подтвердит адрес доставки. ',
+    title: 'Подтверждение заказа',
+    description: 'Менеджер ответит на все вопросы, уточнит сроки, поможет доукомплектовать заказ при необходимости и подтвердит адрес доставки.',
   },
   {
     id: 3,
@@ -39,7 +39,7 @@ export default function ClientContainer() {
   }
 
   return (
-    <div className="flex flex-row gap-8 items-end min-h-[250px] pb-[10px]">
+    <div className="flex flex-row gap-2 items-start min-h-[320px] pb-[10px]">
       {data.map((item: Props) => {
         const isActive = clicked === item.id
         return (
@@ -47,19 +47,16 @@ export default function ClientContainer() {
             key={item.id}
             onClick={() => handleClick(item.id)}
             className={`
-                            flex flex-col flex-1 px-[20px] py-[15px] rounded-2xl cursor-pointer
-                            transition-all duration-300 ease-in-out min-h-[10vh] shadow-md justify-center
-                            ${
-              isActive
-              ? 'bg-mainPurple text-white -translate-y-4 '
-              : 'bg-white text-black hover:bg-gray-50'
-            }
-                        `}
+              flex flex-col flex-1 px-[20px] py-[15px] rounded-2xl cursor-pointer
+              transition-all duration-300 ease-in-out shadow-md
+              ${isActive ? 'bg-mainPurple text-white' : 'bg-white text-black hover:bg-gray-50'}
+            `}
+            style={{ minHeight: '85px' }} // Фиксированная минимальная высота для всех карточек
           >
             <h2 className="text-xl font-bold font-montserrat">{item.title}</h2>
             <div
               className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                isActive ? 'max-h-[200px] opacity-100 mt-2' : 'max-h-0 opacity-0'
+                isActive ? 'max-h-[250px] opacity-100 mt-2' : 'max-h-0 opacity-0'
               }`}
             >
               <p className="text-base leading-relaxed font-montserrat">{item.description}</p>

@@ -112,11 +112,11 @@ export default function Howto() : ReactNode {
 	return (
 		<div className="relative mt-[10px] px-4 md:px-[50px] lg:px-[100px] py-[30px] flex flex-col gap-6 min-h-[80vh] z-[1] before:content-[''] before:absolute before:top-0 before:left-0 before:w-full before:h-full before:bg-[url('/background_image.webp')] before:bg-no-repeat before:bg-center before:bg-cover before:opacity-20 before:z-[-1]">
 			{/* Header */}
-			<div className="text-center mb-8 sm:mb-12">
-				<h1 className="text-mainPurple font-extrabold font-overpass text-2xl sm:text-3xl md:text-4xl lg:text-5xl mb-4">
+			<div className="mb-8 sm:mb-12">
+				<h1 className="text-mainPurple font-extrabold text-2xl sm:text-3xl md:text-4xl mb-4">
 					Как совершить заказ
 				</h1>
-				<p className="text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed max-w-3xl mx-auto">
+				<p className="text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed">
 					Простой и понятный процесс заказа мебели от выбора до установки. Мы
 					сопровождаем вас на каждом этапе для получения идеального результата.
 				</p>
@@ -149,7 +149,7 @@ export default function Howto() : ReactNode {
 
 									{/* Content */}
 									<div className="flex-1">
-										<h3 className="text-mainPurple font-bold font-overpass text-lg sm:text-xl lg:text-2xl mb-2 sm:mb-3">
+										<h3 className="text-mainPurple font-bold text-lg sm:text-xl lg:text-2xl mb-2 sm:mb-3">
 											{step.title}
 										</h3>
 										<p className="text-sm sm:text-base lg:text-lg text-gray-700 leading-relaxed mb-4 sm:mb-6">

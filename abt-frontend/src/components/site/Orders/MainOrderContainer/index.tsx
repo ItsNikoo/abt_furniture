@@ -63,7 +63,7 @@ export default function MainOrderContainer() {
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button
-          className="mb-5 font-bold rounded-xl px-4 py-4 text-sm w-full sm:w-auto sm:px-8 sm:py-6 sm:text-base md:px-12 md:py-7 lg:px-20 lg:py-8 lg:text-lg"
+          className="bg-mainPurple font-bold rounded-xl px-4 py-4 text-sm w-full sm:w-auto sm:px-8 sm:py-6 sm:text-base md:px-15 md:py-7"
         >
           Заказать проект
         </Button>

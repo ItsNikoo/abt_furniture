@@ -54,7 +54,11 @@
 
         --chart-5: 27 87% 67%;
 
-        --radius: 0.5rem
+        --radius: 0.5rem;
+
+        --font-montserrat: 'Montserrat', sans-serif;
+
+        --font-notosans: 'Noto Sans', sans-serif;
     }
 
     .dark {
@@ -117,35 +121,14 @@
 
     body {
         @apply bg-background text-foreground;
-        font-family: var(--font-montserrat), serif, sans-serif;
-    }
-}
-
-.font-montserrat {
-    font-family: var(--font-montserrat), Serif, sans-serif;
-}
-
-.font-overpass {
-    font-family: var(--font-overpass), serif;
-}
-
-@layer base {
-    * {
-        @apply border-border;
-    }
-
-    body {
-        @apply bg-background text-foreground;
+        font-family: var(--font-montserrat), var(--font-notosans), sans-serif;
     }
 
     .font-montserrat {
-        font-family: var(--font-montserrat);
-    }
-    .font-overpass {
-        font-family: var(--font-overpass), serif;
+        font-family: var(--font-montserrat), sans-serif;
     }
 
-    div, p {
-        font-family: var(--font-montserrat), serif;
+    .font-notosans {
+        font-family: var(--font-notosans), sans-serif;
     }
 }

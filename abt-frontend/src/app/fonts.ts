@@ -1,13 +1,13 @@
-import { Montserrat, Overpass } from 'next/font/google'
+import {Montserrat, Noto_Sans} from 'next/font/google'
 
 export const montserrat = Montserrat({
-  weight: ['400', '500', '700'],
+  weight: ['400', '500', '700', '800', '900'],
   subsets: ['latin', 'cyrillic'],
   variable: '--font-montserrat',
 })
 
-export const overpass = Overpass({
-  weight: ['400', '500', '600', '700'],
+export const notosans = Noto_Sans({
+  weight: ['400', '500', '600', '700', '800', '900'],
   subsets: ['latin', 'cyrillic'],
-  variable: '--font-overpass',
+  variable: '--font-notosans',
 })
