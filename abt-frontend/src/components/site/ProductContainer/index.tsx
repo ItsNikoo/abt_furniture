@@ -4,7 +4,7 @@ import ProductOrderContainer from '@/components/site/Orders/ProductOrderContaine
 
 export default function ProductContainer({ product }: { product: Product }) {
   return (
-    <div className="flex flex-col lg:flex-row gap-3 sm:gap-5 mt-5 sm:mt-10">
+    <div className="flex flex-col h-[75vh] lg:flex-row gap-3 sm:gap-5 mt-5 sm:mt-10">
       <div className={'w-full lg:w-1/2'}>
         {product.photos && <ProductPhotoCarousel photos={product.photos}/>}
       </div>
