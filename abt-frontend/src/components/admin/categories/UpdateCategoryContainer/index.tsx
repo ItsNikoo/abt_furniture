@@ -17,6 +17,7 @@ import { Label } from '@/components/ui/label'
 import { Category, CategoryData } from '@/types'
 import Image from 'next/image'
 import { patchCategoryAction } from '@/actions/categories'
+import Cookies from "js-cookie"
 
 export default function UpdateCategoryContainer({ category }: { category: Category }) {
   const [isOpen, setIsOpen] = useState(false)
@@ -35,7 +36,8 @@ export default function UpdateCategoryContainer({ category }: { category: Catego
     try {
       e.preventDefault()
       setIsLoading(true)
-      patchCategoryAction(category.id, formData)
+      const token = Cookies.get('token')
+      await patchCategoryAction(category.id, formData, token as string)
       setPreviewUrl(null)
       setSuccess('Категория успешно изменена')
       setTimeout(() => {
@@ -64,7 +66,7 @@ export default function UpdateCategoryContainer({ category }: { category: Catego
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="ghost" size="icon">
+        <Button variant="ghost" size="icon" className="hover:bg-mainPurple text-black hover:text-white">
           <Pencil className="h-4 w-4"/>
         </Button>
       </DialogTrigger>

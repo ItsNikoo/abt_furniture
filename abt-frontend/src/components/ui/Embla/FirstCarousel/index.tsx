@@ -53,7 +53,7 @@ export default function FirstCarousel({ slides }: { slides: Sale[] }) {
               <div key={slide.id} className="embla__slide flex-[0_0_100%] min-w-0 ">
                 <div className="flex flex-col sm:flex-row">
                   <div className="w-full sm:w-1/2 flex flex-col items-center justify-between pt-3 sm:pt-5 pb-5 sm:pb-10 px-2 sm:px-3">
-                    <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-overpass font-extrabold text-center">{slide.title}</h1>
+                    <h1 className="text-2xl md:text-3xl lg:text-4xl font-overpass font-extrabold text-center">{slide.title}</h1>
                     <div className="flex flex-col items-center mt-4 sm:mt-0">
                       <Link
                         href={slide.link}
@@ -92,11 +92,11 @@ export default function FirstCarousel({ slides }: { slides: Sale[] }) {
         </div>
 
         {/* Точки навигации */}
-        <div className="mt-2 sm:mt-4 flex justify-center gap-1.5 sm:gap-2">
+        <div className="mt-2 sm:mt-4 flex justify-center gap-1">
           {slides.map((_, index) => (
             <button
               key={index}
-              className={`h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full ${
+              className={`h-2 w-2 rounded-full ${
                 index === selectedIndex ? 'bg-mainPurple' : 'bg-gray-300'
               }`}
               onClick={() => scrollTo(index)}

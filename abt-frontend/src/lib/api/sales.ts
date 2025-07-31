@@ -13,9 +13,15 @@ export async function fetchSales() {
   }
 }
 
-export async function deleteSale(id: string) {
+export async function deleteSale(id: string, token: string) {
   try {
-    const res = await axios.delete(`${BASE_URL}/sales/${id}/`)
+    const res = await axios.delete(`${BASE_URL}/sales/${id}/`,{
+      headers: {
+        Authorization: `Token ${token}`,
+        'Content-Type': 'application/json',
+      },
+      withCredentials: true,
+    })
     if (res.status !== 204) {
       throw new Error('Ошибка при удалении акции')
     }
@@ -25,7 +31,7 @@ export async function deleteSale(id: string) {
   }
 }
 
-export async function patchSale(id: string, data: SaleData) {
+export async function patchSale(id: string, data: SaleData, token: string) {
   try {
     const formData = new FormData()
     formData.append('title', data.title)
@@ -37,18 +43,24 @@ export async function patchSale(id: string, data: SaleData) {
 
     const res = await axios.patch(`${BASE_URL}/sales/${id}/`, formData, {
       headers: {
+        Authorization: `Token ${token}`,
         'Content-Type': 'multipart/form-data',
       },
+      withCredentials: true,
     })
 
     return res.data
   } catch (error) {
-    console.error('Ошибка при обновлении акции:', error)
+    if (axios.isAxiosError(error)) {
+      console.error('Axios error:', error.response?.data || error.message)
+    } else {
+      console.error('Unknown error:', error)
+    }
     throw new Error('Не удалось обновить акцию')
   }
 }
 
-export async function postSale(data: SaleData) {
+export async function postSale(data: SaleData, token: string) {
   try {
     const formData = new FormData()
     formData.append('title', data.title)
@@ -60,8 +72,10 @@ export async function postSale(data: SaleData) {
 
     const res = await axios.post(`${BASE_URL}/sales/`, formData, {
       headers: {
+        Authorization: `Token ${token}`,
         'Content-Type': 'multipart/form-data',
       },
+      withCredentials: true,
     })
     return res.data
   } catch (error) {

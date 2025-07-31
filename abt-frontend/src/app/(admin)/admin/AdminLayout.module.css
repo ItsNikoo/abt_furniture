@@ -2,10 +2,18 @@
     margin: 30px 100px;
 }
 
+.Header{
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ccc;
+    gap: 20px;
+}
+
 .Title {
     font-size: 24px;
     font-weight: bold;
-    margin-bottom: 20px;
 }
 
 .Container {

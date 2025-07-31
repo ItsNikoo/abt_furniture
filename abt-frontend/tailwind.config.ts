@@ -52,8 +52,7 @@ export default {
         },
         mainPurple: '#6F63BA',
         mainPurpleHovered: '#5A4F9C',
-        mainOrange: '#E59820',
-        mainOrangeHovered: '#C67A1F',
+        mainGray: '#262626',
         backgroundGray: '#F9F9F9',
       },
       borderRadius: {

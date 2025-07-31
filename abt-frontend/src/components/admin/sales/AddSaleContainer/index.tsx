@@ -15,6 +15,7 @@ import { useState } from 'react'
 import { SaleData } from '@/types'
 import { postSaleAction } from '@/actions/sales'
 import Image from 'next/image'
+import Cookies from "js-cookie";
 
 export default function AddSaleContainer() {
   const [formData, setFormData] = useState<SaleData>({
@@ -46,7 +47,8 @@ export default function AddSaleContainer() {
     try {
       e.preventDefault()
       setIsLoading(true)
-      await postSaleAction(formData)
+      const token = Cookies.get('token')
+      await postSaleAction(formData, token as string)
       setFormData({
         title: '',
         description: '',

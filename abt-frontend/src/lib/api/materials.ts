@@ -1,27 +1,62 @@
 import axios from 'axios'
-import { Material } from '@/types'
+import {Material} from '@/types'
+import Cookies from 'js-cookie'
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
+// GET запрос
 export async function fetchMaterials(): Promise<Material[]> {
-  const response = await fetch(`${BASE_URL}/materials/`)
+  const response = await fetch(`${BASE_URL}/materials/`,
+    {
+      credentials: 'include', // важно для передачи и получения куков
+    }
+  )
   if (!response.ok) {
     throw new Error('Ошибка при загрузке материалов')
   }
   return response.json()
 }
 
-export async function deleteMaterial(id: number) {
-  const res = await axios.delete(`${BASE_URL}/materials/${id}/`)
+// DELETE запрос
+export async function deleteMaterial(id: number, token: string) {
+  const res = await axios.delete(`${BASE_URL}/materials/${id}/`, {
+    headers: {
+      Authorization: `Token ${token}`,
+      'Content-Type': 'application/json',
+    },
+    withCredentials: true,
+  })
   return res.status
 }
 
-export async function postMaterial(material: string) {
-  const res = await axios.post(`${BASE_URL}/materials/`, { material: material })
+
+// POST запрос
+export async function postMaterial(material: string, token: string) {
+  const res = await axios.post(
+    `${BASE_URL}/materials/`,
+    {material},
+    {
+      headers: {
+        Authorization: `Token ${token}`,
+        'Content-Type': 'application/json',
+      },
+      withCredentials: true,
+    }
+  )
   return res.status
 }
 
-export async function patchMaterial(id: number, material: string) {
-  const res = await axios.patch(`${BASE_URL}/materials/${id}/`, { material: material })
+// PATCH запрос
+export async function patchMaterial(id: number, material: string, token: string) {
+  const res = await axios.patch(`${BASE_URL}/materials/${id}/`,
+    {material},
+    {
+      headers: {
+        Authorization: `Token ${token}`,
+        'Content-Type': 'application/json',
+      },
+      withCredentials: true,
+    }
+  )
   return res.status
 }

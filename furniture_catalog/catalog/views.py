@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.generics import ListAPIView
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
@@ -13,10 +13,19 @@ from catalog.serializers import CategorySerializer, StyleSerializer, ProductSeri
 from services.yandex_storage import delete_from_yandex_storage
 from logging import getLogger
 
+from knox.views import LoginView as KnoxLoginView
+from rest_framework.authtoken.serializers import AuthTokenSerializer
+from rest_framework.permissions import AllowAny
+from knox.models import AuthToken
+from rest_framework.views import APIView
+from rest_framework import permissions
+
+
 
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
     lookup_field = "id"
 
     def destroy(self, request, *args, **kwargs):
@@ -39,12 +48,14 @@ class CategoryViewSet(viewsets.ModelViewSet):
 class StylesViewSet(ModelViewSet):
     queryset = Style.objects.all()
     serializer_class = StyleSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
     lookup_field = 'id'
 
 
 class ProductViewSet(ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
     lookup_field = 'id'
 
     def destroy(self, request, *args, **kwargs):
@@ -86,11 +97,14 @@ class ProductViewSet(ModelViewSet):
 class MaterialViewSet(ModelViewSet):
     queryset = Material.objects.all()
     serializer_class = MaterialSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    lookup_field = 'id'
 
 
 class FirstPageViewSet(ModelViewSet):
     queryset = FirstPage.objects.all()
     serializer_class = FirstPageSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
     lookup_field = 'id'
 
     def destroy(self, request, *args, **kwargs):
@@ -106,3 +120,31 @@ class FirstPageViewSet(ModelViewSet):
                 logger.error(f"Ошибка при удалении файла: {str(e)}")
 
         return response
+
+
+# knox views
+
+class LoginAPI(KnoxLoginView):
+    permission_classes = (AllowAny,)
+
+    def post(self, request, format=None):
+        serializer = AuthTokenSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        _, token = AuthToken.objects.create(user)
+        return Response({
+            'token': token,
+            'user': {
+                'id': user.id,
+                'username': user.username,
+            }
+        })
+
+class UserAPI(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        return Response({
+            'id': request.user.id,
+            'username': request.user.username
+        })

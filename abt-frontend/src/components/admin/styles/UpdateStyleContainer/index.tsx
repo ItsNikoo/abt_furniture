@@ -16,6 +16,7 @@ import { Input } from '@/components/ui/input'
 import { useState } from 'react'
 import { Style } from '@/types'
 import { patchStyleAction } from '@/actions/styles'
+import Cookies from 'js-cookie'
 
 export default function UpdateMaterialContainer({ style }: { style: Style }) {
   const [isOpen, setIsOpen] = useState(false)
@@ -25,7 +26,8 @@ export default function UpdateMaterialContainer({ style }: { style: Style }) {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault()
-      patchStyleAction(style.id, styleQuery)
+      const token = Cookies.get('token')
+      await patchStyleAction(style.id, styleQuery, token as string)
       setSuccess('Стиль успешно обновлен!')
       setTimeout(() => {
         setIsOpen(false)
@@ -39,7 +41,7 @@ export default function UpdateMaterialContainer({ style }: { style: Style }) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="ghost" size="icon">
+        <Button variant="ghost" size="icon" className="hover:bg-mainPurple hover:text-white">
           <Pencil className="h-4 w-4"/>
         </Button>
       </DialogTrigger>

@@ -5,6 +5,8 @@ import { Button } from '@/components/ui/button'
 import Image from 'next/image'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { deleteProduct } from '@/lib/api/products'
+import Cookies from "js-cookie"
+import {Trash2} from "lucide-react";
 
 interface ProductCardProps {
   product: Product;
@@ -14,7 +16,13 @@ export default function ProductCard({ product }: ProductCardProps) {
   const queryClient = useQueryClient()
 
   const deleteMutation = useMutation({
-    mutationFn: (id: number) => deleteProduct(id),
+    mutationFn: (id: number) => {
+      const token = Cookies.get('token')
+      if (!token) {
+        throw new Error('Нет токена авторизации. Войдите заново.')
+      }
+      return deleteProduct(id, token)
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['products'] })
     },
@@ -25,52 +33,70 @@ export default function ProductCard({ product }: ProductCardProps) {
   })
 
   const handleDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation() // Предотвращаем всплытие события к Link
+    e.stopPropagation()
     deleteMutation.mutate(product.id)
   }
 
   return (
-    <Card
-      className="shadow-lg hover:shadow-xl transition-shadow duration-300 rounded-lg border border-gray-200"
-    >
-      <CardHeader className="flex flex-row items-center justify-between p-4 rounded-t-lg">
+    <Card className="rounded-xl shadow-xl border-0 bg-white/90 hover:shadow-2xl transition-shadow duration-300">
+      <CardHeader className="flex flex-row items-start justify-between p-4 pb-2 rounded-t-xl">
         <div>
-          <h1 className="font-bold text-xl text-gray-800">{product.title}</h1>
-          <p className="text-base text-gray-600">{product.productSlug}</p>
-          <p className="text-sm text-gray-500">{product.category}</p>
+          <h1 className="font-bold text-lg md:text-xl mb-1">{product.title}</h1>
+          <p className="text-xs text-gray-400 mb-1">{product.productSlug}</p>
+          <p className="text-sm text-gray-600">{product.category}</p>
         </div>
-        <Button size="icon" className="bg-gray-200 hover:bg-gray-300"
-                onClick={handleDelete}>
-          <Image src="/trash-svgrepo-com.svg" alt="Удалить" width={20} height={20}/>
+        <Button
+          size="icon"
+          variant="ghost"
+          className='hover:bg-mainPurple hover:text-white'
+          onClick={handleDelete}
+          aria-label="Удалить продукт"
+        >
+          <Trash2 className="h-4 w-4" />
         </Button>
       </CardHeader>
-      <CardContent className="p-4">
-        <Link href={`/admin/products/${product.id}`} key={product.id}>
+      <CardContent className="p-4 pt-2">
+        <Link href={`/admin/products/${product.id}`} key={product.id} className="block hover:no-underline">
           <div className="flex flex-col gap-2">
-            <p className="text-xl font-medium ">
-              Цена: <span className="font-semibold">{product.price} ₽</span>
-            </p>
-            <p className="text-md text-gray-600">
-              Материал: {product.material}
-            </p>
-            <p>
-              Стиль: {product.style ?? 'не определен'}
-            </p>
-            <p className="text-md text-gray-600">
-              Описание: {product.description}
-            </p>
-            {product.photos && product.photos.length > 0 && (
-              <div className="mt-2">
-                <p className="text-sm text-gray-600 mb-3">Фотографии:</p>
-                <div className="grid grid-cols-3 gap-3">
-                  {product.photos.map((photo: Photo, index) => (
+            <div className="flex flex-col md:flex-row md:items-center gap-3">
+              {product.photos && product.photos.length > 0 && (
+                <div className="flex-shrink-0">
+                  <Image
+                    src={product.photos[0].photoUrl}
+                    width={160}
+                    height={160}
+                    alt={`${product.title} главное фото`}
+                    className="w-40 h-40 object-cover rounded-lg border border-gray-100 bg-gray-50"
+                  />
+                </div>
+              )}
+              <div className="flex-1">
+                <p className="text-base font-medium mb-1">
+                  Цена: <span className="font-semibold">{product.price} ₽</span>
+                </p>
+                <p className="text-sm text-gray-600 mb-1">
+                  Материал: <span className="font-semibold">{product.material}</span>
+                </p>
+                <p className="text-sm text-gray-600 mb-1">
+                  Стиль: <span className="font-semibold">{product.style ?? 'не определен'}</span>
+                </p>
+                <p className="text-sm text-gray-600 mb-1">
+                  Описание: <span className="font-normal">{product.description}</span>
+                </p>
+              </div>
+            </div>
+            {product.photos && product.photos.length > 1 && (
+              <div className="mt-3">
+                <p className="text-xs text-gray-500 mb-2">Доп. фото:</p>
+                <div className="grid grid-cols-3 gap-2">
+                  {product.photos.slice(1).map((photo: Photo, index) => (
                     <Image
                       key={index}
                       src={photo.photoUrl}
-                      width={200}
-                      height={200}
-                      alt={`${product.title} Фото ${index + 1}`}
-                      className="w-32 h-32 object-cover rounded-md"
+                      width={80}
+                      height={80}
+                      alt={`${product.title} Фото ${index + 2}`}
+                      className="w-20 h-20 object-cover rounded-md border border-gray-100 bg-gray-50"
                     />
                   ))}
                 </div>
@@ -78,7 +104,6 @@ export default function ProductCard({ product }: ProductCardProps) {
             )}
           </div>
         </Link>
-
       </CardContent>
     </Card>
   )

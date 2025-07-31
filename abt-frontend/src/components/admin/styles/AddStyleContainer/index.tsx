@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/dialog'
 import { Label } from '@/components/ui/label'
 import { postStyleAction } from '@/actions/styles'
+import Cookies from 'js-cookie'
 
 export default function AddStyleContainer() {
   const [isOpen, setIsOpen] = useState(false)
@@ -23,7 +24,8 @@ export default function AddStyleContainer() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault()
-      postStyleAction(style)
+      const token = Cookies.get('token')
+      await postStyleAction(style, token as string)
       setSuccess('Стиль успешно добавлен!')
       setTimeout(() => {
         setIsOpen(false)

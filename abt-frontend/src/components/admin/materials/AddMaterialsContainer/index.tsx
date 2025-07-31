@@ -14,6 +14,7 @@ import {
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { postMaterialAction } from '@/actions/materials'
+import Cookies from 'js-cookie'
 
 export default function AddMaterialsContainer() {
   const [material, setMaterial] = useState<string>('')
@@ -23,7 +24,8 @@ export default function AddMaterialsContainer() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault()
-      postMaterialAction(material)
+      const token = Cookies.get('token')
+      postMaterialAction(material, token as string)
       setSuccess('Материал успешно добавлен!')
       setMaterial('')
       setTimeout(() => {

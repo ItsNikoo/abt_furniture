@@ -1,5 +1,6 @@
 import axios from 'axios'
 import {ProductData} from '@/types'
+import axiosInstance from "@/lib/axios";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
@@ -15,7 +16,7 @@ export async function fetchProducts(filters: { category?: string, style?: string
       next: {revalidate: 60},
     })
     return res.json()
-  }catch (error: any) {
+  } catch (error: any) {
     throw new Error(`Непредвиденная ошибка в GET запросе продуктов`);
   }
 }
@@ -27,7 +28,7 @@ export async function fetchProductById(id: number) {
   return res.json()
 }
 
-export async function postProduct(data: ProductData) {
+export async function postProduct(data: ProductData, token: string) {
   try {
     const formData = new FormData()
     formData.append('title', data.title)
@@ -48,8 +49,10 @@ export async function postProduct(data: ProductData) {
 
     const response = await axios.post(`${BASE_URL}/products/`, formData, {
       headers: {
+        'Authorization': `Token ${token}`,
         'Content-Type': 'multipart/form-data',
       },
+      withCredentials: true,
     })
     return response.data
   } catch (error) {
@@ -62,7 +65,7 @@ export async function postProduct(data: ProductData) {
   }
 }
 
-export async function patchProduct(data: ProductData, id: number) {
+export async function patchProduct(data: ProductData, id: number, token: string) {
   try {
     const formData = new FormData()
     formData.append('title', data.title)
@@ -89,8 +92,10 @@ export async function patchProduct(data: ProductData, id: number) {
 
     const response = await axios.patch(`${BASE_URL}/products/${id}/`, formData, {
       headers: {
+        Authorization: `Token ${token}`,
         'Content-Type': 'multipart/form-data',
       },
+      withCredentials: true,
     })
 
     console.log('Ответ от сервера:', response.data)
@@ -105,12 +110,13 @@ export async function patchProduct(data: ProductData, id: number) {
   }
 }
 
-export async function deleteProduct(id: number) {
-  const response = await axios.delete(`${BASE_URL}/products/${id}/`)
+export async function deleteProduct(id: number, token: string) {
+  const response = await axios.delete(`${BASE_URL}/products/${id}/`, {
+    headers: {
+      Authorization: `Token ${token}`,
+      'Content-Type': 'application/json',
+    },
+    withCredentials: true,
+  })
   return response.status
-}
-
-export async function fetchProductsByCategory(categorySlug: string) {
-  const res = await axios.get(`${BASE_URL}/products/?category=${categorySlug}`)
-  return res.data
 }

@@ -1,3 +1,4 @@
+from datetime import timedelta
 from pathlib import Path
 from decouple import config
 
@@ -31,7 +32,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'corsheaders',
-    'catalog'
+    'catalog',
+    'knox',
 ]
 
 MIDDLEWARE = [
@@ -55,12 +57,21 @@ REST_FRAMEWORK = {
         'rest_framework.parsers.MultiPartParser',
         'rest_framework.parsers.FormParser',
     ),
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'knox.auth.TokenAuthentication',
+    ]
+}
+
+REST_KNOX = {
+    'TOKEN_TTL': timedelta(minutes=30),
 }
 
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
 ]
+
+CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = 'furniture_catalog.urls'
 

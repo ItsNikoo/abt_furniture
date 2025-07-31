@@ -15,6 +15,7 @@ import {
 } from '@/components/ui/dialog'
 import { Label } from '@/components/ui/label'
 import { postCategoryAction } from '@/actions/categories'
+import Cookies from "js-cookie";
 
 export default function AddCategoryContainer() {
   const [formData, setFormData] = useState<CategoryData>({
@@ -45,7 +46,8 @@ export default function AddCategoryContainer() {
     try {
       e.preventDefault()
       setIsLoading(true)
-      await postCategoryAction(formData)
+      const token = Cookies.get('token')
+      await postCategoryAction(formData, token as string)
       setPreviewUrl(null)
       setSuccess('Категория успешно создана!')
       setTimeout(() => {

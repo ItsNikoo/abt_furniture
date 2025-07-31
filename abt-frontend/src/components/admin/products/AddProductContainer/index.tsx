@@ -15,6 +15,7 @@ import { Category, Material, ProductData, Style } from '@/types'
 import { postProduct } from '@/lib/api/products'
 import { queryClient } from '@/lib/react-query-client'
 import { useRouter } from 'next/navigation'
+import Cookies from "js-cookie"
 
 interface Props {
   categories: Category[];
@@ -44,7 +45,13 @@ export default function AddProductContainer({ categories, styles, materials }: P
   const router = useRouter()
 
   const { mutate, isPending } = useMutation({
-    mutationFn: (data: ProductData) => postProduct(data),
+    mutationFn: (data: ProductData) => {
+      const token = Cookies.get('token')
+      if (!token) {
+        throw new Error('Нет токена авторизации. Войдите заново.')
+      }
+      return postProduct(data, token)
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['products'] })
       setFormData({

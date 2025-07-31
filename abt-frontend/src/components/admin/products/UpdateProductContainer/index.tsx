@@ -16,6 +16,7 @@ import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, Command
 import { cn } from '@/lib/utils'
 import { queryClient } from '@/lib/react-query-client'
 import Image from 'next/image'
+import Cookies from "js-cookie"
 
 interface Props {
   categories: Category[];
@@ -64,7 +65,13 @@ export default function UpdateProductContainer({ categories, styles, materials, 
   }, [data])
 
   const { mutate, isPending } = useMutation({
-    mutationFn: ({ data, id }: { data: ProductData; id: number }) => patchProduct(data, id),
+    mutationFn: ({ data, id }: { data: ProductData; id: number }) => {
+      const token = Cookies.get('token')
+      if (!token) {
+        throw new Error('Нет токена авторизации. Войдите заново.')
+      }
+      return patchProduct(data, id, token)
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['products'] })
       queryClient.refetchQueries({ queryKey: ['products'] })
