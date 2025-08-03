@@ -12,7 +12,7 @@ const steps = [
 		details: [
 			{
 				icon: Monitor,
-				text: "Онлайн-каталог – изучите коллекции на сайте, фильтруйте по стилю, размеру или цене",
+				text: "Онлайн-каталог – изучите коллекции на сайте, фильтруйте по стилю, материалу",
 			},
 			{
 				icon: Palette,
@@ -23,7 +23,7 @@ const steps = [
 				text: "Личное присутствие – посетите наш салон, чтобы увидеть мебель вживую",
 			},
 		],
-		note: "Наши менеджеры помогут с выбором и учтут все ваши пожелания",
+		note: "Абсолютно любой проект на нашем сайте можно переделать под себя. Просто свяжитесь с нами, и мы поможем адаптировать его под ваши нужды.",
 	},
 	{
 		id: 2,
@@ -110,7 +110,7 @@ const steps = [
 
 export default function Howto() : ReactNode {
 	return (
-		<div className="relative mt-[10px] px-4 md:px-[50px] lg:px-[100px] py-[30px] flex flex-col gap-6 min-h-[80vh] z-[1] before:content-[''] before:absolute before:top-0 before:left-0 before:w-full before:h-full before:bg-[url('/background_image.webp')] before:bg-no-repeat before:bg-center before:bg-cover before:opacity-20 before:z-[-1]">
+		<div className="relative mt-[10px] px-4 md:px-[50px] lg:px-[100px] py-[30px] flex flex-col gap-6 min-h-[80vh] z-[1] bg-white">
 			{/* Header */}
 			<div className="mb-8 sm:mb-12">
 				<h1 className="text-mainPurple font-extrabold text-2xl sm:text-3xl md:text-4xl mb-4">

@@ -36,7 +36,7 @@ export default function Header() {
 
   return (
     <ContentWrapper>
-      <div className="mt-4 md:mt-6">
+      <div>
         {/* Desktop Header (lg: ≥1024px) */}
         <div className="hidden lg:flex flex-row items-center justify-between max-w-[1400px] mx-auto py-3 gap-4">
           <Link href="/" className="flex-shrink-0 w-[300px] p-2">

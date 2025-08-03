@@ -10,7 +10,7 @@ interface ServiceProps{
 
 const services: ServiceProps[] = [
   {
-    title:"Дизайн проект",
+    title:"Дизайн-проект",
     link:"/services/design",
   },
   {

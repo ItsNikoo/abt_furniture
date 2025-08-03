@@ -68,3 +68,11 @@ export interface SaleData {
   photoFile: File | null;
   link: string;
 }
+
+export interface Service {
+  id: number;
+  title: string;
+  description: string;
+  link?: string;
+  image?: string;
+}

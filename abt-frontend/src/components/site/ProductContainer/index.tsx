@@ -10,8 +10,8 @@ export default function ProductContainer({ product }: { product: Product }) {
       </div>
       <div className="flex flex-col justify-center gap-3 sm:gap-5 w-full lg:w-1/2">
         <div>
-          <p className="text-gray-400 font-medium text-sm sm:text-base">{product.category}</p>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold">{product.title}</h1>
+          <p className="text-gray-400 text-sm sm:text-base">{product.category}</p>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-montserrat">{product.title}</h1>
           <ProductOrderContainer product={product}/>
         </div>
         <div className={'flex flex-wrap gap-1'}>

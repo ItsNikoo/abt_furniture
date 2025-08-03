@@ -3,18 +3,18 @@ import Link from "next/link";
 
 export default function Contacts() {
   return (
-    <div
-      className="relative mt-[10px] px-4 md:px-[50px] lg:px-[100px] py-[30px] flex flex-col gap-4 h-[80vh] z-[1] before:content-[''] before:absolute before:top-0 before:left-0 before:w-full before:h-full before:bg-[url('/background_image.webp')] before:bg-no-repeat before:bg-center before:bg-cover before:opacity-20 before:z-[-1]">
-      <div className="mb-6 sm:mb-8">
-        <h1 className='text-mainPurple font-extrabold text-3xl sm:text-3xl md:text-4xl mb-3'>
+    <div className="relative mt-[10px] px-4 md:px-[50px] lg:px-[100px] py-[30px] flex flex-col gap-6 min-h-[80vh] z-[1] bg-white">
+      {/* Header */}
+      <div className="mb-8 sm:mb-12">
+        <h1 className="text-mainPurple font-extrabold text-2xl sm:text-3xl md:text-4xl mb-4">
           Контакты нашей компании
         </h1>
-        <p className='text-sm sm:text-base md:text-[18px] text-gray-700 leading-relaxed'>
-          Мы всегда рады помочь Вам создать мебель Вашей мечты! Обращайтесь удобным способом –
-          ответим быстро и подробно проконсультируем.
+        <p className="text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed">
+          Мы всегда рады помочь Вам создать мебель Вашей мечты! Обращайтесь удобным способом – ответим быстро и подробно проконсультируем.
         </p>
       </div>
 
+      {/* Контактные карточки */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
         {/* Телефон */}
         <div

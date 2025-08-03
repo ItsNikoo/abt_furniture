@@ -1,56 +1,73 @@
-import styles from "@/components/site/Services/ServicesPage.module.css";
+import ContentWrapper from "@/components/ContentWrapper"
+import Image from "next/image"
+import Link from "next/link"
 
 export default function DesignPage() {
   return (
-    <div className={styles.Container}>
-      <div>
-        <h1 className='text-mainPurple font-extrabold font-overpass text-4xl mb-3'>Разработка
-          дизайн-проекта</h1>
-        <p className='text-[18px] mt-3'><span className='font-bold'>Дизайн корпусной мебели — это ключевой этап</span>,
-          который определяет не только
-          внешний вид
-          будущих изделий, но и
-          их
-          функциональность, удобство и гармоничное сочетание с интерьером вашего дома или офиса. Мы уделяем особое
-          внимание каждому проекту, чтобы создать мебель, которая будет радовать вас долгие годы.</p>
-        <p className='text-[18px] mt-3'>
-          Перед началом работы наши специалисты внимательно изучают особенности вашего помещения: размеры, планировку,
-          освещение, а также стиль интерьера и ваши личные предпочтения. Это позволяет разработать <span
-          className='font-bold'>индивидуальный
-          дизайн</span>, который подчеркивает уникальность вашего
-          пространства. Мы создаём подробные 3D-визуализации, чтобы вы могли увидеть будущую мебель со всех сторон и
-          внести необходимые коррективы ещё до начала производства.
-        </p>
-        <p className='text-[18px] mt-3'>
-          Вы можете выбрать любой вариант из имеющихся на нашем сайте или создать уникальный проект. В случае выбора
-          варианта с сайта мы пересчитаем его под вашу планировку.
-        </p>
-      </div>
-      <div>
-        <h3 className='text-mainPurple font-extrabold font-overpass text-3xl mb-3'>Особенности выбора
-          дизайна</h3>
-        <p className='text-[18px] mt-3'>Выбор дизайна корпусной мебели — это не просто подбор красивых форм и цветов.
-          Важно учитывать множество
-          факторов: назначение мебели, частоту её использования, особенности помещения и даже психологический комфорт.
-          Например, для маленьких комнат оптимальны светлые оттенки и компактные конструкции с продуманными системами
-          хранения, а для просторных гостиных — более массивные и выразительные модели. Также стоит обратить внимание на
-          сочетание материалов и фактур, чтобы мебель гармонично вписывалась в общий стиль интерьера и подчеркивала его
-          характер.</p>
+    <ContentWrapper>
+      <div className="relative min-h-[60vh] px-4 md:px-[50px] lg:px-[100px] py-[30px] flex flex-col gap-8 bg-white">
+        <div className="flex flex-col md:flex-row items-center gap-8">
+          <div className="w-full md:w-[350px] flex-shrink-0">
+            <div className="relative w-full h-56 md:h-[300px]">
+              <Image
+                src="/services_picture.png"
+                alt="Дизайн-проект"
+                fill={false}
+                width={800}
+                height={800}
+                className="rounded-xl object-cover w-full h-full"
+                style={{ width: "100%", height: "100%" }}
+                priority
+              />
+            </div>
+          </div>
+          <div className="flex-1">
+            <h1 className="font-extrabold text-2xl sm:text-3xl md:text-4xl mb-4">
+              Дизайн-проект
+            </h1>
+            <p className="text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed">
+              <span className="font-bold">Индивидуальный дизайн вашей мебели</span>
+              <br />
+              Перед началом работы мы разрабатываем подробный дизайн-проект,
+              учитывая особенности вашего помещения, стиль интерьера и личные
+              пожелания. Вы получите визуализацию будущей мебели в 3D, чтобы
+              заранее увидеть, как она впишется в пространство.
+            </p>
+            <p className="text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed mt-3">
+              <span className="font-bold">Поле для экспериментов</span>
+              <br />
+              Если вам понравилось что-то из нашего интернет-каталога, но вы
+              желаете поменять цвета или текстуру, это тоже возможно.
+            </p>
+          </div>
         </div>
-      <div>
-        <h3 className='text-mainPurple font-extrabold font-overpass text-3xl mb-3'>Помощь наших
-          специалистов</h3>
-        <p className='text-[18px] mt-3'>Наши опытные дизайнеры и проектировщики готовы сопровождать вас на каждом этапе
-          создания мебели — от первых эскизов до финальной установки. Мы внимательно выслушиваем ваши пожелания,
-          учитываем стиль жизни и особенности пространства, чтобы предложить оптимальные решения. Если вы не уверены в
-          выборе стиля или материалов, наши специалисты предложат актуальные тренды и проверенные варианты, которые
-          идеально подойдут именно вам.</p>
-        <p className='text-[18px] mt-3 font-bold'>Мы предлагаем вам более 1000 материалов и фактур на выбор, множество
-          разных
-          материалов для фасадов и большой спектр качественной фурнитуры, обеспечивающей комфорт.</p>
+        {/* CTA Section */}
+        <div className="mt-8 sm:mt-12 text-center">
+          <div className="bg-gradient-to-r from-mainPurple to-mainPurple/80 rounded-xl sm:rounded-2xl p-6 sm:p-8 lg:p-10 text-white shadow-xl">
+            <h3 className="font-bold text-xl sm:text-2xl lg:text-3xl mb-3 sm:mb-4">
+              Хотите индивидуальный дизайн-проект?
+            </h3>
+            <p className="text-sm sm:text-base lg:text-lg opacity-90 leading-relaxed mb-6 sm:mb-8 max-w-2xl mx-auto">
+              Оставьте заявку или свяжитесь с нами — мы бесплатно проконсультируем
+              и подготовим для вас уникальное решение!
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
+              <Link
+                href="/catalog"
+                className="bg-white text-mainPurple px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold hover:bg-gray-100 transition-colors duration-200 text-sm sm:text-base w-full sm:w-auto"
+              >
+                Смотреть каталог
+              </Link>
+              <Link
+                href="/contacts"
+                className="border-2 border-white text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold hover:bg-white hover:text-mainPurple transition-colors duration-200 text-sm sm:text-base w-full sm:w-auto"
+              >
+                Связаться с нами
+              </Link>
+            </div>
+          </div>
+        </div>
       </div>
-      <p className='text-gray-800'>*Для более детального уточнения перечня услуг и их стоимости рекомендуем связаться с
-        нами по телефону.</p>
-    </div>
-  )
+    </ContentWrapper>
+  );
 }

@@ -68,7 +68,7 @@ export default function FirstCarousel({ slides }: { slides: Sale[] }) {
                           className="sm:w-8 sm:h-8 object-contain"
                         />
                       </Link>
-                      <p className="mt-2 text-sm sm:text-base text-gray-400 font-montserrat text-center px-2">{slide.description}</p>
+                      <p className="mt-2 text-sm sm:text-base text-gray-400 text-center px-2">{slide.description}</p>
                     </div>
                   </div>
                   <div className="w-full sm:w-1/2 h-[250px] sm:h-[350px] md:h-[450px] lg:h-[550px] bg-gray-400">

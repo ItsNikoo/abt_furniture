@@ -53,13 +53,13 @@ export default function ClientContainer() {
             `}
             style={{ minHeight: '85px' }} // Фиксированная минимальная высота для всех карточек
           >
-            <h2 className="text-xl font-bold font-montserrat">{item.title}</h2>
+            <h2 className="font-montserrat font-bold text-xl">{item.title}</h2>
             <div
               className={`overflow-hidden transition-all duration-300 ease-in-out ${
                 isActive ? 'max-h-[250px] opacity-100 mt-2' : 'max-h-0 opacity-0'
               }`}
             >
-              <p className="text-base leading-relaxed font-montserrat">{item.description}</p>
+              <p className="text-base leading-relaxed">{item.description}</p>
             </div>
           </div>
         )

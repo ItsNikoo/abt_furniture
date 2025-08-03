@@ -115,8 +115,8 @@ function CatalogContent({categoriesPromise, stylesPromise, materialsPromise, sel
 
     return (
         <>
-            <div className='flex flex-col sm:flex-row sm:items-center gap-3'>
-                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold">Каталог</h1>
+            <div className='flex flex-col sm:flex-row sm:items-center gap-3 '>
+                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-6xl font-bold font-montserrat">Каталог</h1>
                 <Input
                     type="search"
                     placeholder="Поиск..."
@@ -125,7 +125,7 @@ function CatalogContent({categoriesPromise, stylesPromise, materialsPromise, sel
                     onChange={(e) => setQuery(e.target.value)}
                 />
             </div>
-            <ul className="flex flex-wrap sm:flex-row gap-4 sm:gap-8 font-medium text-sm sm:text-base mt-4 sm:mt-6">
+            <ul className="flex flex-wrap sm:flex-row gap-4 sm:gap-8 font-medium text-sm sm:text-base mt-2 sm:mt-4">
                 {categories.map((category) => (
                     <li key={category.id}>
                         <Link

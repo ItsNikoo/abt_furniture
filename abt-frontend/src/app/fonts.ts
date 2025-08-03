@@ -1,4 +1,4 @@
-import {Montserrat, Noto_Sans} from 'next/font/google'
+import {Montserrat, Inter} from 'next/font/google'
 
 export const montserrat = Montserrat({
   weight: ['400', '500', '700', '800', '900'],
@@ -6,8 +6,8 @@ export const montserrat = Montserrat({
   variable: '--font-montserrat',
 })
 
-export const notosans = Noto_Sans({
+export const inter = Inter({
   weight: ['400', '500', '600', '700', '800', '900'],
   subsets: ['latin', 'cyrillic'],
-  variable: '--font-notosans',
+  variable: '--font-inter',
 })

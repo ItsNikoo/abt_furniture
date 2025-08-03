@@ -20,8 +20,8 @@ export default function CatalogCard({ product }: { product: Product }) {
       )}
       <div className="flex flex-col gap-3 px-4 mb-2">
         <div>
-          <p className="text-gray-400 font-medium">{product.category}</p>
-          <h2 className="text-3xl font-bold">{product.title}</h2>
+          <p className="text-gray-400 text-sm">{product.category}</p>
+          <h2 className="text-3xl font-bold font-montserrat">{product.title}</h2>
         </div>
         <div className="flex flex-row gap-1.5">
           <p className="text-gray-400">Цена за погонный метр - </p>

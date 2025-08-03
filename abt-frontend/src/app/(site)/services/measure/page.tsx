@@ -1,64 +1,75 @@
+import ContentWrapper from "@/components/ContentWrapper";
 import styles from "@/components/site/Services/ServicesPage.module.css";
+import Image from "next/image";
 import Link from "next/link";
 
 export default function MeasurePage() {
   return (
-    <div className={styles.Container}>
-      <div>
-        <h1 className='text-mainPurple font-extrabold font-overpass text-4xl mb-3'>Замер помещения</h1>
-        <p className='text-[18px] mt-3'>
-          Точный замер помещения — отвественный шаг на пути к созданию идеальной мебели на заказ. От
-          правильности замеров зависит не только внешний вид будущей кухни или гардеробной, но и удобство её
-          использования, а также долговечность эксплуатации.
-        </p>
-      </div>
-      <div>
-        <h3 className='text-mainPurple font-extrabold font-overpass text-3xl mb-3'>Почему важно доверить замер
-          профессионалам?
-        </h3>
-        <p className='text-[18px] mt-3'>Если вы не уверены в точности собственных замеров, <span className='font-bold'>рекомендуем воспользоваться услугой профессионального
-          замера.</span> Наш опытный специалист приедет к вам домой, проведёт все необходимые измерения и учтёт
-          особенности
-          помещения, чтобы будущая мебель идеально вписалась в ваш интерьер.
-        </p>
-        <h4 className='text-red-700 font-bold text-xl mt-3'>ВАЖНО!</h4>
-        <p className='text-[18px]'>Замер рекомендуется проводить после завершения ремонта и в полностью освобождённом от
-          мебели помещении. Это позволит учесть все нюансы и избежать ошибок при проектировании.</p>
-      </div>
-      <div>
-        <h3 className='text-mainPurple font-extrabold font-overpass text-3xl mb-3'>Советы от наших
-          специалистов</h3>
-        <ul>
-          <li>
-            <div className='mb-3'>
-              <h4 className='text-xl font-semibold'> - Перед началом ремонта</h4>
-              <p className='text-[18px]'>Сделайте предварительный замер кухни самостоятельно и обязательно посетите один
-                из наших салонов. Это
-                поможет вам определиться с размерами и конфигурацией будущей мебели.
-              </p>
+    <ContentWrapper>
+      <div className="relative min-h-[60vh] px-4 md:px-[50px] lg:px-[100px] py-[30px] flex flex-col gap-8 bg-white">
+        <div className="flex flex-col md:flex-row items-center gap-8">
+          <div className="w-full md:w-[350px] flex-shrink-0">
+            <div className="relative w-full h-56 md:h-[300px]">
+              <Image
+                src="/services_picture.png"
+                alt="Замер помещения"
+                fill={false}
+                width={800}
+                height={800}
+                className="rounded-xl object-cover w-full h-full"
+                style={{ width: "100%", height: "100%" }}
+                priority
+              />
             </div>
-          </li>
-          <li>
-            <div className='mb-3'>
-              <h4 className='text-xl font-semibold'> - Выбор техники</h4>
-              <p className='text-[18px]'>Заранее определите, какая бытовая техника будет установлена на вашей кухне. Это
-                важно для правильного размещения мебели и коммуникаций.
-              </p>
+          </div>
+          <div className="flex-1">
+            <h1 className="font-extrabold text-2xl sm:text-3xl md:text-4xl mb-4">
+              Замер помещения
+            </h1>
+            <p className="text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed mb-4">
+              <span className="font-bold">Точный замер — залог идеальной мебели</span>
+              <br />
+              Наш специалист приедет, чтобы точно измерить
+              помещение, учесть все особенности стен, углов, выступов и
+              коммуникаций. Это гарантирует, что мебель встанет на своё место без
+              зазоров и перекосов.
+            </p>
+            <p className="text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed">
+              <span className="font-bold">Всё продумано до миллиметра</span>
+              <br />
+              Замер позволяет нам спланировать проект максимально точно — без
+              переделок и сюрпризов. Это важный этап, который обеспечивает плотную
+              посадку, надёжность конструкции и идеальную интеграцию в интерьер.
+            </p>
+          </div>
+        </div>
+        {/* CTA Section */}
+        <div className="mt-8 sm:mt-12 text-center">
+          <div className="bg-gradient-to-r from-mainPurple to-mainPurple/80 rounded-xl sm:rounded-2xl p-6 sm:p-8 lg:p-10 text-white shadow-xl">
+            <h3 className="font-bold text-xl sm:text-2xl lg:text-3xl mb-3 sm:mb-4">
+              Хотите вызвать замерщика?
+            </h3>
+            <p className="text-sm sm:text-base lg:text-lg opacity-90 leading-relaxed mb-6 sm:mb-8 max-w-2xl mx-auto">
+              Оставьте заявку или свяжитесь с нами — мы бесплатно проконсультируем
+              и согласуем удобное время для визита специалиста!
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
+              <Link
+                href="/catalog"
+                className="bg-white text-mainPurple px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold hover:bg-gray-100 transition-colors duration-200 text-sm sm:text-base w-full sm:w-auto"
+              >
+                Смотреть каталог
+              </Link>
+              <Link
+                href="/contacts"
+                className="border-2 border-white text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold hover:bg-white hover:text-mainPurple transition-colors duration-200 text-sm sm:text-base w-full sm:w-auto"
+              >
+                Связаться с нами
+              </Link>
             </div>
-          </li>
-          <li>
-            <div className='mb-3'>
-              <h4 className='text-xl font-semibold'> - Стыковка с дизайн-проектом</h4>
-              <p className='text-[18px]'>Вместе с нашим дизайнером составьте предварительный <Link href='/services/design' className='text-mainPurple font-bold'>дизайн-проект</Link> кухни или
-                предоставьте уже имеющийся. Такой проект понадобится вам для корректного проведения работ по электрике,
-                сантехнике и другим коммуникациям.
-              </p>
-            </div>
-          </li>
-        </ul>
+          </div>
+        </div>
       </div>
-      <p className='text-gray-800'>*Для более детального уточнения перечня услуг и их стоимости рекомендуем связаться с
-        нами по телефону.</p>
-    </div>
-  )
+    </ContentWrapper>
+  );
 }
