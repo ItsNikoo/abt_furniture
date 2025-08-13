@@ -4,8 +4,11 @@ import ReactQueryProvider from './react-query-provider'
 import Footer from "@/components/site/Footer"
 
 export const metadata: Metadata = {
-  title: 'АБТ кухни',
+  title: 'АБТ кухни ',
   description: 'Сгенерировано с помощью create next app',
+  icons: {
+    icon: "/favicon.ico",
+  }
 }
 
 export default function SiteLayout({ children }: { children: React.ReactNode }) {

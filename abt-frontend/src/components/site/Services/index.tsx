@@ -25,7 +25,7 @@ function ServiceCard({service}: { service: Service }) {
         )}
       </div>
       <div className="flex-1 p-0 md:p-8 flex flex-col justify-center">
-        <h3 className="font-extrabold text-xl md:text-2xl mb-2 text-mainPurple">{service.title}</h3>
+        <h3 className="font-extrabold text-xl md:text-2xl mb-2">{service.title}</h3>
         <p className="text-base mb-2">{service.description}</p>
         {service.link && (
           <Link
