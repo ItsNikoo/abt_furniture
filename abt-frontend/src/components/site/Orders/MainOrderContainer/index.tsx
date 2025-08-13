@@ -11,9 +11,10 @@ import {
 } from '@/components/ui/dialog'
 import {Button} from '@/components/ui/button'
 import {Input} from '@/components/ui/input'
-import {useState} from 'react'
+import {startTransition, useState} from 'react'
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
+import {postContactAction} from "@/actions/contact";
 
 export default function MainOrderContainer() {
   const [isOpen, setIsOpen] = useState(false)
@@ -84,35 +85,43 @@ export default function MainOrderContainer() {
     return isValid
   }
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
 
     if (!validateForm()) {
-      return
+      return;
     }
 
-    try {
-      console.log('Отправленные данные:', {
-        phone: formData.phone,
-        comment: formData.comment,
-        consent: consent
-      })
-      setIsSubmitting(true)
-      setSuccess('Ваш запрос успешно отправлен! Мы свяжемся с вами в ближайшее время.')
-      setFormData({
-        phone: '',
-        comment: '',
-      })
-      setConsent(false)
+    startTransition(async () => {
+      try {
+        console.log('Отправленные данные:', {
+          phone: formData.phone,
+          comment: formData.comment,
+          consent: consent,
+        });
+        setIsSubmitting(true);
+        const response = await postContactAction(formData.phone, formData.comment, consent);
+        setSuccess('Ваш запрос успешно отправлен! Мы свяжемся с вами в ближайшее время.');
+        setFormData({
+          phone: '',
+          comment: '',
+        });
+        setConsent(false);
 
-      setTimeout(() => {
-        setIsOpen(false)
-        setSuccess(null)
-        setIsSubmitting(false)
-      }, 3000)
-    } catch (e) {
-      setError(`Произошла ошибка при отправке данных. Пожалуйста, попробуйте еще раз. (${e})`)
-    }
+        setTimeout(() => {
+          setIsOpen(false);
+          setSuccess(null);
+          setIsSubmitting(false);
+        }, 3000);
+      } catch (e) {
+        setError(
+          e instanceof Error
+            ? `Произошла ошибка при отправке данных: ${e.message}`
+            : 'Неизвестная ошибка. Пожалуйста, попробуйте еще раз.'
+        );
+        setIsSubmitting(false);
+      }
+    });
   }
 
   return (

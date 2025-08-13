@@ -58,3 +58,13 @@ class FirstPage(models.Model):
 
     class Meta:
         verbose_name = "Карусель на первой странице"
+
+class ContactRequest(models.Model):
+    phone = models.CharField(max_length=20)
+    comment = models.TextField(blank=True)
+    product = models.CharField(max_length=200, blank=True)  # Поле для продукта
+    consent = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Request from {self.phone} for {self.product or 'no product'}"

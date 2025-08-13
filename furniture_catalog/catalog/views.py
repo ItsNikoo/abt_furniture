@@ -1,5 +1,6 @@
+from django.core.mail import send_mail
 from django.shortcuts import render, get_object_or_404
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.generics import ListAPIView
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
@@ -7,9 +8,11 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
-from catalog.models import Category, Style, Product, Material, FirstPage
+from catalog.forms import ContactForm
+from catalog.models import Category, Style, Product, Material, FirstPage, ContactRequest
 from catalog.serializers import CategorySerializer, StyleSerializer, ProductSerializer, MaterialSerializer, \
     FirstPageSerializer
+from furniture_catalog import settings
 from services.yandex_storage import delete_from_yandex_storage
 from logging import getLogger
 
@@ -148,3 +151,51 @@ class UserAPI(APIView):
             'id': request.user.id,
             'username': request.user.username
         })
+
+
+class ContactAPI(APIView):
+    permission_classes = [permissions.AllowAny]  # Разрешить доступ всем
+
+    def post(self, request):
+        form = ContactForm(request.data)
+        if form.is_valid():
+            phone = form.cleaned_data['phone']
+            comment = form.cleaned_data['comment']
+            product = form.cleaned_data['product']
+            consent = form.cleaned_data['consent']
+
+            # Сохранение в базу
+            contact_request = ContactRequest.objects.create(
+                phone=phone,
+                comment=comment,
+                product=product,
+                consent=consent
+            )
+
+            # Получаем IP-адрес для отслеживания
+            ip_address = request.META.get('REMOTE_ADDR', 'Unknown')
+
+            # Формируем сообщение
+            subject = 'Новое сообщение с сайта АБТ'
+            message = f'''
+            Новое сообщение:
+            Номер телефона: {phone}
+            Комментарий: {comment or 'Не указан'}
+            Продукт: {product or 'Не указан'}
+            Согласие на обработку данных: {'Да' if consent else 'Нет'}
+            Время создания: {contact_request.created_at}
+            IP-адрес: {ip_address}
+            '''
+            from_email = settings.DEFAULT_FROM_EMAIL
+            recipient_list = ['perminovni@gmail.com']
+
+            try:
+                send_mail(subject, message, from_email, recipient_list)
+                return Response({'message': 'Сообщение успешно отправлено'}, status=status.HTTP_200_OK)
+            except Exception as e:
+                logger = getLogger(__name__)
+                logger.error(f"Ошибка при отправке письма: {str(e)}")
+                return Response({'error': f'Ошибка при отправке письма: {str(e)}'},
+                                status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        return Response({'errors': form.errors}, status=status.HTTP_400_BAD_REQUEST)

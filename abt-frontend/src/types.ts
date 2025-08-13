@@ -76,3 +76,10 @@ export interface Service {
   link?: string;
   image?: string;
 }
+
+export interface Contact {
+  phone: string;
+  comment: string;
+  consent: boolean;
+  product? : string;
+}
