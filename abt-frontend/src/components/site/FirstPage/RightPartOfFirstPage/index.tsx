@@ -3,8 +3,9 @@
 import {Input} from "@/components/ui/input"
 import {Button} from "@/components/ui/button"
 import {Label} from "@/components/ui/label"
-import {useState} from "react";
+import {startTransition, useState} from "react";
 import {Checkbox} from "@/components/ui/checkbox";
+import {postContactAction} from "@/actions/contact";
 
 export default function RightPartOfFirstPage() {
   const [formData, setFormData] = useState({
@@ -21,6 +22,7 @@ export default function RightPartOfFirstPage() {
   })
 
   function handleCommentChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setSuccess(null);
     setFormData(prev => ({
       ...prev,
       comment: e.target.value
@@ -30,6 +32,7 @@ export default function RightPartOfFirstPage() {
   function handlePhoneChange(e: React.ChangeEvent<HTMLInputElement>) {
     const value = e.target.value;
     const cleanedValue = value.replace(/\D/g, '');
+    setSuccess(null)
 
     let formattedValue = '';
     if (cleanedValue.length > 0) {
@@ -84,25 +87,33 @@ export default function RightPartOfFirstPage() {
       return
     }
 
-    try {
-      setIsSubmitting(true)
-      setError(null)
+    setIsSubmitting(true);
 
-      console.log("Отправленные данные:", formData, "Согласие:", consent)
+    startTransition(async () => {
+      try {
+        console.log('Отправленные данные:', {
+          phone: formData.phone,
+          comment: formData.comment,
+          consent: consent,
+        });
+        const response = await postContactAction(formData.phone, formData.comment, consent);
+        setSuccess('Ваш запрос успешно отправлен! Мы свяжемся с вами в ближайшее время.');
+        setFormData({
+          phone: '',
+          comment: '',
+        });
+        setConsent(false);
+      } catch (e) {
+        setError(
+          e instanceof Error
+            ? `Произошла ошибка при отправке данных: ${e.message}`
+            : 'Неизвестная ошибка. Пожалуйста, попробуйте еще раз.'
+        );
+      }finally {
+        setIsSubmitting(false);
+      }
+    })
 
-      setSuccess('Ваша заявка успешно отправлена! Мы свяжемся с вами в ближайшее время.')
-      setFormData({ phone: '', comment: '' })
-      setConsent(false)
-
-      // Автоматически сбрасываем сообщение об успехе через 5 секунд
-      setTimeout(() => {
-        setSuccess(null)
-      }, 5000)
-    } catch (err) {
-      setError('Произошла ошибка при отправке формы. Пожалуйста, попробуйте еще раз.')
-    } finally {
-      setIsSubmitting(false)
-    }
   }
 
   return (
@@ -175,7 +186,6 @@ export default function RightPartOfFirstPage() {
                 {error}
               </p>
             )}
-
             <Button
               type="submit"
               className="py-4 sm:py-[25px] text-sm sm:text-base font-semibold mt-2 bg-mainPurple hover:bg-mainPurple/90"

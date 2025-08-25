@@ -7,6 +7,7 @@ const navigationLinks = [
   { href: "/contacts", label: "Контакты" },
   { href: "/about", label: "О компании" },
   { href: "/howto", label: "Как совершить заказ" },
+  { href: "/privacy-policy", label: "Политика конфиденциальности" },
 ];
 
 export default function Footer() {

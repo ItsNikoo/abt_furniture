@@ -92,6 +92,8 @@ export default function MainOrderContainer() {
       return;
     }
 
+    setIsSubmitting(true);
+
     startTransition(async () => {
       try {
         console.log('Отправленные данные:', {
@@ -99,7 +101,6 @@ export default function MainOrderContainer() {
           comment: formData.comment,
           consent: consent,
         });
-        setIsSubmitting(true);
         const response = await postContactAction(formData.phone, formData.comment, consent);
         setSuccess('Ваш запрос успешно отправлен! Мы свяжемся с вами в ближайшее время.');
         setFormData({
@@ -107,12 +108,6 @@ export default function MainOrderContainer() {
           comment: '',
         });
         setConsent(false);
-
-        setTimeout(() => {
-          setIsOpen(false);
-          setSuccess(null);
-          setIsSubmitting(false);
-        }, 3000);
       } catch (e) {
         setError(
           e instanceof Error
@@ -181,7 +176,7 @@ export default function MainOrderContainer() {
             </div>
           </div>
 
-          {success && <p className={'text-green-400 text-sm'}>{success}</p>}
+          {success && <p className={'text-green-600 text-sm'}>{success}</p>}
           {error && <p className={'text-red-400 text-sm'}>{error}</p>}
 
           <div className="flex flex-col gap-2">

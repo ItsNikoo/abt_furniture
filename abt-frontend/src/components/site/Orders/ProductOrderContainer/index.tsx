@@ -10,11 +10,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import {useState} from 'react'
+import {startTransition, useState} from 'react'
 import {Input} from '@/components/ui/input'
 import {Label} from '@/components/ui/label'
 import {Button} from '@/components/ui/button'
 import {Checkbox} from "@/components/ui/checkbox";
+import {postContactAction} from "@/actions/contact";
 
 export default function ProductOrderContainer({product}: { product: Product }) {
   const [isOpen, setIsOpen] = useState(false)
@@ -96,29 +97,34 @@ export default function ProductOrderContainer({product}: { product: Product }) {
       return
     }
 
-    try {
-      setIsSubmitting(true)
-      setError(null)
+    setIsSubmitting(true);
 
-      console.log("Отправленные данные:", formData, "Согласие:", consent)
+    startTransition(async () => {
+      try {
+        console.log('Отправленные данные:', {
+          phone: formData.phone,
+          comment: formData.comment,
+          consent: consent,
+        });
+        const response = await postContactAction(formData.phone, formData.comment, consent, formData.product);
+        setSuccess('Ваш запрос успешно отправлен! Мы свяжемся с вами в ближайшее время.');
+        setFormData({
+          phone: '',
+          comment: '',
+          product: product.title
+        });
+        setConsent(false);
+      } catch (e) {
+        setError(
+          e instanceof Error
+            ? `Произошла ошибка при отправке данных: ${e.message}`
+            : 'Неизвестная ошибка. Пожалуйста, попробуйте еще раз.'
+        );
+      }finally {
+        setIsSubmitting(false);
+      }
+    })
 
-      setSuccess('Ваша заявка успешно отправлена! Мы свяжемся с вами в ближайшее время.')
-      setFormData({
-        phone: '',
-        comment: '',
-        product: product.title
-      })
-      setConsent(false)
-
-      // Автоматически сбрасываем сообщение об успехе через 5 секунд
-      setTimeout(() => {
-        setSuccess(null)
-      }, 5000)
-    } catch (err) {
-      setError('Произошла ошибка при отправке формы. Пожалуйста, попробуйте еще раз.')
-    } finally {
-      setIsSubmitting(false)
-    }
   }
 
   return (
@@ -178,7 +184,7 @@ export default function ProductOrderContainer({product}: { product: Product }) {
               )}
             </div>
           </div>
-          {success && <p className={'text-green-400 text-sm'}>{success}</p>}
+          {success && <p className={'text-green-700 text-sm'}>{success}</p>}
           {error && <p className={'text-red-400 text-sm'}>{error}</p>}
           <div className="flex flex-col gap-2">
             <Button
