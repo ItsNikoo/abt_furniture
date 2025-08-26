@@ -1,3 +1,6 @@
+'use client'
+
+import { motion } from "framer-motion";
 import {Phone, MessageCircle, Mail, Clock, ExternalLink, UserRound} from "lucide-react";
 import Link from "next/link";
 
@@ -5,19 +8,26 @@ export default function Contacts() {
   return (
     <div className="relative mt-[10px] px-4 md:px-[50px] lg:px-[100px] py-[30px] flex flex-col gap-6 min-h-[80vh] z-[1] bg-white">
       {/* Header */}
-      <div className="mb-8 sm:mb-12">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="mb-8 sm:mb-12">
         <h1 className="text-mainPurple font-extrabold text-2xl sm:text-3xl md:text-4xl mb-4">
           Контакты нашей компании
         </h1>
         <p className="text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed">
           Мы всегда рады помочь Вам создать мебель Вашей мечты! Обращайтесь удобным способом – ответим быстро и подробно проконсультируем.
         </p>
-      </div>
+      </motion.div>
 
       {/* Контактные карточки */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
         {/* Телефон */}
-        <div
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
           className="bg-white p-4 sm:p-6 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
           <div className="flex items-center gap-3 mb-3">
             <div className="bg-mainPurple/90 p-2 rounded-full">
@@ -37,10 +47,13 @@ export default function Contacts() {
               <span>9:00 до 19:00 (без выходных)</span>
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* WhatsApp */}
-        <div
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
           className="bg-white p-4 sm:p-6 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
           <div className="flex items-center gap-3 mb-3">
             <div className="bg-mainPurple/90 p-2 rounded-full">
@@ -62,10 +75,13 @@ export default function Contacts() {
               Отправьте фото, эскиз или вопрос – обсудим Ваш проект в чате!
             </p>
           </div>
-        </div>
+        </motion.div>
 
         {/* Email */}
-        <div
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
           className="bg-white p-4 sm:p-6 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow md:col-span-2">
           <div className="flex items-center gap-3 mb-3">
             <div className="bg-mainPurple/90 p-2 rounded-full">
@@ -84,9 +100,12 @@ export default function Contacts() {
               Прикрепляйте планировки, размеры и пожелания – мы подготовим расчет.
             </p>
           </div>
-        </div>
+        </motion.div>
         {/* Шоурум */}
-        <div
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.5 }}
           className="bg-white p-4 sm:p-6 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow md:col-span-2">
           <div className="flex items-center gap-3 mb-3">
             <div className="bg-mainPurple/90 p-2 rounded-full">
@@ -101,7 +120,7 @@ export default function Contacts() {
               Пожалуйста, согласуйте время, и мы будем ждать вас!.
             </p>
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   )

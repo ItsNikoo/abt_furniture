@@ -1,3 +1,6 @@
+'use client'
+
+import { motion } from "framer-motion";
 import { Search, Ruler, FileText, Hammer, Truck, CheckCircle, Phone, Monitor, MapPin, Palette, Calculator, FileCheck, Package, Users, Star } from "lucide-react";
 import Link from "next/link"
 import {ReactNode} from "react"
@@ -112,7 +115,12 @@ export default function Howto() : ReactNode {
 	return (
 		<div className="relative mt-[10px] px-4 md:px-[50px] lg:px-[100px] py-[30px] flex flex-col gap-6 min-h-[80vh] z-[1] bg-white">
 			{/* Header */}
-			<div className="mb-8 sm:mb-12">
+			<motion.div
+				initial={{ opacity: 0, y: 20 }}
+				whileInView={{ opacity: 1, y: 0 }}
+				viewport={{ once: true }}
+				transition={{ duration: 0.5 }}
+				className="mb-8 sm:mb-12">
 				<h1 className="text-mainPurple font-extrabold text-2xl sm:text-3xl md:text-4xl mb-4">
 					Как совершить заказ
 				</h1>
@@ -120,14 +128,19 @@ export default function Howto() : ReactNode {
 					Простой и понятный процесс заказа мебели от выбора до установки. Мы
 					сопровождаем вас на каждом этапе для получения идеального результата.
 				</p>
-			</div>
+			</motion.div>
 
 			{/* Steps */}
 			<div className="space-y-6 sm:space-y-8">
 				{steps.map((step, index) => {
 					const IconComponent = step.icon;
 					return (
-						<div key={step.id} className="relative">
+						<motion.div
+							initial={{ opacity: 0, y: 20 }}
+							whileInView={{ opacity: 1, y: 0 }}
+							viewport={{ once: true }}
+							transition={{ duration: 0.5, delay: index * 0.2 }}
+							key={step.id} className="relative">
 							{/* Connecting line */}
 							{index < steps.length - 1 && (
 								<div className="hidden sm:block absolute left-6 lg:left-8 top-16 w-0.5 h-16 bg-gradient-to-b from-mainPurple to-mainPurple/30 z-10" />
@@ -187,13 +200,18 @@ export default function Howto() : ReactNode {
 									</div>
 								</div>
 							</div>
-						</div>
+						</motion.div>
 					);
 				})}
 			</div>
 
 			{/* Final CTA section */}
-			<div className="mt-8 sm:mt-12 text-center">
+			<motion.div
+				initial={{ opacity: 0, y: 20 }}
+				whileInView={{ opacity: 1, y: 0 }}
+				viewport={{ once: true }}
+				transition={{ duration: 0.5, delay: steps.length * 0.2 }}
+				className="mt-8 sm:mt-12 text-center">
 				<div className="bg-gradient-to-r from-mainPurple to-mainPurple/80 rounded-xl sm:rounded-2xl p-6 sm:p-8 lg:p-10 text-white shadow-xl">
 					<div className="flex justify-center mb-4 sm:mb-6">
 						<div className="bg-white/20 rounded-full p-3 sm:p-4">
@@ -222,7 +240,7 @@ export default function Howto() : ReactNode {
 						</Link>
 					</div>
 				</div>
-			</div>
+			</motion.div>
 		</div>
 	);
 }

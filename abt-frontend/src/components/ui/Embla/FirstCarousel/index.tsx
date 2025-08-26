@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button'
 import { Sale } from '@/types'
 import Link from 'next/link'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
+import {motion} from 'framer-motion'
 
 export default function FirstCarousel({ slides }: { slides: Sale[] }) {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [Autoplay({ delay: 4000 })]) // Луп и автопрокрутка
@@ -44,7 +45,11 @@ export default function FirstCarousel({ slides }: { slides: Sale[] }) {
   }, [emblaApi])
 
   return (
-    <div className="relative mx-auto max-w-[95%] sm:max-w-[90%] lg:max-w-[80%]">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="relative mx-auto max-w-[95%] sm:max-w-[90%] lg:max-w-[80%]">
       {/* Контейнер для карусели */}
       <div className="embla">
         <div className="embla__viewport overflow-hidden my-3 sm:my-5 rounded-lg sm:rounded-xl shadow-lg sm:shadow-xl" ref={emblaRef}>
@@ -121,6 +126,6 @@ export default function FirstCarousel({ slides }: { slides: Sale[] }) {
       >
         <ChevronRight className="w-5 h-5 lg:w-6 lg:h-6 text-white" />
       </Button>
-    </div>
+    </motion.div>
   )
 }

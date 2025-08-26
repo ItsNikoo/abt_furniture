@@ -17,11 +17,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const product: Product = await fetchProductById(Number(id))
 
   return {
-    title: `Купить ${product.title} в АБТ`,
-    description: product.description || 'Описание отсутствует',
+    title: `${product.title} от производителя | АБТ`,
+    description: product.description || 'Купить продукт от производителя АБТ. Высокое качество, стильный дизайн и доступные цены прямиком от производителя.',
     openGraph: {
       title: `Купить ${product.title} в АБТ`,
+      description: product.description || 'Купить продукт от производителя || АБТ кухни',
       images: product.photos?.[0]?.photoUrl ? [product.photos[0].photoUrl] : [],
+      url: `https://abt-furniture.ru/catalog/${product.category}/${product.productSlug}`,
+      siteName: "АБТ мебель",
+      locale: "ru_RU",
+      type: "website",
     },
   }
 }

@@ -1,5 +1,6 @@
 import PhotoCarousel from '@/components/ui/Embla/PhotoCarousel'
 import { Product } from '@/types'
+import { motion } from 'framer-motion'
 
 export default function CatalogCard({ product }: { product: Product }) {
   return (
@@ -18,7 +19,11 @@ export default function CatalogCard({ product }: { product: Product }) {
           </div>
         </div>
       )}
-      <div className="flex flex-col gap-3 px-4 mb-2">
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.3 }}
+        className="flex flex-col gap-3 px-4 mb-2">
         <div>
           <p className="text-gray-400 text-sm">{product.category}</p>
           <h2 className="text-3xl font-bold font-montserrat">{product.title}</h2>
@@ -27,7 +32,7 @@ export default function CatalogCard({ product }: { product: Product }) {
           <p className="text-gray-400">Цена за погонный метр - </p>
           <p>{product.price} руб.</p>
         </div>
-      </div>
+      </motion.div>
     </div>
   )
 }

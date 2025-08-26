@@ -6,6 +6,7 @@ import {Label} from "@/components/ui/label"
 import {startTransition, useState} from "react";
 import {Checkbox} from "@/components/ui/checkbox";
 import {postContactAction} from "@/actions/contact";
+import { motion } from "framer-motion";
 
 export default function RightPartOfFirstPage() {
   const [formData, setFormData] = useState({
@@ -117,7 +118,12 @@ export default function RightPartOfFirstPage() {
   }
 
   return (
-    <div className="lg:w-1/2 w-full flex justify-center items-center">
+    <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.75 }}
+      viewport={{once: true}}
+      className="lg:w-1/2 w-full flex justify-center items-center">
       <div className="relative bg-white rounded-2xl sm:rounded-3xl shadow-xl overflow-hidden w-full max-w-sm sm:max-w-md lg:max-w-[360px]">
         {/* Decorative top element */}
         <div className="absolute top-0 left-0 right-0 h-2 sm:h-3 bg-mainPurple"></div>
@@ -196,6 +202,6 @@ export default function RightPartOfFirstPage() {
           </form>
         </div>
       </div>
-    </div>
+    </motion.div>
   )
 }

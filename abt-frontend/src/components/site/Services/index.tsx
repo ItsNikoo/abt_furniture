@@ -1,7 +1,10 @@
+'use client'
+
 import Link from "next/link"
 import {Service} from "@/types"
 import {services} from "@/components/site/Services/services"
 import Image from "next/image"
+import { motion } from "framer-motion"
 
 function ServiceCard({service}: { service: Service }) {
   const isReversed = service.id % 2 === 0
@@ -43,20 +46,38 @@ function ServiceCard({service}: { service: Service }) {
 export default function Services() {
   return (
     <div className="my-4">
-      <h1 className="text-mainPurple font-extrabold text-xl sm:text-2xl md:text-3xl mb-4">
-        Идеальная корпусная мебель на заказ — дизайн, изготовление, установка
-      </h1>
-      <p className="mb-6">
-        Помимо мебели разных фасонов и стилей{" "}
-        <span className="font-bold">мы предоставляем обширный спектр услуг</span>, чтобы вы получили максимум удовольствия и минимум “рутины”.
-      </p>
+      <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      >
+        <h1 className="text-mainPurple font-extrabold text-xl sm:text-2xl md:text-3xl mb-4">
+          Идеальная корпусная мебель на заказ — дизайн, изготовление, установка
+        </h1>
+        <p className="mb-6">
+          Помимо мебели разных фасонов и стилей{" "}
+          <span className="font-bold">мы предоставляем обширный спектр услуг</span>, чтобы вы получили максимум удовольствия и минимум “рутины”.
+        </p>
+      </motion.div>
       <div className="grid grid-cols-1 gap-8">
         {services.map((service: Service) => (
-          <ServiceCard key={service.id} service={service} />
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: service.id * 0.2 }}
+            viewport={{ once: true }}
+            key={service.id}>
+            <ServiceCard service={service} />
+          </motion.div>
         ))}
       </div>
       {/* Фиолетовый CTA контейнер */}
-      <div className="mt-8 sm:mt-12 text-center">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5}}
+        className="mt-8 sm:mt-12 text-center">
         <div className="bg-gradient-to-r from-mainPurple to-mainPurple/80 rounded-xl sm:rounded-2xl p-6 sm:p-8 lg:p-10 text-white shadow-xl">
           <h3 className="font-bold text-xl sm:text-2xl lg:text-3xl mb-3 sm:mb-4">
             Не нашли нужную услугу?
@@ -79,7 +100,7 @@ export default function Services() {
             </Link>
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   )
 }

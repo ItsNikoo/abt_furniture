@@ -8,6 +8,7 @@ import ContentWrapper from "@/components/ContentWrapper"
 import MainOrderContainer from "@/components/site/Orders/MainOrderContainer"
 import ServiceButton from "@/components/ui/ServiceButton"
 import { Button } from "@/components/ui/button"
+import { motion } from "framer-motion"
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -36,9 +37,13 @@ export default function Header() {
 
   return (
     <ContentWrapper>
-      <div>
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}>
         {/* Desktop Header (lg: ≥1024px) */}
-        <div className="hidden lg:flex flex-row items-center justify-between max-w-[1400px] mx-auto py-3 gap-4">
+        <div
+          className="hidden lg:flex flex-row items-center justify-between max-w-[1400px] mx-auto py-3 gap-4">
           <Link href="/" className="flex-shrink-0 w-[300px] p-2">
             <Image
               src="/logo.png"
@@ -91,6 +96,7 @@ export default function Header() {
                 alt="АБТ - мебель для кухни"
                 width={300}
                 height={80}
+                priority
                 className="w-auto h-14"
               />
             </Link>
@@ -189,7 +195,7 @@ export default function Header() {
             </div>
           )}
         </div>
-      </div>
+      </motion.div>
     </ContentWrapper>
   )
 }

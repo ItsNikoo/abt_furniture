@@ -10,6 +10,7 @@ import CatalogCard from '@/components/site/Catalog/CatalogCard'
 import StyleSelector from "@/components/ui/CatalogSelectors/StyleSelector";
 import MaterialSelector from "@/components/ui/CatalogSelectors/MaterialSelector";
 import {Input} from "@/components/ui/input";
+import { motion } from 'framer-motion'
 
 interface CatalogProps {
     categoriesPromise: Promise<Category[]>;
@@ -115,7 +116,11 @@ function CatalogContent({categoriesPromise, stylesPromise, materialsPromise, sel
 
     return (
         <>
-            <div className='flex flex-col sm:flex-row sm:items-center gap-3 '>
+            <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+              className='flex flex-col sm:flex-row sm:items-center gap-3 '>
                 <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-6xl font-bold font-montserrat">Каталог</h1>
                 <Input
                     type="search"
@@ -124,8 +129,12 @@ function CatalogContent({categoriesPromise, stylesPromise, materialsPromise, sel
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                 />
-            </div>
-            <ul className="flex flex-wrap sm:flex-row gap-4 sm:gap-8 font-medium text-sm sm:text-base mt-2 sm:mt-4">
+            </motion.div>
+            <motion.ul
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+              className="flex flex-wrap sm:flex-row gap-4 sm:gap-8 font-medium text-sm sm:text-base mt-2 sm:mt-4">
                 {categories.map((category) => (
                     <li key={category.id}>
                         <Link
@@ -140,8 +149,12 @@ function CatalogContent({categoriesPromise, stylesPromise, materialsPromise, sel
                         </Link>
                     </li>
                 ))}
-            </ul>
-            <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 mt-2">
+            </motion.ul>
+            <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.5 }}
+              className="flex flex-col sm:flex-row gap-2 sm:gap-3 mt-2">
                 <StyleSelector
                     styles={styles}
                     currentStyle={currentStyle}
@@ -152,7 +165,7 @@ function CatalogContent({categoriesPromise, stylesPromise, materialsPromise, sel
                     currentMaterial={currentMaterial}
                     setCurrentMaterial={handleMaterialChange}
                 />
-            </div>
+            </motion.div>
 
             <div className="mt-3 sm:mt-5">
                 {isLoading && <p className="text-sm sm:text-base">Загрузка продуктов...</p>}

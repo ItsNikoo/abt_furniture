@@ -1,5 +1,6 @@
 'use client'
 
+import { motion } from 'framer-motion'
 import { useState } from 'react'
 
 interface Props {
@@ -39,11 +40,16 @@ export default function ClientContainer() {
   }
 
   return (
-    <div className="flex flex-row gap-2 items-start min-h-[320px] pb-[10px]">
+    <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 1 }}
+      className="flex flex-row gap-2 items-start min-h-[320px] pb-[10px]">
       {data.map((item: Props) => {
         const isActive = clicked === item.id
         return (
-          <div
+          <motion.div
+            whileHover={{scale: 1.02}}
             key={item.id}
             onClick={() => handleClick(item.id)}
             className={`
@@ -61,9 +67,9 @@ export default function ClientContainer() {
             >
               <p className="text-base leading-relaxed">{item.description}</p>
             </div>
-          </div>
+          </motion.div>
         )
       })}
-    </div>
+    </motion.div>
   )
 }

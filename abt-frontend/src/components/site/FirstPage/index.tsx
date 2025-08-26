@@ -1,6 +1,9 @@
+'use client'
+
 import RightPartOfFirstPage from '@/components/site/FirstPage/RightPartOfFirstPage'
 import LeftPartOfFirstPage from '@/components/site/FirstPage/LeftPartOfFirstPage'
 import ClientContainer from '@/components/site/FirstPage/ClientContainer'
+import { motion } from 'framer-motion'
 
 export default function FirstPage() {
   return (
@@ -10,10 +13,14 @@ export default function FirstPage() {
         className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20 -z-10"
         style={{backgroundImage: "url('/background_image.webp')"}}
       />
-      <div className='flex lg:flex-row flex-col justify-center items-center'>
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+        className='flex lg:flex-row flex-col justify-center items-center'>
         <LeftPartOfFirstPage/>
         <RightPartOfFirstPage/>
-      </div>
+      </motion.div>
       <div className='relative w-full z-10 hidden lg:block'>
         {/* Новый блок на всю ширину */}
         <ClientContainer/>

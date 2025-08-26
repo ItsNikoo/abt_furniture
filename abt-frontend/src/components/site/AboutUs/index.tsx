@@ -1,10 +1,17 @@
+'use client'
+
 import Link from "next/link";
 import { BookOpen, User, Handshake, Users } from "lucide-react";
+import { motion } from "framer-motion";
 
 export default function AboutUs() {
     return (
         <div className="relative min-h-screen px-4 md:px-[50px] lg:px-[100px] py-[30px] flex flex-col gap-6 bg-white">
-            <div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
                 <h1 className="text-mainPurple font-extrabold text-2xl sm:text-3xl md:text-4xl mb-4">
                     Наша история – качество с 2002 года
                 </h1>
@@ -12,11 +19,15 @@ export default function AboutUs() {
                     <span className='font-bold'>Мы – производитель, а не посредник.</span> И вся наша философия построена вокруг создания
                     уникального продукта, который будет ценным для покупателя и решит его проблемы.
                 </p>
-            </div>
+            </motion.div>
 
             <div className="space-y-6">
                 {/* История с иконкой */}
-                <div className="bg-white/80 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 shadow-lg hover:shadow-xl transition-all duration-300 flex items-start gap-4">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                  className="bg-white/80 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 shadow-lg hover:shadow-xl flex items-start gap-4">
                     <div className="flex-shrink-0 flex items-center justify-center bg-mainPurple/10 rounded-full w-12 h-12 sm:w-14 sm:h-14 mr-2 mt-1">
                         <BookOpen className="text-mainPurple w-6 h-6 sm:w-7 sm:h-7" />
                     </div>
@@ -35,10 +46,14 @@ export default function AboutUs() {
                             функциональную мебель.
                         </p>
                     </div>
-                </div>
+                </motion.div>
 
                 {/* Наши принципы с иконкой */}
-                <div className="bg-white/80 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 shadow-lg hover:shadow-xl transition-all duration-300">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.4 }}
+                  className="bg-white/80 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 shadow-lg hover:shadow-xl">
                     <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 items-start">
                         <div className="hidden sm:flex flex-col items-center">
                             <div className="flex-shrink-0 flex items-center justify-center bg-mainPurple/10 rounded-full w-12 h-12 sm:w-14 sm:h-14 mr-2 mt-1">
@@ -77,10 +92,14 @@ export default function AboutUs() {
                             </div>
                         </div>
                     </div>
-                </div>
+                </motion.div>
 
                 {/* Партнерство и развитие с иконкой */}
-                <div className="bg-white/80 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 shadow-lg hover:shadow-xl transition-all duration-300 flex items-start gap-4">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.6 }}
+                  className="bg-white/80 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 shadow-lg hover:shadow-xl flex items-start gap-4">
                     <div className="flex-shrink-0 flex items-center justify-center bg-mainPurple/10 rounded-full w-12 h-12 sm:w-14 sm:h-14 mr-2 mt-1">
                         <Handshake className="text-mainPurple w-6 h-6 sm:w-7 sm:h-7" />
                     </div>
@@ -102,10 +121,14 @@ export default function AboutUs() {
                             </Link>
                         </p>
                     </div>
-                </div>
+                </motion.div>
 
                 {/* Финальный блок без иконки */}
-                <div className="bg-white/80 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 shadow-lg hover:shadow-xl transition-all duration-300">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5}}
+                  className="bg-white/80 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 shadow-lg hover:shadow-xl">
                     <p className="text-xs xs:text-sm sm:text-base md:text-[18px] leading-relaxed mb-3">
                         Каждый наш проект – это не просто изделие, а часть вашего дома, созданная с душой. Мы
                         продолжаем расти, чтобы предлагать вам лучшие решения для уюта и комфорта.
@@ -113,7 +136,7 @@ export default function AboutUs() {
                     <h3 className="text-mainPurple font-bold text-lg sm:text-xl md:text-2xl mb-3">
                         Спасибо, что выбираете нас!
                     </h3>
-                </div>
+                </motion.div>
             </div>
         </div>
     )
