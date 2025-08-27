@@ -36,6 +36,8 @@ export default function CategoriesGrid({ promise }: { promise: Promise<Category[
                     src={category.photo}
                     alt={category.category}
                     fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    priority
                     className="object-cover"
                   />
                 </div>

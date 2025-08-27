@@ -33,20 +33,34 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export const revalidate = 60
 
-export async function generateStaticParams() {
-  const products = await fetchProducts(); // Предполагается, что есть такая функция
-  return products.map((product: Product) => ({
-    categorySlug: product.category, // Если продукт привязан к категории
-    productSlug: product.productSlug,
-  }));
+export async function generateStaticParams({ params }: Props) {
+  try {
+    const products = await fetchProducts()
+    return products.map((product: Product) => {
+      if (!product.category || !product.id || !product.productSlug) {
+        console.error('Invalid product:', product);
+        return null;
+      }
+      // Формируем productSlug с ID
+      const productSlug = `${product.id}-${product.productSlug}`;
+      return {
+        categorySlug: product.category,
+        productSlug: productSlug,
+      };
+    }).filter(Boolean);
+  }catch (error) {
+    console.error('Error in generateStaticParams:', error);
+    return [];
+  }
 }
+
 export default async function ProductPage({ params }: Props) {
   const { productSlug } = await params
   const id = productSlug.split('-')[0]
   const product: Product = await fetchProductById(Number(id))
   return (
-    <ContentWrapper>
-      <ProductContainer product={product}/>
-    </ContentWrapper>
+      <ContentWrapper>
+        <ProductContainer product={product}/>
+      </ContentWrapper>
   )
 }
