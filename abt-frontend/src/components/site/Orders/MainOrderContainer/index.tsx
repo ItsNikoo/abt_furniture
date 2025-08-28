@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/dialog'
 import {Button} from '@/components/ui/button'
 import {Input} from '@/components/ui/input'
-import {startTransition, useState} from 'react'
+import {startTransition, useState, useEffect} from 'react'
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
 import {postContactAction} from "@/actions/contact";
@@ -21,14 +21,32 @@ export default function MainOrderContainer() {
   const [formData, setFormData] = useState({
     phone: '',
     comment: '',
+    honeypot: '', // Ловушечное поле
   })
-  const [consent, setConsent] = useState(false) // Состояние для чекбокса согласия
+  const [consent, setConsent] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [success, setSuccess] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [formErrors, setFormErrors] = useState({
     consent: '',
   })
+  const [formLoadTime, setFormLoadTime] = useState<number>(0) // Время загрузки формы
+
+  // Засекаем время когда открылась форма
+  useEffect(() => {
+    if (isOpen) {
+      setFormLoadTime(Date.now());
+      // Сбрасываем состояние при открытии
+      setFormData({
+        phone: '',
+        comment: '',
+        honeypot: '',
+      });
+      setConsent(false);
+      setSuccess(null);
+      setError(null);
+    }
+  }, [isOpen]);
 
   function handlePhoneChange(e: React.ChangeEvent<HTMLInputElement>) {
     const value = e.target.value;
@@ -64,9 +82,16 @@ export default function MainOrderContainer() {
     }));
   }
 
+  // Обработчик для ловушечного поля (на всякий случай, хотя оно скрыто)
+  function handleHoneypotChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setFormData(prev => ({
+      ...prev,
+      honeypot: e.target.value
+    }));
+  }
+
   function handleConsentChange(checked: boolean) {
     setConsent(checked)
-    // Очищаем ошибку при изменении состояния чекбокса
     if (checked) {
       setFormErrors(prev => ({ ...prev, consent: '' }))
     }
@@ -92,6 +117,15 @@ export default function MainOrderContainer() {
       return;
     }
 
+    // Time Check: проверяем что прошло хотя бы 2 секунды
+    const submitTime = Date.now();
+    const formFillTime = submitTime - formLoadTime;
+
+    if (formFillTime < 2000) {
+      setError('Пожалуйста, заполните форму внимательнее');
+      return;
+    }
+
     setIsSubmitting(true);
 
     startTransition(async () => {
@@ -100,12 +134,23 @@ export default function MainOrderContainer() {
           phone: formData.phone,
           comment: formData.comment,
           consent: consent,
+          honeypot: formData.honeypot, // Отправляем ловушечное поле
+          formLoadTime: formLoadTime,   // Отправляем время загрузки
         });
-        const response = await postContactAction(formData.phone, formData.comment, consent);
+
+        const response = await postContactAction(
+          formData.phone,
+          formData.comment,
+          consent,
+          formData.honeypot, // Передаем ловушечное поле
+          formLoadTime       // Передаем время загрузки
+        );
+
         setSuccess('Ваш запрос успешно отправлен! Мы свяжемся с вами в ближайшее время.');
         setFormData({
           phone: '',
           comment: '',
+          honeypot: '',
         });
         setConsent(false);
       } catch (e) {
@@ -114,6 +159,7 @@ export default function MainOrderContainer() {
             ? `Произошла ошибка при отправке данных: ${e.message}`
             : 'Неизвестная ошибка. Пожалуйста, попробуйте еще раз.'
         );
+      } finally {
         setIsSubmitting(false);
       }
     });
@@ -136,6 +182,21 @@ export default function MainOrderContainer() {
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          {/* Ловушечное поле - скрыто от пользователей */}
+          <input
+            type="text"
+            name="company"
+            value={formData.honeypot}
+            onChange={handleHoneypotChange}
+            style={{
+              display: 'none',
+              position: 'absolute',
+              left: '-9999px'
+            }}
+            autoComplete="off"
+            tabIndex={-1}
+          />
+
           <Input
             name="phone"
             value={formData.phone}

@@ -3,7 +3,7 @@
 import {Input} from "@/components/ui/input"
 import {Button} from "@/components/ui/button"
 import {Label} from "@/components/ui/label"
-import {startTransition, useState} from "react";
+import {startTransition, useEffect, useState} from "react";
 import {Checkbox} from "@/components/ui/checkbox";
 import {postContactAction} from "@/actions/contact";
 import { motion } from "framer-motion";
@@ -12,6 +12,7 @@ export default function RightPartOfFirstPage() {
   const [formData, setFormData] = useState({
     phone: '',
     comment: '',
+    honeypot: '', // Ловушечное поле
   })
   const [consent, setConsent] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -21,6 +22,12 @@ export default function RightPartOfFirstPage() {
     phone: '',
     consent: '',
   })
+  const [formLoadTime, setFormLoadTime] = useState<number>(0) // Время загрузки компонента
+
+  // Засекаем время когда компонент смонтирован
+  useEffect(() => {
+    setFormLoadTime(Date.now());
+  }, []);
 
   function handleCommentChange(e: React.ChangeEvent<HTMLInputElement>) {
     setSuccess(null);
@@ -57,7 +64,6 @@ export default function RightPartOfFirstPage() {
       phone: formattedValue
     }));
 
-    // Очищаем ошибку при изменении
     if (formattedValue.length > 0) {
       setFormErrors(prev => ({ ...prev, phone: '' }))
     }
@@ -68,6 +74,14 @@ export default function RightPartOfFirstPage() {
     if (checked) {
       setFormErrors(prev => ({ ...prev, consent: '' }))
     }
+  }
+
+  // Обработчик для ловушечного поля
+  function handleHoneypotChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setFormData(prev => ({
+      ...prev,
+      honeypot: e.target.value
+    }));
   }
 
   function validateForm() {
@@ -88,33 +102,48 @@ export default function RightPartOfFirstPage() {
       return
     }
 
+    // Time Check защита
+    const submitTime = Date.now();
+    const formFillTime = submitTime - formLoadTime;
+
+    if (formFillTime < 3000) {
+      setError('Пожалуйста, заполните форму внимательнее');
+      return;
+    }
+
     setIsSubmitting(true);
 
     startTransition(async () => {
       try {
-        console.log('Отправленные данные:', {
-          phone: formData.phone,
-          comment: formData.comment,
-          consent: consent,
-        });
-        const response = await postContactAction(formData.phone, formData.comment, consent);
-        setSuccess('Ваш запрос успешно отправлен! Мы свяжемся с вами в ближайшее время.');
-        setFormData({
-          phone: '',
-          comment: '',
-        });
-        setConsent(false);
+        const response = await postContactAction(
+          formData.phone,
+          formData.comment,
+          consent,
+          formData.honeypot,   // Передаем honeypot
+          formLoadTime         // Передаем время загрузки
+        );
+
+        if (response.success) {
+          setSuccess('Ваш запрос успешно отправлен! Мы свяжемся с вами в ближайшее время.');
+          setFormData({
+            phone: '',
+            comment: '',
+            honeypot: ''
+          });
+          setConsent(false);
+        } else {
+          setError(response.error || 'Произошла ошибка при отправке');
+        }
       } catch (e) {
         setError(
           e instanceof Error
             ? `Произошла ошибка при отправке данных: ${e.message}`
             : 'Неизвестная ошибка. Пожалуйста, попробуйте еще раз.'
         );
-      }finally {
+      } finally {
         setIsSubmitting(false);
       }
     })
-
   }
 
   return (
@@ -125,16 +154,30 @@ export default function RightPartOfFirstPage() {
       viewport={{once: true}}
       className="lg:w-1/2 w-full flex justify-center items-center">
       <div className="relative bg-white rounded-2xl sm:rounded-3xl shadow-xl overflow-hidden w-full max-w-sm sm:max-w-md lg:max-w-[360px]">
-        {/* Decorative top element */}
         <div className="absolute top-0 left-0 right-0 h-2 sm:h-3 bg-mainPurple"></div>
 
-        {/* Content */}
         <div className="pt-6 sm:pt-8 px-6 sm:px-8 pb-5 sm:pb-6">
           <p className="text-center mb-4 sm:mb-5 text-sm sm:text-base text-gray-700">
             Предложите нам идею, и мы поможем вам ее реализовать
           </p>
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-3 sm:gap-4">
+            {/* Улучшенное honeypot поле */}
+            <input
+              type="text"
+              name="email" // Более привлекательное для ботов имя
+              value={formData.honeypot}
+              onChange={handleHoneypotChange}
+              style={{
+                display: 'none',
+                position: 'absolute',
+                left: '-9999px'
+              }}
+              autoComplete="off"
+              tabIndex={-1}
+            />
+
+            {/* Остальная форма без изменений */}
             <div>
               <Input
                 name="phone"
@@ -192,6 +235,7 @@ export default function RightPartOfFirstPage() {
                 {error}
               </p>
             )}
+
             <Button
               type="submit"
               className="py-4 sm:py-[25px] text-sm sm:text-base font-semibold mt-2 bg-mainPurple hover:bg-mainPurple/90"

@@ -10,7 +10,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import {startTransition, useState} from 'react'
+import {startTransition, useState, useEffect} from 'react'
 import {Input} from '@/components/ui/input'
 import {Label} from '@/components/ui/label'
 import {Button} from '@/components/ui/button'
@@ -22,7 +22,8 @@ export default function ProductOrderContainer({product}: { product: Product }) {
   const [formData, setFormData] = useState({
     product: product.title,
     phone: '',
-    comment: ''
+    comment: '',
+    honeypot: '', // Ловушечное поле
   })
   const [consent, setConsent] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -32,6 +33,24 @@ export default function ProductOrderContainer({product}: { product: Product }) {
     phone: '',
     consent: '',
   })
+  const [formLoadTime, setFormLoadTime] = useState<number>(0) // Время загрузки формы
+
+  // Засекаем время когда открывается диалог
+  useEffect(() => {
+    if (isOpen) {
+      setFormLoadTime(Date.now());
+      // Сбрасываем состояние при открытии
+      setFormData(prev => ({
+        ...prev,
+        phone: '',
+        comment: '',
+        honeypot: ''
+      }));
+      setConsent(false);
+      setSuccess(null);
+      setError(null);
+    }
+  }, [isOpen]);
 
   function handleCommentChange(e: React.ChangeEvent<HTMLInputElement>) {
     setFormData(prev => ({
@@ -66,7 +85,6 @@ export default function ProductOrderContainer({product}: { product: Product }) {
       phone: formattedValue
     }));
 
-    // Очищаем ошибку при изменении
     if (formattedValue.length > 0) {
       setFormErrors(prev => ({...prev, phone: ''}))
     }
@@ -77,6 +95,14 @@ export default function ProductOrderContainer({product}: { product: Product }) {
     if (checked) {
       setFormErrors(prev => ({...prev, consent: ''}))
     }
+  }
+
+  // Обработчик для ловушечного поля
+  function handleHoneypotChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setFormData(prev => ({
+      ...prev,
+      honeypot: e.target.value
+    }));
   }
 
   function validateForm() {
@@ -97,41 +123,56 @@ export default function ProductOrderContainer({product}: { product: Product }) {
       return
     }
 
+    // Time Check защита
+    const submitTime = Date.now();
+    const formFillTime = submitTime - formLoadTime;
+
+    if (formFillTime < 3000) {
+      setError('Пожалуйста, заполните форму внимательнее');
+      return;
+    }
+
     setIsSubmitting(true);
 
     startTransition(async () => {
       try {
-        console.log('Отправленные данные:', {
-          phone: formData.phone,
-          comment: formData.comment,
-          consent: consent,
-        });
-        const response = await postContactAction(formData.phone, formData.comment, consent, formData.product);
-        setSuccess('Ваш запрос успешно отправлен! Мы свяжемся с вами в ближайшее время.');
-        setFormData({
-          phone: '',
-          comment: '',
-          product: product.title
-        });
-        setConsent(false);
+        const response = await postContactAction(
+          formData.phone,
+          formData.comment,
+          consent,
+          formData.product,
+          formData.honeypot,   // Передаем honeypot
+          formLoadTime         // Передаем время загрузки
+        );
+
+        if (response && response.success) {
+          setSuccess('Ваш запрос успешно отправлен! Мы свяжемся с вами в ближайшее время.');
+          setFormData({
+            product: product.title,
+            phone: '',
+            comment: '',
+            honeypot: ''
+          });
+          setConsent(false);
+        } else {
+          setError(response?.error || 'Произошла ошибка при отправке');
+        }
       } catch (e) {
         setError(
           e instanceof Error
             ? `Произошла ошибка при отправке данных: ${e.message}`
             : 'Неизвестная ошибка. Пожалуйста, попробуйте еще раз.'
         );
-      }finally {
+      } finally {
         setIsSubmitting(false);
       }
     })
-
   }
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button className={'my-3 font-bold rounded-xl text-base'}>Заказать
-          проект</Button>
+        <Button className={'my-3 font-bold rounded-xl text-base'}>Заказать проект</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -141,6 +182,21 @@ export default function ProductOrderContainer({product}: { product: Product }) {
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          {/* Ловушечное поле - скрыто от пользователей */}
+          <input
+            type="text"
+            name="email" // Привлекательное для ботов имя
+            value={formData.honeypot}
+            onChange={handleHoneypotChange}
+            style={{
+              display: 'none',
+              position: 'absolute',
+              left: '-9999px'
+            }}
+            autoComplete="off"
+            tabIndex={-1}
+          />
+
           <div>
             <Input
               name="phone"
@@ -156,6 +212,7 @@ export default function ProductOrderContainer({product}: { product: Product }) {
               <p className="text-red-500 text-xs mt-1">{formErrors.phone}</p>
             )}
           </div>
+
           <Input
             name="comment"
             value={formData.comment}
@@ -163,6 +220,7 @@ export default function ProductOrderContainer({product}: { product: Product }) {
             className={'py-6'}
             placeholder="Комментарий, пожелания или желаемые размеры..."
           />
+
           <div className="flex items-start gap-3">
             <Checkbox
               id="consent-checkbox"
@@ -184,8 +242,10 @@ export default function ProductOrderContainer({product}: { product: Product }) {
               )}
             </div>
           </div>
+
           {success && <p className={'text-green-700 text-sm'}>{success}</p>}
           {error && <p className={'text-red-400 text-sm'}>{error}</p>}
+
           <div className="flex flex-col gap-2">
             <Button
               type="submit"
