@@ -4,7 +4,7 @@ export const advantagesList = [
     icon: 'factory',
   },
   {
-    title: 'Гарантия 5 лет на любую продукцию',
+    title: 'Гарантия на любую продукцию',
     icon: 'shield',
   },
   {

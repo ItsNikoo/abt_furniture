@@ -187,7 +187,7 @@ class ContactAPI(APIView):
             IP-адрес: {ip_address}
             '''
             from_email = settings.DEFAULT_FROM_EMAIL
-            recipient_list = ['perminovni@gmail.com']
+            recipient_list = ['info@kuhni-abt.ru']
 
             try:
                 send_mail(subject, message, from_email, recipient_list)

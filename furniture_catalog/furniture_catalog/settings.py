@@ -144,9 +144,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Настройки для отправки на почту
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = 'smtp.majordomo.ru'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'perminovni@gmail.com'  # Ваш email
+EMAIL_HOST_USER = 'info@kuhni-abt.ru'  # Ваш email
 EMAIL_HOST_PASSWORD = config("EMAIL_PASSWORD")
-DEFAULT_FROM_EMAIL = 'perminovni@gmail.com'
+DEFAULT_FROM_EMAIL = 'info@kuhni-abt.ru'

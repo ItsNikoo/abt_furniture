@@ -48,7 +48,7 @@ export default function Footer() {
               href="mailto:info@abt-mebel.ru"
               className="hover:underline"
             >
-              info@abt-mebel.ru
+              info@kuhni-abt.ru
             </a>
           </div>
         </div>
