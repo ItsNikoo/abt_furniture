@@ -1,7 +1,7 @@
 'use client'
 
 import Link from "next/link";
-import { BookOpen, User, Handshake, Users } from "lucide-react";
+import { BookOpen, User, Handshake } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function AboutUs() {

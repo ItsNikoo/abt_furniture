@@ -22,7 +22,7 @@ export default function AutoLogoutTimer() {
 
     // Очистка таймера при размонтировании компонента
     return () => clearTimeout(timeout)
-  }, [isAuthenticated])
+  }, [isAuthenticated, router, setIsAuthenticated, setUser])
 
   return null // ничего не рендерим
 }

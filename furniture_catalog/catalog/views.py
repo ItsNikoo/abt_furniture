@@ -1,8 +1,5 @@
 from django.core.mail import send_mail
-from django.shortcuts import render, get_object_or_404
 from rest_framework import viewsets, status
-from rest_framework.decorators import action
-from rest_framework.generics import ListAPIView
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.request import Request
 from rest_framework.response import Response
@@ -199,3 +196,11 @@ class ContactAPI(APIView):
                                 status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         return Response({'errors': form.errors}, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+class HealthCheckView(APIView):
+    permission_classes = []  # No authentication required
+
+    def get(self, request):
+        return Response({"status": "ok"}, status=status.HTTP_200_OK)

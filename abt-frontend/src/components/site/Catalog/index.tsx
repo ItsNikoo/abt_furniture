@@ -11,6 +11,7 @@ import StyleSelector from "@/components/ui/CatalogSelectors/StyleSelector";
 import MaterialSelector from "@/components/ui/CatalogSelectors/MaterialSelector";
 import {Input} from "@/components/ui/input";
 import { motion } from 'framer-motion'
+import LoadingPlaceholder from "@/components/placeholders/LoadingPlaceholder";
 
 interface CatalogProps {
     categoriesPromise: Promise<Category[]>;
@@ -168,7 +169,7 @@ function CatalogContent({categoriesPromise, stylesPromise, materialsPromise, sel
             </motion.div>
 
             <div className="mt-3 sm:mt-5">
-                {isLoading && <p className="text-sm sm:text-base">Загрузка продуктов...</p>}
+                {isLoading && <div className="text-sm sm:text-base min-h-[60vh]"><LoadingPlaceholder /></div>}
                 {isError && <p className="text-sm sm:text-base">Ошибка при загрузке продуктов</p>}
                 {filteredProducts && filteredProducts.length > 0 && (
                     <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mt-4 sm:mt-6">
@@ -188,7 +189,7 @@ function CatalogContent({categoriesPromise, stylesPromise, materialsPromise, sel
                     </div>
                 )}
                 {filteredProducts && filteredProducts.length === 0 && !isLoading &&
-                    <p className="text-sm sm:text-base">Нет продуктов в этой категории.</p>}
+                    <p className="text-sm sm:text-base min-h-[50vh]">Нет продуктов в этой категории.</p>}
             </div>
         </>
     )
@@ -196,7 +197,7 @@ function CatalogContent({categoriesPromise, stylesPromise, materialsPromise, sel
 
 export default function CatalogWrapper({categoriesPromise, stylesPromise, materialsPromise, selectedCategory,}: CatalogProps) {
     return (
-        <Suspense fallback={<div>Загрузка...</div>}>
+        <Suspense fallback={<div><LoadingPlaceholder /></div>}>
             <CatalogContent categoriesPromise={categoriesPromise} stylesPromise={stylesPromise} materialsPromise={materialsPromise} selectedCategory={selectedCategory} />
         </Suspense>
     )

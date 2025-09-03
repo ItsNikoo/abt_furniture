@@ -144,7 +144,8 @@ export default function MainOrderContainer() {
           consent,
           formData.honeypot, // Передаем ловушечное поле
           formLoadTime       // Передаем время загрузки
-        );
+        )
+        console.log(response)
 
         setSuccess('Ваш запрос успешно отправлен! Мы свяжемся с вами в ближайшее время.');
         setFormData({

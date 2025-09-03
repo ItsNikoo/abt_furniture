@@ -3,7 +3,7 @@ import MeasureServiceComponent from "@/components/site/Services/MeasureServiceCo
 
 export async function generateMetadata(){
   return{
-    title: "Замер | Абт кухни",
+    title: "Замер | Абт мебель",
     description: "Профессиональная услуга замера от АБТ мебель. Точные измерения для идеальной подгонки мебели под ваш интерьер и пространство.",
     openGraph: {
       title: "Замер | АБТ мебель",

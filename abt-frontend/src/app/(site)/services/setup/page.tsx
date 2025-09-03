@@ -3,7 +3,7 @@ import SetupPageComponent from "@/components/site/Services/SetupPageComponent"
 
 export async function generateMetadata(){
   return{
-    title: "Настройка и установка | Абт кухни",
+    title: "Настройка и установка | Абт мебель",
     description: "Услуги по настройке и установке мебели от АБТ мебель. Профессиональная установка для идеального результата.",
     openGraph: {
       title: "Настройка и установка | АБТ мебель",

@@ -3,7 +3,7 @@ import ContentWrapper from "@/components/ContentWrapper";
 
 export async function generateMetadata(){
   return{
-    title: "Услуги | Абт кухни",
+    title: "Услуги | Абт мебель",
     description: "Ознакомьтесь с перечнем предоставляемых услуг по производству и установке мебели на заказ. АБТ мебель — ваш надежный партнер в создании идеального интерьера.",
     openGraph: {
       title: "Услуги | АБТ мебель",

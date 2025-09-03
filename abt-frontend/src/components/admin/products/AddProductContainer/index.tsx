@@ -16,11 +16,22 @@ import { postProduct } from '@/lib/api/products'
 import { queryClient } from '@/lib/react-query-client'
 import { useRouter } from 'next/navigation'
 import Cookies from "js-cookie"
+import Image from "next/image";
 
 interface Props {
   categories: Category[];
   styles: Style[];
   materials: Material[];
+}
+
+interface ApiError {
+  response?: {
+    data?: {
+      photoFiles?: string;
+      non_field_errors?: string;
+    };
+  };
+  message: string;
 }
 
 export default function AddProductContainer({ categories, styles, materials }: Props) {
@@ -71,10 +82,25 @@ export default function AddProductContainer({ categories, styles, materials }: P
       setSuccess('Продукт успешно добавлен')
       router.push('/admin/products')
     },
-    onError: (err: any) => {
+    onError: (err: unknown) => { // Типизируем err как unknown
       console.error('Ошибка при добавлении товара:', err)
-      const errorMessage = err.response?.data?.photoFiles || err.response?.data?.non_field_errors ||
-                           'Не удалось добавить товар. Попробуйте снова.'
+
+      // Правильная обработка ошибок
+      let errorMessage = 'Не удалось добавить товар. Попробуйте снова.'
+
+      if (typeof err === 'object' && err !== null) {
+        const apiError = err as ApiError
+        if (apiError.response?.data?.photoFiles) {
+          errorMessage = apiError.response.data.photoFiles
+        } else if (apiError.response?.data?.non_field_errors) {
+          errorMessage = apiError.response.data.non_field_errors
+        } else if (apiError.message) {
+          errorMessage = apiError.message
+        }
+      } else if (typeof err === 'string') {
+        errorMessage = err
+      }
+
       setError(errorMessage)
     },
   })
@@ -334,10 +360,12 @@ export default function AddProductContainer({ categories, styles, materials }: P
                   <p className="text-sm text-gray-600">Выбрано файлов: {photoPreviews.length}</p>
                   <div className="grid grid-cols-3 gap-2 mt-2">
                     {photoPreviews.map((preview, index) => (
-                      <img
+                      <Image
                         key={index}
                         src={preview}
                         alt={`Превью ${index + 1}`}
+                        width={1280}
+                        height={1280}
                         className="w-[100px] h-[100px] object-cover rounded-md border border-gray-200"
                       />
                     ))}

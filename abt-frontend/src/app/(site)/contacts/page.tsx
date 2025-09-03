@@ -2,7 +2,7 @@ import Contacts from "@/components/site/Contacts"
 
 export async function generateMetadata(){
   return{
-    title: "Контакты | Абт кухни",
+    title: "Контакты | Абт мебель",
     description: "Свяжитесь с нами для консультации, заказа или вопросов. Мы всегда рады помочь вам с выбором мебели от АБТ.",
     openGraph: {
       title: "Контакты | АБТ мебель",

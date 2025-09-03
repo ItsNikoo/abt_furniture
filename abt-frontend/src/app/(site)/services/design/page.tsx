@@ -3,7 +3,7 @@ import DesignPageComponent from "@/components/site/Services/DesignPageComponent"
 
 export async function generateMetadata(){
   return{
-    title: "Дизайн интерьера | Абт кухни",
+    title: "Дизайн интерьера | Абт мебель",
     description: "Профессиональные услуги по дизайну интерьера от АБТ мебель. Создаем уникальные и функциональные пространства, отражающие ваш стиль и предпочтения.",
     openGraph: {
       title: "Дизайн интерьера | АБТ мебель",

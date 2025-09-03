@@ -1,6 +1,5 @@
 import axios from 'axios'
 import {Material} from '@/types'
-import Cookies from 'js-cookie'
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 

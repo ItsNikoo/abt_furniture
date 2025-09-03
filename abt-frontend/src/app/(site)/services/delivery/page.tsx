@@ -3,7 +3,7 @@ import DeliveryPageComponent from "@/components/site/Services/DeliveryPageCompon
 
 export async function generateMetadata(){
   return{
-    title: "Доставка | Абт кухни",
+    title: "Доставка | Абт мебель",
     description: "Узнайте о наших условиях доставки и оплаты мебели на заказ. АБТ мебель предлагает удобные и надежные варианты для вашего комфорта.",
     openGraph: {
       title: "Доставка | АБТ мебель",

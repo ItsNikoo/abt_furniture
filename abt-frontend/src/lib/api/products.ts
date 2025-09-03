@@ -1,10 +1,8 @@
 import axios from 'axios'
 import {ProductData} from '@/types'
-import axiosInstance from "@/lib/axios";
-
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
-export async function fetchProducts(filters: { category?: string, style?: string, material?: string } = {}) {
+export async function fetchProducts(filters: { category?: string; style?: string; material?: string } = {}) {
   try {
     const params = new URLSearchParams()
     if (filters.category) params.append('category', filters.category)
@@ -13,11 +11,24 @@ export async function fetchProducts(filters: { category?: string, style?: string
 
     const url = `${BASE_URL}/products/?${params.toString()}`
     const res = await fetch(url, {
-      next: {revalidate: 60},
+      next: { revalidate: 60 },
     })
-    return res.json()
-  } catch (error: any) {
-    throw new Error(`Непредвиденная ошибка в GET запросе продуктов`);
+
+    if (!res.ok) {
+      // Обрабатываем HTTP ошибки
+      throw new Error(`HTTP error! status: ${res.status} ${res.statusText}`)
+    }
+
+    return await res.json()
+  } catch (error) {
+    // Правильная обработка ошибок с TypeScript
+    if (error instanceof Error) {
+      console.error('Ошибка при получении продуктов:', error.message)
+      throw new Error(`Не удалось загрузить продукты: ${error.message}`)
+    } else {
+      console.error('Неизвестная ошибка при получении продуктов:', error)
+      throw new Error('Произошла неизвестная ошибка при загрузке продуктов')
+    }
   }
 }
 
@@ -47,14 +58,14 @@ export async function postProduct(data: ProductData, token: string) {
       })
     }
 
-    const response = await axios.post(`${BASE_URL}/products/`, formData, {
+    const response = await fetch('/api/products', {
+      method: 'POST',
+      body: formData,
       headers: {
-        'Authorization': `Token ${token}`,
-        'Content-Type': 'multipart/form-data',
-      },
-      withCredentials: true,
+        'Authorization': `Bearer ${token}`
+      }
     })
-    return response.data
+    return response.json()
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.error('Ошибка при добавлении продукта:', error.response?.data || error.message)

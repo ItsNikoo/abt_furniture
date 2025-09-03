@@ -4,8 +4,8 @@ import ReactQueryProvider from './react-query-provider'
 import Footer from "@/components/site/Footer"
 
 export const metadata: Metadata = {
-  title: 'АБТ кухни ',
-  description: 'Сгенерировано с помощью create next app',
+  title: 'АБТ мебель ',
+  description: 'Производим качественную мебель на заказ в Москве. Кухни, прихожие, корпусная мебель от АБТ. Бесплатный замер, 3D-проект и гарантия на продукцию. Создаем мебель вашей мечты!',
   icons: {
     icon: "/favicon.ico",
   }

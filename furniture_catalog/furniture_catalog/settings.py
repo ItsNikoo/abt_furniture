@@ -1,3 +1,4 @@
+import os
 from datetime import timedelta
 from pathlib import Path
 from decouple import config
@@ -17,9 +18,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-d90$&ig18i$-7_)w2h0^q4^o$xh-(ee6**n=7mz1pd1qow49%3'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'my_backend', 'abt-frontend', 'my_frontend']
 
 # Application definition
 
@@ -50,7 +51,7 @@ MIDDLEWARE = [
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (
         'djangorestframework_camel_case.render.CamelCaseJSONRenderer',
-        'rest_framework.renderers.BrowsableAPIRenderer',  # если используешь browsable API
+        #   'rest_framework.renderers.BrowsableAPIRenderer',  # если используешь browsable API
     ),
     'DEFAULT_PARSER_CLASSES': (
         'djangorestframework_camel_case.parser.CamelCaseJSONParser',
@@ -66,9 +67,10 @@ REST_KNOX = {
     'TOKEN_TTL': timedelta(minutes=30),
 }
 
-
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
+    "http://my_frontend:3000",
+    "http://127.0.0.1:3000",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -134,13 +136,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = '/app/static'
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Эта строка обязательна!
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
 
 # Настройки для отправки на почту
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -150,3 +153,27 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'info@kuhni-abt.ru'  # Ваш email
 EMAIL_HOST_PASSWORD = config("EMAIL_PASSWORD")
 DEFAULT_FROM_EMAIL = 'info@kuhni-abt.ru'
+
+# # Добавьте в конец settings.py
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'handlers': {
+#         'console': {
+#             'level': 'DEBUG',
+#             'class': 'logging.StreamHandler',
+#         },
+#     },
+#     'loggers': {
+#         'django': {
+#             'handlers': ['console'],
+#             'level': 'DEBUG',
+#             'propagate': True,
+#         },
+#         'django.request': {
+#             'handlers': ['console'],
+#             'level': 'DEBUG',
+#             'propagate': False,
+#         },
+#     },
+# }

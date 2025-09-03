@@ -19,10 +19,9 @@ const wordVariants: Variants = {
 interface AnimatedTextProps {
   text: string;
   className?: string;
-  delay?: number;
 }
 
-export default function AnimatedText({ text, className, delay }: AnimatedTextProps) {
+export default function AnimatedText({ text, className }: AnimatedTextProps) {
   // Разбиваем текст на массив слов
   const words = text.split(" ");
 

@@ -85,7 +85,7 @@ export default function RightPartOfFirstPage() {
   }
 
   function validateForm() {
-    let isValid = true
+    const isValid = true
     const newErrors = {
       phone: formData.phone.trim() === '' ? 'Введите номер телефона' : '',
       consent: !consent ? 'Необходимо дать согласие на обработку данных' : ''

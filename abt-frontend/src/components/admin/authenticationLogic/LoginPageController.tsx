@@ -30,8 +30,12 @@ export default function LoginPageController() {
       setUser(data.user.username)
       console.log('Вход выполнен успешно')
       router.push('/admin') // Перенаправление на страницу администратора
-    } catch (err: any) {
-      setError(err.message)
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message)
+      } else {
+        setError('Произошла неизвестная ошибка')
+      }
       setIsAuthenticated(false)
       setUser(null)
     }
