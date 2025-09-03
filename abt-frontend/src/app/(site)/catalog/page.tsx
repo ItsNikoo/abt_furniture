@@ -19,6 +19,9 @@ export async function generateMetadata() {
   }
 }
 
+export const dynamic = 'force-dynamic' // Отключает статическую генерацию
+export const revalidate = 0 // Отключает кэширование
+
 export default function CatalogPage() {
   const categoriesPromise = fetchCategories()
   const stylesPromise = fetchStyles()

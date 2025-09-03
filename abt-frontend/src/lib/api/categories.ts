@@ -15,18 +15,18 @@ interface ApiErrorResponse {
 
 export async function fetchCategories() {
 	try {
-		const res = await fetch(`${BASE_URL}/categories/`, {
+		const response = await fetch(`${BASE_URL}/categories/`, {
 			next: {revalidate: 60},
 		})
 
-		if (!res.ok) {
-			throw new Error(`HTTP error! status: ${res.status}`)
+		if (!response.ok) {
+			return [];
 		}
 
-		return await res.json()
+		return await response.json()
 	} catch (err) {
 		console.error('Ошибка при получении категорий:', err)
-		throw new Error('Не удалось получить категории')
+		return [];
 	}
 }
 

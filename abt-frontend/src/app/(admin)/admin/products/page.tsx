@@ -2,6 +2,9 @@ import MainGridContainer from '@/components/admin/products/MainGridContainer'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 
+export const dynamic = 'force-dynamic' // Отключает статическую генерацию
+export const revalidate = 0 // Отключает кэширование
+
 export default function ProductsPage() {
   return (
     <div>

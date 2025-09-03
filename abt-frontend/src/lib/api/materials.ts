@@ -5,15 +5,20 @@ const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
 // GET запрос
 export async function fetchMaterials(): Promise<Material[]> {
-  const response = await fetch(`${BASE_URL}/materials/`,
-    {
-      credentials: 'include', // важно для передачи и получения куков
+  try{
+    const response = await fetch(`${BASE_URL}/materials/`,
+      {
+        credentials: 'include', // важно для передачи и получения куков
+      }
+    )
+    if (!response.ok) {
+      return [];
     }
-  )
-  if (!response.ok) {
-    throw new Error('Ошибка при загрузке материалов')
+    return response.json()
+  }catch(err){
+    console.error("Ошибка в функции fetchMaterials:", err)
+    return [];
   }
-  return response.json()
 }
 
 // DELETE запрос

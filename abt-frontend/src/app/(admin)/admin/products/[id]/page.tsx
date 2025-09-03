@@ -5,6 +5,9 @@ import { fetchStyles } from '@/lib/api/styles'
 import { fetchMaterials } from '@/lib/api/materials'
 import { fetchProductById } from '@/lib/api/products'
 
+export const dynamic = 'force-dynamic' // Отключает статическую генерацию
+export const revalidate = 0 // Отключает кэширование
+
 type Props = {
   params: Promise<{
     id: string

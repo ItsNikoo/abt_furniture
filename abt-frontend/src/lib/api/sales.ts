@@ -3,8 +3,6 @@ import {Sale, SaleData} from '@/types'
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
-
-
 export async function fetchSales(): Promise<Sale[]> {
 	try {
 		const res = await fetch(`${BASE_URL}/sales/`, {
@@ -13,13 +11,13 @@ export async function fetchSales(): Promise<Sale[]> {
 		})
 
 		if (!res.ok) {
-			throw new Error(`Ошибка сервера: ${res.status}`)
+			return []
 		}
 
 		return await res.json()
 	} catch (error) {
 		console.error("Ошибка при получении акций:", error)
-		throw new Error('Не удалось получить акции')
+		return []
 	}
 }
 
