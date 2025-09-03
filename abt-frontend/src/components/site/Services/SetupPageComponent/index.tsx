@@ -1,8 +1,8 @@
 'use client'
 
-import {motion} from "framer-motion"
-import Image from "next/image"
-import Link from "next/link"
+import { motion } from 'framer-motion'
+import Image from 'next/image'
+import Link from 'next/link'
 
 export default function SetupPageComponent() {
   return (
@@ -10,9 +10,9 @@ export default function SetupPageComponent() {
       <div className="flex flex-col md:flex-row items-center gap-8">
         <div className="w-full md:w-[350px] flex-shrink-0">
           <motion.div
-            initial={{opacity: 0, scale: 1.05}}
-            animate={{opacity: 1, scale: 1}}
-            transition={{duration: 1}}
+            initial={{ opacity: 0, scale: 1.05 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1 }}
             className="relative w-full h-56 md:h-[300px]">
             <Image
               src="/services_pictures/picture2.png"
@@ -21,23 +21,23 @@ export default function SetupPageComponent() {
               width={800}
               height={800}
               className="rounded-xl object-cover w-full h-full"
-              style={{width: "100%", height: "100%"}}
+              style={{ width: '100%', height: '100%' }}
               priority
             />
           </motion.div>
         </div>
         <div className="flex-1">
           <motion.h1
-            initial={{opacity: 0, y: 20}}
-            animate={{opacity: 1, y: 0}}
-            transition={{duration: 0.5}}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
             className="font-extrabold text-2xl sm:text-3xl md:text-4xl mb-4">
             Установка мебели
           </motion.h1>
           <motion.p
-            initial={{opacity: 0, y: 20}}
-            animate={{opacity: 1, y: 0}}
-            transition={{duration: 0.5, delay: 0.2}}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
             className="text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed mb-4">
             <span className="font-bold">Профессиональная установка — гарантия качества</span>
             <br/>
@@ -45,9 +45,9 @@ export default function SetupPageComponent() {
             Мы используем только профессиональный инструмент и строго следуем технологии монтажа.
           </motion.p>
           <motion.p
-            initial={{opacity: 0, y: 20}}
-            animate={{opacity: 1, y: 0}}
-            transition={{duration: 0.5, delay: 0.4}}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
             className="text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed">
             <span className="font-bold">Всё под контролем</span>
             <br/>
@@ -58,9 +58,9 @@ export default function SetupPageComponent() {
       </div>
       {/* CTA Section */}
       <motion.div
-        initial={{opacity: 0, y: 20}}
-        animate={{opacity: 1, y: 0}}
-        transition={{duration: 0.5, delay: 0.6}}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.6 }}
         className="mt-8 sm:mt-12 text-center">
         <div
           className="bg-gradient-to-r from-mainPurple to-mainPurple/80 rounded-xl sm:rounded-2xl p-6 sm:p-8 lg:p-10 text-white shadow-xl">

@@ -1,34 +1,34 @@
 'use client'
 
-import { useState } from "react";
-import Link from "next/link";
+import { useState } from 'react'
+import Link from 'next/link'
 
-interface ServiceProps{
+interface ServiceProps {
   title: string;
   link: string;
 }
 
 const services: ServiceProps[] = [
   {
-    title:"Дизайн-проект",
-    link:"/services/design",
+    title: 'Дизайн-проект',
+    link: '/services/design',
   },
   {
-    title:"Замер",
-    link:"/services/measure",
+    title: 'Замер',
+    link: '/services/measure',
   },
   {
-    title:"Доставка",
-    link:"/services/delivery",
+    title: 'Доставка',
+    link: '/services/delivery',
   },
   {
-    title:"Установка",
-    link:"/services/setup",
-  }
-];
+    title: 'Установка',
+    link: '/services/setup',
+  },
+]
 
 export default function ServiceButton() {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false)
 
   return (
     <div
@@ -38,7 +38,7 @@ export default function ServiceButton() {
     >
       <Link
         className="font-notosans"
-        href='/services'
+        href="/services"
       >
         Услуги
       </Link>
@@ -59,5 +59,5 @@ export default function ServiceButton() {
         </div>
       )}
     </div>
-  );
+  )
 }

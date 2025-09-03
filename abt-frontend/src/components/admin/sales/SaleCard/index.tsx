@@ -1,12 +1,12 @@
-"use client"
+'use client'
 
-import { Sale } from "@/types";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Trash2 } from "lucide-react";
-import UpdateSaleContainer from "@/components/admin/sales/UpdateSaleContainer";
-import Image from "next/image";
-import Cookies from "js-cookie";
+import { Sale } from '@/types'
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { Trash2 } from 'lucide-react'
+import UpdateSaleContainer from '@/components/admin/sales/UpdateSaleContainer'
+import Image from 'next/image'
+import Cookies from 'js-cookie'
 
 export default function SaleCard({
   sale,
@@ -17,16 +17,16 @@ export default function SaleCard({
 }) {
   const handleDelete = async () => {
     try {
-      const token = Cookies.get("token");
+      const token = Cookies.get('token')
       if (!token) {
-        alert("Вы не авторизованы");
-        return;
+        alert('Вы не авторизованы')
+        return
       }
-      await onDeleteAction(sale.id, token);
+      await onDeleteAction(sale.id, token)
     } catch (error) {
-      console.error("Ошибка при удалении акции:", error);
+      console.error('Ошибка при удалении акции:', error)
     }
-  };
+  }
 
   return (
     <Card className="rounded-xl shadow-lg border-0 bg-white/90">
@@ -36,7 +36,7 @@ export default function SaleCard({
             {sale.title}
           </h1>
           <div className="flex gap-1">
-            <UpdateSaleContainer sale={sale} />
+            <UpdateSaleContainer sale={sale}/>
             <Button
               variant="ghost"
               size="icon"
@@ -44,7 +44,7 @@ export default function SaleCard({
               className="hover:bg-mainPurple text-black hover:text-white transition-colors"
               aria-label="Удалить акцию"
             >
-              <Trash2 className="h-4 w-4" />
+              <Trash2 className="h-4 w-4"/>
             </Button>
           </div>
         </div>
@@ -78,5 +78,5 @@ export default function SaleCard({
         </div>
       </CardContent>
     </Card>
-  );
+  )
 }

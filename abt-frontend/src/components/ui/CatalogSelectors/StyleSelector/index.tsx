@@ -1,12 +1,12 @@
 'use client'
 
-import {Style} from "@/types";
-import {useState} from "react";
-import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
-import {Button} from "@/components/ui/button";
-import {Check, ChevronsUpDown} from "lucide-react";
-import {Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList} from "@/components/ui/command";
-import {cn} from "@/lib/utils";
+import { Style } from '@/types'
+import { useState } from 'react'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { Button } from '@/components/ui/button'
+import { Check, ChevronsUpDown } from 'lucide-react'
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command'
+import { cn } from '@/lib/utils'
 
 interface StyleSelectorProps {
   styles: Style[]
@@ -17,7 +17,7 @@ interface StyleSelectorProps {
 export default function StyleSelector({ styles, currentStyle, setCurrentStyle }: StyleSelectorProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false)
 
-  return(
+  return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
         <Button

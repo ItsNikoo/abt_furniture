@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button'
 import { Sale } from '@/types'
 import Link from 'next/link'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import {motion} from 'framer-motion'
+import { motion } from 'framer-motion'
 
 export default function FirstCarousel({ slides }: { slides: Sale[] }) {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [Autoplay({ delay: 4000 })]) // Луп и автопрокрутка
@@ -52,13 +52,16 @@ export default function FirstCarousel({ slides }: { slides: Sale[] }) {
       className="relative mx-auto max-w-[95%] sm:max-w-[90%] lg:max-w-[80%]">
       {/* Контейнер для карусели */}
       <div className="embla">
-        <div className="embla__viewport overflow-hidden my-3 sm:my-5 rounded-lg sm:rounded-xl shadow-lg sm:shadow-xl" ref={emblaRef}>
+        <div className="embla__viewport overflow-hidden my-3 sm:my-5 rounded-lg sm:rounded-xl shadow-lg sm:shadow-xl"
+             ref={emblaRef}>
           <div className="embla__container flex">
             {slides && slides.map((slide) => (
               <div key={slide.id} className="embla__slide flex-[0_0_100%] min-w-0 ">
                 <div className="flex flex-col sm:flex-row">
-                  <div className="w-full sm:w-1/2 flex flex-col items-center justify-between pt-3 sm:pt-5 pb-5 sm:pb-10 px-2 sm:px-3">
-                    <h1 className="text-2xl md:text-3xl lg:text-4xl font-overpass font-extrabold text-center">{slide.title}</h1>
+                  <div
+                    className="w-full sm:w-1/2 flex flex-col items-center justify-between pt-3 sm:pt-5 pb-5 sm:pb-10 px-2 sm:px-3">
+                    <h1
+                      className="text-2xl md:text-3xl lg:text-4xl font-overpass font-extrabold text-center">{slide.title}</h1>
                     <div className="flex flex-col items-center mt-4 sm:mt-0">
                       <Link
                         href={slide.link}
@@ -117,14 +120,14 @@ export default function FirstCarousel({ slides }: { slides: Sale[] }) {
         onClick={scrollPrev}
         aria-label="Предыдущий слайд"
       >
-        <ChevronLeft className="w-5 h-5 lg:w-6 lg:h-6 text-white" />
+        <ChevronLeft className="w-5 h-5 lg:w-6 lg:h-6 text-white"/>
       </Button>
       <Button
         className="hidden sm:flex absolute right-[-30px] lg:right-[-50px] top-1/2 -translate-y-1/2 bg-mainPurple p-2 w-8 h-8 lg:w-10 lg:h-10 hover:bg-mainPurpleHovered transition-colors duration-200 items-center justify-center shadow-lg"
         onClick={scrollNext}
         aria-label="Следующий слайд"
       >
-        <ChevronRight className="w-5 h-5 lg:w-6 lg:h-6 text-white" />
+        <ChevronRight className="w-5 h-5 lg:w-6 lg:h-6 text-white"/>
       </Button>
     </motion.div>
   )

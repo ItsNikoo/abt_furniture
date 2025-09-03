@@ -1,6 +1,6 @@
-import React from "react";
-import { motion } from "framer-motion";
-import { Skeleton } from "@/components/ui/skeleton";
+import React from 'react'
+import { motion } from 'framer-motion'
+import { Skeleton } from '@/components/ui/skeleton'
 
 export default function CategoriesPlaceholder() {
   return (
@@ -21,15 +21,15 @@ export default function CategoriesPlaceholder() {
             {/* Фиолетовая полоска сверху */}
             <div className="absolute top-0 left-0 right-0 h-3 bg-mainPurple z-10"></div>
             <div className="flex flex-col p-10 pt-8">
-              <Skeleton className="h-8 w-2/3 mb-3" />
+              <Skeleton className="h-8 w-2/3 mb-3"/>
               <div className="w-full aspect-square relative overflow-hidden rounded-lg">
-                <Skeleton className="w-full h-full rounded-lg" />
+                <Skeleton className="w-full h-full rounded-lg"/>
               </div>
             </div>
           </div>
         ))}
       </div>
     </motion.div>
-  );
+  )
 }
 

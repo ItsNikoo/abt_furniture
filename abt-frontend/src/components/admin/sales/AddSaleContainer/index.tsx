@@ -15,7 +15,7 @@ import { useState } from 'react'
 import { SaleData } from '@/types'
 import { postSaleAction } from '@/actions/sales'
 import Image from 'next/image'
-import Cookies from "js-cookie";
+import Cookies from 'js-cookie'
 
 export default function AddSaleContainer() {
   const [formData, setFormData] = useState<SaleData>({

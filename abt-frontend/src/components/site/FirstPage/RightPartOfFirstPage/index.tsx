@@ -1,12 +1,12 @@
-"use client"
+'use client'
 
-import {Input} from "@/components/ui/input"
-import {Button} from "@/components/ui/button"
-import {Label} from "@/components/ui/label"
-import {startTransition, useEffect, useState} from "react";
-import {Checkbox} from "@/components/ui/checkbox";
-import {postContactAction} from "@/actions/contact";
-import { motion } from "framer-motion";
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+import { Label } from '@/components/ui/label'
+import { startTransition, useEffect, useState } from 'react'
+import { Checkbox } from '@/components/ui/checkbox'
+import { postContactAction } from '@/actions/contact'
+import { motion } from 'framer-motion'
 
 export default function RightPartOfFirstPage() {
   const [formData, setFormData] = useState({
@@ -26,43 +26,43 @@ export default function RightPartOfFirstPage() {
 
   // Засекаем время когда компонент смонтирован
   useEffect(() => {
-    setFormLoadTime(Date.now());
-  }, []);
+    setFormLoadTime(Date.now())
+  }, [])
 
   function handleCommentChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setSuccess(null);
+    setSuccess(null)
     setFormData(prev => ({
       ...prev,
-      comment: e.target.value
-    }));
+      comment: e.target.value,
+    }))
   }
 
   function handlePhoneChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const value = e.target.value;
-    const cleanedValue = value.replace(/\D/g, '');
+    const value = e.target.value
+    const cleanedValue = value.replace(/\D/g, '')
     setSuccess(null)
 
-    let formattedValue = '';
+    let formattedValue = ''
     if (cleanedValue.length > 0) {
-      formattedValue = '+7 ';
+      formattedValue = '+7 '
       if (cleanedValue.length > 1) {
-        formattedValue += `(${cleanedValue.substring(1, 4)}`;
+        formattedValue += `(${cleanedValue.substring(1, 4)}`
       }
       if (cleanedValue.length > 4) {
-        formattedValue += `) ${cleanedValue.substring(4, 7)}`;
+        formattedValue += `) ${cleanedValue.substring(4, 7)}`
       }
       if (cleanedValue.length > 7) {
-        formattedValue += `-${cleanedValue.substring(7, 9)}`;
+        formattedValue += `-${cleanedValue.substring(7, 9)}`
       }
       if (cleanedValue.length > 9) {
-        formattedValue += `-${cleanedValue.substring(9, 11)}`;
+        formattedValue += `-${cleanedValue.substring(9, 11)}`
       }
     }
 
     setFormData(prev => ({
       ...prev,
-      phone: formattedValue
-    }));
+      phone: formattedValue,
+    }))
 
     if (formattedValue.length > 0) {
       setFormErrors(prev => ({ ...prev, phone: '' }))
@@ -80,15 +80,15 @@ export default function RightPartOfFirstPage() {
   function handleHoneypotChange(e: React.ChangeEvent<HTMLInputElement>) {
     setFormData(prev => ({
       ...prev,
-      honeypot: e.target.value
-    }));
+      honeypot: e.target.value,
+    }))
   }
 
   function validateForm() {
     const isValid = true
     const newErrors = {
       phone: formData.phone.trim() === '' ? 'Введите номер телефона' : '',
-      consent: !consent ? 'Необходимо дать согласие на обработку данных' : ''
+      consent: !consent ? 'Необходимо дать согласие на обработку данных' : '',
     }
 
     setFormErrors(newErrors)
@@ -103,15 +103,15 @@ export default function RightPartOfFirstPage() {
     }
 
     // Time Check защита
-    const submitTime = Date.now();
-    const formFillTime = submitTime - formLoadTime;
+    const submitTime = Date.now()
+    const formFillTime = submitTime - formLoadTime
 
     if (formFillTime < 3000) {
-      setError('Пожалуйста, заполните форму внимательнее');
-      return;
+      setError('Пожалуйста, заполните форму внимательнее')
+      return
     }
 
-    setIsSubmitting(true);
+    setIsSubmitting(true)
 
     startTransition(async () => {
       try {
@@ -120,28 +120,28 @@ export default function RightPartOfFirstPage() {
           formData.comment,
           consent,
           formData.honeypot,   // Передаем honeypot
-          formLoadTime         // Передаем время загрузки
-        );
+          formLoadTime,         // Передаем время загрузки
+        )
 
         if (response.success) {
-          setSuccess('Ваш запрос успешно отправлен! Мы свяжемся с вами в ближайшее время.');
+          setSuccess('Ваш запрос успешно отправлен! Мы свяжемся с вами в ближайшее время.')
           setFormData({
             phone: '',
             comment: '',
-            honeypot: ''
-          });
-          setConsent(false);
+            honeypot: '',
+          })
+          setConsent(false)
         } else {
-          setError(response.error || 'Произошла ошибка при отправке');
+          setError(response.error || 'Произошла ошибка при отправке')
         }
       } catch (e) {
         setError(
           e instanceof Error
-            ? `Произошла ошибка при отправке данных: ${e.message}`
-            : 'Неизвестная ошибка. Пожалуйста, попробуйте еще раз.'
-        );
+          ? `Произошла ошибка при отправке данных: ${e.message}`
+          : 'Неизвестная ошибка. Пожалуйста, попробуйте еще раз.',
+        )
       } finally {
-        setIsSubmitting(false);
+        setIsSubmitting(false)
       }
     })
   }
@@ -151,9 +151,10 @@ export default function RightPartOfFirstPage() {
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.75 }}
-      viewport={{once: true}}
+      viewport={{ once: true }}
       className="lg:w-1/2 w-full flex justify-center items-center">
-      <div className="relative bg-white rounded-2xl sm:rounded-3xl shadow-xl overflow-hidden w-full max-w-sm sm:max-w-md lg:max-w-[360px]">
+      <div
+        className="relative bg-white rounded-2xl sm:rounded-3xl shadow-xl overflow-hidden w-full max-w-sm sm:max-w-md lg:max-w-[360px]">
         <div className="absolute top-0 left-0 right-0 h-2 sm:h-3 bg-mainPurple"></div>
 
         <div className="pt-6 sm:pt-8 px-6 sm:px-8 pb-5 sm:pb-6">
@@ -171,7 +172,7 @@ export default function RightPartOfFirstPage() {
               style={{
                 display: 'none',
                 position: 'absolute',
-                left: '-9999px'
+                left: '-9999px',
               }}
               autoComplete="off"
               tabIndex={-1}
@@ -183,7 +184,7 @@ export default function RightPartOfFirstPage() {
                 name="phone"
                 value={formData.phone}
                 onChange={handlePhoneChange}
-                className='py-4 sm:py-[25px] text-sm sm:text-base'
+                className="py-4 sm:py-[25px] text-sm sm:text-base"
                 placeholder="+7 (___) ___-__-__"
                 type="tel"
                 required
@@ -198,7 +199,7 @@ export default function RightPartOfFirstPage() {
               name="comment"
               value={formData.comment}
               onChange={handleCommentChange}
-              className='py-4 sm:py-[25px] text-sm sm:text-base'
+              className="py-4 sm:py-[25px] text-sm sm:text-base"
               placeholder="Комментарий или пожелания..."
             />
 
@@ -213,7 +214,7 @@ export default function RightPartOfFirstPage() {
                   Принимаю политику конфиденциальности
                 </Label>
                 <p className="text-muted-foreground text-[13px]">
-                  Нажимая на эту кнопку, вы соглашаетесь на обработку персональных данных.{" "}
+                  Нажимая на эту кнопку, вы соглашаетесь на обработку персональных данных.{' '}
                   <a href="/privacy-policy" className="text-mainPurple hover:underline">
                     Подробнее
                   </a>

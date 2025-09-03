@@ -1,7 +1,7 @@
-import React from "react";
-import { motion } from "framer-motion";
-import { Skeleton } from "@/components/ui/skeleton";
-import Image from "next/image";
+import React from 'react'
+import { motion } from 'framer-motion'
+import { Skeleton } from '@/components/ui/skeleton'
+import Image from 'next/image'
 
 export default function SalesPlaceholder() {
   return (
@@ -16,8 +16,9 @@ export default function SalesPlaceholder() {
           <div className="embla__container flex">
             <div className="embla__slide flex-[0_0_100%] min-w-0">
               <div className="flex flex-col sm:flex-row">
-                <div className="w-full sm:w-1/2 flex flex-col items-center justify-between pt-3 sm:pt-5 pb-5 sm:pb-10 px-2 sm:px-3">
-                  <Skeleton className="h-10 w-3/4 mb-4" />
+                <div
+                  className="w-full sm:w-1/2 flex flex-col items-center justify-between pt-3 sm:pt-5 pb-5 sm:pb-10 px-2 sm:px-3">
+                  <Skeleton className="h-10 w-3/4 mb-4"/>
                   <div className="flex flex-col items-center mt-4 sm:mt-0">
                     <div className="rounded-full bg-mainPurple p-2 w-10 h-10 flex items-center justify-center mb-2">
                       <Image
@@ -28,11 +29,12 @@ export default function SalesPlaceholder() {
                         className="opacity-40"
                       />
                     </div>
-                    <Skeleton className="h-4 w-2/3 mt-2" />
+                    <Skeleton className="h-4 w-2/3 mt-2"/>
                   </div>
                 </div>
-                <div className="w-full sm:w-1/2 h-[250px] sm:h-[350px] md:h-[450px] lg:h-[550px] bg-gray-200 flex items-center justify-center">
-                  <Skeleton className="w-full h-full rounded-lg" />
+                <div
+                  className="w-full sm:w-1/2 h-[250px] sm:h-[350px] md:h-[450px] lg:h-[550px] bg-gray-200 flex items-center justify-center">
+                  <Skeleton className="w-full h-full rounded-lg"/>
                 </div>
               </div>
             </div>
@@ -44,7 +46,7 @@ export default function SalesPlaceholder() {
             <span
               key={index}
               className={`h-2 w-2 rounded-full ${
-                index === 0 ? "bg-mainPurple" : "bg-gray-300"
+                index === 0 ? 'bg-mainPurple' : 'bg-gray-300'
               }`}
             />
           ))}
@@ -72,6 +74,6 @@ export default function SalesPlaceholder() {
         </svg>
       </button>
     </motion.div>
-  );
+  )
 }
 

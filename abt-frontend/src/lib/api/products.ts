@@ -1,5 +1,6 @@
 import axios from 'axios'
-import {ProductData} from '@/types'
+import { ProductData } from '@/types'
+
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
 export async function fetchProducts(filters: { category?: string; style?: string; material?: string } = {}) {
@@ -34,7 +35,7 @@ export async function fetchProducts(filters: { category?: string; style?: string
 
 export async function fetchProductById(id: number) {
   const res = await fetch(`${BASE_URL}/products/${id}/`, {
-    next: {revalidate: 60},
+    next: { revalidate: 60 },
   })
   return res.json()
 }
@@ -62,8 +63,8 @@ export async function postProduct(data: ProductData, token: string) {
       method: 'POST',
       body: formData,
       headers: {
-        'Authorization': `Bearer ${token}`
-      }
+        'Authorization': `Bearer ${token}`,
+      },
     })
     return response.json()
   } catch (error) {

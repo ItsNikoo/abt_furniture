@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 
 export default function LoadingPlaceholder() {
   return (
@@ -24,5 +24,5 @@ export default function LoadingPlaceholder() {
       </svg>
       <span className="text-lg text-black font-medium">Загрузка данных...</span>
     </div>
-  );
+  )
 }

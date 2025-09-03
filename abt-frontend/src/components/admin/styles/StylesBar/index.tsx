@@ -16,7 +16,7 @@ export default function StylesBar({ promise }: { promise: Promise<Style[]> }) {
     <div className="grid grid-cols-3 gap-2.5">
       {styles?.map((style) => (
         <div key={style.id}>
-          <StyleCard style={style} onDeleteAction={handleDeleteStyle} />
+          <StyleCard style={style} onDeleteAction={handleDeleteStyle}/>
         </div>
       ))}
     </div>

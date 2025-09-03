@@ -1,13 +1,13 @@
 import styles from './AdminLayout.module.css'
 import Link from 'next/link'
-import LogoutButton from "@/components/admin/authenticationLogic/LogoutButton";
+import LogoutButton from '@/components/admin/authenticationLogic/LogoutButton'
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className={styles.MainContainer}>
       <div className={styles.Header}>
         <h1 className={styles.Title}>Админ-панель</h1>
-        <LogoutButton />
+        <LogoutButton/>
       </div>
       <div className={styles.Container}>
         <nav className={styles.Sidebar}>

@@ -15,8 +15,8 @@ import { Category, Material, ProductData, Style } from '@/types'
 import { postProduct } from '@/lib/api/products'
 import { queryClient } from '@/lib/react-query-client'
 import { useRouter } from 'next/navigation'
-import Cookies from "js-cookie"
-import Image from "next/image";
+import Cookies from 'js-cookie'
+import Image from 'next/image'
 
 interface Props {
   categories: Category[];

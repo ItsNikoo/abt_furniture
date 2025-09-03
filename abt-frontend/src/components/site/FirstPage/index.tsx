@@ -11,17 +11,17 @@ export default function FirstPage() {
       {/* Background Image */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20 -z-10"
-        style={{backgroundImage: "url('/background_image.webp')"}}
+        style={{ backgroundImage: 'url(\'/background_image.webp\')' }}
       />
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className='flex lg:flex-row flex-col justify-center items-center'>
+        className="flex lg:flex-row flex-col justify-center items-center">
         <LeftPartOfFirstPage/>
         <RightPartOfFirstPage/>
       </motion.div>
-      <div className='relative w-full z-10 hidden lg:block'>
+      <div className="relative w-full z-10 hidden lg:block">
         {/* Новый блок на всю ширину */}
         <ClientContainer/>
       </div>

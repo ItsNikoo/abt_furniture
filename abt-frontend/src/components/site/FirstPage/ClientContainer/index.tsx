@@ -49,7 +49,7 @@ export default function ClientContainer() {
         const isActive = clicked === item.id
         return (
           <motion.div
-            whileHover={{scale: 1.02}}
+            whileHover={{ scale: 1.02 }}
             key={item.id}
             onClick={() => handleClick(item.id)}
             className={`

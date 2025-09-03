@@ -5,8 +5,8 @@ import { Button } from '@/components/ui/button'
 import Image from 'next/image'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { deleteProduct } from '@/lib/api/products'
-import Cookies from "js-cookie"
-import {Trash2} from "lucide-react";
+import Cookies from 'js-cookie'
+import { Trash2 } from 'lucide-react'
 
 interface ProductCardProps {
   product: Product;
@@ -48,11 +48,11 @@ export default function ProductCard({ product }: ProductCardProps) {
         <Button
           size="icon"
           variant="ghost"
-          className='hover:bg-mainPurple hover:text-white'
+          className="hover:bg-mainPurple hover:text-white"
           onClick={handleDelete}
           aria-label="Удалить продукт"
         >
-          <Trash2 className="h-4 w-4" />
+          <Trash2 className="h-4 w-4"/>
         </Button>
       </CardHeader>
       <CardContent className="p-4 pt-2">

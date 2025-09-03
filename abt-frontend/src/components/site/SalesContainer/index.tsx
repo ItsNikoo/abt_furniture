@@ -3,8 +3,8 @@
 import { useEffect, useState } from 'react'
 import { Sale } from '@/types'
 import FirstCarousel from '@/components/ui/Embla/FirstCarousel'
-import LoadingPlaceholder from "@/components/placeholders/LoadingPlaceholder";
-import SalesPlaceholder from "@/components/placeholders/SalesPlaceholder";
+import LoadingPlaceholder from '@/components/placeholders/LoadingPlaceholder'
+import SalesPlaceholder from '@/components/placeholders/SalesPlaceholder'
 
 export default function SalesContainer() {
   const [sales, setSales] = useState<Sale[]>([])
@@ -30,12 +30,12 @@ export default function SalesContainer() {
 
   if (loading) return (
     <div>
-      <LoadingPlaceholder />
+      <LoadingPlaceholder/>
     </div>
   )
   if (error || sales.length === 0) return (
     <div>
-      <SalesPlaceholder />
+      <SalesPlaceholder/>
     </div>
   )
 

@@ -16,7 +16,7 @@ import { Input } from '@/components/ui/input'
 import { useState } from 'react'
 import { Material } from '@/types'
 import { patchMaterialAction } from '@/actions/materials'
-import Cookies from "js-cookie"
+import Cookies from 'js-cookie'
 
 export default function UpdateMaterialContainer({ material }: { material: Material }) {
   const [isOpen, setIsOpen] = useState(false)

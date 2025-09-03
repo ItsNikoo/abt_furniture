@@ -1,12 +1,12 @@
 'use client'
 
-import {Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList} from "@/components/ui/command"
-import {Button} from "@/components/ui/button"
-import {Check, ChevronsUpDown} from "lucide-react"
-import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover"
-import {useState} from "react"
-import { Material } from "@/types"
-import { cn } from "@/lib/utils"
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command'
+import { Button } from '@/components/ui/button'
+import { Check, ChevronsUpDown } from 'lucide-react'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { useState } from 'react'
+import { Material } from '@/types'
+import { cn } from '@/lib/utils'
 
 interface MaterialSelectorProps {
   materials: Material[],
@@ -14,7 +14,7 @@ interface MaterialSelectorProps {
   setCurrentMaterial: (material: string) => void,
 }
 
-export default function MaterialSelector({materials, currentMaterial, setCurrentMaterial}: MaterialSelectorProps) {
+export default function MaterialSelector({ materials, currentMaterial, setCurrentMaterial }: MaterialSelectorProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false)
 
   return (

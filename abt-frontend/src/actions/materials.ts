@@ -16,7 +16,7 @@ export async function patchMaterialAction(id: number, data: string, token: strin
 }
 
 // Создание материала
-export async function postMaterialAction(material: string,token: string) {
+export async function postMaterialAction(material: string, token: string) {
   await postMaterial(material, token)
   revalidatePath('/admin/materials')
 }

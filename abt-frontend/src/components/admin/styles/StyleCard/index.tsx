@@ -5,7 +5,7 @@ import { Card, CardHeader } from '@/components/ui/card'
 import UpdateStyleContainer from '@/components/admin/styles/UpdateStyleContainer'
 import { Button } from '@/components/ui/button'
 import { Trash2 } from 'lucide-react'
-import Cookies from "js-cookie";
+import Cookies from 'js-cookie'
 
 export default function StyleCard({ style, onDeleteAction }: {
   style: Style,
@@ -35,7 +35,7 @@ export default function StyleCard({ style, onDeleteAction }: {
             variant="ghost"
             size="icon"
             onClick={handleDelete}
-            className='hover:bg-mainPurple hover:text-white'
+            className="hover:bg-mainPurple hover:text-white"
           >
             <Trash2 className="h-4 w-4"/>
           </Button>

@@ -9,7 +9,7 @@ export default function CatalogCard({ product }: { product: Product }) {
         <div className="relative overflow-hidden">
           {/* Обертка карусели с относительным позиционированием */}
           <div className="relative pointer-events-auto m-5">
-            <PhotoCarousel photos={product.photos} />
+            <PhotoCarousel photos={product.photos}/>
 
             {/* Фиолетовый бейдж - теперь позиционируется относительно карусели */}
             <div

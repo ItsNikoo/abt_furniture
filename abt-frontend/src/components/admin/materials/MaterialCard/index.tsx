@@ -8,9 +8,9 @@ import UpdateMaterialContainer from '@/components/admin/materials/UpdateMaterial
 import Cookies from 'js-cookie'
 
 export default function MaterialCard({
-                                       material,
-                                       onDeleteAction,
-                                     }: {
+  material,
+  onDeleteAction,
+}: {
   material: Material
   onDeleteAction: (id: number, token: string) => Promise<void>
 }) {
@@ -32,9 +32,9 @@ export default function MaterialCard({
       <CardHeader className="flex flex-row items-center justify-between">
         <p className="text-xl font-bold">{material.material}</p>
         <div className="flex gap-1">
-          <UpdateMaterialContainer material={material} />
-          <Button variant="ghost" size="icon" onClick={handleDelete} className='hover:bg-mainPurple hover:text-white'>
-            <Trash2 className="h-4 w-4" />
+          <UpdateMaterialContainer material={material}/>
+          <Button variant="ghost" size="icon" onClick={handleDelete} className="hover:bg-mainPurple hover:text-white">
+            <Trash2 className="h-4 w-4"/>
           </Button>
         </div>
       </CardHeader>

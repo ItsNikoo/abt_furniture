@@ -17,7 +17,7 @@ import { Label } from '@/components/ui/label'
 import { Category, CategoryData } from '@/types'
 import Image from 'next/image'
 import { patchCategoryAction } from '@/actions/categories'
-import Cookies from "js-cookie"
+import Cookies from 'js-cookie'
 
 export default function UpdateCategoryContainer({ category }: { category: Category }) {
   const [isOpen, setIsOpen] = useState(false)

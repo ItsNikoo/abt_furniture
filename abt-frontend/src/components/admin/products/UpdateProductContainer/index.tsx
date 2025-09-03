@@ -1,6 +1,6 @@
 'use client'
 
-import {redirect, useParams} from 'next/navigation'
+import { redirect, useParams } from 'next/navigation'
 import { useMutation } from '@tanstack/react-query'
 import { patchProduct } from '@/lib/api/products'
 import { Category, Material, Photo, Product, ProductData, Style } from '@/types'
@@ -16,7 +16,7 @@ import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, Command
 import { cn } from '@/lib/utils'
 import { queryClient } from '@/lib/react-query-client'
 import Image from 'next/image'
-import Cookies from "js-cookie"
+import Cookies from 'js-cookie'
 
 interface Props {
   categories: Category[];

@@ -1,17 +1,17 @@
 'use client'
 
-import Link from "next/link"
-import {Service} from "@/types"
-import {services} from "@/components/site/Services/services"
-import Image from "next/image"
-import { motion } from "framer-motion"
+import Link from 'next/link'
+import { Service } from '@/types'
+import { services } from '@/components/site/Services/services'
+import Image from 'next/image'
+import { motion } from 'framer-motion'
 
-function ServiceCard({service}: { service: Service }) {
+function ServiceCard({ service }: { service: Service }) {
   const isReversed = service.id % 2 === 0
   return (
     <div
       className={`flex flex-col md:flex-row shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden max-w-5xl mx-auto rounded-xl p-6 md:p-[50px] ${
-        isReversed ? "md:flex-row-reverse" : ""
+        isReversed ? 'md:flex-row-reverse' : ''
       }`}
     >
       <div className="w-full h-56 md:w-[300px] md:h-[300px] flex-shrink-0 relative mb-6 md:mb-0">
@@ -23,7 +23,7 @@ function ServiceCard({service}: { service: Service }) {
             fill={false}
             width={1200}
             height={1200}
-            style={{ width: "100%", height: "100%" }}
+            style={{ width: '100%', height: '100%' }}
           />
         )}
       </div>
@@ -47,16 +47,17 @@ export default function Services() {
   return (
     <div className="my-4">
       <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
       >
         <h1 className="text-mainPurple font-extrabold text-xl sm:text-2xl md:text-3xl mb-4">
           Идеальная корпусная мебель на заказ — дизайн, изготовление, установка
         </h1>
         <p className="mb-6">
-          Помимо мебели разных фасонов и стилей{" "}
-          <span className="font-bold">мы предоставляем обширный спектр услуг</span>, чтобы вы получили максимум удовольствия и минимум “рутины”.
+          Помимо мебели разных фасонов и стилей{' '}
+          <span className="font-bold">мы предоставляем обширный спектр услуг</span>, чтобы вы получили максимум
+          удовольствия и минимум “рутины”.
         </p>
       </motion.div>
       <div className="grid grid-cols-1 gap-8">
@@ -67,7 +68,7 @@ export default function Services() {
             transition={{ duration: 0.5, delay: service.id * 0.2 }}
             viewport={{ once: true }}
             key={service.id}>
-            <ServiceCard service={service} />
+            <ServiceCard service={service}/>
           </motion.div>
         ))}
       </div>
@@ -76,14 +77,16 @@ export default function Services() {
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.5}}
+        transition={{ duration: 0.5 }}
         className="mt-8 sm:mt-12 text-center">
-        <div className="bg-gradient-to-r from-mainPurple to-mainPurple/80 rounded-xl sm:rounded-2xl p-6 sm:p-8 lg:p-10 text-white shadow-xl">
+        <div
+          className="bg-gradient-to-r from-mainPurple to-mainPurple/80 rounded-xl sm:rounded-2xl p-6 sm:p-8 lg:p-10 text-white shadow-xl">
           <h3 className="font-bold text-xl sm:text-2xl lg:text-3xl mb-3 sm:mb-4">
             Не нашли нужную услугу?
           </h3>
           <p className="text-sm sm:text-base lg:text-lg opacity-90 leading-relaxed mb-6 sm:mb-8 max-w-2xl mx-auto">
-            Мы готовы реализовать любые задачи по мебели и интерьеру. Свяжитесь с нами — подберём индивидуальное решение!
+            Мы готовы реализовать любые задачи по мебели и интерьеру. Свяжитесь с нами — подберём индивидуальное
+            решение!
           </p>
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
             <Link

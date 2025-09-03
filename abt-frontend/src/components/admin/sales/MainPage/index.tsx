@@ -21,7 +21,7 @@ export default function MainPage({ promise }: { promise: Promise<Sale[]> }) {
     <div className="grid grid-cols-2 gap-2">
       {sales.map((sale) => (
         <div key={sale.id}>
-          <SaleCard sale={sale} onDeleteAction={handleDelete} />
+          <SaleCard sale={sale} onDeleteAction={handleDelete}/>
         </div>
       ))}
     </div>

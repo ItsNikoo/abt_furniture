@@ -6,8 +6,10 @@ django-cors-headers==4.7.0
 django-rest-knox==5.0.2
 djangorestframework==3.16.0
 djangorestframework-camel-case==1.4.2
+gunicorn==23.0.0
 jmespath==1.0.1
 pony==0.7.19
+psycopg2-binary==2.9.10
 python-dateutil==2.9.0.post0
 python-decouple==3.8
 s3transfer==0.12.0

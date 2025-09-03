@@ -1,7 +1,7 @@
 // components/AnimatedText.jsx
-'use client';
+'use client'
 
-import {motion, Variants} from 'framer-motion'
+import { motion, Variants } from 'framer-motion'
 
 // Варианты анимации для каждого слова
 const wordVariants: Variants = {
@@ -11,10 +11,10 @@ const wordVariants: Variants = {
     transition: {
       delay: i * 0.2, // Задержка для i-го слова (i * 0.2 секунды)
       duration: 0.5,
-      ease: "easeOut"
-    }
-  })
-};
+      ease: 'easeOut',
+    },
+  }),
+}
 
 interface AnimatedTextProps {
   text: string;
@@ -23,7 +23,7 @@ interface AnimatedTextProps {
 
 export default function AnimatedText({ text, className }: AnimatedTextProps) {
   // Разбиваем текст на массив слов
-  const words = text.split(" ");
+  const words = text.split(' ')
 
   return (
     <h1 className={`flex flex-wrap ${className}`}>
@@ -41,5 +41,5 @@ export default function AnimatedText({ text, className }: AnimatedTextProps) {
         </motion.span>
       ))}
     </h1>
-  );
+  )
 }

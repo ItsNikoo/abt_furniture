@@ -1,23 +1,23 @@
 import axios from 'axios'
-import {Material} from '@/types'
+import { Material } from '@/types'
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
 // GET запрос
 export async function fetchMaterials(): Promise<Material[]> {
-  try{
+  try {
     const response = await fetch(`${BASE_URL}/materials/`,
       {
         credentials: 'include', // важно для передачи и получения куков
-      }
+      },
     )
     if (!response.ok) {
-      return [];
+      return []
     }
     return response.json()
-  }catch(err){
-    console.error("Ошибка в функции fetchMaterials:", err)
-    return [];
+  } catch (err) {
+    console.error('Ошибка в функции fetchMaterials:', err)
+    return []
   }
 }
 
@@ -33,19 +33,18 @@ export async function deleteMaterial(id: number, token: string) {
   return res.status
 }
 
-
 // POST запрос
 export async function postMaterial(material: string, token: string) {
   const res = await axios.post(
     `${BASE_URL}/materials/`,
-    {material},
+    { material },
     {
       headers: {
         Authorization: `Token ${token}`,
         'Content-Type': 'application/json',
       },
       withCredentials: true,
-    }
+    },
   )
   return res.status
 }
@@ -53,14 +52,14 @@ export async function postMaterial(material: string, token: string) {
 // PATCH запрос
 export async function patchMaterial(id: number, material: string, token: string) {
   const res = await axios.patch(`${BASE_URL}/materials/${id}/`,
-    {material},
+    { material },
     {
       headers: {
         Authorization: `Token ${token}`,
         'Content-Type': 'application/json',
       },
       withCredentials: true,
-    }
+    },
   )
   return res.status
 }

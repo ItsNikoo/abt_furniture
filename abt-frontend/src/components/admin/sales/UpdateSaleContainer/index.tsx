@@ -17,7 +17,7 @@ import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import Image from 'next/image'
 import { patchSaleAction } from '@/actions/sales'
-import Cookies from "js-cookie";
+import Cookies from 'js-cookie'
 
 export default function UpdateSaleContainer({ sale }: { sale: Sale }) {
   const [isOpen, setIsOpen] = useState(false)
@@ -69,7 +69,7 @@ export default function UpdateSaleContainer({ sale }: { sale: Sale }) {
     <div>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger asChild>
-          <Button variant="ghost" size="icon" className='hover:bg-mainPurple hover:text-white'>
+          <Button variant="ghost" size="icon" className="hover:bg-mainPurple hover:text-white">
             <Pencil className="h-4 w-4"/>
           </Button>
         </DialogTrigger>

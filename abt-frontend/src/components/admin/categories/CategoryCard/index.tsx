@@ -6,7 +6,7 @@ import Image from 'next/image'
 import { Category } from '@/types'
 import { Trash2 } from 'lucide-react'
 import UpdateCategoryContainer from '@/components/admin/categories/UpdateCategoryContainer'
-import Cookies from "js-cookie"
+import Cookies from 'js-cookie'
 
 export default function CategoryCard({ category, onDeleteAction }: {
   category: Category,
@@ -36,8 +36,8 @@ export default function CategoryCard({ category, onDeleteAction }: {
             />
           </div>
         ) : (
-          <div className="bg-gray-200 w-full h-44 rounded-t-xl" />
-        )}
+           <div className="bg-gray-200 w-full h-44 rounded-t-xl"/>
+         )}
       </CardHeader>
       <CardContent className="flex flex-row gap-2.5 justify-between items-center py-4">
         <div>

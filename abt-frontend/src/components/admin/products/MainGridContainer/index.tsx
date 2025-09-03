@@ -23,7 +23,7 @@ export default function MainGridContainer() {
   }
 
   const filtered = data.filter((product: Product) =>
-    product.title.toLowerCase().includes(search.toLowerCase())
+    product.title.toLowerCase().includes(search.toLowerCase()),
   )
 
   return (

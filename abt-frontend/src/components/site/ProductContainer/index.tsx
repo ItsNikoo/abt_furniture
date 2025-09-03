@@ -3,8 +3,8 @@
 import { Product } from '@/types'
 import ProductPhotoCarousel from '@/components/ui/Embla/ProductPhotoCarousel'
 import ProductOrderContainer from '@/components/site/Orders/ProductOrderContainer'
-import {motion} from "framer-motion"
-import AnimatedText from "@/components/ui/Animations/AnimatedText";
+import { motion } from 'framer-motion'
+import AnimatedText from '@/components/ui/Animations/AnimatedText'
 
 export default function ProductContainer({ product }: { product: Product }) {
   return (
@@ -28,7 +28,7 @@ export default function ProductContainer({ product }: { product: Product }) {
             className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-montserrat"
           />
           <motion.div
-            initial={{ opacity: 0}}
+            initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.3 }}
           >

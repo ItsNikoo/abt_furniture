@@ -17,7 +17,7 @@ export default function MaterialsBar({ promise }: { promise: Promise<Material[]>
     <div>
       <div className="grid grid-cols-3 gap-2.5">
         {materials?.map((material: Material) => (
-          <MaterialCard key={material.id} material={material} onDeleteAction={handleDeleteMaterial} />
+          <MaterialCard key={material.id} material={material} onDeleteAction={handleDeleteMaterial}/>
         ))}
       </div>
     </div>

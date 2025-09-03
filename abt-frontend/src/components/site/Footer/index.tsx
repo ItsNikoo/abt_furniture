@@ -1,14 +1,14 @@
-import Link from "next/link";
-import { Phone, MapPin, Mail } from "lucide-react";
+import Link from 'next/link'
+import { Mail, MapPin, Phone } from 'lucide-react'
 
 const navigationLinks = [
-  { href: "/", label: "Главная" },
-  { href: "/catalog", label: "Каталог" },
-  { href: "/contacts", label: "Контакты" },
-  { href: "/about", label: "О компании" },
-  { href: "/howto", label: "Как совершить заказ" },
-  { href: "/privacy-policy", label: "Политика конфиденциальности" },
-];
+  { href: '/', label: 'Главная' },
+  { href: '/catalog', label: 'Каталог' },
+  { href: '/contacts', label: 'Контакты' },
+  { href: '/about', label: 'О компании' },
+  { href: '/howto', label: 'Как совершить заказ' },
+  { href: '/privacy-policy', label: 'Политика конфиденциальности' },
+]
 
 export default function Footer() {
   return (
@@ -30,11 +30,11 @@ export default function Footer() {
         {/* Контакты */}
         <div className="flex flex-col gap-2 items-start md:items-start text-sm font-notosans">
           <div className="flex items-center gap-2">
-            <MapPin className="w-4 h-4" />
+            <MapPin className="w-4 h-4"/>
             <span>Балашиха, Железнодорожный, Керамическая, 2Б</span>
           </div>
           <div className="flex items-center gap-2">
-            <Phone className="w-4 h-4" />
+            <Phone className="w-4 h-4"/>
             <a
               href="tel:+79267232880"
               className="hover:underline"
@@ -43,7 +43,7 @@ export default function Footer() {
             </a>
           </div>
           <div className="flex items-center gap-2">
-            <Mail className="w-4 h-4" />
+            <Mail className="w-4 h-4"/>
             <a
               href="mailto:info@abt-mebel.ru"
               className="hover:underline"
@@ -57,5 +57,5 @@ export default function Footer() {
         © {new Date().getFullYear()} АБТ Мебель
       </div>
     </footer>
-  );
+  )
 }

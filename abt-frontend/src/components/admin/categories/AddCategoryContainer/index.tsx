@@ -15,7 +15,7 @@ import {
 } from '@/components/ui/dialog'
 import { Label } from '@/components/ui/label'
 import { postCategoryAction } from '@/actions/categories'
-import Cookies from "js-cookie";
+import Cookies from 'js-cookie'
 
 export default function AddCategoryContainer() {
   const [formData, setFormData] = useState<CategoryData>({

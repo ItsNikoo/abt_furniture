@@ -9,12 +9,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import {Button} from '@/components/ui/button'
-import {Input} from '@/components/ui/input'
-import {startTransition, useState, useEffect} from 'react'
-import { Checkbox } from "@/components/ui/checkbox"
-import { Label } from "@/components/ui/label"
-import {postContactAction} from "@/actions/contact";
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { startTransition, useEffect, useState } from 'react'
+import { Checkbox } from '@/components/ui/checkbox'
+import { Label } from '@/components/ui/label'
+import { postContactAction } from '@/actions/contact'
 
 export default function MainOrderContainer() {
   const [isOpen, setIsOpen] = useState(false)
@@ -35,59 +35,59 @@ export default function MainOrderContainer() {
   // Засекаем время когда открылась форма
   useEffect(() => {
     if (isOpen) {
-      setFormLoadTime(Date.now());
+      setFormLoadTime(Date.now())
       // Сбрасываем состояние при открытии
       setFormData({
         phone: '',
         comment: '',
         honeypot: '',
-      });
-      setConsent(false);
-      setSuccess(null);
-      setError(null);
+      })
+      setConsent(false)
+      setSuccess(null)
+      setError(null)
     }
-  }, [isOpen]);
+  }, [isOpen])
 
   function handlePhoneChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const value = e.target.value;
-    const cleanedValue = value.replace(/\D/g, '');
+    const value = e.target.value
+    const cleanedValue = value.replace(/\D/g, '')
 
-    let formattedValue = '';
+    let formattedValue = ''
     if (cleanedValue.length > 0) {
-      formattedValue = '+7 ';
+      formattedValue = '+7 '
       if (cleanedValue.length > 1) {
-        formattedValue += `(${cleanedValue.substring(1, 4)}`;
+        formattedValue += `(${cleanedValue.substring(1, 4)}`
       }
       if (cleanedValue.length > 4) {
-        formattedValue += `) ${cleanedValue.substring(4, 7)}`;
+        formattedValue += `) ${cleanedValue.substring(4, 7)}`
       }
       if (cleanedValue.length > 7) {
-        formattedValue += `-${cleanedValue.substring(7, 9)}`;
+        formattedValue += `-${cleanedValue.substring(7, 9)}`
       }
       if (cleanedValue.length > 9) {
-        formattedValue += `-${cleanedValue.substring(9, 11)}`;
+        formattedValue += `-${cleanedValue.substring(9, 11)}`
       }
     }
 
     setFormData(prev => ({
       ...prev,
-      phone: formattedValue
-    }));
+      phone: formattedValue,
+    }))
   }
 
   function handleCommentChange(e: React.ChangeEvent<HTMLInputElement>) {
     setFormData(prev => ({
       ...prev,
-      comment: e.target.value
-    }));
+      comment: e.target.value,
+    }))
   }
 
   // Обработчик для ловушечного поля (на всякий случай, хотя оно скрыто)
   function handleHoneypotChange(e: React.ChangeEvent<HTMLInputElement>) {
     setFormData(prev => ({
       ...prev,
-      honeypot: e.target.value
-    }));
+      honeypot: e.target.value,
+    }))
   }
 
   function handleConsentChange(checked: boolean) {
@@ -111,22 +111,22 @@ export default function MainOrderContainer() {
   }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
+    e.preventDefault()
 
     if (!validateForm()) {
-      return;
+      return
     }
 
     // Time Check: проверяем что прошло хотя бы 2 секунды
-    const submitTime = Date.now();
-    const formFillTime = submitTime - formLoadTime;
+    const submitTime = Date.now()
+    const formFillTime = submitTime - formLoadTime
 
     if (formFillTime < 2000) {
-      setError('Пожалуйста, заполните форму внимательнее');
-      return;
+      setError('Пожалуйста, заполните форму внимательнее')
+      return
     }
 
-    setIsSubmitting(true);
+    setIsSubmitting(true)
 
     startTransition(async () => {
       try {
@@ -136,34 +136,34 @@ export default function MainOrderContainer() {
           consent: consent,
           honeypot: formData.honeypot, // Отправляем ловушечное поле
           formLoadTime: formLoadTime,   // Отправляем время загрузки
-        });
+        })
 
         const response = await postContactAction(
           formData.phone,
           formData.comment,
           consent,
           formData.honeypot, // Передаем ловушечное поле
-          formLoadTime       // Передаем время загрузки
+          formLoadTime,       // Передаем время загрузки
         )
         console.log(response)
 
-        setSuccess('Ваш запрос успешно отправлен! Мы свяжемся с вами в ближайшее время.');
+        setSuccess('Ваш запрос успешно отправлен! Мы свяжемся с вами в ближайшее время.')
         setFormData({
           phone: '',
           comment: '',
           honeypot: '',
-        });
-        setConsent(false);
+        })
+        setConsent(false)
       } catch (e) {
         setError(
           e instanceof Error
-            ? `Произошла ошибка при отправке данных: ${e.message}`
-            : 'Неизвестная ошибка. Пожалуйста, попробуйте еще раз.'
-        );
+          ? `Произошла ошибка при отправке данных: ${e.message}`
+          : 'Неизвестная ошибка. Пожалуйста, попробуйте еще раз.',
+        )
       } finally {
-        setIsSubmitting(false);
+        setIsSubmitting(false)
       }
-    });
+    })
   }
 
   return (
@@ -179,7 +179,8 @@ export default function MainOrderContainer() {
         <DialogHeader>
           <DialogTitle className={'font-bold text-xl'}>Заказать проект</DialogTitle>
           <DialogDescription>
-            Мы готовы реализовать любой амбициозный проект. Оставьте заявку, и мы свяжемся с вами для обсуждения деталей.
+            Мы готовы реализовать любой амбициозный проект. Оставьте заявку, и мы свяжемся с вами для обсуждения
+            деталей.
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -192,7 +193,7 @@ export default function MainOrderContainer() {
             style={{
               display: 'none',
               position: 'absolute',
-              left: '-9999px'
+              left: '-9999px',
             }}
             autoComplete="off"
             tabIndex={-1}
@@ -227,7 +228,7 @@ export default function MainOrderContainer() {
                 Принимаю политику конфиденциальности
               </Label>
               <p className="text-muted-foreground text-sm">
-                Нажимая на эту кнопку, вы соглашаетесь на обработку персональных данных.{" "}
+                Нажимая на эту кнопку, вы соглашаетесь на обработку персональных данных.{' '}
                 <a href="/privacy-policy" className="text-mainPurple hover:underline">
                   Подробнее
                 </a>

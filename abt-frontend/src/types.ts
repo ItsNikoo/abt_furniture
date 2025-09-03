@@ -81,5 +81,5 @@ export interface Contact {
   phone: string;
   comment: string;
   consent: boolean;
-  product? : string;
+  product?: string;
 }

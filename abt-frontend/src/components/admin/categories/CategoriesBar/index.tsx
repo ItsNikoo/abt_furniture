@@ -20,7 +20,7 @@ export default function CategoriesBar({ promise }: { promise: Promise<Category[]
     <div>
       <div className={'grid grid-cols-3 gap-4'}>
         {data?.map((category: Category) => (
-          <CategoryCard key={category.id} category={category} onDeleteAction={handleDelete} />
+          <CategoryCard key={category.id} category={category} onDeleteAction={handleDelete}/>
         ))}
       </div>
     </div>
