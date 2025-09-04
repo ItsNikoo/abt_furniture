@@ -8,10 +8,11 @@ services:
     env_file:
       - ./furniture_catalog/.env
     environment:
-      - DEBUG=0
+      - DEBUG=1
       - ALLOWED_HOSTS=localhost,127.0.0.1,backend,nginx
     volumes:
       - media_volume:/app/media
+    command: gunicorn furniture_catalog.wsgi:application --bind 0.0.0.0:8000 --access-logfile - --error-logfile - --log-level debug
     depends_on:
       - db
     networks:
@@ -23,8 +24,6 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
-    environment:
-      - NEXT_PUBLIC_API_URL=http://backend:8000
     depends_on:
       - backend
     networks:
