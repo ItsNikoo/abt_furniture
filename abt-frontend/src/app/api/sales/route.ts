@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server'
+import { apiUrl } from '@/lib/api/baseUrl'
 
 export const revalidate = 3600 // 1 час
 
 export async function GET() {
   try {
-    const backendUrl = process.env.BACKEND_URL || 'http://localhost:8000'
-    const response = await fetch(`${backendUrl}/api/sales/`)
+    const response = await fetch(apiUrl('/sales/'))
 
     if (!response.ok) {
       // ВАЖНО: возвращаем пустой массив вместо ошибки

@@ -1,9 +1,8 @@
 import Cookies from 'js-cookie'
-
-const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
+import { apiUrl } from '@/lib/api/baseUrl'
 
 export async function login(username: string, password: string) {
-  const response = await fetch(`${BASE_URL}/auth/login/`, {
+  const response = await fetch(apiUrl('/auth/login/'), {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
