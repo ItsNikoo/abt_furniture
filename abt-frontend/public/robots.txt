@@ -1,0 +1,149 @@
+# robots.txt для kuhni-abt.ru
+# Создано: 2024
+# Обновлено: регулярно
+
+# ===================================
+# ОСНОВНЫЕ ПРАВИЛА ДЛЯ ВСЕХ РОБОТОВ
+# ===================================
+
+User-agent: *
+
+# РАЗРЕШЕННЫЕ ДИРЕКТОРИИ (по умолчанию все разрешено)
+Allow: /
+Allow: /catalog/
+Allow: /products/
+Allow: /about
+Allow: /contacts
+Allow: /services/
+Allow: /privacy-policy
+Allow: /blog/
+
+# ЗАПРЕЩЕННЫЕ ДИРЕКТОРИИ
+# API эндпоинты (не нужны в поиске)
+Disallow: /api/
+Disallow: /_next/
+Disallow: /_vercel/
+
+# Системные файлы Next.js
+Disallow: *.json$
+Disallow: /*_buildManifest.js
+Disallow: /*_ssgManifest.js
+
+# Админ панель и приватные страницы
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /login
+Disallow: /register
+Disallow: /profile/
+Disallow: /account/
+Disallow: /auth/
+
+# Служебные страницы
+Disallow: /404
+Disallow: /500
+Disallow: /error
+Disallow: /maintenance
+
+# Формы и процессы (не нужны в индексе)
+Disallow: /search?*
+Disallow: /*?search=*
+Disallow: /*?filter=*
+Disallow: /*?sort=*
+Disallow: /*?page=*
+Disallow: /cart
+Disallow: /checkout/
+Disallow: /payment/
+
+# Дублированный контент
+Disallow: /*?utm_*
+Disallow: /*?fbclid=*
+Disallow: /*?gclid=*
+Disallow: /*?ref=*
+
+# Временные файлы и бэкапы
+Disallow: /tmp/
+Disallow: /temp/
+Disallow: *.bak$
+Disallow: *.tmp$
+
+# ===================================
+# СПЕЦИАЛЬНЫЕ ПРАВИЛА ДЛЯ РАЗНЫХ БОТОВ
+# ===================================
+
+# Google Bot - основной поисковый бот
+User-agent: Googlebot
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+# Можно добавить специфичные правила для Google
+
+# Bing Bot
+User-agent: Bingbot
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+# Yandex Bot (важно для российского рынка)
+User-agent: YandexBot
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Crawl-delay: 1
+
+# Facebook бот (для Open Graph)
+User-agent: facebookexternalhit
+Allow: /
+Allow: /category/
+Allow: /products/
+
+# Twitter бот
+User-agent: Twitterbot
+Allow: /
+Allow: /category/
+Allow: /products/
+
+# WhatsApp бот
+User-agent: WhatsApp
+Allow: /
+Allow: /category/
+Allow: /products/
+
+# ===================================
+# БЛОКИРОВКА ВРЕДНЫХ БОТОВ
+# ===================================
+
+# Блокировка скреперов и спам-ботов
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: BLEXBot
+Disallow: /
+
+# Агрессивные краулеры
+User-agent: *Bot*
+Crawl-delay: 5
+
+# ===================================
+# SITEMAP И ДОПОЛНИТЕЛЬНАЯ ИНФОРМАЦИЯ
+# ===================================
+
+# Основная карта сайта
+Sitemap: https://kuhni-abt.ru/sitemap.xml
+
+# Дополнительные карты сайта (если есть)
+# Sitemap: https://kuhni-abt.ru/sitemap-images.xml
+# Sitemap: https://kuhni-abt.ru/sitemap-news.xml
+
+# ===================================
+# ИНФОРМАЦИЯ О ХОСТЕ (опционально)
+# ===================================
+Host: kuhni-abt.ru
