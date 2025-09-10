@@ -14,8 +14,8 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { Label } from '@/components/ui/label'
-//import { postCategoryAction } from '@/actions/categories'
-//import Cookies from 'js-cookie'
+import { postCategoryAction } from '@/actions/categories'
+import Cookies from 'js-cookie'
 
 export default function AddCategoryContainer() {
   const [formData, setFormData] = useState<CategoryData>({
@@ -42,49 +42,36 @@ export default function AddCategoryContainer() {
     }
   }
 
-  // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-  //   try {
-  //     e.preventDefault()
-  //     setIsLoading(true)
-  //     const token = Cookies.get('token')
-  //     console.log(token)
-  //     await postCategoryAction(formData, token as string)
-  //     setPreviewUrl(null)
-  //     setSuccess('Категория успешно создана!')
-  //     setTimeout(() => {
-  //       setIsOpen(false)
-  //       setSuccess(null)
-  //       setFormData({
-  //         category: '',
-  //         categorySlug: '',
-  //         photoFile: null,
-  //       })
-  //     }, 1000)
-  //   } catch (error) {
-  //     setError('Не удалось создать категорию. Пожалуйста, попробуйте еще раз.' + error)
-  //   } finally {
-  //     setIsLoading(false)
-  //   }
-  // }
-
-  const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
-    try{
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    try {
       e.preventDefault()
       setIsLoading(true)
-      console.log("ТЕСТ 1. ПРОХОДИТ ЛИ БЛЯТЬ?")
-      setSuccess("Прошло ебать")
-    }catch(e){
-      console.log("А ПОЧЕМУ НЕ РАБОТАЕТ БЛЯТЬ?", e)
-      setError("А ПОЧЕМУ НЕ РАБОТАЕТ БЛЯТЬ?" + e)
-    }finally {
+      const token = Cookies.get('token')
+      console.log(token)
+      await postCategoryAction(formData, token as string)
+      setPreviewUrl(null)
+      setSuccess('Категория успешно создана!')
+      setTimeout(() => {
+        setIsOpen(false)
+        setSuccess(null)
+        setFormData({
+          category: '',
+          categorySlug: '',
+          photoFile: null,
+        })
+      }, 1000)
+    } catch (error) {
+      setError('Не удалось создать категорию. Пожалуйста, попробуйте еще раз.' + error)
+    } finally {
       setIsLoading(false)
     }
   }
 
+
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button className="mb-5">Добавить категорию блять</Button>
+        <Button className="mb-5">Добавить категорию</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

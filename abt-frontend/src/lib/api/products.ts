@@ -58,21 +58,27 @@ export async function postProduct(data: ProductData, token: string) {
       })
     }
 
-    const response = await fetch('/api/products', {
+    const response = await fetch(apiUrl('/products/'), {
       method: 'POST',
       body: formData,
       headers: {
-        'Authorization': `Bearer ${token}`,
+        'Authorization': `Token ${token}`, // Fixed: Changed from Bearer to Token
       },
     })
-    return response.json()
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      console.error('Ошибка при добавлении продукта:', error.response?.data || error.message)
-      throw new Error(error.response?.data?.message || 'Ошибка при добавлении продукта')
+
+    // Add proper error handling
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}))
+      throw {
+        response: { data: errorData },
+        message: `HTTP ${response.status}: ${response.statusText}`
+      }
     }
-    console.error('Неизвестная ошибка:', error)
-    throw new Error('Неизвестная ошибка при добавлении продукта')
+
+    return await response.json()
+  } catch (error) {
+    console.error('Ошибка при добавлении продукта:', error)
+    throw error // Let the component handle the error
   }
 }
 

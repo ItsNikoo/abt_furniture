@@ -61,7 +61,7 @@ export default function AddProductContainer({ categories, styles, materials }: P
       if (!token) {
         throw new Error('Нет токена авторизации. Войдите заново.')
       }
-      return postProduct(data, token)
+      return postProduct(data, token as string)
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['products'] })
