@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { ProductData } from '@/types'
-
-const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
+import { apiUrl } from '@/lib/api/baseUrl'
 
 export async function fetchProducts(filters: { category?: string; style?: string; material?: string } = {}) {
   try {
@@ -10,7 +9,7 @@ export async function fetchProducts(filters: { category?: string; style?: string
     if (filters.style) params.append('style', filters.style)
     if (filters.material) params.append('material', filters.material)
 
-    const url = `${BASE_URL}/products/?${params.toString()}`
+    const url = `${apiUrl('/products/')}${params.toString() ? `?${params.toString()}` : ''}`
     const res = await fetch(url, {
       next: { revalidate: 60 },
     })
@@ -34,7 +33,7 @@ export async function fetchProducts(filters: { category?: string; style?: string
 }
 
 export async function fetchProductById(id: number) {
-  const res = await fetch(`${BASE_URL}/products/${id}/`, {
+  const res = await fetch(apiUrl(`/products/${id}/`), {
     next: { revalidate: 60 },
   })
   return res.json()
@@ -59,21 +58,27 @@ export async function postProduct(data: ProductData, token: string) {
       })
     }
 
-    const response = await fetch('/api/products', {
+    const response = await fetch(apiUrl('/products/'), {
       method: 'POST',
       body: formData,
       headers: {
-        'Authorization': `Bearer ${token}`,
+        'Authorization': `Token ${token}`, // Fixed: Changed from Bearer to Token
       },
     })
-    return response.json()
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      console.error('Ошибка при добавлении продукта:', error.response?.data || error.message)
-      throw new Error(error.response?.data?.message || 'Ошибка при добавлении продукта')
+
+    // Add proper error handling
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}))
+      throw {
+        response: { data: errorData },
+        message: `HTTP ${response.status}: ${response.statusText}`
+      }
     }
-    console.error('Неизвестная ошибка:', error)
-    throw new Error('Неизвестная ошибка при добавлении продукта')
+
+    return await response.json()
+  } catch (error) {
+    console.error('Ошибка при добавлении продукта:', error)
+    throw error // Let the component handle the error
   }
 }
 
@@ -102,7 +107,7 @@ export async function patchProduct(data: ProductData, id: number, token: string)
       })
     }
 
-    const response = await axios.patch(`${BASE_URL}/products/${id}/`, formData, {
+    const response = await axios.patch(apiUrl(`/products/${id}/`), formData, {
       headers: {
         Authorization: `Token ${token}`,
         'Content-Type': 'multipart/form-data',
@@ -123,7 +128,7 @@ export async function patchProduct(data: ProductData, id: number, token: string)
 }
 
 export async function deleteProduct(id: number, token: string) {
-  const response = await axios.delete(`${BASE_URL}/products/${id}/`, {
+  const response = await axios.delete(apiUrl(`/products/${id}/`), {
     headers: {
       Authorization: `Token ${token}`,
       'Content-Type': 'application/json',

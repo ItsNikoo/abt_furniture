@@ -12,21 +12,46 @@ type Props = {
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { categorySlug, productSlug } = await params
-  const domain = process.env.DOMAIN || 'kuhni-abt.ru'
+  // Get the product data for metadata
+  const { productSlug } = await params
+  const id = productSlug.split('-')[0]
 
-  return {
-    title: `Товар от производителя | АБТ мебель`,
-    description: 'Купить продукт от производителя АБТ. Высокое качество, стильный дизайн и доступные цены прямиком от производителя.',
-    openGraph: {
-      title: `Купить товар от производителя`,
-      description: 'Купить продукт от производителя || АБТ мебель',
-      images: [],
-      url: `https://${domain}/catalog/${categorySlug}/${productSlug}`,
-      siteName: 'АБТ мебель',
-      locale: 'ru_RU',
-      type: 'website',
-    },
+  try {
+    const product: Product = await fetchProductById(Number(id))
+
+    return {
+      title: `${product.title} | АБТ мебель`,
+      description: product.description || `Купить ${product.title} от производителя АБТ. Высокое качество, стильный дизайн и доступные цены.`,
+      openGraph: {
+        title: `${product.title} - купить от производителя`,
+        description: product.description || `Купить ${product.title} от производителя АБТ мебель`,
+        images: product.photos?.map(img => ({
+          url: img.photoUrl,
+          alt: product.title
+        })) || [],
+        siteName: 'АБТ мебель',
+        locale: 'ru_RU',
+        type: 'website',
+      },
+      other: {
+        'product:price:amount': product.price?.toString(),
+        'product:price:currency': 'RUB',
+      }
+    }
+  } catch {
+    // Fallback metadata if product fetch fails
+    return {
+      title: `Товар от производителя | АБТ мебель`,
+      description: 'Купить продукт от производителя АБТ. Высокое качество, стильный дизайн и доступные цены прямиком от производителя.',
+      openGraph: {
+        title: `Купить товар от производителя`,
+        description: 'Купить продукт от производителя АБТ. Высокое качество, стильный дизайн и доступные цены прямиком от производителя.',
+        images: [],
+        siteName: 'АБТ мебель',
+        locale: 'ru_RU',
+        type: 'website',
+      },
+    }
   }
 }
 
@@ -36,6 +61,7 @@ export default async function ProductPage({ params }: Props) {
   const { productSlug } = await params
   const id = productSlug.split('-')[0]
   const product: Product = await fetchProductById(Number(id))
+
   return (
     <ContentWrapper>
       <ProductContainer product={product}/>

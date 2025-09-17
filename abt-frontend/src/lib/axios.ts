@@ -1,11 +1,10 @@
 // src/lib/axios.ts
 import axios from 'axios'
 import Cookies from 'js-cookie'
-
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL
+import { getApiBaseUrl } from '@/lib/api/baseUrl'
 
 const axiosInstance = axios.create({
-  baseURL: BASE_URL,
+  baseURL: getApiBaseUrl(),
 })
 
 axiosInstance.interceptors.request.use(

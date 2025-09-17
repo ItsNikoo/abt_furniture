@@ -47,6 +47,7 @@ export default function AddCategoryContainer() {
       e.preventDefault()
       setIsLoading(true)
       const token = Cookies.get('token')
+      console.log(token)
       await postCategoryAction(formData, token as string)
       setPreviewUrl(null)
       setSuccess('Категория успешно создана!')
@@ -65,6 +66,7 @@ export default function AddCategoryContainer() {
       setIsLoading(false)
     }
   }
+
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>

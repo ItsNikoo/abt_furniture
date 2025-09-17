@@ -1,11 +1,10 @@
 import axios from 'axios'
 import { Sale, SaleData } from '@/types'
-
-const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
+import { apiUrl } from '@/lib/api/baseUrl'
 
 export async function fetchSales(): Promise<Sale[]> {
   try {
-    const res = await fetch(`${BASE_URL}/sales/`, {
+    const res = await fetch(apiUrl('/sales/'), {
       // Важные настройки для избежания долгого ожидания
       signal: AbortSignal.timeout(5000), // Таймаут 5 секунд
     })
@@ -23,7 +22,7 @@ export async function fetchSales(): Promise<Sale[]> {
 
 export async function deleteSale(id: string, token: string) {
   try {
-    const res = await axios.delete(`${BASE_URL}/sales/${id}/`, {
+    const res = await axios.delete(apiUrl(`/sales/${id}/`), {
       headers: {
         Authorization: `Token ${token}`,
         'Content-Type': 'application/json',
@@ -49,7 +48,7 @@ export async function patchSale(id: string, data: SaleData, token: string) {
       formData.append('photo_file', data.photoFile)
     }
 
-    const res = await axios.patch(`${BASE_URL}/sales/${id}/`, formData, {
+    const res = await axios.patch(apiUrl(`/sales/${id}/`), formData, {
       headers: {
         Authorization: `Token ${token}`,
         'Content-Type': 'multipart/form-data',
@@ -78,7 +77,7 @@ export async function postSale(data: SaleData, token: string) {
     }
     formData.append('link', data.link)
 
-    const res = await axios.post(`${BASE_URL}/sales/`, formData, {
+    const res = await axios.post(apiUrl('/sales/'), formData, {
       headers: {
         Authorization: `Token ${token}`,
         'Content-Type': 'multipart/form-data',

@@ -1,7 +1,6 @@
 import axios, { AxiosError } from 'axios'
 import { CategoryData } from '@/types'
-
-const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
+import { apiUrl } from '@/lib/api/baseUrl'
 
 // Интерфейсы для типизации ошибок
 interface ApiErrorResponse {
@@ -14,7 +13,7 @@ interface ApiErrorResponse {
 
 export async function fetchCategories() {
   try {
-    const response = await fetch(`${BASE_URL}/categories/`, {
+    const response = await fetch(apiUrl('/categories/'), {
       next: { revalidate: 60 },
     })
 
@@ -39,7 +38,7 @@ export async function postCategory(data: CategoryData, token: string) {
       formData.append('photo_file', data.photoFile)
     }
 
-    const res = await axios.post(`${BASE_URL}/categories/`, formData, {
+    const res = await axios.post(apiUrl('/categories/'), formData, {
       headers: {
         Authorization: `Token ${token}`,
         'Content-Type': 'multipart/form-data',
@@ -87,7 +86,7 @@ export async function postCategory(data: CategoryData, token: string) {
 
 export async function deleteCategory(id: number, token: string) {
   try {
-    const res = await axios.delete(`${BASE_URL}/categories/${id}/`, {
+    const res = await axios.delete(apiUrl(`/categories/${id}/`), {
       headers: {
         Authorization: `Token ${token}`,
         'Content-Type': 'application/json',
@@ -134,7 +133,7 @@ export async function patchCategory(id: number, data: CategoryData, token: strin
       formData.append('photo_file', data.photoFile)
     }
 
-    const res = await axios.patch(`${BASE_URL}/categories/${id}/`, formData, {
+    const res = await axios.patch(apiUrl(`/categories/${id}/`), formData, {
       headers: {
         Authorization: `Token ${token}`,
         'Content-Type': 'multipart/form-data',

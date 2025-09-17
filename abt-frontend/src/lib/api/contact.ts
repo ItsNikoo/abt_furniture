@@ -1,4 +1,5 @@
 import { Contact } from '@/types'
+import { apiUrl } from '@/lib/api/baseUrl'
 
 interface ApiErrorResponse {
   errors?: { [key: string]: string[] }; // Для ошибок валидации (HTTP 400)
@@ -6,7 +7,6 @@ interface ApiErrorResponse {
 }
 
 export async function postContact({ phone, comment, consent, product = '' }: Contact) {
-  const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
   // Валидация на фронтенде
   if (!phone.trim()) {
@@ -17,7 +17,7 @@ export async function postContact({ phone, comment, consent, product = '' }: Con
   }
 
   try {
-    const response = await fetch(`${BASE_URL}/contact/`, {
+    const response = await fetch(apiUrl('/contact/'), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

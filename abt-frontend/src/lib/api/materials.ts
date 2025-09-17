@@ -1,12 +1,11 @@
 import axios from 'axios'
 import { Material } from '@/types'
-
-const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
+import { apiUrl } from '@/lib/api/baseUrl'
 
 // GET запрос
 export async function fetchMaterials(): Promise<Material[]> {
   try {
-    const response = await fetch(`${BASE_URL}/materials/`,
+    const response = await fetch(apiUrl('/materials/'),
       {
         credentials: 'include', // важно для передачи и получения куков
       },
@@ -23,7 +22,7 @@ export async function fetchMaterials(): Promise<Material[]> {
 
 // DELETE запрос
 export async function deleteMaterial(id: number, token: string) {
-  const res = await axios.delete(`${BASE_URL}/materials/${id}/`, {
+  const res = await axios.delete(apiUrl(`/materials/${id}/`), {
     headers: {
       Authorization: `Token ${token}`,
       'Content-Type': 'application/json',
@@ -36,7 +35,7 @@ export async function deleteMaterial(id: number, token: string) {
 // POST запрос
 export async function postMaterial(material: string, token: string) {
   const res = await axios.post(
-    `${BASE_URL}/materials/`,
+    apiUrl('/materials/'),
     { material },
     {
       headers: {
@@ -51,7 +50,7 @@ export async function postMaterial(material: string, token: string) {
 
 // PATCH запрос
 export async function patchMaterial(id: number, material: string, token: string) {
-  const res = await axios.patch(`${BASE_URL}/materials/${id}/`,
+  const res = await axios.patch(apiUrl(`/materials/${id}/`),
     { material },
     {
       headers: {

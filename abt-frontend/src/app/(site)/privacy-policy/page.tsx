@@ -1,5 +1,19 @@
 import ContentWrapper from '@/components/ContentWrapper'
 
+export const metadata = {
+  title: 'Политика конфиденциальности | АБТ мебель',
+  description:
+    'Политика конфиденциальности и обработки персональных данных для пользователей сайта АБТ мебель. Узнайте, как мы защищаем ваши данные.',
+  openGraph: {
+    title: 'Политика конфиденциальности | АБТ мебель',
+    description: 'Политика конфиденциальности и обработки персональных данных для пользователей сайта АБТ мебель. Узнайте, как мы защищаем ваши данные.',
+    url: 'https://kuhni-abt.ru/privacy-policy',
+    siteName: 'АБТ мебель',
+    locale: 'ru_RU',
+    type: 'website',
+  },
+}
+
 export default function PrivacyPolicyPage() {
   return (
     <ContentWrapper>

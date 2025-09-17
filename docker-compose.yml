@@ -3,16 +3,13 @@ services:
     build:
       context: ./furniture_catalog
       dockerfile: Dockerfile
-    ports:
-      - "8000:8000"
+    # no host port; accessed via nginx and internal network
     env_file:
       - ./furniture_catalog/.env
     environment:
-      - DEBUG=1
-      - ALLOWED_HOSTS=localhost,127.0.0.1,backend,nginx
+      - DEBUG=True
     volumes:
       - media_volume:/app/media
-    command: gunicorn furniture_catalog.wsgi:application --bind 0.0.0.0:8000 --access-logfile - --error-logfile - --log-level debug
     depends_on:
       - db
     networks:
@@ -22,8 +19,11 @@ services:
     build:
       context: ./abt-frontend
       dockerfile: Dockerfile
-    ports:
-      - "3000:3000"
+      args:
+        NEXT_PUBLIC_API_URL: "/api"
+    environment:
+      - NODE_ENV=production
+      - API_URL=http://backend:8000/api
     depends_on:
       - backend
     networks:
@@ -48,10 +48,9 @@ services:
       - "80:80"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
-      - media_volume:/var/www/media
     depends_on:
-      - frontend
       - backend
+      - frontend
     networks:
       - app-network
 

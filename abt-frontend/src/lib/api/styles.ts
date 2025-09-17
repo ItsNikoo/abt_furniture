@@ -1,10 +1,9 @@
 import axios from 'axios'
 import { Style } from '@/types'
-
-const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
+import { apiUrl } from '@/lib/api/baseUrl'
 
 export async function fetchStyles(): Promise<Style[]> {
-  const response = await fetch(`${BASE_URL}/styles/`, {
+  const response = await fetch(apiUrl('/styles/'), {
     credentials: 'include', // важно для передачи и получения куков
   })
   if (!response.ok) {
@@ -14,7 +13,7 @@ export async function fetchStyles(): Promise<Style[]> {
 }
 
 export async function deleteStyle(id: number, token: string) {
-  const res = await axios.delete(`${BASE_URL}/styles/${id}/`, {
+  const res = await axios.delete(apiUrl(`/styles/${id}/`), {
     headers: {
       Authorization: `Token ${token}`,
       'Content-Type': 'application/json',
@@ -26,7 +25,7 @@ export async function deleteStyle(id: number, token: string) {
 
 export async function postStyle(style: string, token: string) {
   const res = await axios.post(
-    `${BASE_URL}/styles/`,
+    apiUrl('/styles/'),
     { style: style },
     {
       headers: {
@@ -40,7 +39,7 @@ export async function postStyle(style: string, token: string) {
 }
 
 export async function patchStyle(id: number, style: string, token: string) {
-  const res = await axios.patch(`${BASE_URL}/styles/${id}/`,
+  const res = await axios.patch(apiUrl(`/styles/${id}/`),
     { style: style },
     {
       headers: {
