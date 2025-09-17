@@ -7,7 +7,7 @@ export const revalidate = 10 // ISR
 
 export async function generateMetadata() {
   return {
-    title: 'Купить мебель от производителя | Абт мебель',
+    title: 'Купить мебель от производителя | АБТ мебель',
     description: 'АБТ мебель: создаем стильную и функциональную мебель для вашего комфорта. Производство кухонь, шкафов и корпусной мебели на заказ.',
     keywords: [
       'мебель на заказ',
@@ -21,7 +21,7 @@ export async function generateMetadata() {
     openGraph: {
       title: 'Купить мебель от производителя | Абт мебель',
       description: 'АБТ мебель: создаем стильную и функциональную мебель для вашего комфорта. Производство кухонь, шкафов и корпусной мебели на заказ.',
-      url: 'https://abt-furniture.ru',
+      url: 'https://kuhni-abt.ru',
       siteName: 'АБТ мебель',
       locale: 'ru_RU',
       type: 'website',

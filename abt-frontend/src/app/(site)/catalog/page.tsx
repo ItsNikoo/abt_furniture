@@ -6,12 +6,12 @@ import { fetchMaterials } from '@/lib/api/materials'
 
 export async function generateMetadata() {
   return {
-    title: 'Каталог мебели | Абт мебель',
+    title: 'Каталог мебели | АБТ мебель',
     description: 'Ознакомьтесь с нашим обширным каталогом мебели, включая кухни, шкафы и многое другое. Высокое качество и стильный дизайн от АБТ.',
     openGraph: {
       title: 'Каталог мебели | АБТ мебель',
       description: 'АБТ мебель — мебельная компания, объединяющая качество, стиль и заботу о клиентах.',
-      url: 'https://abt-furniture.ru/catalog',
+      url: 'https://kuhni-abt.ru/catalog',
       siteName: 'АБТ мебель',
       locale: 'ru_RU',
       type: 'website',
