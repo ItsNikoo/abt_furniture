@@ -20,7 +20,7 @@ SECRET_KEY = config('SECRET_KEY', default='django-insecure-d90$&ig18i$-7_)w2h0^q
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'backend', 'frontend', 'nginx']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'backend', 'frontend', 'nginx', '178.250.242.124','kuhni-abt.ru']
 
 # Application definition
 
@@ -72,6 +72,9 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost',
     "http://my_frontend:3000",
     "http://127.0.0.1:3000",
+    "http://178.250.242.124",
+    "https://kuhni-abt.ru",
+    "https://www.kuhni-abt.ru"
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -84,8 +87,12 @@ CSRF_TRUSTED_ORIGINS = [
 
 CSRF_COOKIE_SAMESITE = 'Lax'
 SESSION_COOKIE_SAMESITE = 'Lax'
-CSRF_COOKIE_HTTPONLY = False
+#CSRF_COOKIE_HTTPONLY = False
 SESSION_COOKIE_HTTPONLY = True
+
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
 
 ROOT_URLCONF = 'furniture_catalog.urls'
 
