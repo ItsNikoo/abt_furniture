@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react'
 import { Sale } from '@/types'
 import FirstCarousel from '@/components/ui/Embla/FirstCarousel'
-import LoadingPlaceholder from '@/components/placeholders/LoadingPlaceholder'
 import SalesPlaceholder from '@/components/placeholders/SalesPlaceholder'
 
 export default function SalesContainer() {
@@ -30,7 +29,7 @@ export default function SalesContainer() {
 
   if (loading) return (
     <div>
-      <LoadingPlaceholder/>
+      <SalesPlaceholder/>
     </div>
   )
   if (error || sales.length === 0) return (

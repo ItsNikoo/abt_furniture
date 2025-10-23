@@ -7,7 +7,7 @@ import { motion } from 'framer-motion'
 
 export default function FirstPage() {
   return (
-    <div className="relative px-4 sm:px-8 md:px-16 lg:px-24 xl:px-32 2xl:px-40 z-10 flex flex-col">
+    <div className="relative md:px-16 lg:px-24 z-10 flex flex-col">
       {/* Background Image */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20 -z-10"
@@ -16,8 +16,9 @@ export default function FirstPage() {
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
-        className="flex lg:flex-row flex-col justify-center items-center">
+        viewport={{ once: true, amount: 0.5 }}
+        transition={{ duration: 1 }}
+        className="flex lg:flex-row flex-col justify-center items-stretch pt-10 pb-5 h-full">
         <LeftPartOfFirstPage/>
         <RightPartOfFirstPage/>
       </motion.div>

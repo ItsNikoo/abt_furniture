@@ -23,10 +23,8 @@ export async function fetchProducts(filters: { category?: string; style?: string
   } catch (error) {
     // Правильная обработка ошибок с TypeScript
     if (error instanceof Error) {
-      console.error('Ошибка при получении продуктов:', error.message)
       throw new Error(`Не удалось загрузить продукты: ${error.message}`)
     } else {
-      console.error('Неизвестная ошибка при получении продуктов:', error)
       throw new Error('Произошла неизвестная ошибка при загрузке продуктов')
     }
   }

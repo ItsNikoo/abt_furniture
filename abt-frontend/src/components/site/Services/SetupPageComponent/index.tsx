@@ -15,7 +15,7 @@ export default function SetupPageComponent() {
             transition={{ duration: 1 }}
             className="relative w-full h-56 md:h-[300px]">
             <Image
-              src="/services_pictures/picture2.png"
+              src="/services_pictures/picture2.jpeg"
               alt="Установка мебели"
               fill={false}
               width={800}

@@ -1,4 +1,3 @@
-import os
 from datetime import timedelta
 from pathlib import Path
 from decouple import config
@@ -117,13 +116,17 @@ WSGI_APPLICATION = 'furniture_catalog.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('POSTGRES_DB', default='furniture_catalog'),
-        'USER': config('POSTGRES_USER', default='postgres'),
-        'PASSWORD': config('POSTGRES_PASSWORD', default='postgres'),
-        'HOST': config('DB_HOST', default='db'),
-        'PORT': config('DB_PORT', default='5432'),
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': config('POSTGRES_DB', default='furniture_catalog'),
+    #     'USER': config('POSTGRES_USER', default='postgres'),
+    #     'PASSWORD': config('POSTGRES_PASSWORD', default='postgres'),
+    #     'HOST': config('DB_HOST', default='db'),
+    #     'PORT': config('DB_PORT', default='5432'),
+    # }
+    'default':{
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3'
     }
 }
 
@@ -176,27 +179,3 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'info@kuhni-abt.ru'  # Ваш email
 EMAIL_HOST_PASSWORD = config("EMAIL_PASSWORD", default="")
 DEFAULT_FROM_EMAIL = 'info@kuhni-abt.ru'
-
-# # Добавьте в конец settings.py
-# LOGGING = {
-#     'version': 1,
-#     'disable_existing_loggers': False,
-#     'handlers': {
-#         'console': {
-#             'level': 'DEBUG',
-#             'class': 'logging.StreamHandler',
-#         },
-#     },
-#     'loggers': {
-#         'django': {
-#             'handlers': ['console'],
-#             'level': 'DEBUG',
-#             'propagate': True,
-#         },
-#         'django.request': {
-#             'handlers': ['console'],
-#             'level': 'DEBUG',
-#             'propagate': False,
-#         },
-#     },
-# }
