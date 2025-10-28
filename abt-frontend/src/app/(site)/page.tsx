@@ -2,7 +2,6 @@ import FirstPage from '@/components/site/FirstPage'
 import SalesContainer from '@/components/site/SalesContainer'
 import ContentWrapper from '@/components/ContentWrapper'
 import CategoriesGrid from '@/components/site/CategoriesGrid'
-import ClientContainer from '@/components/site/FirstPage/ClientContainer'
 
 export const revalidate = 10 // ISR
 

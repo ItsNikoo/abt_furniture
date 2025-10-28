@@ -18,12 +18,13 @@ export async function fetchCategories() {
     })
 
     if (!response.ok) {
-      return []
+      throw new Error(`HTTP error! status: ${response.status}`)
     }
 
     return await response.json()
   } catch (err) {
-    console.error('Ошибка при получении категорий:', err)
+    console.warn('Бэкенд недоступен, возвращаем пустой массив:', err)
+    // Возвращаем пустой массив вместо выброса ошибки
     return []
   }
 }

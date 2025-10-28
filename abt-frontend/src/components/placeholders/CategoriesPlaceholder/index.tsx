@@ -1,35 +1,47 @@
 import React from 'react'
-import { motion } from 'framer-motion'
-import { Skeleton } from '@/components/ui/skeleton'
+import {motion} from 'framer-motion'
 
 export default function CategoriesPlaceholder() {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8 }}
+    <div
+      className="px-4"
     >
-      <h1 className="sm:text-5xl text-3xl font-extrabold text-center my-10">
+      <motion.h1
+        initial={{opacity: 0}}
+        animate={{opacity: 1}}
+        transition={{duration: 0.5, delay: 1}}
+        className="sm:text-5xl text-3xl font-extrabold text-center my-10">
         Каталог продукции
-      </h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 sm:gap-8 gap-4">
-        {[...Array(3)].map((_, idx) => (
-          <div
-            key={idx}
-            className="relative rounded-3xl shadow-xl overflow-hidden bg-white hover:shadow-2xl transition-shadow"
+      </motion.h1>
+
+      <div className="flex flex-wrap mx-auto justify-between gap-4">
+        {[...Array(3)].map((_, index) => (
+          <motion.div
+            initial={{y: 30, opacity: 0}}
+            whileInView={{y: 0, opacity: 1}}
+            transition={{duration: 0.5, delay: index * 0.2}}
+            viewport={{once: true}}
+            key={index}
+            className="flex-grow basis-full sm:basis-[calc(50%-12px)] lg:basis-[calc(33.333%-16px)] max-w-full sm:max-w-[calc(50%-12px)] lg:max-w-[calc(33.333%-16px)]"
           >
-            {/* Фиолетовая полоска сверху */}
-            <div className="absolute top-0 left-0 right-0 h-3 bg-mainPurple z-10"></div>
-            <div className="flex flex-col p-10 pt-8">
-              <Skeleton className="h-8 w-2/3 mb-3"/>
-              <div className="w-full aspect-square relative overflow-hidden rounded-lg">
-                <Skeleton className="w-full h-full rounded-lg"/>
+            <div className="relative overflow-hidden rounded-2xl shadow-md">
+              {/* Скелетон изображения */}
+              <div className="w-full aspect-square relative bg-gradient-to-br from-gray-200 to-gray-300 animate-pulse">
+                {/* Shimmer эффект */}
+                <div
+                  className="absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/40 to-transparent"
+                />
+              </div>
+
+              {/* Скелетон текста */}
+              <div className="absolute inset-0 flex items-center justify-center text-center p-4">
+                <div className="h-8 w-3/4 bg-gray-400/60 rounded-lg animate-pulse"/>
               </div>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
-    </motion.div>
+    </div>
   )
 }
 
