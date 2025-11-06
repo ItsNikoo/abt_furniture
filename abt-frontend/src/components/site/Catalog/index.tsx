@@ -1,16 +1,16 @@
 'use client'
 
-import { Suspense, use, useEffect, useState } from 'react'
+import {Suspense, use, useEffect, useState} from 'react'
 import Link from 'next/link'
-import { Category, Material, Product, Style } from '@/types'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { fetchProductById, fetchProducts } from '@/lib/api/products'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import {Category, Material, Product, Style} from '@/types'
+import {useQuery, useQueryClient} from '@tanstack/react-query'
+import {fetchProductById, fetchProducts} from '@/lib/api/products'
+import {usePathname, useRouter, useSearchParams} from 'next/navigation'
 import CatalogCard from '@/components/site/Catalog/CatalogCard'
 import StyleSelector from '@/components/ui/CatalogSelectors/StyleSelector'
 import MaterialSelector from '@/components/ui/CatalogSelectors/MaterialSelector'
-import { Input } from '@/components/ui/input'
-import { motion } from 'framer-motion'
+import {Input} from '@/components/ui/input'
+import {motion} from 'framer-motion'
 import LoadingPlaceholder from '@/components/placeholders/LoadingPlaceholder'
 
 interface CatalogProps {
@@ -20,7 +20,7 @@ interface CatalogProps {
   selectedCategory?: string;
 }
 
-function CatalogContent({ categoriesPromise, stylesPromise, materialsPromise, selectedCategory }: CatalogProps) {
+function CatalogContent({categoriesPromise, stylesPromise, materialsPromise, selectedCategory}: CatalogProps) {
   const queryClient = useQueryClient()
   const categories = use(categoriesPromise)
   const styles = use(stylesPromise)
@@ -95,18 +95,18 @@ function CatalogContent({ categoriesPromise, stylesPromise, materialsPromise, se
 
   const handleStyleChange = (style: string) => {
     setCurrentStyle(style)
-    updateURL({ style, material: currentMaterial, query })
+    updateURL({style, material: currentMaterial, query})
   }
 
   const handleMaterialChange = (material: string) => {
     setCurrentMaterial(material)
-    updateURL({ style: currentStyle, material, query })
+    updateURL({style: currentStyle, material, query})
   }
 
-  const { data: products, isLoading, isError } = useQuery({
+  const {data: products, isLoading, isError} = useQuery({
     queryKey: [`products`, currentCategory, currentStyle, currentMaterial],
     queryFn: async () => {
-      return await fetchProducts({ category: currentCategory, style: currentStyle, material: currentMaterial })
+      return await fetchProducts({category: currentCategory, style: currentStyle, material: currentMaterial})
     },
     enabled: !!currentCategory,
   })
@@ -118,9 +118,9 @@ function CatalogContent({ categoriesPromise, stylesPromise, materialsPromise, se
   return (
     <>
       <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+        initial={{opacity: 0, y: -40}}
+        animate={{opacity: 1, y: 0}}
+        transition={{duration: 0.75}}
         className="flex flex-col sm:flex-row sm:items-center gap-3 ">
         <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-6xl font-bold font-montserrat">Каталог</h1>
         <Input
@@ -132,29 +132,42 @@ function CatalogContent({ categoriesPromise, stylesPromise, materialsPromise, se
         />
       </motion.div>
       <motion.ul
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.3 }}
-        className="flex flex-wrap sm:flex-row gap-4 sm:gap-8 font-medium text-sm sm:text-base mt-2 sm:mt-4">
+        initial="hidden"
+        animate="visible"
+        variants={{
+          hidden: {},
+          visible: {
+            transition: {
+              staggerChildren: 0.3, // задержка между появлением элементов
+            },
+          },
+        }}
+        className="flex flex-wrap sm:flex-row gap-4 sm:gap-8 font-medium text-sm sm:text-base mt-2 sm:mt-4"
+      >
         {categories.map((category) => (
-          <li key={category.id}>
+          <motion.li
+            key={category.id}
+            variants={{
+              hidden: { opacity: 0 },
+              visible: { opacity: 1},
+            }}
+            transition={{ duration: 1 }}
+          >
             <Link
               href={`/catalog/${category.categorySlug}`}
               className={`rounded-md transition cursor-pointer px-2 py-1 sm:px-0 sm:py-0 ${
-                currentCategory === category.categorySlug
-                ? 'text-mainPurple'
-                : 'text-black'
+                currentCategory === category.categorySlug ? 'text-mainPurple' : 'text-black'
               }`}
             >
               {category.category}
             </Link>
-          </li>
+          </motion.li>
         ))}
       </motion.ul>
       <motion.div
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.5 }}
+        initial={{opacity: 0}}
+        animate={{opacity: 1}}
+        transition={{duration: 0.5, delay: 1}}
         className="flex flex-col sm:flex-row gap-2 sm:gap-3 mt-2">
         <StyleSelector
           styles={styles}
@@ -172,7 +185,7 @@ function CatalogContent({ categoriesPromise, stylesPromise, materialsPromise, se
         {isLoading && <div className="text-sm sm:text-base min-h-[60vh]"><LoadingPlaceholder/></div>}
         {isError && <p className="text-sm sm:text-base">Ошибка при загрузке продуктов</p>}
         {filteredProducts && filteredProducts.length > 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mt-4 sm:mt-6">
+          <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-4 mt-4 sm:mt-6">
             {filteredProducts.map((product: Product) => (
               <Link key={product.id}
                     href={`/catalog/${currentCategory}/${product.id}-${product.productSlug}`}
@@ -189,18 +202,18 @@ function CatalogContent({ categoriesPromise, stylesPromise, materialsPromise, se
           </div>
         )}
         {filteredProducts && filteredProducts.length === 0 && !isLoading &&
-         <p className="text-sm sm:text-base min-h-[50vh]">Нет продуктов в этой категории.</p>}
+            <p className="text-sm sm:text-base min-h-[50vh]">Нет продуктов в этой категории.</p>}
       </div>
     </>
   )
 }
 
 export default function CatalogWrapper({
-  categoriesPromise,
-  stylesPromise,
-  materialsPromise,
-  selectedCategory,
-}: CatalogProps) {
+                                         categoriesPromise,
+                                         stylesPromise,
+                                         materialsPromise,
+                                         selectedCategory,
+                                       }: CatalogProps) {
   return (
     <Suspense fallback={<div><LoadingPlaceholder/></div>}>
       <CatalogContent categoriesPromise={categoriesPromise} stylesPromise={stylesPromise}

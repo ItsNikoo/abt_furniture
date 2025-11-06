@@ -55,7 +55,8 @@ export default function ProductPhotoCarousel({ photos }: { photos: Photo[] }) {
                 <Image
                   src={photo.photoUrl}
                   alt={`Фото ${photo.id}`}
-                  className="object-center"
+                  //className="object-center"
+                  className="object-contain"
                   fill
                 />
               </div>
@@ -79,23 +80,6 @@ export default function ProductPhotoCarousel({ photos }: { photos: Photo[] }) {
       >
         <Image src="/arrow-right.svg" alt="Вперёд" width={24} height={24}/>
       </Button>
-
-      {/*/!* Индикаторы *!/*/}
-      {/*<div className="flex justify-center gap-1 mt-4">*/}
-      {/*    /!*{photos.map((_, index) => (*!/*/}
-      {/*    /!*    <button*!/*/}
-      {/*    /!*        key={index}*!/*/}
-      {/*    /!*        onClick={(e) => scrollTo(index, e)}*!/*/}
-      {/*    /!*        className={`w-2 h-2 rounded-full transition-colors ${*!/*/}
-      {/*    /!*            index === selectedIndex ? 'bg-mainPurple' : 'bg-gray-300'*!/*/}
-      {/*    /!*        }`}*!/*/}
-      {/*    /!*        aria-label={`Перейти к слайду ${index + 1}`}*!/*/}
-      {/*    /!*    />*!/*/}
-      {/*    /!*))}*!/*/}
-      {/*    {photos.map((photo: Photo) => (*/}
-      {/*        <Image key={photo.id} src={photo.photoUrl} alt={`Фото ${photo.id}`} fill />*/}
-      {/*    ))}*/}
-      {/*</div>*/}
 
       {/* Миниатюры */}
       <div className="flex gap-2 mt-4 overflow-x-auto px-2">

@@ -38,7 +38,7 @@ export default function CategoriesGrid() {
   return (
     <motion.div
       initial={{opacity: 0, y: 40}}
-      whileInView={{opacity: 1, y: 0}}
+      animate={{opacity: 1, y: 0}}
       viewport={{once: true, amount: 0.2}}
       transition={{duration: 1}}
       className="px-4"
@@ -56,7 +56,7 @@ export default function CategoriesGrid() {
           >
             <motion.div
               initial={{y: 20, opacity:0}}
-              whileInView={{y:0, opacity:1}}
+              animate={{y:0, opacity:1}}
               transition={{duration:0.5, delay: index * 0.3}}
               viewport={{once: true, amount: 0.1}}
               className="relative overflow-hidden rounded-2xl shadow-md group"

@@ -30,7 +30,7 @@ export default function Footer() {
         {/* Контакты */}
         <div className="flex flex-col gap-2 items-start text-sm font-notosans ">
           {/* Балашиха */}
-          <div className="flex flex-row gap-2">
+          <div className="flex sm:flex-row flex-col gap-2">
             <div className="flex items-center gap-2">
               <MapPin className="w-4 h-4 flex-shrink-0"/>
               <span>Балашиха, Железнодорожный, Керамическая, 2Б</span>
@@ -47,7 +47,7 @@ export default function Footer() {
           </div>
 
           {/* Москва */}
-          <div className="flex flex-row gap-2">
+          <div className="flex sm:flex-row flex-col gap-2">
             <div className="flex items-center gap-2">
               <MapPin className="w-4 h-4 flex-shrink-0"/>
               <span>Москва, Каширское шоссе, д.5, корп.1</span>

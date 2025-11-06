@@ -1,8 +1,8 @@
 import ContentWrapper from '@/components/ContentWrapper'
 import Catalog from '../../../components/site/Catalog'
-import { fetchCategories } from '@/lib/api/categories'
-import { fetchStyles } from '@/lib/api/styles'
-import { fetchMaterials } from '@/lib/api/materials'
+import {fetchCategories} from '@/lib/api/categories'
+import {fetchStyles} from '@/lib/api/styles'
+import {fetchMaterials} from '@/lib/api/materials'
 
 export async function generateMetadata() {
   return {
@@ -16,6 +16,14 @@ export async function generateMetadata() {
       locale: 'ru_RU',
       type: 'website',
     },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+      },
+    }
   }
 }
 
