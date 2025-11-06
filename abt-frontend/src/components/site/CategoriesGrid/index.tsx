@@ -1,11 +1,10 @@
 'use client'
 
 import {Category} from '@/types'
-import {useEffect, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import {motion} from 'framer-motion'
-import LoadingPlaceholder from '@/components/placeholders/LoadingPlaceholder'
 import CategoriesPlaceholder from '@/components/placeholders/CategoriesPlaceholder'
 import {fetchCategories} from "@/lib/api/categories";
 
@@ -31,60 +30,62 @@ export default function CategoriesGrid() {
     loadCategories()
   }, []);
 
-  if (loading || error || categories.length === 0){
+  if (loading || error || categories.length === 0) {
     return <CategoriesPlaceholder/>
   }
 
   return (
-    <motion.div
-      initial={{opacity: 0, y: 40}}
-      animate={{opacity: 1, y: 0}}
-      viewport={{once: true, amount: 0.2}}
-      transition={{duration: 1}}
+    <div
       className="px-4"
     >
-      <h1 className="sm:text-5xl text-3xl font-extrabold text-center my-10">
+      <motion.h1
+        initial={{opacity: 0}}
+        animate={{opacity: 1}}
+        transition={{duration: 0.5, delay: 1}}
+        className="sm:text-5xl text-3xl font-extrabold text-center my-10">
         Каталог продукции
-      </h1>
+      </motion.h1>
 
       <div className="flex flex-wrap mx-auto justify-between gap-4">
         {categories.map((category, index) => (
-          <Link
+          <motion.div
+            initial={{y: 30, opacity: 0}}
+            animate={{y: 0, opacity: 1}}
+            transition={{duration: 0.5, delay: index * 0.2}}
             key={category.id}
-            href={`/catalog/${category.categorySlug}`}
             className="flex-grow basis-full sm:basis-[calc(50%-12px)] lg:basis-[calc(33.333%-16px)] max-w-full sm:max-w-[calc(50%-12px)] lg:max-w-[calc(33.333%-16px)]"
           >
-            <motion.div
-              initial={{y: 20, opacity:0}}
-              animate={{y:0, opacity:1}}
-              transition={{duration:0.5, delay: index * 0.3}}
-              viewport={{once: true, amount: 0.1}}
-              className="relative overflow-hidden rounded-2xl shadow-md group"
+            <Link
+              href={`/catalog/${category.categorySlug}`}
             >
-              {/* Затемнённое фото */}
-              <div className="w-full aspect-square relative group-hover:scale-[1.02] duration-300">
-                <Image
-                  src={category.photo}
-                  alt={category.category}
-                  fill
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  priority
-                  className="object-cover transition-all duration-500 group-hover:brightness-100 brightness-50"
-                />
-              </div>
+              <div
+                className="relative overflow-hidden rounded-2xl shadow-md group"
+              >
+                {/* Затемнённое фото */}
+                <div className="w-full aspect-square relative group-hover:scale-[1.02] duration-300">
+                  <Image
+                    src={category.photo}
+                    alt={category.category}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    priority
+                    className="object-cover transition-all duration-500 group-hover:brightness-100 brightness-50"
+                  />
+                </div>
 
-              {/* Текст поверх фото */}
-              <div className="absolute inset-0 flex items-center justify-center text-center">
-                <h2
-                  className="text-white text-2xl font-extrabold drop-shadow-lg transition-all duration-300 group-hover:scale-105">
-                  {category.category}
-                </h2>
+                {/* Текст поверх фото */}
+                <div className="absolute inset-0 flex items-center justify-center text-center">
+                  <h2
+                    className="text-white text-2xl font-extrabold drop-shadow-lg transition-all duration-300 group-hover:scale-105">
+                    {category.category}
+                  </h2>
+                </div>
               </div>
-            </motion.div>
-          </Link>
+            </Link>
+          </motion.div>
         ))}
       </div>
-    </motion.div>
+    </div>
   );
 
 }
