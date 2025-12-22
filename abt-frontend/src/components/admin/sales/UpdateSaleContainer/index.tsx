@@ -22,7 +22,6 @@ import Cookies from 'js-cookie'
 export default function UpdateSaleContainer({ sale }: { sale: Sale }) {
   const [isOpen, setIsOpen] = useState(false)
   const [formData, setFormData] = useState<SaleData>({
-    title: sale.title,
     description: sale.description,
     photo: sale.photo,
     link: sale.link,
@@ -80,17 +79,6 @@ export default function UpdateSaleContainer({ sale }: { sale: Sale }) {
               В этом окне вы можете редактировать акцию.
             </DialogDescription>
             <form onSubmit={handleSubmit} className="flex flex-col gap-2">
-              <div>
-                <Label>Название</Label>
-                <Input
-                  id="title"
-                  name="title"
-                  type="text"
-                  value={formData.title}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
               <div>
                 <Label>Описание</Label>
                 <Input

@@ -54,7 +54,6 @@ export interface ProductData {
 
 export interface Sale {
   id: string;
-  title: string;
   description: string;
   photo: string | null;
   link: string;
@@ -62,7 +61,6 @@ export interface Sale {
 }
 
 export interface SaleData {
-  title: string;
   description: string;
   photo?: string | null;
   photoFile: File | null;
