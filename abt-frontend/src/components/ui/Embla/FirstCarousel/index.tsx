@@ -59,24 +59,16 @@ export default function FirstCarousel({ slides }: { slides: Sale[] }) {
               <div key={slide.id} className="embla__slide flex-[0_0_100%] min-w-0 ">
                 <div className="flex flex-col sm:flex-row">
                   <div
-                    className="w-full sm:w-1/2 flex flex-col items-center justify-between pt-3 sm:pt-5 pb-5 sm:pb-10 px-2 sm:px-3">
+                    className="w-full sm:w-1/2 flex flex-col items-center justify-center pt-3 sm:pt-5 pb-5 sm:pb-10 px-2 sm:px-3 gap-3">
                     <h1
                       className="text-2xl md:text-3xl lg:text-4xl font-overpass font-extrabold text-center">{slide.title}</h1>
-                    <div className="flex flex-col items-center mt-4 sm:mt-0">
+                    <div className="flex flex-col items-center mt-4 sm:mt-0 gap-3">
+                      <p className="mt-2 text-sm sm:text-lg text-gray-800 text-center px-2">{slide.description}</p>
                       <Link
                         href={slide.link}
-                        className="rounded-full bg-mainPurple p-1.5 sm:p-2 w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center hover:bg-mainPurpleHovered"
+                        className="rounded-xl bg-mainPurple p-2 px-4 flex items-center justify-center hover:bg-mainPurpleHovered text-white font-bold hover:transition duration-500"
                         target="_blank"
-                        rel="noopener noreferrer">
-                        <Image
-                          src="/star.svg"
-                          alt="Star icon"
-                          width={24}
-                          height={24}
-                          className="sm:w-8 sm:h-8 object-contain"
-                        />
-                      </Link>
-                      <p className="mt-2 text-sm sm:text-base text-gray-400 text-center px-2">{slide.description}</p>
+                        rel="noopener noreferrer">Подробнее</Link>
                     </div>
                   </div>
                   <div className="w-full sm:w-1/2 h-[250px] sm:h-[350px] md:h-[450px] lg:h-[550px] bg-gray-400">
@@ -120,7 +112,7 @@ export default function FirstCarousel({ slides }: { slides: Sale[] }) {
         onClick={scrollPrev}
         aria-label="Предыдущий слайд"
       >
-        <ChevronLeft className="w-5 h-5 lg:w-6 lg:h-6 text-white"/>
+        <ChevronLeft className="w-7 h-7 text-white"/>
       </Button>
       <Button
         className="hidden sm:flex absolute right-[-30px] lg:right-[-50px] top-1/2 -translate-y-1/2 bg-mainPurple p-2 w-8 h-8 lg:w-10 lg:h-10 hover:bg-mainPurpleHovered transition-colors duration-200 items-center justify-center shadow-lg"

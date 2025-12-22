@@ -34,8 +34,9 @@ export default function AnimatedText({ text, className }: AnimatedTextProps) {
           initial="hidden"
           animate="visible"
           custom={index} // Передаем индекс в variants для расчета задержки
-          style={{ display: 'inline-block', marginRight: '0.25em' }} // Чтобы пробелы не съедались
+          style={{ display: 'inline-block', marginRight: '0.25em'}} // Чтобы пробелы не съедались
           className="inline-block mr-1" // Если используете Tailwind CSS
+            transition={{ delay: 2 }}
         >
           {word}
         </motion.span>

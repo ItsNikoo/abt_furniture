@@ -8,7 +8,7 @@ export const advantagesList = [
     icon: 'shield',
   },
   {
-    title: 'Материалы разных цветов и фактур на выбор',
+    title: 'Разнообразие материалов',
     icon: 'palette',
   },
   {

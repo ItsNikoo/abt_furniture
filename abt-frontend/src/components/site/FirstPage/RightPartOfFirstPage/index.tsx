@@ -148,11 +148,11 @@ export default function RightPartOfFirstPage() {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.75 }}
+      initial={{ opacity: 0, x: 20 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.75, delay: 1 }}
       viewport={{ once: true }}
-      className="lg:w-1/2 w-full flex justify-center items-center">
+      className="lg:w-1/2 w-full flex justify-center items-center h-full">
       <div
         className="relative bg-white rounded-2xl sm:rounded-3xl shadow-xl overflow-hidden w-full max-w-sm sm:max-w-md lg:max-w-[360px]">
         <div className="absolute top-0 left-0 right-0 h-2 sm:h-3 bg-mainPurple"></div>

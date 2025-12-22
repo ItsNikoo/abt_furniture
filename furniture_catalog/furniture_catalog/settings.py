@@ -1,4 +1,3 @@
-import os
 from datetime import timedelta
 from pathlib import Path
 from decouple import config
@@ -20,7 +19,7 @@ SECRET_KEY = config('SECRET_KEY', default='django-insecure-d90$&ig18i$-7_)w2h0^q
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'backend', 'frontend', 'nginx']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'backend', 'frontend', 'nginx', '178.250.242.124','kuhni-abt.ru']
 
 # Application definition
 
@@ -72,6 +71,9 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost',
     "http://my_frontend:3000",
     "http://127.0.0.1:3000",
+    "http://178.250.242.124",
+    "https://kuhni-abt.ru",
+    "https://www.kuhni-abt.ru"
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -84,8 +86,12 @@ CSRF_TRUSTED_ORIGINS = [
 
 CSRF_COOKIE_SAMESITE = 'Lax'
 SESSION_COOKIE_SAMESITE = 'Lax'
-CSRF_COOKIE_HTTPONLY = False
+#CSRF_COOKIE_HTTPONLY = False
 SESSION_COOKIE_HTTPONLY = True
+
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
 
 ROOT_URLCONF = 'furniture_catalog.urls'
 
@@ -110,13 +116,17 @@ WSGI_APPLICATION = 'furniture_catalog.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('POSTGRES_DB', default='furniture_catalog'),
-        'USER': config('POSTGRES_USER', default='postgres'),
-        'PASSWORD': config('POSTGRES_PASSWORD', default='postgres'),
-        'HOST': config('DB_HOST', default='db'),
-        'PORT': config('DB_PORT', default='5432'),
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': config('POSTGRES_DB', default='furniture_catalog'),
+    #     'USER': config('POSTGRES_USER', default='postgres'),
+    #     'PASSWORD': config('POSTGRES_PASSWORD', default='postgres'),
+    #     'HOST': config('DB_HOST', default='db'),
+    #     'PORT': config('DB_PORT', default='5432'),
+    # }
+    'default':{
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3'
     }
 }
 
@@ -169,27 +179,3 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'info@kuhni-abt.ru'  # Ваш email
 EMAIL_HOST_PASSWORD = config("EMAIL_PASSWORD", default="")
 DEFAULT_FROM_EMAIL = 'info@kuhni-abt.ru'
-
-# # Добавьте в конец settings.py
-# LOGGING = {
-#     'version': 1,
-#     'disable_existing_loggers': False,
-#     'handlers': {
-#         'console': {
-#             'level': 'DEBUG',
-#             'class': 'logging.StreamHandler',
-#         },
-#     },
-#     'loggers': {
-#         'django': {
-#             'handlers': ['console'],
-#             'level': 'DEBUG',
-#             'propagate': True,
-#         },
-#         'django.request': {
-#             'handlers': ['console'],
-#             'level': 'DEBUG',
-#             'propagate': False,
-#         },
-#     },
-# }

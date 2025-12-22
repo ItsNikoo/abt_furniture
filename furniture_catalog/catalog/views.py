@@ -11,7 +11,6 @@ from catalog.serializers import CategorySerializer, StyleSerializer, ProductSeri
     FirstPageSerializer
 from furniture_catalog import settings
 from services.yandex_storage import delete_from_yandex_storage
-from logging import getLogger
 
 from knox.views import LoginView as KnoxLoginView
 from rest_framework.authtoken.serializers import AuthTokenSerializer
@@ -36,12 +35,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
         response = super().destroy(request, *args, **kwargs)
         # Удаляем файл из Yandex Cloud, если он есть
         if photo_url:
-            try:
-                delete_from_yandex_storage(photo_url)
-            except Exception as e:
-                # Логируем ошибку, но не прерываем ответ
-                logger = getLogger(__name__)
-                logger.error(f"Ошибка при удалении файла для категории {instance.category_slug}: {str(e)}")
+            delete_from_yandex_storage(photo_url)
         return response
 
 
@@ -66,12 +60,7 @@ class ProductViewSet(ModelViewSet):
 
         # Удаляем файлы из Yandex Cloud Storage
         for photo_url in photo_urls:
-            try:
-                delete_from_yandex_storage(photo_url)
-            except Exception as e:
-                # Логируем ошибку, но не прерываем удаление
-                logger = getLogger(__name__)
-                logger.error(f"Ошибка при удалении файла {photo_url} для продукта {instance.title}: {str(e)}")
+            delete_from_yandex_storage(photo_url)
 
         # Удаляем продукт
         response = super().destroy(request, *args, **kwargs)
@@ -114,10 +103,7 @@ class FirstPageViewSet(ModelViewSet):
         response = super().destroy(request, *args, **kwargs)
 
         if photo_url:
-            try:
-                delete_from_yandex_storage(photo_url)
-            except Exception as e:
-                logger.error(f"Ошибка при удалении файла: {str(e)}")
+            delete_from_yandex_storage(photo_url)
 
         return response
 
@@ -190,8 +176,6 @@ class ContactAPI(APIView):
                 send_mail(subject, message, from_email, recipient_list)
                 return Response({'message': 'Сообщение успешно отправлено'}, status=status.HTTP_200_OK)
             except Exception as e:
-                logger = getLogger(__name__)
-                logger.error(f"Ошибка при отправке письма: {str(e)}")
                 return Response({'error': f'Ошибка при отправке письма: {str(e)}'},
                                 status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 

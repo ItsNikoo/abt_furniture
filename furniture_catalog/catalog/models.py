@@ -41,23 +41,36 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     description = models.TextField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    material = models.ForeignKey(Material, on_delete=models.CASCADE, related_name='products', null=True, blank=True)
-    style = models.ForeignKey(Style, on_delete=models.CASCADE, related_name='products', null=True, blank=True)
+    material = models.ForeignKey(
+        Material,
+        on_delete=models.CASCADE,
+        related_name='products',
+        null=True,
+        blank=True
+    )
+    style = models.ForeignKey(
+        Style,
+        on_delete=models.CASCADE,
+        related_name='products',
+        null=True,
+        blank=True
+    )
     photos = models.ManyToManyField(Photo, related_name='products', blank=True)
 
     class Meta:
         verbose_name = "Товар"
         verbose_name_plural = "Товары"
 
-
+# Модель акций (SALE) (первая полоса)
 class FirstPage(models.Model):
     title = models.CharField(max_length=300)
     description = models.TextField()
-    photo = models.URLField(max_length=500, null = True, blank=True)
+    photo = models.URLField(max_length=500, null=True, blank=True)
     link = models.URLField(max_length=500)
 
     class Meta:
         verbose_name = "Карусель на первой странице"
+
 
 class ContactRequest(models.Model):
     phone = models.CharField(max_length=20)

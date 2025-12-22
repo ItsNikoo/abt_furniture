@@ -1,19 +1,21 @@
+version: '3.8'
+
 services:
   backend:
     build:
       context: ./furniture_catalog
       dockerfile: Dockerfile
-    # no host port; accessed via nginx and internal network
     env_file:
       - ./furniture_catalog/.env
     environment:
-      - DEBUG=True
+      - DEBUG=False
     volumes:
       - media_volume:/app/media
     depends_on:
       - db
     networks:
-      - app-network
+      - web-net
+      - db-net   # backend is the only one that can see the DB
 
   frontend:
     build:
@@ -27,37 +29,68 @@ services:
     depends_on:
       - backend
     networks:
-      - app-network
+      - web-net
 
   db:
     image: postgres:15-alpine
     environment:
       - POSTGRES_DB=furniture_catalog
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=user_abt                  # safer than postgres superuser
+      - POSTGRES_PASSWORD=${DB_PASSWORD}        # from .env file
+      - POSTGRES_INITDB_ARGS=--auth=scram-sha-256
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
+    expose:
+      - "5432"   # only visible inside db-net, not published to host
     networks:
-      - app-network
+      - db-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB -q"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - NET_RAW
 
   nginx:
     image: nginx:alpine
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+      - media_volume:/app/media:ro
     depends_on:
       - backend
       - frontend
     networks:
-      - app-network
+      - web-net
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+    networks:
+      - web-net
+    security_opt:
+      - no-new-privileges:true
 
 volumes:
   postgres_data:
   media_volume:
 
 networks:
-  app-network:
+  web-net:
+    driver: bridge
+  db-net:
     driver: bridge

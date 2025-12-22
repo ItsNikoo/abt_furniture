@@ -4,7 +4,7 @@ import { inter, montserrat } from './fonts'
 
 export const metadata: Metadata = {
   title: 'АБТ - мебель для кухни',
-  description: 'Сгенерировано с помощью create next app',
+  description: 'Мебельная фабрика АБТ. Стиль и качество с 2002 года',
   icons: {
     icon: '/favicon.ico',
   },

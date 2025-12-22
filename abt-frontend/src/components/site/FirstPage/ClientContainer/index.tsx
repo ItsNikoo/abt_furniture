@@ -1,75 +1,37 @@
 'use client'
 
-import { motion } from 'framer-motion'
-import { useState } from 'react'
+import {advantagesList} from "@/lib/advantages-list"
+import { motion } from "framer-motion";
+import Image from "next/image"
 
-interface Props {
-  id: number
-  title: string
-  description: string
+interface Advantage {
+    title: string;
+    icon: string;
 }
 
-const data = [
-  {
-    id: 1,
-    title: 'Оформление заказа',
-    description: 'Оформление заказа занимает всего несколько минут: удобный сайт поможет ознакомиться с ассортиментом и заказать в пару кликов, а наши менеджеры готовы выслушать вас по телефону.',
-  },
-  {
-    id: 2,
-    title: 'Подтверждение заказа',
-    description: 'Менеджер ответит на все вопросы, уточнит сроки, поможет доукомплектовать заказ при необходимости и подтвердит адрес доставки.',
-  },
-  {
-    id: 3,
-    title: 'Комплектация и доставка',
-    description: 'Мы собираем ваш заказ с заботой и доставляем прямо до двери — аккуратно и вовремя. Каждый заказ проверяется на комплектность, упаковка надёжная, а доставка — точно в срок.',
-  },
-  {
-    id: 4,
-    title: 'Установка и прием результата',
-    description: 'Мы предоставляем услуги по установке кухни. Все сделано для того, чтобы вы максимально насладились результатом. Кухня — это сердце дома.',
-  },
-]
-
 export default function ClientContainer() {
-  const [clicked, setClicked] = useState<number | null>(1)
-
-  function handleClick(id: number) {
-    setClicked(clicked === id ? null : id)
-  }
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 1 }}
-      className="flex flex-row gap-2 items-start min-h-[320px] pb-[10px]">
-      {data.map((item: Props) => {
-        const isActive = clicked === item.id
-        return (
-          <motion.div
-            whileHover={{ scale: 1.02 }}
-            key={item.id}
-            onClick={() => handleClick(item.id)}
-            className={`
-              flex flex-col flex-1 px-[20px] py-[15px] rounded-2xl cursor-pointer
-              transition-all duration-300 ease-in-out shadow-md
-              ${isActive ? 'bg-mainPurple text-white' : 'bg-white text-black hover:bg-gray-50'}
-            `}
-            style={{ minHeight: '85px' }} // Фиксированная минимальная высота для всех карточек
-          >
-            <h2 className="font-montserrat font-bold text-xl">{item.title}</h2>
-            <div
-              className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                isActive ? 'max-h-[250px] opacity-100 mt-2' : 'max-h-0 opacity-0'
-              }`}
-            >
-              <p className="text-base leading-relaxed">{item.description}</p>
-            </div>
-          </motion.div>
-        )
-      })}
-    </motion.div>
-  )
+    return (
+        <div className='grid grid-cols-4 gap-4'>
+            {
+                advantagesList.map((advantage: Advantage, index) => (
+                    <motion.div
+                            initial={{y: 30, opacity:0}}
+                            whileInView={{y:0, opacity:1}}
+                            transition={{duration:0.5, delay: index * 0.2}}
+                            viewport={{once: true}}
+                        key={index}
+                         className="flex flex-col items-center justify-center text-center
+                         min-w-[250px] min-h-[175px] p-5 bg-white rounded-t-xl
+                          hover:pt-10 duration-500
+                         ">
+                        <div className="bg-mainPurple rounded-full p-2 mb-2">
+                            <Image src={`/advantages/${advantage.icon}.svg`} width={35} height={35}
+                                   alt={advantage.title}/>
+                        </div>
+                        <p className="leading-tight">{advantage.title}</p>
+                    </motion.div>
+                ))
+            }
+        </div>
+    )
 }

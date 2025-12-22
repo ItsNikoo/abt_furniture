@@ -1,19 +1,19 @@
 import ContentWrapper from '@/components/ContentWrapper'
-import { fetchProductById } from '@/lib/api/products'
-import { Product } from '@/types'
+import {fetchProductById} from '@/lib/api/products'
+import {Product} from '@/types'
 import ProductContainer from '@/components/site/ProductContainer'
-import { Metadata } from 'next'
+import {Metadata} from 'next'
 
 type Props = {
   params: Promise<{
     categorySlug: string;
     productSlug: string;
-  }>;
-};
+  }>
+}
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata({params}: Props): Promise<Metadata> {
   // Get the product data for metadata
-  const { productSlug } = await params
+  const {productSlug} = await params
   const id = productSlug.split('-')[0]
 
   try {
@@ -32,6 +32,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         siteName: 'АБТ мебель',
         locale: 'ru_RU',
         type: 'website',
+      },
+      robots: {
+        index: true,
+        follow: true,
+        googleBot: {
+          index: true,
+          follow: true,
+        },
       },
       other: {
         'product:price:amount': product.price?.toString(),
@@ -57,8 +65,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export const revalidate = 60
 
-export default async function ProductPage({ params }: Props) {
-  const { productSlug } = await params
+export default async function ProductPage({params}: Props) {
+  const {productSlug} = await params
   const id = productSlug.split('-')[0]
   const product: Product = await fetchProductById(Number(id))
 

@@ -1,13 +1,13 @@
 'use client'
 
-import { useCallback, useEffect, useState } from 'react'
+import {useCallback, useEffect, useState} from 'react'
 import useEmblaCarousel from 'embla-carousel-react'
 import Image from 'next/image'
-import { Button } from '@/components/ui/button'
-import { Photo } from '@/types'
+import {Button} from '@/components/ui/button'
+import {Photo} from '@/types'
 
-export default function PhotoCarousel({ photos }: { photos: Photo[] }) {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true })
+export default function PhotoCarousel({photos}: { photos: Photo[] }) {
+  const [emblaRef, emblaApi] = useEmblaCarousel({loop: true})
   const [selectedIndex, setSelectedIndex] = useState(0)
 
   const scrollPrev = useCallback((e: React.MouseEvent) => {
@@ -47,19 +47,23 @@ export default function PhotoCarousel({ photos }: { photos: Photo[] }) {
       <div className="overflow-hidden" ref={emblaRef}>
         <div className="flex">
           {photos.map((photo) => (
-            <div key={photo.id} className="flex-[0_0_100%] min-w-0">
-              <div className={`relative aspect-video h-fit`}>
+            <div key={photo.id} className="flex-[0_0_100%] bg-gray-50 min-w-0">
+              <div
+                // className="relative w-full aspect-video h-fit rounded-2xl"
+                className="relative aspect-video h-fit"
+              >
                 <Image
                   src={photo.photoUrl}
                   alt={`Фото ${photo.id}`}
-                  className="object-cover"
                   fill
+                  className="object-contain"
                 />
               </div>
             </div>
           ))}
         </div>
       </div>
+
 
       {/* Навигационные кнопки */}
       <Button

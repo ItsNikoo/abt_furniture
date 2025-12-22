@@ -28,24 +28,46 @@ export default function Footer() {
         </nav>
 
         {/* Контакты */}
-        <div className="flex flex-col gap-2 items-start md:items-start text-sm font-notosans">
-          <div className="flex items-center gap-2">
-            <MapPin className="w-4 h-4"/>
-            <span>Балашиха, Железнодорожный, Керамическая, 2Б</span>
+        <div className="flex flex-col gap-2 items-start text-sm font-notosans ">
+          {/* Балашиха */}
+          <div className="flex sm:flex-row flex-col gap-2">
+            <div className="flex items-center gap-2">
+              <MapPin className="w-4 h-4 flex-shrink-0"/>
+              <span>Балашиха, Железнодорожный, Керамическая, 2Б</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Phone className="w-4 h-4 flex-shrink-0"/>
+              <a
+                href="tel:+79267232880"
+                className="hover:underline"
+              >
+                +7 (926) 723-28-80
+              </a>
+            </div>
           </div>
-          <div className="flex items-center gap-2">
-            <Phone className="w-4 h-4"/>
-            <a
-              href="tel:+79267232880"
-              className="hover:underline"
-            >
-              +7 (926) 723-28-80
-            </a>
+
+          {/* Москва */}
+          <div className="flex sm:flex-row flex-col gap-2">
+            <div className="flex items-center gap-2">
+              <MapPin className="w-4 h-4 flex-shrink-0"/>
+              <span>Москва, Каширское шоссе, д.5, корп.1</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Phone className="w-4 h-4 flex-shrink-0"/>
+              <a
+                href="tel:+79197626655"
+                className="hover:underline"
+              >
+                +7 (919) 762-66-55
+              </a>
+            </div>
           </div>
+
+          {/* Email */}
           <div className="flex items-center gap-2">
-            <Mail className="w-4 h-4"/>
+            <Mail className="w-4 h-4 flex-shrink-0"/>
             <a
-              href="mailto:info@abt-mebel.ru"
+              href="mailto:info@kuhni-abt.ru"
               className="hover:underline"
             >
               info@kuhni-abt.ru

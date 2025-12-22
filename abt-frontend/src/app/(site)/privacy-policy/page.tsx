@@ -12,6 +12,14 @@ export const metadata = {
     locale: 'ru_RU',
     type: 'website',
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  }
 }
 
 export default function PrivacyPolicyPage() {

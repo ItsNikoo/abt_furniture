@@ -13,11 +13,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <nav className={styles.Sidebar}>
           <ul className={styles.MenuList}>
             <li className={styles.MenuItem}>
-              <Link href={'/admin'}>
-                Главная
-              </Link>
-            </li>
-            <li className={styles.MenuItem}>
               <Link href={'/admin/products'}>
                 Продукты
               </Link>

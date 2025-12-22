@@ -16,7 +16,7 @@ export default function DeliveryPageComponent() {
             transition={{ duration: 1 }}
             className="relative w-full h-56 md:h-[300px]">
             <Image
-              src="/services_pictures/picture1.png"
+              src="/services_pictures/picture1.jpeg"
               alt="Доставка"
               fill={false}
               width={800}

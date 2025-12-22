@@ -15,7 +15,7 @@ export default function DesignPageComponent() {
             transition={{ duration: 1 }}
             className="relative w-full h-56 md:h-[300px]">
             <Image
-              src="/services_pictures/picture1.png"
+              src="/services_pictures/picture1.jpeg"
               alt="Дизайн-проект"
               fill={false}
               width={800}
