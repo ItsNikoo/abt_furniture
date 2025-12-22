@@ -1,12 +1,13 @@
 // Centralized API base URL resolution and helpers
 
 export function getApiBaseUrl(): string {
-  // Browser: use public URL (nginx on host)
-  if (typeof window !== 'undefined') {
-    return process.env.NEXT_PUBLIC_API_URL || '/api'
-  }
-  // Server (inside Docker network): prefer env, fallback to Docker DNS
-  return process.env.API_URL || process.env.NEXT_PUBLIC_API_URL || 'http://backend:8000/api'
+   //Browser: use public URL (nginx on host)
+   if (typeof window !== 'undefined') {
+     return process.env.NEXT_PUBLIC_API_URL || '/api'
+   }
+   // Server (inside Docker network): prefer env, fallback to Docker DNS
+   return process.env.API_URL || process.env.NEXT_PUBLIC_API_URL || 'http://backend:8000/api'
+//    return 'http://127.0.0.1:8000/api'
 }
 
 export function apiUrl(path: string): string {
