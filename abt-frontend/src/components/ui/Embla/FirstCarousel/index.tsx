@@ -59,7 +59,7 @@ export default function FirstCarousel({slides}: { slides: Sale[] }) {
   return (
     <div className="flex justify-center items-center">
       <div className="w-full mx-[15px] md:mx-[50px] lg:mx-[100px]
-                      aspect-[16/6]  /* Фиксированное соотношение сторон 16:9 */
+                      aspect-[16/6]  /* Фиксированное соотношение сторон 16:6 */
                       rounded-lg sm:rounded-xl lg:rounded-2xl overflow-hidden shadow-lg sm:shadow-xl">
         <div className="overflow-hidden relative w-full h-full"
              onMouseEnter={() => setIsPaused(true)}
@@ -95,24 +95,24 @@ export default function FirstCarousel({slides}: { slides: Sale[] }) {
           <div className="absolute inset-0 flex justify-between items-center p-4 pointer-events-none">
             <button
               onClick={previous}
-              className="p-1 rounded-full shadow bg-white/80 hover:bg-white cursor-pointer pointer-events-auto z-10"
+              className="md:p-1 rounded-full shadow bg-white/80 hover:bg-white cursor-pointer pointer-events-auto z-10"
             >
-              <ChevronLeft/>
+              <ChevronLeft className="w-4 md:w-6"/>
             </button>
             <button
               onClick={next}
-              className="p-1 rounded-full shadow bg-white/80 hover:bg-white cursor-pointer pointer-events-auto z-10"
+              className="md:p-1 rounded-full shadow bg-white/80 hover:bg-white cursor-pointer pointer-events-auto z-10"
             >
-              <ChevronRight/>
+              <ChevronRight className="w-4 md:w-6"/>
             </button>
           </div>
-          <div className={`absolute bottom-4 right-0 left-0`}>
+          <div className={`absolute bottom-2 md:bottom-4 right-0 left-0`}>
             <div className={`flex items-center justify-center gap-1`}>
               {slides.map((_, index: number) => (
                 <div
                   key={index}
                   onClick={() => goToSlide(index)}
-                  className={`transition-all w-6 h-1 rounded-full cursor-pointer ${current === index ? "bg-mainPurple" : "bg-white"}`}/>
+                  className={`transition-all w-3 md:w-6 h-0.5 md:h-1 rounded-full cursor-pointer ${current === index ? "bg-mainPurple" : "bg-white"}`}/>
               ))}
             </div>
           </div>
