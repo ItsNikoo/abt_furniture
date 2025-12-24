@@ -63,8 +63,7 @@ class Product(models.Model):
 
 # Модель акций (SALE) (первая полоса)
 class FirstPage(models.Model):
-    title = models.CharField(max_length=300)
-    description = models.TextField()
+    description = models.TextField(default='')
     photo = models.URLField(max_length=500, null=True, blank=True)
     link = models.URLField(max_length=500)
 

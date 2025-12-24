@@ -32,9 +32,6 @@ export default function SaleCard({
     <Card className="rounded-xl shadow-lg border-0 bg-white/90">
       <CardHeader className="pb-2">
         <div className="flex justify-between items-start gap-2">
-          <h1 className="font-bold text-lg md:text-xl m-0 p-0">
-            {sale.title}
-          </h1>
           <div className="flex gap-1">
             <UpdateSaleContainer sale={sale}/>
             <Button
@@ -58,7 +55,7 @@ export default function SaleCard({
             <div className="w-full rounded-lg overflow-hidden border border-gray-100 bg-gray-50">
               <Image
                 src={sale.photo}
-                alt={sale.title}
+                alt={sale.description}
                 width={500}
                 height={300}
                 className="object-cover w-full h-48"

@@ -1,126 +1,123 @@
 'use client'
+import {ChevronLeft, ChevronRight} from "lucide-react"
+import {useEffect, useRef, useState} from "react"
+import {Sale} from "@/types"
+import Link from "next/link"
+import Image from "next/image"
 
-import { useCallback, useEffect, useState } from 'react'
-import useEmblaCarousel from 'embla-carousel-react'
-import Autoplay from 'embla-carousel-autoplay'
-import Image from 'next/image'
-import { Button } from '@/components/ui/button'
-import { Sale } from '@/types'
-import Link from 'next/link'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { motion } from 'framer-motion'
+export default function FirstCarousel({slides}: { slides: Sale[] }) {
+  const [current, setCurrent] = useState<number>(0)
+  const [isPaused, setIsPaused] = useState<boolean>(false)
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null)
 
-export default function FirstCarousel({ slides }: { slides: Sale[] }) {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [Autoplay({ delay: 4000 })]) // Луп и автопрокрутка
-  const [selectedIndex, setSelectedIndex] = useState(0)
+  function previous() {
+    if (current === 0) {
+      setCurrent(slides.length - 1)
+    } else {
+      setCurrent(current - 1)
+    }
+    resetTimeout()
+  }
 
-  // Функции для навигации
-  const scrollPrev = useCallback(() => {
-    if (emblaApi) emblaApi.scrollPrev()
-  }, [emblaApi])
+  function next() {
+    if (current === slides.length - 1) {
+      setCurrent(0)
+    } else {
+      setCurrent(current + 1)
+    }
+  }
 
-  const scrollNext = useCallback(() => {
-    if (emblaApi) emblaApi.scrollNext()
-  }, [emblaApi])
+  function goToSlide(index: number) {
+    setCurrent(index)
+  }
 
-  const scrollTo = useCallback(
-    (index: number) => {
-      if (emblaApi) emblaApi.scrollTo(index)
-    },
-    [emblaApi],
-  )
+  function resetTimeout() {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current)
+    }
+  }
 
-  // Обновление текущего индекса
+  // Автопрокрутка каждые 3 секунды
   useEffect(() => {
-    if (!emblaApi) return
-
-    const onSelect = () => {
-      setSelectedIndex(emblaApi.selectedScrollSnap())
+    if (!isPaused && slides.length > 1) {
+      timeoutRef.current = setTimeout(() => {
+        next()
+      }, 5000)
     }
 
-    emblaApi.on('select', onSelect)
     return () => {
-      emblaApi.off('select', onSelect)
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+      }
     }
-  }, [emblaApi])
+  }, [current, isPaused, slides.length])
+
+  if (!slides || slides.length === 0) {
+    return null
+  }
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="relative mx-auto max-w-[95%] sm:max-w-[90%] lg:max-w-[80%]">
-      {/* Контейнер для карусели */}
-      <div className="embla">
-        <div className="embla__viewport overflow-hidden my-3 sm:my-5 rounded-lg sm:rounded-xl shadow-lg sm:shadow-xl"
-             ref={emblaRef}>
-          <div className="embla__container flex">
+    <div className="flex justify-center items-center">
+      <div className="w-full mx-[15px] md:mx-[50px] lg:mx-[100px]
+                      aspect-[16/6]  /* Фиксированное соотношение сторон 16:6 */
+                      rounded-lg sm:rounded-xl lg:rounded-2xl overflow-hidden shadow-lg sm:shadow-xl">
+        <div className="overflow-hidden relative w-full h-full"
+             onMouseEnter={() => setIsPaused(true)}
+             onMouseLeave={() => setIsPaused(false)}>
+          <div className="flex h-full transition-transform ease-out duration-1000"
+               style={{
+                 transform: `translateX(-${current * 100}%`
+               }}>
             {slides && slides.map((slide) => (
-              <div key={slide.id} className="embla__slide flex-[0_0_100%] min-w-0 ">
-                <div className="flex flex-col sm:flex-row">
-                  <div
-                    className="w-full sm:w-1/2 flex flex-col items-center justify-center pt-3 sm:pt-5 pb-5 sm:pb-10 px-2 sm:px-3 gap-3">
-                    <h1
-                      className="text-2xl md:text-3xl lg:text-4xl font-overpass font-extrabold text-center">{slide.title}</h1>
-                    <div className="flex flex-col items-center mt-4 sm:mt-0 gap-3">
-                      <p className="mt-2 text-sm sm:text-lg text-gray-800 text-center px-2">{slide.description}</p>
-                      <Link
-                        href={slide.link}
-                        className="rounded-xl bg-mainPurple p-2 px-4 flex items-center justify-center hover:bg-mainPurpleHovered text-white font-bold hover:transition duration-500"
-                        target="_blank"
-                        rel="noopener noreferrer">Подробнее</Link>
-                    </div>
+              <Link
+                key={slide.id}
+                href={slide.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="min-w-full h-full relative cursor-pointer"
+              >
+                {slide.photo ? (
+                  <Image
+                    src={slide.photo}
+                    alt={slide.description}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 640px) 100vw, (max-width: 768px) 100vw, (max-width: 1024px) 100vw, 100vw"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                    <div className="text-gray-400 text-lg">Загрузка...</div>
                   </div>
-                  <div className="w-full sm:w-1/2 h-[250px] sm:h-[350px] md:h-[450px] lg:h-[550px] bg-gray-400">
-                    <Link href={slide.link}
-                          target="_blank"
-                          rel="noopener noreferrer">
-                      {slide.photo &&
-                       <Image
-                         src={slide.photo}
-                         alt={slide.description}
-                         width={1200}
-                         height={1200}
-                         className="rounded-lg object-cover w-full h-full"
-                       />}
-                    </Link>
-                  </div>
-                </div>
-              </div>
+                )}
+              </Link>
             ))}
           </div>
-        </div>
-
-        {/* Точки навигации */}
-        <div className="mt-2 sm:mt-4 flex justify-center gap-1">
-          {slides.map((_, index) => (
+          <div className="absolute inset-0 flex justify-between items-center p-4 pointer-events-none">
             <button
-              key={index}
-              className={`h-2 w-2 rounded-full ${
-                index === selectedIndex ? 'bg-mainPurple' : 'bg-gray-300'
-              }`}
-              onClick={() => scrollTo(index)}
-              aria-label={`Перейти к слайду ${index + 1}`}
-            />
-          ))}
+              onClick={previous}
+              className="md:p-1 rounded-full shadow bg-white/80 hover:bg-white cursor-pointer pointer-events-auto z-10"
+            >
+              <ChevronLeft className="w-4 md:w-6"/>
+            </button>
+            <button
+              onClick={next}
+              className="md:p-1 rounded-full shadow bg-white/80 hover:bg-white cursor-pointer pointer-events-auto z-10"
+            >
+              <ChevronRight className="w-4 md:w-6"/>
+            </button>
+          </div>
+          <div className={`absolute bottom-2 md:bottom-4 right-0 left-0`}>
+            <div className={`flex items-center justify-center gap-1`}>
+              {slides.map((_, index: number) => (
+                <div
+                  key={index}
+                  onClick={() => goToSlide(index)}
+                  className={`transition-all w-3 md:w-6 h-0.5 md:h-1 rounded-full cursor-pointer ${current === index ? "bg-mainPurple" : "bg-white"}`}/>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
-
-      {/* Кнопки навигации вне контейнера embla - скрываем на мобильных */}
-      <Button
-        className="hidden sm:flex absolute left-[-30px] lg:left-[-50px] top-1/2 -translate-y-1/2 bg-mainPurple p-2 w-8 h-8 lg:w-10 lg:h-10 hover:bg-mainPurpleHovered transition-colors duration-200 items-center justify-center shadow-lg"
-        onClick={scrollPrev}
-        aria-label="Предыдущий слайд"
-      >
-        <ChevronLeft className="w-7 h-7 text-white"/>
-      </Button>
-      <Button
-        className="hidden sm:flex absolute right-[-30px] lg:right-[-50px] top-1/2 -translate-y-1/2 bg-mainPurple p-2 w-8 h-8 lg:w-10 lg:h-10 hover:bg-mainPurpleHovered transition-colors duration-200 items-center justify-center shadow-lg"
-        onClick={scrollNext}
-        aria-label="Следующий слайд"
-      >
-        <ChevronRight className="w-5 h-5 lg:w-6 lg:h-6 text-white"/>
-      </Button>
-    </motion.div>
+    </div>
   )
 }

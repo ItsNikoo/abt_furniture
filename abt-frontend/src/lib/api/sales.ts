@@ -41,7 +41,6 @@ export async function deleteSale(id: string, token: string) {
 export async function patchSale(id: string, data: SaleData, token: string) {
   try {
     const formData = new FormData()
-    formData.append('title', data.title)
     formData.append('description', data.description)
     formData.append('link', data.link)
     if (data.photoFile) {
@@ -70,7 +69,6 @@ export async function patchSale(id: string, data: SaleData, token: string) {
 export async function postSale(data: SaleData, token: string) {
   try {
     const formData = new FormData()
-    formData.append('title', data.title)
     formData.append('description', data.description)
     if (data.photoFile) {
       formData.append('photo_file', data.photoFile)

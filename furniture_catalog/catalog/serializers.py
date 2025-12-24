@@ -310,7 +310,7 @@ class FirstPageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = FirstPage
-        fields = ['id', 'title', 'description', 'photo', 'link', 'photo_file']
+        fields = ['id', 'description', 'photo', 'link', 'photo_file']
         extra_kwargs = {
             'photo': {'read_only': True}
         }

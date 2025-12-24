@@ -44,13 +44,13 @@ export default function Header() {
         {/* Desktop Header (lg: ≥1024px) */}
         <div
           className="hidden lg:flex flex-row items-center justify-between max-w-[1400px] mx-auto py-3 gap-4">
-          <Link href="/" className="flex-shrink-0 w-[300px] p-2">
+          <Link href="/" className="flex-shrink-0 w-[300px]">
             <Image
-              src="/logo.png"
+              src="/new_year_logo.png"
               alt="АБТ - мебель для кухни"
               width={300}
               height={80}
-              className="w-auto h-14"
+              className="w-auto"
             />
           </Link>
 
@@ -104,12 +104,12 @@ export default function Header() {
           <div className="flex items-center justify-between py-3 gap-2">
             <Link href="/" className="flex-shrink-0 w-[300px] p-2">
               <Image
-                src="/logo.png"
+                src="/new_year_logo.png"
                 alt="АБТ - мебель для кухни"
                 width={300}
                 height={80}
                 priority
-                className="w-auto h-14"
+                className="w-auto"
               />
             </Link>
             <div className="flex items-center gap-3 min-w-0">
@@ -164,11 +164,11 @@ export default function Header() {
           <div className="flex items-center justify-between py-3 gap-2">
             <Link href="/" className="flex-shrink-0 w-[250px] p-2">
               <Image
-                src="/logo.png"
+                src="/new_year_logo.png"
                 alt="АБТ - мебель для кухни"
                 width={250}
                 height={70}
-                className="w-auto h-12"
+                className="w-auto"
               />
             </Link>
             <div className="flex items-center gap-3">

@@ -46,14 +46,18 @@ export default function CategoriesGrid() {
         Каталог продукции
       </motion.h1>
 
-      <div className="flex flex-wrap mx-auto justify-between gap-4">
+      <div
+        // className="flex flex-wrap mx-auto justify-between gap-4"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+      >
         {categories.map((category, index) => (
           <motion.div
             initial={{y: 30, opacity: 0}}
             animate={{y: 0, opacity: 1}}
             transition={{duration: 0.5, delay: index * 0.2}}
             key={category.id}
-            className="flex-grow basis-full sm:basis-[calc(50%-12px)] lg:basis-[calc(33.333%-16px)] max-w-full sm:max-w-[calc(50%-12px)] lg:max-w-[calc(33.333%-16px)]"
+            //className="flex-grow basis-full sm:basis-[calc(50%-12px)] lg:basis-[calc(33.333%-16px)] max-w-full sm:max-w-[calc(50%-12px)] lg:max-w-[calc(33.333%-16px)]"
+            className="w-full"
           >
             <Link
               href={`/catalog/${category.categorySlug}`}

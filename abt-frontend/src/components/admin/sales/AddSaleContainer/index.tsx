@@ -19,7 +19,6 @@ import Cookies from 'js-cookie'
 
 export default function AddSaleContainer() {
   const [formData, setFormData] = useState<SaleData>({
-    title: '',
     description: '',
     photoFile: null,
     link: '',
@@ -50,7 +49,6 @@ export default function AddSaleContainer() {
       const token = Cookies.get('token')
       await postSaleAction(formData, token as string)
       setFormData({
-        title: '',
         description: '',
         photoFile: null,
         link: '',
@@ -80,17 +78,6 @@ export default function AddSaleContainer() {
             В этом окне вы можете создать акцию. Заполните ВСЕ поля, чтобы акция была создана.
           </DialogDescription>
           <form onSubmit={handleSubmit} className="flex flex-col gap-2">
-            <div>
-              <Label>Название</Label>
-              <Input
-                id="title"
-                name="title"
-                type="text"
-                value={formData.title}
-                onChange={handleChange}
-                required
-              />
-            </div>
             <div>
               <Label>Описание</Label>
               <Input
