@@ -19,7 +19,7 @@ SECRET_KEY = config('SECRET_KEY', default='django-insecure-d90$&ig18i$-7_)w2h0^q
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'backend', 'frontend', 'nginx', '178.250.242.124','kuhni-abt.ru']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'backend', 'frontend', 'nginx', '178.250.242.124', 'kuhni-abt.ru']
 
 # Application definition
 
@@ -50,12 +50,11 @@ MIDDLEWARE = [
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (
         'djangorestframework_camel_case.render.CamelCaseJSONRenderer',
-        #   'rest_framework.renderers.BrowsableAPIRenderer',  # если используешь browsable API
     ),
     'DEFAULT_PARSER_CLASSES': (
         'djangorestframework_camel_case.parser.CamelCaseJSONParser',
-        'rest_framework.parsers.MultiPartParser',
-        'rest_framework.parsers.FormParser',
+        'djangorestframework_camel_case.parser.CamelCaseMultiPartParser',
+        'djangorestframework_camel_case.parser.CamelCaseFormParser',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'knox.auth.TokenAuthentication',
@@ -63,7 +62,8 @@ REST_FRAMEWORK = {
 }
 
 REST_KNOX = {
-    'TOKEN_TTL': timedelta(minutes=30),
+    'TOKEN_TTL': timedelta(hours=1),
+    'AUTO_REFRESH': False,
 }
 
 CORS_ALLOWED_ORIGINS = [
@@ -86,12 +86,11 @@ CSRF_TRUSTED_ORIGINS = [
 
 CSRF_COOKIE_SAMESITE = 'Lax'
 SESSION_COOKIE_SAMESITE = 'Lax'
-#CSRF_COOKIE_HTTPONLY = False
+# CSRF_COOKIE_HTTPONLY = False
 SESSION_COOKIE_HTTPONLY = True
 
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
-
 
 ROOT_URLCONF = 'furniture_catalog.urls'
 
@@ -124,7 +123,7 @@ DATABASES = {
     #     'HOST': config('DB_HOST', default='db'),
     #     'PORT': config('DB_PORT', default='5432'),
     # }
-    'default':{
+    'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3'
     }

@@ -1,22 +1,23 @@
 'use client'
 
-import { useMutation } from '@tanstack/react-query'
-import { Card, CardContent, CardHeader } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Textarea } from '@/components/ui/textarea'
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { Button } from '@/components/ui/button'
-import { Check, ChevronsUpDown } from 'lucide-react'
-import { cn } from '@/lib/utils'
-import { useEffect, useState } from 'react'
-import { Category, Material, ProductData, Style } from '@/types'
-import { postProduct } from '@/lib/api/products'
-import { queryClient } from '@/lib/react-query-client'
-import { useRouter } from 'next/navigation'
+import {useMutation} from '@tanstack/react-query'
+import {Card, CardContent, CardHeader} from '@/components/ui/card'
+import {Input} from '@/components/ui/input'
+import {Label} from '@/components/ui/label'
+import {Textarea} from '@/components/ui/textarea'
+import {Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList} from '@/components/ui/command'
+import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover'
+import {Button} from '@/components/ui/button'
+import {Check, ChevronsUpDown} from 'lucide-react'
+import {cn} from '@/lib/utils'
+import {useEffect, useState} from 'react'
+import {Category, Material, ProductData, Style} from '@/types'
+import {postProduct} from '@/lib/api/products'
+import {queryClient} from '@/lib/react-query-client'
+import {useRouter} from 'next/navigation'
 import Cookies from 'js-cookie'
 import Image from 'next/image'
+import {ADMIN_ROUTES} from "@/config/navigation";
 
 interface Props {
   categories: Category[];
@@ -34,7 +35,7 @@ interface ApiError {
   message: string;
 }
 
-export default function AddProductContainer({ categories, styles, materials }: Props) {
+export default function AddProductContainer({categories, styles, materials}: Props) {
   const [openCategory, setOpenCategory] = useState(false)
   const [openMaterial, setOpenMaterial] = useState(false)
   const [openStyle, setOpenStyle] = useState(false)
@@ -55,7 +56,7 @@ export default function AddProductContainer({ categories, styles, materials }: P
 
   const router = useRouter()
 
-  const { mutate, isPending } = useMutation({
+  const {mutate, isPending} = useMutation({
     mutationFn: (data: ProductData) => {
       const token = Cookies.get('token')
       if (!token) {
@@ -64,7 +65,7 @@ export default function AddProductContainer({ categories, styles, materials }: P
       return postProduct(data, token as string)
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['products'] })
+      queryClient.invalidateQueries({queryKey: ['products']})
       setFormData({
         title: '',
         productSlug: '',
@@ -80,7 +81,7 @@ export default function AddProductContainer({ categories, styles, materials }: P
       setPhotoPreviews([])
       setError('')
       setSuccess('Продукт успешно добавлен')
-      router.push('/admin/products')
+      router.push(ADMIN_ROUTES.PRODUCTS.path)
     },
     onError: (err: unknown) => { // Типизируем err как unknown
       console.error('Ошибка при добавлении товара:', err)
@@ -106,8 +107,8 @@ export default function AddProductContainer({ categories, styles, materials }: P
   })
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
+    const {name, value} = e.target
+    setFormData((prev) => ({...prev, [name]: value}))
   }
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -134,7 +135,7 @@ export default function AddProductContainer({ categories, styles, materials }: P
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (!formData.title.trim() || !formData.price || !formData.category || !formData.description ||
-        !formData.productSlug) {
+      !formData.productSlug) {
       setError('Поля \'Название\', \'slug\', \'Цена\', \'Описание\' и \'Категория\' обязательны!')
       return
     }
@@ -144,7 +145,7 @@ export default function AddProductContainer({ categories, styles, materials }: P
 
   return (
     <div className="flex items-center justify-center">
-      <Card className="w-full max-w-md shadow-lg rounded-lg border border-gray-200">
+      <Card className="w-full shadow-lg rounded-lg border border-gray-200">
         <CardHeader className="bg-gray-50 p-4 rounded-t-lg">
           <h2 className="text-2xl font-bold text-gray-800">Добавить продукт</h2>
         </CardHeader>
@@ -232,7 +233,7 @@ export default function AddProductContainer({ categories, styles, materials }: P
                             key={category.id}
                             value={category.category}
                             onSelect={(currentValue) => {
-                              setFormData((prev) => ({ ...prev, category: currentValue }))
+                              setFormData((prev) => ({...prev, category: currentValue}))
                               setOpenCategory(false)
                             }}
                           >
@@ -278,7 +279,7 @@ export default function AddProductContainer({ categories, styles, materials }: P
                             key={material.id}
                             value={material.material}
                             onSelect={(currentValue) => {
-                              setFormData((prev) => ({ ...prev, material: currentValue }))
+                              setFormData((prev) => ({...prev, material: currentValue}))
                               setOpenMaterial(false)
                             }}
                           >
@@ -324,7 +325,7 @@ export default function AddProductContainer({ categories, styles, materials }: P
                             key={style.id}
                             value={style.style}
                             onSelect={(currentValue) => {
-                              setFormData((prev) => ({ ...prev, style: currentValue }))
+                              setFormData((prev) => ({...prev, style: currentValue}))
                               setOpenStyle(false)
                             }}
                           >

@@ -6,9 +6,9 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from catalog.forms import ContactForm
-from catalog.models import Category, Style, Product, Material, FirstPage, ContactRequest
+from catalog.models import Category, Style, Product, Material, FirstPage, ContactRequest, Promotion
 from catalog.serializers import CategorySerializer, StyleSerializer, ProductSerializer, MaterialSerializer, \
-    FirstPageSerializer
+    FirstPageSerializer, PromotionSerializer
 from furniture_catalog import settings
 from services.yandex_storage import delete_from_yandex_storage
 
@@ -19,6 +19,7 @@ from knox.models import AuthToken
 from rest_framework.views import APIView
 from rest_framework import permissions
 
+from rest_framework.filters import OrderingFilter
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
@@ -51,6 +52,10 @@ class ProductViewSet(ModelViewSet):
     serializer_class = ProductSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
     lookup_field = 'id'
+
+    filter_backends = [OrderingFilter]
+    ordering_fields = ['price']
+    ordering = ['id']
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
@@ -126,6 +131,7 @@ class LoginAPI(KnoxLoginView):
             }
         })
 
+
 class UserAPI(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
@@ -182,9 +188,49 @@ class ContactAPI(APIView):
         return Response({'errors': form.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 
-
 class HealthCheckView(APIView):
     permission_classes = []  # No authentication required
 
     def get(self, request):
         return Response({"status": "ok"}, status=status.HTTP_200_OK)
+
+
+class PromotionViewSet(ModelViewSet):
+    queryset = Promotion.objects.all()
+    serializer_class = PromotionSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    lookup_field = 'id'
+
+    filter_backends = [OrderingFilter]
+    ordering_fields = ['price']
+    ordering = ['id']
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        photos = instance.photos.all()
+        photo_urls = [photo.photo_url for photo in photos]
+
+        for photo in photo_urls:
+            delete_from_yandex_storage(photo)
+
+        response = super().destroy(request, *args, **kwargs)
+        return response
+
+    def get_queryset(self):
+        request: Request = self.request
+        category_slug = request.query_params.get('category')
+        style = request.query_params.get('style')
+        material = request.query_params.get('material')
+
+        base_qs = Promotion.objects.all()
+
+        if category_slug:
+            base_qs = base_qs.filter(category__category_slug=category_slug)
+
+        if style:
+            base_qs = base_qs.filter(style__style=style)
+
+        if material:
+            base_qs = base_qs.filter(material__material=material)
+
+        return base_qs

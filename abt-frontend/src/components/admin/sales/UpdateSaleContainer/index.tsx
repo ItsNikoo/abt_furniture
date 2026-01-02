@@ -1,7 +1,7 @@
 'use client'
 
-import { Pencil } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import {Pencil} from 'lucide-react'
+import {Button} from '@/components/ui/button'
 import {
   Dialog,
   DialogClose,
@@ -11,15 +11,15 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { useState } from 'react'
-import { Sale, SaleData } from '@/types'
-import { Label } from '@/components/ui/label'
-import { Input } from '@/components/ui/input'
+import {useState} from 'react'
+import {Sale, SaleData} from '@/types'
+import {Label} from '@/components/ui/label'
+import {Input} from '@/components/ui/input'
 import Image from 'next/image'
-import { patchSaleAction } from '@/actions/sales'
+import {patchSaleAction} from '@/actions/sales'
 import Cookies from 'js-cookie'
 
-export default function UpdateSaleContainer({ sale }: { sale: Sale }) {
+export default function UpdateSaleContainer({sale}: { sale: Sale }) {
   const [isOpen, setIsOpen] = useState(false)
   const [formData, setFormData] = useState<SaleData>({
     description: sale.description,
@@ -33,14 +33,14 @@ export default function UpdateSaleContainer({ sale }: { sale: Sale }) {
   const [success, setSuccess] = useState<string | null>(null)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
-    setFormData(prev => ({ ...prev, [name]: value }))
+    const {name, value} = e.target
+    setFormData(prev => ({...prev, [name]: value}))
   }
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0]
-      setFormData(prev => ({ ...prev, photoFile: file }))
+      setFormData(prev => ({...prev, photoFile: file}))
       setPreviewUrl(URL.createObjectURL(file))
     }
   }
@@ -56,7 +56,7 @@ export default function UpdateSaleContainer({ sale }: { sale: Sale }) {
       setTimeout(() => {
         setIsOpen(false)
         setSuccess(null)
-      }, 2000)
+      }, 500)
     } catch (error) {
       setError('Не удалось обновить акцию. Пожалуйста, попробуйте позже: ' + error)
     } finally {

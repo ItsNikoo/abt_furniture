@@ -1,5 +1,5 @@
 import { Contact } from '@/types'
-import { apiUrl } from '@/lib/api/baseUrl'
+import { apiUrl } from '@/lib/utils/baseUrl'
 
 interface ApiErrorResponse {
   errors?: { [key: string]: string[] }; // Для ошибок валидации (HTTP 400)

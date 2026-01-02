@@ -29,10 +29,11 @@ export default function UpdateMaterialContainer({ style }: { style: Style }) {
       const token = Cookies.get('token')
       await patchStyleAction(style.id, styleQuery, token as string)
       setSuccess('Стиль успешно обновлен!')
+      setStyleQuery(``)
       setTimeout(() => {
         setIsOpen(false)
         setSuccess(null)
-      }, 1000)
+      }, 500)
     } catch (error) {
       setSuccess('Произошла ошибка при обновлении стиля: ' + error)
     }

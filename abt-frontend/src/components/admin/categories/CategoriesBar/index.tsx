@@ -1,11 +1,15 @@
 'use client'
 
-import { Category } from '@/types'
-import { use } from 'react'
+import {Category} from '@/types'
+import {use} from 'react'
 import CategoryCard from '@/components/admin/categories/CategoryCard'
-import { deleteCategoryAction } from '@/actions/categories'
+import {deleteCategoryAction} from '@/actions/categories'
 
-export default function CategoriesBar({ promise }: { promise: Promise<Category[]> }) {
+interface Props {
+  promise: Promise<Category[]>
+}
+
+export default function CategoriesBar({promise}: Props) {
   const data = use(promise)
 
   const handleDelete = async (id: number, token: string) => {
@@ -18,7 +22,7 @@ export default function CategoriesBar({ promise }: { promise: Promise<Category[]
 
   return (
     <div>
-      <div className={'grid grid-cols-3 gap-4'}>
+      <div className='grid grid-cols-3 gap-4'>
         {data?.map((category: Category) => (
           <CategoryCard key={category.id} category={category} onDeleteAction={handleDelete}/>
         ))}

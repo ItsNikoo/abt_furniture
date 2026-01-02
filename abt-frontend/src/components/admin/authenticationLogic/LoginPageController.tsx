@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { login } from '@/lib/api/auth'
+import { login } from '@/lib/utils/auth'
 import { useAuth } from '@/context/AuthContext'
 import { useRouter } from 'next/navigation'
 

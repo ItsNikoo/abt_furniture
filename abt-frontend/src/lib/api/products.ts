@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { ProductData } from '@/types'
-import { apiUrl } from '@/lib/api/baseUrl'
+import { apiUrl } from '@/lib/utils/baseUrl'
 
 export async function fetchProducts(filters: { category?: string; style?: string; material?: string } = {}) {
   try {

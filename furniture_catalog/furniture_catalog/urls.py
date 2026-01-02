@@ -4,7 +4,7 @@ from rest_framework.routers import DefaultRouter
 from knox import views as knox_views
 
 from catalog.views import CategoryViewSet, StylesViewSet, ProductViewSet, MaterialViewSet, FirstPageViewSet, LoginAPI, \
-    UserAPI, ContactAPI, HealthCheckView
+    UserAPI, ContactAPI, HealthCheckView, PromotionViewSet
 
 router = DefaultRouter()
 router.register(r'categories', CategoryViewSet, basename='category')
@@ -12,6 +12,7 @@ router.register(r'styles', StylesViewSet, basename='style')
 router.register(r'materials', MaterialViewSet, basename="material")
 router.register(r'products', ProductViewSet, basename='product')
 router.register(r'sales', FirstPageViewSet, basename='first_page')
+router.register(r'promotions', PromotionViewSet, basename='promotion')
 
 urlpatterns = [
     path('admin/', admin.site.urls),

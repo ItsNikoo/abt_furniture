@@ -9,7 +9,7 @@ from services.yandex_storage import (
     upload_to_yandex_storage,
     delete_from_yandex_storage
 )
-from catalog.models import Category, Style, Photo, Product, FirstPage, Material
+from catalog.models import Category, Style, Photo, Product, FirstPage, Material, Promotion
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -364,3 +364,181 @@ class FirstPageSerializer(serializers.ModelSerializer):
                 )
 
         return super().update(instance, validated_data)
+
+
+class PromotionSerializer(serializers.ModelSerializer):
+    """Serializer для сущности спецпредложений с логикой добавления фотографий"""
+    category = serializers.SlugRelatedField(
+        slug_field='category',
+        queryset=Category.objects.all()
+    )
+    style = serializers.SlugRelatedField(
+        slug_field='style',
+        queryset=Style.objects.all(),
+        required=False
+    )
+    material = serializers.SlugRelatedField(
+        slug_field='material',
+        queryset=Material.objects.all(),
+        required=False
+    )
+    photos = PhotoSerializer(many=True, required=False, read_only=True)
+    price = serializers.DecimalField(
+        max_digits=10, decimal_places=2, coerce_to_string=False
+    )
+    photo_files = serializers.ListField(
+        child=serializers.FileField(),
+        write_only=True,
+        required=False,
+        allow_empty=True
+    )
+    delete_photos = serializers.ListField(
+        child=serializers.URLField(), write_only=True, required=False
+    )
+
+    class Meta:
+        model = Promotion
+        fields = [
+            'id',
+            'title',
+            'product_slug',
+            'price',
+            'description',
+            'size',
+            'category',
+            'material',
+            'style',
+            'photos',
+            'photo_files',
+            'delete_photos'
+        ]
+
+    def validate_photo_files(self, value):
+        """Валидация фото"""
+        for file in value:
+            if file.size > 5 * 1024 * 1024:
+                raise serializers.ValidationError(
+                    f"Файл {file.name} превышает 5 МБ."
+                )
+            if not file.name.lower().endswith(
+                    ('.png', '.jpg', '.jpeg', '.webp')
+            ):
+                raise serializers.ValidationError(
+                    f"Файл {file.name} должен быть в формате "
+                    "PNG, JPG, WEBP или JPEG."
+                )
+        return value
+
+    def validate_title(self, value):
+        # Очистка названия продукта для использования в качестве имени папки
+        cleaned_title = re.sub(r'[^\w\s-]', '', value).strip().replace(
+            ' ', '_'
+        )
+        if not cleaned_title:
+            raise serializers.ValidationError(
+                "Название продукта не может быть пустым или содержать "
+                "только недопустимые символы."
+            )
+        return value
+
+    def validate_product_slug(self, value):
+        """Валидация уникальности slug."""
+        if self.instance:
+            if Promotion.objects.filter(product_slug=value).exclude(
+                    id=self.instance.id
+            ).exists():
+                raise serializers.ValidationError(
+                    "Акционный продукт с таким slug уже существует."
+                )
+        else:
+            if Promotion.objects.filter(product_slug=value).exists():
+                raise serializers.ValidationError(
+                    "Акционный продукт с таким slug уже существует."
+                )
+        return value
+
+    def create(self, validated_data):
+        """Создание акционного продукта."""
+        photo_files = validated_data.pop('photo_files', [])
+        promotion = Promotion.objects.create(**validated_data)
+
+        # Получаем очищенное название продукта для папки
+        cleaned_title = re.sub(
+            r'[^\w\s-]', '', promotion.title
+        ).strip().replace(' ', '_')
+
+        # Обработка загрузки фотографий
+        for photo_file in photo_files:
+            try:
+                # Формируем путь с папкой promotions/ и именем продукта
+                filename = f"{cleaned_title}/{uuid.uuid4()}_{photo_file.name}"
+                file_url = upload_to_yandex_storage(
+                    photo_file.file, filename, "promotions"
+                )
+                # Создаем объект Photo и связываем с акционным продуктом
+                photo = Photo.objects.create(photo_url=file_url)
+                promotion.photos.add(photo)
+            except Exception as e:
+                # Если произошла ошибка, удаляем продукт
+                # и уже загруженные фото
+                for photo in promotion.photos.all():
+                    try:
+                        delete_from_yandex_storage(photo.photo_url)
+                    except Exception as delete_error:
+                        raise serializers.ValidationError(
+                            {
+                                'photo_cleanup':
+                                    f"Ошибка удаления файла {photo.photo_url}: "
+                                    f"{str(delete_error)}"
+                            }
+                        )
+                promotion.delete()
+                raise serializers.ValidationError(
+                    {
+                        'photo_files':
+                            f"Ошибка загрузки файла {photo_file.name}: {str(e)}"
+                    }
+                )
+
+        return promotion
+
+    def update(self, instance, validated_data):
+        """Обновление акционного продукта."""
+        delete_photos = validated_data.pop('delete_photos', [])
+        photo_files = validated_data.pop('photo_files', [])
+
+        # Удаление фото из Yandex Cloud и базы
+        for url in delete_photos:
+            try:
+                photo = instance.photos.filter(photo_url=url).first()
+                if photo:
+                    delete_from_yandex_storage(url)
+                    photo.delete()
+            except Exception as e:
+                raise serializers.ValidationError(
+                    {'delete_photos': f"Ошибка при удалении фото {url}: {str(e)}"}
+                )
+
+        # Обработка загрузки новых фото (если есть)
+        for photo_file in photo_files:
+            try:
+                cleaned_title = re.sub(
+                    r'[^\w\s-]', '', instance.title
+                ).strip().replace(' ', '_')
+                filename = f"{cleaned_title}/{uuid.uuid4()}_{photo_file.name}"
+                file_url = upload_to_yandex_storage(
+                    photo_file.file, filename, "promotions"
+                )
+                photo = Photo.objects.create(photo_url=file_url)
+                instance.photos.add(photo)
+            except Exception as e:
+                raise serializers.ValidationError(
+                    {'photo_files': f"Ошибка загрузки: {str(e)}"}
+                )
+
+        # Обновление остальных полей
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        instance.save()
+
+        return instance
