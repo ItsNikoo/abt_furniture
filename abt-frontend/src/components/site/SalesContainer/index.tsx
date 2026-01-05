@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from 'react'
 import { Sale } from '@/types'
-import FirstCarousel from '@/components/ui/Embla/FirstCarousel'
 import SalesPlaceholder from '@/components/placeholders/SalesPlaceholder'
+import { fetchSales } from "@/lib/api/sales";
+import SalesCarousel from "@/components/ui/Embla/SalesCarousel";
 
 export default function SalesContainer() {
   const [sales, setSales] = useState<Sale[]>([])
@@ -13,12 +14,11 @@ export default function SalesContainer() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('/api/sales') // ← Используй Next.js API route
-        if (!response.ok) throw new Error('Невозможно получить акции')
-        const data = await response.json()
+        const data = await fetchSales() // ← Используйте вашу функцию
+        console.log('API Response:', data)
         setSales(data)
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Unknown error')
+        setError(err instanceof Error ? err.message : 'Не удалось загрузить акции')
       } finally {
         setLoading(false)
       }
@@ -32,6 +32,7 @@ export default function SalesContainer() {
       <SalesPlaceholder/>
     </div>
   )
+
   if (error || sales.length === 0) return (
     <div className="mt-5 mb-5">
       <SalesPlaceholder/>
@@ -40,7 +41,7 @@ export default function SalesContainer() {
 
   return (
     <div className="mt-5 mb-5">
-      <FirstCarousel slides={sales}/>
+      <SalesCarousel slides={sales}/>
     </div>
   )
 }

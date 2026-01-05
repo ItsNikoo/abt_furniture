@@ -3,7 +3,7 @@ import {ChevronLeft, ChevronRight} from "lucide-react"
 
 export default function SalesPlaceholder() {
   return (
-    <div className="flex justify-center items-center">
+    <div className="flex justify-center items-center xl:px-[12vh]">
       <div className="w-full mx-[15px] md:mx-[50px] lg:mx-[100px]
                       aspect-[16/6]
                       rounded-lg sm:rounded-xl lg:rounded-2xl overflow-hidden shadow-lg sm:shadow-xl

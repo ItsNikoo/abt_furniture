@@ -11,6 +11,9 @@ export async function postSale(data: SaleData, token: string) {
   if (data.photoFile) {
     formData.append('photo_file', data.photoFile)
   }
+  if (data.mobilePhotoFile) {
+    formData.append('mobile_photo_file', data.mobilePhotoFile)
+  }
   formData.append('link', data.link)
   return apiRequest<Sale>(
     `/sales/`,
@@ -29,6 +32,9 @@ export async function patchSale(id: string, data: SaleData, token: string) {
   formData.append('link', data.link)
   if (data.photoFile) {
     formData.append('photo_file', data.photoFile)
+  }
+  if (data.mobilePhotoFile) {
+    formData.append('mobile_photo_file', data.mobilePhotoFile)
   }
   return apiRequest(
     `/sales/${id}`,

@@ -71,6 +71,7 @@ class FirstPage(models.Model):
     """Сущность акция (на первой полосе)"""
     description = models.TextField(default='')
     photo = models.URLField(max_length=500, null=True, blank=True)
+    mobile_photo = models.URLField(max_length=500, null=True, blank=True)
     link = models.URLField(max_length=500)
 
     class Meta:

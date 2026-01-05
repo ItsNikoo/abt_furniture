@@ -133,7 +133,7 @@ export default function AddPromotionContainer({categories, styles, materials}: P
         })
       }
 
-      await postPromotionAction(submitFormData, token as string)
+      await postPromotionAction(formData, token as string)
 
       setSuccess("Предложение успешно создано!")
       setTimeout(() => {

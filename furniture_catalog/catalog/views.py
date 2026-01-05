@@ -104,17 +104,28 @@ class FirstPageViewSet(ModelViewSet):
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
         photo_url = instance.photo
+        mobile_photo_url = instance.mobile_photo
 
         response = super().destroy(request, *args, **kwargs)
 
+        # Удаляем desktop фото
         if photo_url:
-            delete_from_yandex_storage(photo_url)
+            try:
+                delete_from_yandex_storage(photo_url)
+            except Exception as e:
+                print(f"Ошибка удаления desktop фото: {str(e)}")
+
+        # Удаляем mobile фото
+        if mobile_photo_url:
+            try:
+                delete_from_yandex_storage(mobile_photo_url)
+            except Exception as e:
+                print(f"Ошибка удаления mobile фото: {str(e)}")
 
         return response
 
 
 # knox views
-
 class LoginAPI(KnoxLoginView):
     permission_classes = (AllowAny,)
 

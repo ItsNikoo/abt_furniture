@@ -43,7 +43,7 @@ export default function Header() {
         transition={{ duration: 0.5 }}>
         {/* Desktop Header (lg: ≥1024px) */}
         <div
-          className="hidden lg:flex flex-row items-center justify-between max-w-[1400px] mx-auto py-3 gap-4">
+          className="hidden lg:flex flex-row items-center justify-between max-w-[1400px] mx-auto gap-4">
           <Link href="/" className="flex-shrink-0 w-[300px]">
             <Image
               src="/new_year_logo.png"
