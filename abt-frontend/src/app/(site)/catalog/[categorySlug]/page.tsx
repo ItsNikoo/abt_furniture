@@ -14,7 +14,7 @@ export async function generateMetadata({params}: Props) {
   const categories = await fetchCategories()
 
   // Находим текущую категорию
-  const category: Category = categories.find((cat: Category) => cat.categorySlug === categorySlug)
+  const category: Category | undefined = categories.find((cat: Category) => cat.categorySlug === categorySlug)
 
   // Fallback если категория не найдена
   if (!category) {

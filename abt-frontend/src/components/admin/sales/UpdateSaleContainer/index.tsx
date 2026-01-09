@@ -1,6 +1,5 @@
 'use client'
 
-import { Pencil } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -9,7 +8,6 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/dialog'
 import { useState } from 'react'
 import { Sale, SaleData } from '@/types'

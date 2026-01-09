@@ -4,36 +4,20 @@ import Image from 'next/image'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Sale } from '@/types'
-import { deleteSaleAction } from '@/actions/sales' // предполагаю, что у тебя есть такая action
-import Cookies from 'js-cookie'
 import UpdateSaleContainer from '@/components/admin/sales/UpdateSaleContainer'
 import { useState } from 'react'
 
 interface Props {
-  sale: Sale
+  sale: Sale,
+  onDeleteAction: (id: string) => Promise<void>,
 }
 
-export default function SaleCard({ sale }: Props) {
+export default function SaleCard({ sale, onDeleteAction }: Props) {
   const [showUpdateDialog, setShowUpdateDialog] = useState(false)
 
   const mainPhoto = sale.photo || sale.mobilePhoto || null
 
   const thumbnailPhoto = sale.photo && sale.mobilePhoto ? sale.mobilePhoto : null
-
-  async function handleDelete() {
-    const token = Cookies.get('token')
-    if (!token) {
-      alert('Вы не авторизованы')
-      return
-    }
-
-    try {
-      await deleteSaleAction(sale.id, token)
-    } catch (error) {
-      console.error('Ошибка при удалении акции:', error)
-      alert('Не удалось удалить акцию')
-    }
-  }
 
   return (
     <>
@@ -83,7 +67,7 @@ export default function SaleCard({ sale }: Props) {
             <Button variant="outline" size="sm" onClick={() => setShowUpdateDialog(true)}>
               Изменить
             </Button>
-            <Button variant="destructive" size="sm" onClick={handleDelete}>
+            <Button variant="destructive" size="sm" onClick={() => onDeleteAction(sale.id)}>
               Удалить
             </Button>
           </div>

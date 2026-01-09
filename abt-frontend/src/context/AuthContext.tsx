@@ -1,6 +1,6 @@
 'use client'
 
-import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react'
+import React, { createContext, ReactNode, useContext, useEffect, useState, useCallback, useRef } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
 import { getToken, isTokenExpired, logout } from '@/lib/utils/auth'
 
@@ -20,8 +20,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const router = useRouter()
   const pathname = usePathname()
 
-  // Проверка токена при монтировании и каждые 30 секунд
-  const checkAuth = () => {
+  // Используем ref для хранения текущего pathname без trigger перерендера
+  const pathnameRef = useRef(pathname)
+
+  useEffect(() => {
+    pathnameRef.current = pathname
+  }, [pathname])
+
+  // Оборачиваем checkAuth в useCallback для стабильной ссылки
+  const checkAuth = useCallback(() => {
     const token = getToken()
 
     if (!token || isTokenExpired()) {
@@ -29,15 +36,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setUser(null)
       logout()
 
-      // Если пользователь на защищенной странице - редирект на логин
-      if (pathname?.startsWith('/admin')) {
+      // Используем ref для доступа к актуальному pathname
+      if (pathnameRef.current?.startsWith('/admin')) {
         router.push('/auth/login')
       }
       return
     }
 
     setIsAuthenticated(true)
-  }
+  }, [router]) // router стабильная ссылка из Next.js
 
   useEffect(() => {
     checkAuth()
@@ -45,7 +52,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const interval = setInterval(checkAuth, 30000)
 
     return () => clearInterval(interval)
-  }, [pathname])
+  }, [checkAuth]) // Теперь checkAuth стабильная зависимость
 
   return (
     <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, user, setUser, checkAuth }}>

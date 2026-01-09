@@ -1,7 +1,7 @@
-// app/sitemap.xml/route.ts
 import { NextResponse } from 'next/server'
 import {fetchProducts} from "@/lib/api/products"
 import {fetchCategories} from "@/lib/api/categories"
+import {Category} from "@/types"
 
 // Типы для данных
 type SitemapRoute = {
@@ -11,21 +11,17 @@ type SitemapRoute = {
 	priority: string
 }
 
-type Category = {
-	slug: string
-	updatedAt?: string
-}
-
 type Product = {
 	id: string | number
-	slug?: string
-	title?: string
+	productSlug: string // ИСПРАВЛЕНО: было slug
+	title: string
 	updatedAt?: string
 	published?: boolean
 	category?: {
 		slug?: string
 	}
 }
+
 
 function generateSiteMapXML(
 	staticRoutes: SitemapRoute[],
@@ -93,30 +89,27 @@ export async function GET() {
 			fetchProducts(),
 			fetchCategories(),
 		])
-		console.log("Products response:", products)
-		console.log("Categories response:", categories)
 
-
-		// Категории
+		// Категории с корректным lastmod
 		const categoryRoutes: SitemapRoute[] = categories.map((category: Category) => ({
-			url: `/catalog/${category.slug}`,
-			lastmod: category.updatedAt
-				? new Date(category.updatedAt).toISOString()
-				: currentDate,
-			changefreq: 'weekly',
+			url: `/catalog/${category.categorySlug}`,
+			lastmod: currentDate,
+			changefreq: 'monthly',
 			priority: '0.6',
 		}))
 
-		// Продукты
+		// Продукты с кодированием URL
 		const productRoutes: SitemapRoute[] = products
 			.filter((product: Product) => product.published !== false)
 			.map((product: Product) => {
-				const slug =
-					product.slug ||
-					product.title?.toLowerCase().replace(/\s+/g, '-') ||
-					'product'
+				// ИСПРАВЛЕНО: используем productSlug напрямую
+				const slug = product.productSlug || `product-${product.id}`
+
+				// Формируем URL без кодирования (slug уже на латинице)
+				const rawUrl = `/catalog/${product.category?.slug || 'products'}/${product.id}-${slug}`
+
 				return {
-					url: `/catalog/${product.category?.slug || 'products'}/${product.id}-${slug}`,
+					url: rawUrl, // ИСПРАВЛЕНО: не нужно кодировать, slug уже латиница
 					lastmod: product.updatedAt
 						? new Date(product.updatedAt).toISOString()
 						: currentDate,
@@ -134,9 +127,8 @@ export async function GET() {
 		return new NextResponse(sitemap, {
 			status: 200,
 			headers: {
-				'Content-Type': 'application/xml',
-				'Cache-Control':
-					'public, s-maxage=86400, stale-while-revalidate=43200',
+				'Content-Type': 'application/xml; charset=UTF-8',
+				'Cache-Control': 'public, s-maxage=86400, stale-while-revalidate=43200',
 			},
 		})
 	} catch (error) {
@@ -159,7 +151,7 @@ export async function GET() {
 		return new NextResponse(basicSitemap, {
 			status: 200,
 			headers: {
-				'Content-Type': 'application/xml',
+				'Content-Type': 'application/xml; charset=UTF-8',
 			},
 		})
 	}

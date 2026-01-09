@@ -6,7 +6,6 @@ import Image from 'next/image'
 import {useMutation, useQueryClient} from '@tanstack/react-query'
 import {deleteProduct} from '@/lib/api/products'
 import Cookies from 'js-cookie'
-import {Trash2} from 'lucide-react'
 import {ADMIN_ROUTES} from "@/config/navigation";
 
 interface ProductCardProps {

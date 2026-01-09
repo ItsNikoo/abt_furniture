@@ -4,7 +4,13 @@ const nextConfig: NextConfig = {
   /* config options here */
   output: 'standalone',
   images: {
-    domains: ['storage.yandexcloud.net'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'storage.yandexcloud.net', // для поддоменов
+        pathname: '/**',
+      }
+    ]
   },
 }
 

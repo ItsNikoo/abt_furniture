@@ -10,12 +10,18 @@ type ApiRequestOptions = {
   isFormData?: boolean
 }
 
+const axiosInstance = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  proxy: false, // Отключаем proxy
+  withCredentials: true,
+})
+
 export async function apiRequest<T>(
   path: string,
   { method, data, token, isFormData }: ApiRequestOptions = { method: 'GET' }
 ): Promise<T> {
   try {
-    const response = await axios.request({
+    const response = await axiosInstance.request({
       url: apiUrl(path),
       method,
       data,
@@ -26,7 +32,6 @@ export async function apiRequest<T>(
           ? { 'Content-Type': 'application/json' }
           : {}),
       },
-      withCredentials: true,
     });
 
     return response.data;
