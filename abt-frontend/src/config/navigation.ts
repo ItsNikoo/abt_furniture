@@ -27,3 +27,30 @@ export const ADMIN_ROUTES = {
   }
 
 } as const
+
+export const ROUTES = {
+  MAIN: {
+    name: 'Главная',
+    path: '/'
+  },
+  CATALOG: {
+    name: 'Каталог',
+    path: '/catalog',
+  },
+  PROMOS: {
+    name: 'Готовые решения',
+    path: '/sales',
+  },
+  CONTACTS: {
+    name: 'Контакты',
+    path: '/contacts',
+  },
+  ABOUT: {
+    name: 'О компании',
+    path: '/about',
+  },
+  HOWTO: {
+    name: 'Как совершить заказ',
+    path: '/howto',
+  },
+} as const

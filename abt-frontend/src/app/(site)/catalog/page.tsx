@@ -1,8 +1,8 @@
 import ContentWrapper from '@/components/ContentWrapper'
-import Catalog from '../../../components/site/Catalog'
 import {fetchCategories} from '@/lib/api/categories'
 import {fetchStyles} from '@/lib/api/styles'
 import {fetchMaterials} from '@/lib/api/materials'
+import CatalogComponent from "../../../components/site/Catalog/CatalogComponent";
 
 export async function generateMetadata() {
   return {
@@ -37,7 +37,7 @@ export default function CatalogPage() {
 
   return (
     <ContentWrapper>
-      <Catalog categoriesPromise={categoriesPromise} stylesPromise={stylesPromise} materialsPromise={materialsPromise}/>
+      <CatalogComponent categoriesPromise={categoriesPromise} stylesPromise={stylesPromise} materialsPromise={materialsPromise}/>
     </ContentWrapper>
   )
 }

@@ -1,5 +1,5 @@
 import {fetchCategories} from '@/lib/api/categories'
-import Catalog from '../../../../components/site/Catalog'
+import Catalog from '../../../../components/site/Catalog/CatalogComponent'
 import ContentWrapper from '@/components/ContentWrapper'
 import {fetchStyles} from '@/lib/api/styles'
 import {fetchMaterials} from '@/lib/api/materials'

@@ -1,26 +1,21 @@
 'use client'
 
-import {Suspense, use, useEffect, useState} from 'react'
-import Link from 'next/link'
-import {Category, Material, Product, Style} from '@/types'
-import {useQuery, useQueryClient} from '@tanstack/react-query'
-import {fetchProductById, fetchProducts} from '@/lib/api/products'
-import {usePathname, useRouter, useSearchParams} from 'next/navigation'
-import CatalogCard from '@/components/site/Catalog/CatalogCard'
-import StyleSelector from '@/components/ui/CatalogSelectors/StyleSelector'
-import MaterialSelector from '@/components/ui/CatalogSelectors/MaterialSelector'
-import {Input} from '@/components/ui/input'
-import {motion} from 'framer-motion'
-import LoadingPlaceholder from '@/components/placeholders/LoadingPlaceholder'
+import {useQuery, useQueryClient} from "@tanstack/react-query";
+import {use, useEffect, useState} from "react";
+import {usePathname, useRouter, useSearchParams} from "next/navigation";
+import {fetchProductById, fetchProducts} from "@/lib/api/products";
+import {Product} from "@/types";
+import {motion} from "framer-motion";
+import {Input} from "@/components/ui/input";
+import Link from "next/link";
+import StyleSelector from "@/components/ui/CatalogSelectors/StyleSelector";
+import MaterialSelector from "@/components/ui/CatalogSelectors/MaterialSelector";
+import LoadingPlaceholder from "@/components/placeholders/LoadingPlaceholder";
+import CatalogCard from "@/components/site/Catalog/CatalogCard";
+import {CatalogProps} from "@/components/site/Catalog/CatalogProps";
 
-interface CatalogProps {
-  categoriesPromise: Promise<Category[]>;
-  stylesPromise: Promise<Style[]>;
-  materialsPromise: Promise<Material[]>;
-  selectedCategory?: string;
-}
 
-function CatalogContent({categoriesPromise, stylesPromise, materialsPromise, selectedCategory}: CatalogProps) {
+export default function CatalogContent({categoriesPromise, stylesPromise, materialsPromise, selectedCategory}: CatalogProps) {
   const queryClient = useQueryClient()
   const categories = use(categoriesPromise)
   const styles = use(stylesPromise)
@@ -205,19 +200,5 @@ function CatalogContent({categoriesPromise, stylesPromise, materialsPromise, sel
             <p className="text-sm sm:text-base min-h-[50vh]">Нет продуктов в этой категории.</p>}
       </div>
     </>
-  )
-}
-
-export default function CatalogWrapper({
-                                         categoriesPromise,
-                                         stylesPromise,
-                                         materialsPromise,
-                                         selectedCategory,
-                                       }: CatalogProps) {
-  return (
-    <Suspense fallback={<div><LoadingPlaceholder/></div>}>
-      <CatalogContent categoriesPromise={categoriesPromise} stylesPromise={stylesPromise}
-                      materialsPromise={materialsPromise} selectedCategory={selectedCategory}/>
-    </Suspense>
   )
 }
