@@ -38,9 +38,9 @@ export default function Header() {
           {/* Desktop Header (lg: ≥1024px) */}
           <div
             className="hidden lg:flex flex-row items-center justify-between max-w-[1400px] mx-auto gap-4">
-            <Link href="/" className="flex-shrink-0 w-[300px]">
+            <Link href="/" className="flex-shrink-0 w-[250px] p-5">
               <Image
-                src="/new_year_logo.png"
+                src="/logo.png"
                 alt="АБТ - мебель для кухни"
                 width={300}
                 height={80}

@@ -1,4 +1,5 @@
 import AboutUs from '@/components/site/AboutUs'
+import SiteContainer from "@/components/SiteContainer";
 
 export async function generateMetadata() {
   return {
@@ -17,6 +18,8 @@ export async function generateMetadata() {
 
 export default function AboutPage() {
   return (
-    <AboutUs/>
+    <SiteContainer>
+      <AboutUs/>
+    </SiteContainer>
   )
 }

@@ -58,6 +58,7 @@ export default function ProductPhotoCarousel({ photos }: { photos: Photo[] }) {
                   //className="object-center"
                   className="object-contain"
                   fill
+                  priority
                 />
               </div>
             </div>

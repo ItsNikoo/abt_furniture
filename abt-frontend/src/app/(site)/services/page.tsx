@@ -1,5 +1,5 @@
 import Services from '@/components/site/Services'
-import ContentWrapper from '@/components/ContentWrapper'
+import SiteContainer from "@/components/SiteContainer";
 
 export async function generateMetadata() {
   return {
@@ -26,8 +26,8 @@ export async function generateMetadata() {
 
 export default function ServicesPage() {
   return (
-    <ContentWrapper>
+    <SiteContainer>
       <Services/>
-    </ContentWrapper>
+    </SiteContainer>
   )
 }

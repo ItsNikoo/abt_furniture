@@ -28,19 +28,19 @@ export default function SalesContainer() {
   }, [])
 
   if (loading) return (
-    <div className="mt-5 mb-5">
+    <div className="mt-5">
       <SalesPlaceholder/>
     </div>
   )
 
   if (error || sales.length === 0) return (
-    <div className="mt-5 mb-5">
+    <div className="mt-5">
       <SalesPlaceholder/>
     </div>
   )
 
   return (
-    <div className="mt-5 mb-5">
+    <div className="mt-5">
       <SalesCarousel slides={sales}/>
     </div>
   )

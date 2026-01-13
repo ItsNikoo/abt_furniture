@@ -3,6 +3,7 @@ import {fetchProductById} from '@/lib/api/products'
 import {Product} from '@/types'
 import ProductContainer from '@/components/site/ProductContainer'
 import {Metadata} from 'next'
+import SiteContainer from "@/components/SiteContainer";
 
 type Props = {
   params: Promise<{
@@ -71,8 +72,8 @@ export default async function ProductPage({params}: Props) {
   const product: Product = await fetchProductById(Number(id))
 
   return (
-    <ContentWrapper>
+    <SiteContainer>
       <ProductContainer product={product}/>
-    </ContentWrapper>
+    </SiteContainer>
   )
 }

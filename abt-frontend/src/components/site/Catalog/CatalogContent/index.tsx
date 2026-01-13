@@ -111,12 +111,12 @@ export default function CatalogContent({categoriesPromise, stylesPromise, materi
   )
 
   return (
-    <>
+    <div>
       <motion.div
         initial={{opacity: 0, y: -40}}
         animate={{opacity: 1, y: 0}}
         transition={{duration: 0.75}}
-        className="flex flex-col sm:flex-row sm:items-center gap-3 ">
+        className="flex flex-col sm:flex-row sm:items-center gap-3">
         <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-6xl font-bold font-montserrat">Каталог</h1>
         <Input
           type="search"
@@ -129,14 +129,6 @@ export default function CatalogContent({categoriesPromise, stylesPromise, materi
       <motion.ul
         initial="hidden"
         animate="visible"
-        variants={{
-          hidden: {},
-          visible: {
-            transition: {
-              staggerChildren: 0.3, // задержка между появлением элементов
-            },
-          },
-        }}
         className="flex flex-wrap sm:flex-row gap-4 sm:gap-8 font-medium text-sm sm:text-base mt-2 sm:mt-4"
       >
         {categories.map((category) => (
@@ -199,6 +191,6 @@ export default function CatalogContent({categoriesPromise, stylesPromise, materi
         {filteredProducts && filteredProducts.length === 0 && !isLoading &&
             <p className="text-sm sm:text-base min-h-[50vh]">Нет продуктов в этой категории.</p>}
       </div>
-    </>
+    </div>
   )
 }

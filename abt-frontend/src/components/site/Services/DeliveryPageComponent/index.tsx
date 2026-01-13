@@ -7,7 +7,7 @@ import Link from 'next/link'
 export default function DeliveryPageComponent() {
   return (
 
-    <div className="relative min-h-[60vh] px-4 md:px-[50px] lg:px-[100px] py-[30px] flex flex-col gap-8 bg-white">
+    <div className="relative py-[30px] flex flex-col gap-8 bg-white">
       <div className="flex flex-col md:flex-row items-center gap-8">
         <div className="w-full md:w-[350px] flex-shrink-0">
           <motion.div

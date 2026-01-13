@@ -1,4 +1,5 @@
 import Howto from '@/components/site/Howto'
+import SiteContainer from "@/components/SiteContainer";
 
 export async function generateMetadata() {
   return {
@@ -25,6 +26,8 @@ export async function generateMetadata() {
 
 export default function HowToPage() {
   return (
-    <Howto/>
+    <SiteContainer>
+      <Howto/>
+    </SiteContainer>
   )
 }

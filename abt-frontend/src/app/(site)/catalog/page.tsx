@@ -1,4 +1,3 @@
-import ContentWrapper from '@/components/ContentWrapper'
 import {fetchCategories} from '@/lib/api/categories'
 import {fetchStyles} from '@/lib/api/styles'
 import {fetchMaterials} from '@/lib/api/materials'
@@ -36,8 +35,6 @@ export default function CatalogPage() {
   const materialsPromise = fetchMaterials()
 
   return (
-    <ContentWrapper>
-      <CatalogComponent categoriesPromise={categoriesPromise} stylesPromise={stylesPromise} materialsPromise={materialsPromise}/>
-    </ContentWrapper>
+    <CatalogComponent categoriesPromise={categoriesPromise} stylesPromise={stylesPromise} materialsPromise={materialsPromise}/>
   )
 }

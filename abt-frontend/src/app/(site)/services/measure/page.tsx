@@ -1,5 +1,6 @@
 import ContentWrapper from '@/components/ContentWrapper'
 import MeasureServiceComponent from '@/components/site/Services/MeasureServiceComponent'
+import SiteContainer from "@/components/SiteContainer";
 
 export async function generateMetadata() {
   return {
@@ -26,8 +27,8 @@ export async function generateMetadata() {
 
 export default function MeasurePage() {
   return (
-    <ContentWrapper>
+    <SiteContainer>
       <MeasureServiceComponent/>
-    </ContentWrapper>
+    </SiteContainer>
   )
 }

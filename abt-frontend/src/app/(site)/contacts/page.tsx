@@ -1,4 +1,5 @@
 import Contacts from '@/components/site/Contacts'
+import SiteContainer from "@/components/SiteContainer";
 
 export async function generateMetadata() {
   return {
@@ -25,6 +26,8 @@ export async function generateMetadata() {
 
 export default function ContactsPage() {
   return (
-    <Contacts/>
+    <SiteContainer>
+      <Contacts/>
+    </SiteContainer>
   )
 }
