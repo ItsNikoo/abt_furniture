@@ -2,13 +2,11 @@
 
 import { motion } from 'framer-motion'
 import SiteContainer from '@/components/SiteContainer'
-import LeftPartOfFirstPage from '@/components/site/FirstPage/LeftPartOfFirstPage'
-import RightPartOfFirstPage from '@/components/site/FirstPage/RightPartOfFirstPage'
-import ClientContainer from '@/components/site/FirstPage/ClientContainer'
+import FirstMainContainer from '@/components/site/FirstPage/FirstMainContainer'
 
 export default function FirstPage() {
   return (
-    <section className="relative z-10">
+    <section className="relative z-10 py-5">
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-25 -z-10"
         style={{ backgroundImage: "url('/background_image.webp')" }}
@@ -30,12 +28,9 @@ export default function FirstPage() {
             pb-5
           "
         >
-          <LeftPartOfFirstPage />
-          {/*<RightPartOfFirstPage />*/}
+          <FirstMainContainer />
         </motion.div>
-        <ClientContainer />
       </SiteContainer>
-
     </section>
   )
 }

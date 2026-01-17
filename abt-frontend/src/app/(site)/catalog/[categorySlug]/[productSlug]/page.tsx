@@ -1,4 +1,3 @@
-import ContentWrapper from '@/components/ContentWrapper'
 import {fetchProductById} from '@/lib/api/products'
 import {Product} from '@/types'
 import ProductContainer from '@/components/site/ProductContainer'

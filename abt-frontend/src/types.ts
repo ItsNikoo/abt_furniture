@@ -81,6 +81,7 @@ export interface Service {
 }
 
 export interface Contact {
+  name: string;
   phone: string;
   comment: string;
   consent: boolean;

@@ -1,53 +1,32 @@
-import { Contact } from '@/types'
-import { apiUrl } from '@/lib/utils/baseUrl'
+import {Contact} from '@/types'
+import {apiRequest} from "@/lib/utils/apiRequest";
 
-interface ApiErrorResponse {
-  errors?: { [key: string]: string[] }; // Для ошибок валидации (HTTP 400)
-  error?: string; // Для серверных ошибок (HTTP 500)
-}
-
-export async function postContact({ phone, comment, consent, product = '' }: Contact) {
-
-  // Валидация на фронтенде
-  if (!phone.trim()) {
-    throw new Error('Номер телефона обязателен')
+export async function postContact({name, phone, comment, consent, product = ''}: Contact) {
+  const formData = new FormData()
+  formData.append('name', name)
+  formData.append('phone', phone)
+  formData.append('comment', comment)
+  if (product !== '') {
+    formData.append('product', product)
   }
   if (!consent) {
     throw new Error('Необходимо дать согласие на обработку данных')
   }
 
-  try {
-    const response = await fetch(apiUrl('/contact/'), {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        phone: phone.trim(),
-        comment: comment.trim(),
-        consent,
-        product: product ? product.trim() : '', // Явно отправляем пустую строку
-      }),
-      // Убрали credentials: 'include', так как не требуется для AllowAny
-      signal: AbortSignal.timeout(10000), // Таймаут 10 секунд
-    })
-
-    if (!response.ok) {
-      const errorData: ApiErrorResponse = await response.json()
-      if (response.status === 400 && errorData.errors) {
-        // Извлекаем первую ошибку для UX
-        const errorMessage = Object.values(errorData.errors)[0]?.[0] || 'Ошибка валидации данных'
-        throw new Error(errorMessage)
-      } else if (errorData.error) {
-        throw new Error(errorData.error) // Серверная ошибка (например, SMTP)
-      }
-      throw new Error(`Ошибка ${response.status}: Не удалось отправить данные`)
-    }
-
-    return await response.json() // { message: "Сообщение успешно отправлено" }
-  } catch (error) {
-    // Логируем для отладки
-    console.error('Ошибка в postContact:', error)
-    throw error instanceof Error ? error : new Error('Неизвестная ошибка при отправке данных')
+  const data = {
+    name: name.trim(),
+    phone: phone.trim(),
+    comment: comment.trim(),
+    consent: consent,
+    product: product ? product.trim() : '',
   }
+
+  return apiRequest<Contact>(
+    `/contact/`,
+    {
+      method: 'POST',
+      data: data,
+      isFormData: false
+    }
+  )
 }

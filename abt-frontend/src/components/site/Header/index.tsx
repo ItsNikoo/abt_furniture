@@ -96,9 +96,9 @@ export default function Header() {
           <div className="hidden md:flex lg:hidden flex-col">
             {/* Top row: Logo and Button */}
             <div className="flex items-center justify-between py-3 gap-2">
-              <Link href="/" className="flex-shrink-0 w-[300px] p-2">
+              <Link href="/" className="flex-shrink-0 w-[250px] p-2">
                 <Image
-                  src="/new_year_logo.png"
+                  src="/logo.png"
                   alt="АБТ - мебель для кухни"
                   width={300}
                   height={80}
@@ -156,9 +156,9 @@ export default function Header() {
           <div className="md:hidden">
             {/* Top row with logo and menu button */}
             <div className="flex items-center justify-between py-3 gap-2">
-              <Link href="/" className="flex-shrink-0 w-[250px] p-2">
+              <Link href="/" className="flex-shrink-0 w-[200px] p-2">
                 <Image
-                  src="/new_year_logo.png"
+                  src="/logo.png"
                   alt="АБТ - мебель для кухни"
                   width={250}
                   height={70}

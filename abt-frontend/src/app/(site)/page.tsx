@@ -1,8 +1,9 @@
 import FirstPage from '@/components/site/FirstPage'
 import SalesContainer from '@/components/site/SalesContainer'
-import ContentWrapper from '@/components/ContentWrapper'
 import CategoriesGrid from '@/components/site/CategoriesGrid'
 import SiteContainer from "@/components/SiteContainer";
+import AdvantagesContainer from "@/components/site/AdvantagesContainer";
+import FeedbackForm from "@/components/site/FeedbackForm";
 
 export const revalidate = 10 // ISR
 
@@ -45,7 +46,9 @@ export default async function Home() {
             <SalesContainer/>
             <FirstPage/>
             <SiteContainer>
+                <AdvantagesContainer />
                 <CategoriesGrid/>
+                <FeedbackForm />
             </SiteContainer>
         </>
     )

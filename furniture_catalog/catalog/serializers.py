@@ -9,7 +9,7 @@ from services.yandex_storage import (
     upload_to_yandex_storage,
     delete_from_yandex_storage
 )
-from catalog.models import Category, Style, Photo, Product, FirstPage, Material, Promotion
+from catalog.models import Category, Style, Photo, Product, FirstPage, Material, Promotion, ContactRequest
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -436,6 +436,8 @@ class FirstPageSerializer(serializers.ModelSerializer):
                 )
 
         return super().update(instance, validated_data)
+
+
 class PromotionSerializer(serializers.ModelSerializer):
     """Serializer для сущности спецпредложений с логикой добавления фотографий"""
     category = serializers.SlugRelatedField(
@@ -612,3 +614,30 @@ class PromotionSerializer(serializers.ModelSerializer):
         instance.save()
 
         return instance
+
+
+class ContactRequestSerializer(serializers.ModelSerializer):
+    """Сериализатор для контактных запросов."""
+
+    class Meta:
+        model = ContactRequest
+        fields = ['id', 'name', 'phone', 'comment', 'product', 'consent', 'created_at']
+        read_only_fields = ['id', 'created_at']
+
+    def validate_name(self, value):
+        """Валидация имени."""
+        if not value or len(value.strip()) == 0:
+            raise serializers.ValidationError("Имя обязательно для заполнения.")
+        if len(value) > 50:
+            raise serializers.ValidationError(
+                "Имя не должно превышать 50 символов."
+            )
+        return value.strip()
+
+    def validate_consent(self, value):
+        """Проверка согласия на обработку данных."""
+        if not value:
+            raise serializers.ValidationError(
+                "Необходимо согласие на обработку персональных данных."
+            )
+        return value

@@ -1,3 +1,4 @@
+import os
 from datetime import timedelta
 from pathlib import Path
 from decouple import config
@@ -171,10 +172,31 @@ STATIC_ROOT = '/app/static'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Настройки для отправки на почту
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.majordomo.ru'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'info@kuhni-abt.ru'  # Ваш email
-EMAIL_HOST_PASSWORD = config("EMAIL_PASSWORD", default="")
-DEFAULT_FROM_EMAIL = 'info@kuhni-abt.ru'
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.majordomo.ru'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = 'info@kuhni-abt.ru'  # Ваш email
+# EMAIL_HOST_PASSWORD = config("EMAIL_PASSWORD", default="")
+# DEFAULT_FROM_EMAIL = 'info@kuhni-abt.ru'
+
+if DEBUG:
+    # Письма будут выводиться в консоль
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+    DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
+    # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    # EMAIL_HOST = 'smtp.gmail.com'
+    # EMAIL_PORT = 587
+    # EMAIL_USE_TLS = True
+    # EMAIL_HOST_USER = os.getenv("DEV_MAIL")  # Ваш Gmail
+    # EMAIL_HOST_PASSWORD = os.getenv('DEV_PASSWORD')  # Пароль приложения (не обычный пароль!)
+    # DEFAULT_FROM_EMAIL = os.getenv("DEV_MAIL")  # Тот же email, что и выше
+else:
+    # Реальная отправка через SMTP
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = 'smtp.majordomo.ru'
+    EMAIL_PORT = 587
+    EMAIL_USE_TLS = True
+    EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+    EMAIL_HOST_PASSWORD = os.getenv('EMAIL_PASSWORD')
+    DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')

@@ -80,6 +80,7 @@ class FirstPage(models.Model):
 
 class ContactRequest(models.Model):
     """Сущность контакт"""
+    name = models.CharField(max_length=50)
     phone = models.CharField(max_length=20)
     comment = models.TextField(blank=True)
     product = models.CharField(max_length=200, blank=True)  # Поле для продукта

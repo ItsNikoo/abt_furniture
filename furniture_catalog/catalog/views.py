@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from django.core.mail import send_mail
 from rest_framework import viewsets, status
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
@@ -5,10 +7,9 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
-from catalog.forms import ContactForm
 from catalog.models import Category, Style, Product, Material, FirstPage, ContactRequest, Promotion
 from catalog.serializers import CategorySerializer, StyleSerializer, ProductSerializer, MaterialSerializer, \
-    FirstPageSerializer, PromotionSerializer
+    FirstPageSerializer, PromotionSerializer, ContactRequestSerializer
 from furniture_catalog import settings
 from services.yandex_storage import delete_from_yandex_storage
 
@@ -154,49 +155,80 @@ class UserAPI(APIView):
 
 
 class ContactAPI(APIView):
-    permission_classes = [permissions.AllowAny]  # Разрешить доступ всем
+    """API для обработки контактных запросов."""
+
+    permission_classes = [permissions.AllowAny]
 
     def post(self, request):
-        form = ContactForm(request.data)
-        if form.is_valid():
-            phone = form.cleaned_data['phone']
-            comment = form.cleaned_data['comment']
-            product = form.cleaned_data['product']
-            consent = form.cleaned_data['consent']
+        """Создание нового контактного запроса."""
+        serializer = ContactRequestSerializer(data=request.data)
 
-            # Сохранение в базу
-            contact_request = ContactRequest.objects.create(
-                phone=phone,
-                comment=comment,
-                product=product,
-                consent=consent
-            )
+        if serializer.is_valid():
+            # Сохраняем в базу данных
+            contact_request = serializer.save()
 
-            # Получаем IP-адрес для отслеживания
+            # Получаем IP-адрес для логирования
             ip_address = request.META.get('REMOTE_ADDR', 'Unknown')
 
-            # Формируем сообщение
+            # Формируем сообщение для email
             subject = 'Новое сообщение с сайта АБТ'
             message = f'''
-            Новое сообщение:
-            Номер телефона: {phone}
-            Комментарий: {comment or 'Не указан'}
-            Продукт: {product or 'Не указан'}
-            Согласие на обработку данных: {'Да' if consent else 'Нет'}
-            Время создания: {contact_request.created_at}
+            Новое сообщение с сайта:
+
+            Имя: {contact_request.name}
+            Номер телефона: {contact_request.phone}
+            Комментарий: {contact_request.comment or 'Не указан'}
+            Продукт: {contact_request.product or 'Не указан'}
+            Согласие на обработку данных: {'Да' if contact_request.consent else 'Нет'}
+
+            Время создания: {(contact_request.created_at + timedelta(hours=3)).strftime('%d.%m.%Y %H:%M:%S')} МСК
             IP-адрес: {ip_address}
-            '''
+                        '''
+
             from_email = settings.DEFAULT_FROM_EMAIL
             recipient_list = ['info@kuhni-abt.ru']
 
             try:
-                send_mail(subject, message, from_email, recipient_list)
-                return Response({'message': 'Сообщение успешно отправлено'}, status=status.HTTP_200_OK)
-            except Exception as e:
-                return Response({'error': f'Ошибка при отправке письма: {str(e)}'},
-                                status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                # Отправляем email
+                send_mail(
+                    subject,
+                    message,
+                    from_email,
+                    recipient_list,
+                    fail_silently=False
+                )
 
-        return Response({'errors': form.errors}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({
+                    'message': 'Сообщение успешно отправлено',
+                    'id': contact_request.id
+                }, status=status.HTTP_201_CREATED)
+
+            except Exception as e:
+                # Логируем ошибку, но запись в БД уже сохранена
+                print(f"Ошибка отправки email: {str(e)}")
+
+                return Response({
+                    'message': 'Запрос сохранен, но возникла ошибка при отправке email',
+                    'error': str(e),
+                    'id': contact_request.id
+                }, status=status.HTTP_201_CREATED)
+
+        return Response({
+            'errors': serializer.errors
+        }, status=status.HTTP_400_BAD_REQUEST)
+
+    def get(self, request):
+        """Получение списка контактных запросов (опционально, для админки)."""
+        # Можно ограничить доступ только для staff
+        if not request.user.is_staff:
+            return Response(
+                {'error': 'Доступ запрещен'},
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+        contacts = ContactRequest.objects.all().order_by('-created_at')
+        serializer = ContactRequestSerializer(contacts, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class HealthCheckView(APIView):
