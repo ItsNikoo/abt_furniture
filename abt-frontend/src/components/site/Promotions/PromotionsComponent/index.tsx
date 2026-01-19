@@ -1,30 +1,23 @@
 import { Suspense } from "react"
-import {Category, Style, Material, Promotion} from "@/types"
 import PromotionsContent from "@/components/site/Promotions/PromotionsContent";
 import PromotionsSkeleton from "@/components/site/Promotions/PromotionSkeleton";
 import SiteContainer from "@/components/SiteContainer";
-
-interface PromotionsComponentProps {
-  categories: Category[]
-  styles: Style[]
-  materials: Material[]
-  promotions: Promotion[]
-}
+import {PromotionProps} from "@/components/site/Promotions/PromotionProps";
 
 export default function PromotionsComponent({
-                                              categories,
-                                              styles,
-                                              materials,
-                                              promotions,
-                                            }: PromotionsComponentProps) {
+                                              categoriesPromise,
+                                              stylesPromise,
+                                              materialsPromise,
+                                              promotionsPromise,
+                                            }: PromotionProps) {
   return (
     <SiteContainer>
       <Suspense fallback={<PromotionsSkeleton />}>
         <PromotionsContent
-          categories={categories}
-          styles={styles}
-          materials={materials}
-          promotions={promotions}
+          categoriesPromise={categoriesPromise}
+          stylesPromise={stylesPromise}
+          materialsPromise={materialsPromise}
+          promotionsPromise={promotionsPromise}
         />
       </Suspense>
     </SiteContainer>

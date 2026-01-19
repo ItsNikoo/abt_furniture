@@ -3,7 +3,7 @@ import SalesContainer from '@/components/site/SalesContainer'
 import CategoriesGrid from '@/components/site/CategoriesGrid'
 import SiteContainer from "@/components/SiteContainer";
 import AdvantagesContainer from "@/components/site/AdvantagesContainer";
-import FeedbackForm from "@/components/site/FeedbackForm";
+import FeedbackForm from "@/components/shared/FeedbackForm";
 
 export const revalidate = 10 // ISR
 

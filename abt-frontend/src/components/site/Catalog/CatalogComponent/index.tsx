@@ -4,7 +4,6 @@ import {CatalogProps} from "@/components/site/Catalog/CatalogProps";
 import CatalogContent from "@/components/site/Catalog/CatalogContent";
 import SiteContainer from "@/components/SiteContainer";
 
-
 export default function CatalogComponent({
                                          categoriesPromise,
                                          stylesPromise,

@@ -13,20 +13,18 @@ export const metadata: Metadata = {
 }
 
 export default async function PromotionsPage() {
-  const [categories, styles, materials, promotions] = await Promise.all([
-    fetchCategories(),
-    fetchStyles(),
-    fetchMaterials(),
-    fetchPromotions(),
-  ])
+  const categoriesPromise = fetchCategories();
+  const stylesPromise = fetchStyles();
+  const materialsPromise = fetchMaterials();
+  const promotionsPromise = fetchPromotions();
 
   return (
     <ContentWrapper>
       <PromotionsComponent
-        categories={categories}
-        styles={styles}
-        materials={materials}
-        promotions={promotions}
+        categoriesPromise={categoriesPromise}
+        stylesPromise={stylesPromise}
+        materialsPromise={materialsPromise}
+        promotionsPromise={promotionsPromise}
       />
     </ContentWrapper>
   )

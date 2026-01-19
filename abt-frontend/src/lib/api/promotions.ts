@@ -1,10 +1,23 @@
-import {Promotion, PromotionData} from "@/types";
+import { Promotion, PromotionData} from "@/types";
 import {apiRequest} from "@/lib/utils/apiRequest";
+import {Filters} from "@/lib/api/filters";
 
-export async function fetchPromotions(): Promise<Promotion[]> {
-  return apiRequest<Promotion[]>(`/promotions`, {method: "GET"})
+export async function fetchPromotions(filters: Filters = {}): Promise<Promotion[]> {
+  const params = new URLSearchParams()
+  if (filters.category) params.append('category', filters.category)
+  if (filters.style) params.append('style', filters.style)
+  if (filters.material) params.append('material', filters.material)
+  if (filters.ordering) params.append('ordering', filters.ordering)
+
+  const queryString = params.toString()
+  const path = `/promotions/${queryString ? `?${queryString}` : ''}`
+
+  return apiRequest<Promotion[]>(path, {method: "GET"})
 }
 
+export async function fetchPromotionById(id: number): Promise<Promotion> {
+  return apiRequest<Promotion>(`/promotions/${id}/`, {method: 'GET'})
+}
 
 export async function postPromotion(data: PromotionData, token: string): Promise<Promotion> {
   const formData = new FormData()
@@ -36,14 +49,6 @@ export async function postPromotion(data: PromotionData, token: string): Promise
       isFormData: true,
     }
   )
-}
-
-export async function deletePromotion(id: number, token: string) {
-  return apiRequest(
-    `/promotions/${id}`,
-    {
-      method: "DELETE", token: token
-    })
 }
 
 export async function patchPromotion(id: number, data: PromotionData, token: string) {
@@ -92,4 +97,13 @@ export async function patchPromotion(id: number, data: PromotionData, token: str
       isFormData: true,
     }
   )
+}
+
+export async function deletePromotion(id: number, token: string) {
+  return apiRequest(
+    `/promotions/${id}`,
+    {
+      method: "DELETE",
+      token: token
+    })
 }
