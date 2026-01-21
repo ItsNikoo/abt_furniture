@@ -89,7 +89,7 @@ export async function patchPromotion(id: number, data: PromotionData, token: str
     })
   }
   return apiRequest(
-    `/promotions/${id}`,
+    `/promotions/${id}/`,
     {
       method: "PATCH",
       data: formData,
@@ -101,7 +101,7 @@ export async function patchPromotion(id: number, data: PromotionData, token: str
 
 export async function deletePromotion(id: number, token: string) {
   return apiRequest(
-    `/promotions/${id}`,
+    `/promotions/${id}/`,
     {
       method: "DELETE",
       token: token

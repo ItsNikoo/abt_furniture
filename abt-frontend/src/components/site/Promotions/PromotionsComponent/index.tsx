@@ -1,23 +1,23 @@
-import { Suspense } from "react"
+import {Suspense} from "react"
 import PromotionsContent from "@/components/site/Promotions/PromotionsContent";
-import PromotionsSkeleton from "@/components/site/Promotions/PromotionSkeleton";
 import SiteContainer from "@/components/SiteContainer";
-import {PromotionProps} from "@/components/site/Promotions/PromotionProps";
+import LoadingPlaceholder from "@/components/placeholders/LoadingPlaceholder";
+import {CatalogProps} from "@/components/shared/CatalogProps";
 
 export default function PromotionsComponent({
                                               categoriesPromise,
                                               stylesPromise,
                                               materialsPromise,
-                                              promotionsPromise,
-                                            }: PromotionProps) {
+                                              selectedCategory,
+                                            }: CatalogProps) {
   return (
     <SiteContainer>
-      <Suspense fallback={<PromotionsSkeleton />}>
+      <Suspense fallback={<LoadingPlaceholder/>}>
         <PromotionsContent
           categoriesPromise={categoriesPromise}
           stylesPromise={stylesPromise}
           materialsPromise={materialsPromise}
-          promotionsPromise={promotionsPromise}
+          selectedCategory={selectedCategory}
         />
       </Suspense>
     </SiteContainer>

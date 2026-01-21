@@ -37,7 +37,7 @@ export async function patchSale(id: string, data: SaleData, token: string) {
     formData.append('mobile_photo_file', data.mobilePhotoFile)
   }
   return apiRequest(
-    `/sales/${id}`,
+    `/sales/${id}/`,
     {
       method: "PATCH",
       data: formData,

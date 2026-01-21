@@ -18,7 +18,7 @@ export async function postStyle(style: string, token: string) {
 
 export async function patchStyle(id: number, style: string, token: string) {
   return apiRequest<Style>(
-    `/styles/${id}`,
+    `/styles/${id}/`,
     {
       method: "PATCH",
       data: {style},
@@ -29,7 +29,7 @@ export async function patchStyle(id: number, style: string, token: string) {
 
 export async function deleteStyle(id: number, token: string) {
   return apiRequest<Style>(
-    `/styles/${id}`,
+    `/styles/${id}/`,
     {
       method: "DELETE",
       token: token

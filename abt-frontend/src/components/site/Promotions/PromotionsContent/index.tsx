@@ -1,6 +1,6 @@
 'use client'
 
-import {CatalogProps} from "@/components/site/Catalog/CatalogProps";
+import {CatalogProps} from "@/components/shared/CatalogProps";
 import BaseCatalogContent from "@/components/shared/BaseCatalogContent";
 import {fetchPromotionById, fetchPromotions} from "@/lib/api/promotions";
 import CatalogCard from "@/components/shared/CatalogCard";
@@ -22,7 +22,7 @@ export default function PromotionsContent(
       basePath={"/sales"}
       fetchFn={fetchPromotions}
       queryKeyPrefix={"sales"}
-      renderCard={(promotion) => <CatalogCard entity={promotion}/>}
+      renderCard={(promotion) => <CatalogCard isPromotion={true} entity={promotion}/>}
       getItemLink={(promotion, categorySlug) =>
         `/sales/${categorySlug}/${promotion.id}-${promotion.productSlug}`
       }

@@ -10,9 +10,12 @@ export default function CatalogCard({product}: { product: Product }) {
       transition={{duration: 0.5}}
       className="overflow-hidden rounded-lg mb-2">
       {product.photos && (
-        <div className="relative overflow-hidden  py-3">
-          <div className="relative pointer-events-auto">
-            <PhotoCarousel photos={product.photos}/>
+        <div className="relative overflow-hidden aspect-[16/9]"> {/* Добавлен aspect-[16/9] для соотношения 16:9; убран py-3, чтобы не ломать aspect */}
+          <div className="relative pointer-events-auto h-full w-full"> {/* h-full w-full для заполнения контейнера */}
+            <PhotoCarousel
+              photos={product.photos}
+              className="h-full w-full" // Предполагаем, что PhotoCarousel принимает className пропс; если нет, добавьте в его код
+            />
             <div
               className="absolute top-3 left-3 bg-mainPurple text-white text-[14px] font-bold px-2 py-1 rounded-md z-20">
               {product.style}

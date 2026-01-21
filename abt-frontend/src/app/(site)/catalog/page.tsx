@@ -35,6 +35,7 @@ export default function CatalogPage() {
   const materialsPromise = fetchMaterials()
 
   return (
-    <CatalogComponent categoriesPromise={categoriesPromise} stylesPromise={stylesPromise} materialsPromise={materialsPromise}/>
+    <CatalogComponent categoriesPromise={categoriesPromise} stylesPromise={stylesPromise}
+                      materialsPromise={materialsPromise}/>
   )
 }

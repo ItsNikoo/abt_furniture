@@ -21,7 +21,7 @@ export async function postMaterial(material: string, token: string) {
 // PATCH запрос
 export async function patchMaterial(id: number, material: string, token: string) {
   return apiRequest<Material>(
-    `/materials/${id}`,
+    `/materials/${id}/`,
     {
       method: 'PATCH',
       data: {material},
@@ -33,7 +33,7 @@ export async function patchMaterial(id: number, material: string, token: string)
 // DELETE запрос
 export async function deleteMaterial(id: number, token: string) {
   return apiRequest<Material>(
-    `/materials/${id}`,
+    `/materials/${id}/`,
     {
       method: 'DELETE',
       token: token

@@ -165,7 +165,7 @@ export default function BaseCatalogContent({
       });
     },
     enabled: !!currentCategory && isInitialized, // Добавлен флаг инициализации
-  });
+  })
 
   const filteredItems = items?.filter((item) =>
     item.title?.toLowerCase().includes(query.toLowerCase())
@@ -176,19 +176,34 @@ export default function BaseCatalogContent({
       <motion.div
         initial={{ opacity: 0, y: -40 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.75 }}
-        className="flex flex-col sm:flex-row sm:items-center gap-3 bg-pink-300"
+        transition={{ duration: 0.75, ease: "easeOut" }}
+        className="flex flex-col lg:flex-row lg:items-center gap-4 lg:gap-8 py-4 lg:py-6 bg-transparent" // Убрал bg-pink-300, сделал transparent для "невидимого" вида
       >
-        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-6xl font-bold font-montserrat bg-red-600">
-          {title}
-        </h1>
-        <Input
-          type="search"
-          placeholder="Поиск..."
-          className="mt-2 sm:mt-5 h-12 sm:h-16 w-full bg-transparent border-none focus:ring-0 placeholder:text-gray-300 shadow-none text-sm sm:text-base"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-        />
+        {/* Заголовок слева */}
+        <div className="flex-1">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold font-montserrat text-gray-900 leading-tight">
+            {title}
+          </h1>
+        </div>
+
+        {/* Поиск справа, "невидимый" (прозрачный фон, минималистичный) */}
+        <div className="w-full lg:w-auto lg:flex-shrink-0">
+          <div className="relative">
+            <Input
+              type="search"
+              placeholder="Поиск..."
+              className="h-12 sm:h-14 lg:h-16 w-full pl-12 pr-4 bg-transparent border border-gray-300 hover:border-gray-400 focus:border-transparent focus:ring-0 rounded-md placeholder:text-gray-400 text-gray-900 text-base transition-colors duration-300" // Transparent bg, subtle border, no shadow/ring
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+            />
+            {/* Опциональная иконка для подсказки, но "невидимая" (слабая) */}
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <svg className="w-5 h-5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </div>
+          </div>
+        </div>
       </motion.div>
 
       <motion.ul

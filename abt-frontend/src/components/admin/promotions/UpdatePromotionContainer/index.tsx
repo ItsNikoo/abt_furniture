@@ -1,7 +1,7 @@
 'use client'
 
-import {Photo, Promotion, PromotionData} from "@/types";
-import React, { useState, useEffect } from "react";
+import {Category, Material, Photo, Promotion, PromotionData, Style} from "@/types";
+import React, {useState, useEffect} from "react";
 import {
   Dialog,
   DialogContent,
@@ -9,26 +9,44 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import {Label} from "@/components/ui/label";
+import {Input} from "@/components/ui/input";
+import {Textarea} from "@/components/ui/textarea";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
+import {Button} from "@/components/ui/button";
 import Cookies from "js-cookie";
-import { patchPromotionAction } from "@/actions/promotions";
-import { Trash2 } from "lucide-react"; // иконка корзины (установи: npm i lucide-react)
+import {patchPromotionAction} from "@/actions/promotions";
+import {Check, ChevronsUpDown, Trash2} from "lucide-react";
+import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
+import {Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList} from "@/components/ui/command";
+import {cn} from "@/lib/utils";
 
 interface UpdatePromotionContainerProps {
-  promotion: Promotion;
-  isOpen: boolean;
-  onCloseAction: () => void;
+  promotion: Promotion,
+  categories: Category[],
+  styles: Style[],
+  materials: Material[],
+  isOpen: boolean,
+  onCloseAction: () => void,
 }
 
-export default function UpdatePromotionContainer({promotion, isOpen, onCloseAction}: UpdatePromotionContainerProps) {
+export default function UpdatePromotionContainer(
+  {
+    promotion,
+    categories,
+    styles,
+    materials,
+    isOpen,
+    onCloseAction
+  }: UpdatePromotionContainerProps) {
   const [success, setSuccess] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [photoPreviews, setPhotoPreviews] = useState<string[]>([]);
+  const [openCategory, setOpenCategory] = useState(false)
+  const [openStyle, setOpenStyle] = useState(false)
+  const [openMaterial, setOpenMaterial] = useState(false)
+
 
   const [formData, setFormData] = useState<PromotionData>({
     title: promotion.title,
@@ -62,7 +80,7 @@ export default function UpdatePromotionContainer({promotion, isOpen, onCloseActi
   }, [promotion, isOpen]);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
-    const { name, value } = e.target;
+    const {name, value} = e.target;
     setFormData(prev => ({
       ...prev,
       [name]: name === "price" ? Number(value) || 0 : value,
@@ -72,7 +90,7 @@ export default function UpdatePromotionContainer({promotion, isOpen, onCloseActi
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const files = e.target.files;
     if (!files || files.length === 0) {
-      setFormData(prev => ({ ...prev, photoFiles: undefined }));
+      setFormData(prev => ({...prev, photoFiles: undefined}));
       setPhotoPreviews([]);
       return;
     }
@@ -89,7 +107,7 @@ export default function UpdatePromotionContainer({promotion, isOpen, onCloseActi
       reader.readAsDataURL(file);
     });
 
-    setFormData(prev => ({ ...prev, photoFiles: newFiles }));
+    setFormData(prev => ({...prev, photoFiles: newFiles}));
   }
 
   // Переключение пометки на удаление для существующего фото
@@ -98,10 +116,10 @@ export default function UpdatePromotionContainer({promotion, isOpen, onCloseActi
       const currentDeletes = prev.deletePhotos || [];
       if (currentDeletes.includes(photoUrl)) {
         // снимаем пометку
-        return { ...prev, deletePhotos: currentDeletes.filter(url => url !== photoUrl) };
+        return {...prev, deletePhotos: currentDeletes.filter(url => url !== photoUrl)};
       } else {
         // помечаем на удаление
-        return { ...prev, deletePhotos: [...currentDeletes, photoUrl] };
+        return {...prev, deletePhotos: [...currentDeletes, photoUrl]};
       }
     });
   }
@@ -147,32 +165,166 @@ export default function UpdatePromotionContainer({promotion, isOpen, onCloseActi
             {/* ... все поля как были ... */}
             <div>
               <Label htmlFor="title">Название</Label>
-              <Input id="title" name="title" value={formData.title} onChange={handleChange} required />
+              <Input id="title" name="title" value={formData.title} onChange={handleChange} required/>
             </div>
             <div>
               <Label htmlFor="productSlug">Slug продукта</Label>
-              <Input id="productSlug" name="productSlug" value={formData.productSlug} onChange={handleChange} required />
+              <Input id="productSlug" name="productSlug" value={formData.productSlug} onChange={handleChange} required/>
             </div>
             <div>
               <Label htmlFor="price">Цена</Label>
-              <Input id="price" name="price" type="number" value={formData.price} onChange={handleChange} required />
+              <Input id="price" name="price" type="number" value={formData.price} onChange={handleChange} required/>
             </div>
+
+            {/*Категория*/}
             <div>
-              <Label htmlFor="category">Категория</Label>
-              <Input id="category" name="category" value={formData.category} onChange={handleChange} required />
+              <Label>Категория</Label>
+              <Popover open={openCategory} onOpenChange={setOpenCategory}>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    role="combobox"
+                    aria-expanded={openCategory}
+                    className="w-full justify-between mt-1"
+                  >
+                    {formData.category || 'Выберите категорию...'}
+                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50"/>
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-full p-0">
+                  <Command>
+                    <CommandInput placeholder="Поиск категории..."/>
+                    <CommandList>
+                      <CommandEmpty>Категории не найдены.</CommandEmpty>
+                      <CommandGroup>
+                        {categories.map((cat) => (
+                          <CommandItem
+                            key={cat.id}
+                            value={cat.category}
+                            onSelect={(value) => {
+                              setFormData((prev) => ({...prev, category: value}))
+                              setOpenCategory(false)
+                            }}
+                          >
+                            <Check
+                              className={cn(
+                                'mr-2 h-4 w-4',
+                                formData.category === cat.category ? 'opacity-100' : 'opacity-0'
+                              )}
+                            />
+                            {cat.category}
+                          </CommandItem>
+                        ))}
+                      </CommandGroup>
+                    </CommandList>
+                  </Command>
+                </PopoverContent>
+              </Popover>
             </div>
+
+
             <div>
               <Label htmlFor="size">Размер</Label>
-              <Input id="size" name="size" value={formData.size} onChange={handleChange} />
+              <Input id="size" name="size" value={formData.size} onChange={handleChange}/>
             </div>
+            {/* Материал (опционально) */}
             <div>
-              <Label htmlFor="material">Материал</Label>
-              <Input id="material" name="material" value={formData.material || ""} onChange={handleChange} />
+              <Label>Материал (опционально)</Label>
+              <Popover open={openMaterial} onOpenChange={setOpenMaterial}>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    role="combobox"
+                    aria-expanded={openMaterial}
+                    className="w-full justify-between mt-1"
+                  >
+                    {formData.material || 'Выберите материал...'}
+                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50"/>
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-full p-0">
+                  <Command>
+                    <CommandInput placeholder="Поиск материала..."/>
+                    <CommandList>
+                      <CommandEmpty>Материалы не найдены.</CommandEmpty>
+                      <CommandGroup>
+                        {materials.map((mat) => (
+                          <CommandItem
+                            key={mat.id}
+                            value={mat.material}
+                            onSelect={(value) => {
+                              setFormData((prev) => ({
+                                ...prev,
+                                material: value || undefined,
+                              }))
+                              setOpenMaterial(false)
+                            }}
+                          >
+                            <Check
+                              className={cn(
+                                'mr-2 h-4 w-4',
+                                formData.material === mat.material ? 'opacity-100' : 'opacity-0'
+                              )}
+                            />
+                            {mat.material}
+                          </CommandItem>
+                        ))}
+                      </CommandGroup>
+                    </CommandList>
+                  </Command>
+                </PopoverContent>
+              </Popover>
             </div>
+
+            {/* Стиль (опционально) */}
             <div>
-              <Label htmlFor="style">Стиль</Label>
-              <Input id="style" name="style" value={formData.style || ""} onChange={handleChange} />
+              <Label>Стиль (опционально)</Label>
+              <Popover open={openStyle} onOpenChange={setOpenStyle}>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    role="combobox"
+                    aria-expanded={openStyle}
+                    className="w-full justify-between mt-1"
+                  >
+                    {formData.style || 'Выберите стиль...'}
+                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50"/>
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-full p-0">
+                  <Command>
+                    <CommandInput placeholder="Поиск стиля..."/>
+                    <CommandList>
+                      <CommandEmpty>Стили не найдены.</CommandEmpty>
+                      <CommandGroup>
+                        {styles.map((st) => (
+                          <CommandItem
+                            key={st.id}
+                            value={st.style}
+                            onSelect={(value) => {
+                              setFormData((prev) => ({
+                                ...prev,
+                                style: value || undefined,
+                              }))
+                              setOpenStyle(false)
+                            }}
+                          >
+                            <Check
+                              className={cn(
+                                'mr-2 h-4 w-4',
+                                formData.style === st.style ? 'opacity-100' : 'opacity-0'
+                              )}
+                            />
+                            {st.style}
+                          </CommandItem>
+                        ))}
+                      </CommandGroup>
+                    </CommandList>
+                  </Command>
+                </PopoverContent>
+              </Popover>
             </div>
+
           </div>
 
           <div>

@@ -34,7 +34,7 @@ export async function patchCategory(id: number, data: CategoryData, token: strin
     formData.append('photo_file', data.photoFile)
   }
   return apiRequest(
-    `/categories/${id}`,
+    `/categories/${id}/`,
     {
       method: 'PATCH',
       data: formData,
@@ -46,7 +46,7 @@ export async function patchCategory(id: number, data: CategoryData, token: strin
 
 export async function deleteCategory(id: number, token: string) {
   return apiRequest(
-    `/categories/${id}`,
+    `/categories/${id}/`,
     {
       method: 'DELETE',
       token: token,

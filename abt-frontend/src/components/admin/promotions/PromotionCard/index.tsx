@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card'
-import {Promotion} from '@/types'
+import {Category, Material, Promotion, Style} from '@/types'
 import {Button} from "@/components/ui/button";
 import {deletePromotionAction} from "@/actions/promotions";
 import Cookies from "js-cookie";
@@ -10,10 +10,13 @@ import UpdatePromotionContainer from "@/components/admin/promotions/UpdatePromot
 import {useState} from "react";
 
 interface Props {
-  promotion: Promotion
+  promotion: Promotion,
+  categories: Category[],
+  styles: Style[],
+  materials: Material[],
 }
 
-export default function PromotionCard({promotion}: Props) {
+export default function PromotionCard({promotion, categories, styles, materials}: Props) {
   const [showUpdateDialog, setShowUpdateDialog] = useState(false);
 
   const mainPhoto = promotion.photos && promotion.photos.length > 0
@@ -123,6 +126,9 @@ export default function PromotionCard({promotion}: Props) {
       {showUpdateDialog && (
         <UpdatePromotionContainer
           promotion={promotion}
+          categories={categories}
+          styles={styles}
+          materials={materials}
           isOpen={showUpdateDialog}
           onCloseAction={() => setShowUpdateDialog(false)}
         />

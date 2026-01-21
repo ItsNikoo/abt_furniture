@@ -1,4 +1,3 @@
-import ContentWrapper from "@/components/ContentWrapper"
 import { fetchCategories } from "@/lib/api/categories"
 import { fetchStyles } from "@/lib/api/styles"
 import { fetchMaterials } from "@/lib/api/materials"
@@ -16,16 +15,12 @@ export default async function PromotionsPage() {
   const categoriesPromise = fetchCategories();
   const stylesPromise = fetchStyles();
   const materialsPromise = fetchMaterials();
-  const promotionsPromise = fetchPromotions();
 
   return (
-    <ContentWrapper>
-      <PromotionsComponent
-        categoriesPromise={categoriesPromise}
-        stylesPromise={stylesPromise}
-        materialsPromise={materialsPromise}
-        promotionsPromise={promotionsPromise}
-      />
-    </ContentWrapper>
+    <PromotionsComponent
+      categoriesPromise={categoriesPromise}
+      stylesPromise={stylesPromise}
+      materialsPromise={materialsPromise}
+    />
   )
 }

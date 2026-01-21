@@ -1,6 +1,6 @@
 'use client'
 
-import {CatalogProps} from "@/components/site/Catalog/CatalogProps";
+import {CatalogProps} from "@/components/shared/CatalogProps";
 import BaseCatalogContent from "@/components/shared/BaseCatalogContent";
 import {fetchProductById, fetchProducts} from "@/lib/api/products";
 import CatalogCard from "@/components/shared/CatalogCard";

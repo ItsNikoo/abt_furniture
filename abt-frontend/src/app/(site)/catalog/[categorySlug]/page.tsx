@@ -1,13 +1,12 @@
 import {fetchCategories} from '@/lib/api/categories'
-import Catalog from '../../../../components/site/Catalog/CatalogComponent'
-import ContentWrapper from '@/components/ContentWrapper'
 import {fetchStyles} from '@/lib/api/styles'
 import {fetchMaterials} from '@/lib/api/materials'
 import {Category} from "@/types"
+import CatalogComponent from "../../../../components/site/Catalog/CatalogComponent";
 
-type Props = {
+interface Props{
   params: Promise<{ categorySlug: string }>;
-};
+}
 
 export async function generateMetadata({params}: Props) {
   const {categorySlug} = await params
@@ -50,20 +49,14 @@ export async function generateMetadata({params}: Props) {
   }
 }
 
-export default async function CategoryPage({params}: Props) {
+export default async function ProductCategoryPage({params}: Props) {
   const {categorySlug} = await params
   const categoriesPromise = fetchCategories()
   const stylesPromise = fetchStyles()
   const materialsPromise = fetchMaterials()
 
   return (
-    <ContentWrapper>
-      <Catalog
-        categoriesPromise={categoriesPromise}
-        selectedCategory={categorySlug}
-        stylesPromise={stylesPromise}
-        materialsPromise={materialsPromise}
-      />
-    </ContentWrapper>
+    <CatalogComponent categoriesPromise={categoriesPromise} stylesPromise={stylesPromise}
+                      materialsPromise={materialsPromise} selectedCategory={categorySlug} />
   )
 }
