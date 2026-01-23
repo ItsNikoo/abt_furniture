@@ -1,6 +1,6 @@
 'use client'
 
-import {Product} from '@/types'
+import {Product, Promotion} from '@/types'
 import {
   Dialog,
   DialogClose,
@@ -12,9 +12,9 @@ import {
 } from '@/components/ui/dialog'
 import {useState} from 'react'
 import {Button} from '@/components/ui/button'
-import {ContactForm} from "@/components/ui/ContactForm";
+import {ContactForm} from "@/components/shared/ContactForm";
 
-export default function ProductOrderContainer({product}: { product: Product }) {
+export default function ProductOrderContainer({entity}: { entity: Product | Promotion }) {
   const [isOpen, setIsOpen] = useState(false)
     return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -23,7 +23,7 @@ export default function ProductOrderContainer({product}: { product: Product }) {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle className={'font-bold text-2xl'}>{product.title}</DialogTitle>
+          <DialogTitle className={'font-bold text-2xl'}>{entity.title}</DialogTitle>
           <DialogDescription>
             Напишите нам, если хотите этот проект, и мы подготовим уникальное решение персонально для вас.
           </DialogDescription>
@@ -32,7 +32,7 @@ export default function ProductOrderContainer({product}: { product: Product }) {
           submitText="Заказать проект"
           successMessage="Спасибо! Ваша заявка успешно отправлена."
           onSuccess={() => setTimeout(() => setIsOpen(false), 3000)}
-          product={product.title}
+          product={entity.title}
         />
         <DialogClose asChild>
           <Button type="button" variant="secondary">

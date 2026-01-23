@@ -114,3 +114,23 @@ class Promotion(models.Model):
         blank=True
     )
     photos = models.ManyToManyField(Photo, related_name='promotions', blank=True)
+
+
+class Review(models.Model):
+    """Сущность отзыв"""
+    name = models.CharField(max_length=50)
+    review = models.TextField()
+    rank = models.CharField(max_length=1, choices=[
+        ('1', '1'),
+        ('2', '2'),
+        ('3', '3'),
+        ('4', '4'),
+        ('5', '5'),
+    ])
+    date = models.CharField(max_length=50)
+    location = models.CharField(max_length=100)
+    photos = models.ManyToManyField(Photo, related_name='reviews', blank=True)
+
+    class Meta:
+        verbose_name = "Отзыв"
+        verbose_name_plural = "Отзывы"

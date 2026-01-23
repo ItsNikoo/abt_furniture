@@ -33,6 +33,13 @@ export default function CatalogCard({entity, isPromotion = false}: CatalogCardPr
         </div>
         <div className="flex flex-col mt-2"> {/* Изменили на flex-col для вертикального стека, чтобы цена выделялась */}
           {!isPromotion && <p className="text-gray-400 text-sm">Цена за погонный метр</p>} {/* Убрали " - ", сделали короче */}
+          {isPromotion && (
+            <div className="flex items-baseline gap-1 mb-1"> {/* Обёртка для выравнивания, с отступом снизу */}
+          <p> {/* Заметный: средний размер, жирный, бренд-цвет */}
+            {"size" in entity ? entity.size : ""}
+          </p>
+        </div>
+        )}
           <div className="flex items-baseline gap-1"> {/* Обернули цену для выравнивания */}
             <p className="text-3xl font-bold"> {/* Увеличили размер, жирный, бренд-цвет для заметности */}
               {entity.price.toLocaleString('ru-RU')} {/* Форматирование с пробелами: 25 000 */}

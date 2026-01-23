@@ -277,3 +277,30 @@ class PromotionViewSet(ModelViewSet):
             base_qs = base_qs.filter(material__material=material)
 
         return base_qs
+
+from catalog.models import Review
+from catalog.serializers import ReviewSerializer
+
+class ReviewViewSet(ModelViewSet):
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    lookup_field = 'id'
+
+    filter_backends = [OrderingFilter]
+    ordering_fields = ['date']
+    ordering = ['-id']
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        # Извлекаем все связанные фотографии
+        photos = instance.photos.all()
+        photo_urls = [photo.photo_url for photo in photos]
+
+        # Удаляем файлы из Yandex Cloud Storage
+        for photo_url in photo_urls:
+            delete_from_yandex_storage(photo_url)
+
+        # Удаляем отзыв
+        response = super().destroy(request, *args, **kwargs)
+        return response

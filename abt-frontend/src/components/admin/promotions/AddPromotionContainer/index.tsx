@@ -110,29 +110,6 @@ export default function AddPromotionContainer({categories, styles, materials}: P
       setIsLoading(true)
       const token = Cookies.get('token')
 
-      // Создаем FormData
-      const submitFormData = new FormData()
-      submitFormData.append('title', formData.title)
-      submitFormData.append('productSlug', formData.productSlug)
-      submitFormData.append('price', formData.price.toString())
-      submitFormData.append('description', formData.description)
-      submitFormData.append('size', formData.size)
-      submitFormData.append('category', formData.category)
-
-      if (formData.material) {
-        submitFormData.append('material', formData.material)
-      }
-      if (formData.style) {
-        submitFormData.append('style', formData.style)
-      }
-
-      // Добавляем файлы
-      if (formData.photoFiles && formData.photoFiles.length > 0) {
-        formData.photoFiles.forEach((file) => {
-          submitFormData.append('photoFiles', file)
-        })
-      }
-
       await postPromotionAction(formData, token as string)
 
       setSuccess("Предложение успешно создано!")
@@ -161,14 +138,14 @@ export default function AddPromotionContainer({categories, styles, materials}: P
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen py-8">
-      <Card className="w-full max-w-2xl shadow-lg rounded-lg border border-gray-200">
+    <div className="flex items-center justify-center min-h-screen">
+      <Card className="w-full shadow-lg rounded-lg border border-gray-200">
         <CardHeader className="bg-gray-50 p-6 rounded-t-lg">
           <h2 className="text-2xl font-bold text-gray-800">Добавить специальное предложение</h2>
         </CardHeader>
 
-        <CardContent className="p-6">
-          <form onSubmit={handleSubmit} className="space-y-6">
+        <CardContent className="py-3">
+          <form onSubmit={handleSubmit} className="space-y-3">
             {/* Название */}
             <div>
               <Label htmlFor="title">Название</Label>

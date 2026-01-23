@@ -114,3 +114,24 @@ export interface PromotionData {
   photoFiles?: File[];
   deletePhotos?: string[];
 }
+
+export interface Review{
+  id: number
+  name: string
+  review: string
+  rank: number
+  date: string
+  location: string
+  photos?: Photo[]
+}
+
+export interface ReviewData {
+  name: string
+  review: string
+  rank: number
+  date: string
+  location: string
+  photos?: Photo[]
+  photoFiles?: File[]
+  deletePhotos?: string[]
+}

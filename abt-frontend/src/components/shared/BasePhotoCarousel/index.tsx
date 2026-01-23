@@ -18,17 +18,18 @@ interface BasePhotoCarouselProps {
   aspectRatio?: string // Aspect-ratio для слайдов (default: 'aspect-video')
 }
 
-export default function BasePhotoCarousel({
-                                            photos,
-                                            className = '',
-                                            slideClassName = '',
-                                            showDots = false,
-                                            showThumbnails = false,
-                                            onSlideClick,
-                                            thumbnailsClassName = '',
-                                            imageClassName = 'object-contain',
-                                            aspectRatio = 'aspect-video'
-                                          }: BasePhotoCarouselProps) {
+export default function BasePhotoCarousel(
+  {
+    photos,
+    className = '',
+    slideClassName = '',
+    showDots = false,
+    showThumbnails = false,
+    onSlideClick,
+    thumbnailsClassName = '',
+    imageClassName = 'object-contain',
+    aspectRatio = 'aspect-video'
+  }: BasePhotoCarouselProps) {
   const [emblaRef, emblaApi] = useEmblaCarousel({loop: true})
   const [selectedIndex, setSelectedIndex] = useState(0)
 

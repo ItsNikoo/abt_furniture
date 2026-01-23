@@ -9,7 +9,7 @@ from services.yandex_storage import (
     upload_to_yandex_storage,
     delete_from_yandex_storage
 )
-from catalog.models import Category, Style, Photo, Product, FirstPage, Material, Promotion, ContactRequest
+from catalog.models import Category, Style, Photo, Product, FirstPage, Material, Promotion, ContactRequest, Review
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -641,3 +641,148 @@ class ContactRequestSerializer(serializers.ModelSerializer):
                 "Необходимо согласие на обработку персональных данных."
             )
         return value
+
+
+class ReviewSerializer(serializers.ModelSerializer):
+    """Serializer для отзывов с логикой добавления фотографий."""
+
+    photos = PhotoSerializer(many=True, required=False, read_only=True)
+    photo_files = serializers.ListField(
+        child=serializers.FileField(),
+        write_only=True,
+        required=False,
+        allow_empty=True
+    )
+    delete_photos = serializers.ListField(
+        child=serializers.URLField(), write_only=True, required=False
+    )
+
+    class Meta:
+        model = Review
+        fields = [
+            'id',
+            'name',
+            'review',
+            'rank',
+            'date',
+            'location',
+            'photos',
+            'photo_files',
+            'delete_photos'
+        ]
+
+    def validate_photo_files(self, value):
+        """Валидация фото."""
+        for file in value:
+            # Проверка размера файла (не больше 5 МБ)
+            if file.size > 5 * 1024 * 1024:
+                raise serializers.ValidationError(
+                    f"Файл {file.name} превышает 5 МБ."
+                )
+            # Проверка расширения файла
+            if not file.name.lower().endswith(
+                    ('.png', '.jpg', '.jpeg', '.webp')
+            ):
+                raise serializers.ValidationError(
+                    f"Файл {file.name} должен быть в формате "
+                    "PNG, JPG, WEBP или JPEG."
+                )
+        return value
+
+    def validate_name(self, value):
+        """Очистка имени для использования в качестве имени папки."""
+        cleaned_name = re.sub(r'[^\w\s-]', '', value).strip().replace(
+            ' ', '_'
+        )
+        if not cleaned_name:
+            raise serializers.ValidationError(
+                "Имя не может быть пустым или содержать "
+                "только недопустимые символы."
+            )
+        return value
+
+    def create(self, validated_data):
+        """Создание отзыва."""
+        photo_files = validated_data.pop('photo_files', [])
+        review = Review.objects.create(**validated_data)
+
+        # Получаем очищенное имя для папки
+        cleaned_name = re.sub(
+            r'[^\w\s-]', '', review.name
+        ).strip().replace(' ', '_')
+
+        # Обработка загрузки фотографий
+        for photo_file in photo_files:
+            try:
+                # Формируем путь с папкой reviews/ и именем автора
+                filename = f"{cleaned_name}/{uuid.uuid4()}_{photo_file.name}"
+                file_url = upload_to_yandex_storage(
+                    photo_file.file, filename, "reviews"
+                )
+                # Создаем объект Photo и связываем с отзывом
+                photo = Photo.objects.create(photo_url=file_url)
+                review.photos.add(photo)
+            except Exception as e:
+                # Если произошла ошибка, удаляем отзыв
+                # и уже загруженные фото
+                for photo in review.photos.all():
+                    try:
+                        delete_from_yandex_storage(photo.photo_url)
+                    except Exception as delete_error:
+                        raise serializers.ValidationError(
+                            {
+                                'photo_cleanup':
+                                    f"Ошибка удаления файла {photo.photo_url}: "
+                                    f"{str(delete_error)}"
+                            }
+                        )
+                review.delete()
+                raise serializers.ValidationError(
+                    {
+                        'photo_files':
+                            f"Ошибка загрузки файла {photo_file.name}: {str(e)}"
+                    }
+                )
+
+        return review
+
+    def update(self, instance, validated_data):
+        """Обновление отзыва."""
+        delete_photos = validated_data.pop('delete_photos', [])
+        photo_files = validated_data.pop('photo_files', [])
+
+        # Удаление фото из Yandex Cloud и базы
+        for url in delete_photos:
+            try:
+                photo = instance.photos.filter(photo_url=url).first()
+                if photo:
+                    delete_from_yandex_storage(url)
+                    photo.delete()
+            except Exception as e:
+                raise serializers.ValidationError(
+                    {'delete_photos': f"Ошибка при удалении фото {url}: {str(e)}"}
+                )
+
+        # Обработка загрузки новых фото (если есть)
+        for photo_file in photo_files:
+            try:
+                cleaned_name = re.sub(
+                    r'[^\w\s-]', '', instance.name
+                ).strip().replace(' ', '_')
+                filename = f"{cleaned_name}/{uuid.uuid4()}_{photo_file.name}"
+                file_url = upload_to_yandex_storage(
+                    photo_file.file, filename, "reviews"
+                )
+                photo = Photo.objects.create(photo_url=file_url)
+                instance.photos.add(photo)
+            except Exception as e:
+                raise serializers.ValidationError(
+                    {'photo_files': f"Ошибка загрузки: {str(e)}"}
+                )
+
+        # Обновление остальных полей
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        instance.save()
+
+        return instance

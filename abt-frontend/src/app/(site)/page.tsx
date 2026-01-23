@@ -4,6 +4,7 @@ import CategoriesGrid from '@/components/site/CategoriesGrid'
 import SiteContainer from "@/components/SiteContainer";
 import AdvantagesContainer from "@/components/site/AdvantagesContainer";
 import FeedbackForm from "@/components/shared/FeedbackForm";
+import ReviewsContainer from "@/components/site/Reviews/ReviewsContainer";
 
 export const revalidate = 10 // ISR
 
@@ -50,6 +51,7 @@ export default async function Home() {
                 <CategoriesGrid/>
                 <FeedbackForm />
             </SiteContainer>
+            <ReviewsContainer />
         </>
     )
 }

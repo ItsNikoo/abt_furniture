@@ -24,6 +24,10 @@ export const ADMIN_ROUTES = {
   PROMOTIONS: {
     name: 'Спецпредложения',
     path: `${ADMIN_URL}/promotions`,
+  },
+  REVIEWS: {
+    name: 'Отзывы',
+    path: `${ADMIN_URL}/reviews`,
   }
 
 } as const
@@ -45,6 +49,10 @@ export const ROUTES = {
     name: 'Контакты',
     path: '/contacts',
   },
+  REVIEWS: {
+    name: 'Отзывы',
+    path: '/reviews',
+  },
   ABOUT: {
     name: 'О компании',
     path: '/about',
@@ -52,5 +60,5 @@ export const ROUTES = {
   HOWTO: {
     name: 'Как совершить заказ',
     path: '/howto',
-  },
+  }
 } as const

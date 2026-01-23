@@ -14,6 +14,7 @@ type Props = {
 export async function generateMetadata({params}: Props): Promise<Metadata> {
   // Get the product data for metadata
   const {productSlug} = await params
+  const {categorySlug} = await params
   const id = productSlug.split('-')[0]
 
   try {
@@ -32,6 +33,7 @@ export async function generateMetadata({params}: Props): Promise<Metadata> {
         siteName: 'АБТ мебель',
         locale: 'ru_RU',
         type: 'website',
+        url: `https://kuhni-abt.ru/catalog/${categorySlug}/${productSlug}`
       },
       robots: {
         index: true,
@@ -72,7 +74,7 @@ export default async function ProductPage({params}: Props) {
 
   return (
     <SiteContainer>
-      <ProductContainer product={product}/>
+      <ProductContainer entity={product}/>
     </SiteContainer>
   )
 }

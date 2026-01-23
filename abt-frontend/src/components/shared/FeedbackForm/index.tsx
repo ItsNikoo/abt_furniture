@@ -1,5 +1,5 @@
 import Image from "next/image"
-import {ContactForm} from "@/components/ui/ContactForm";
+import {ContactForm} from "@/components/shared/ContactForm";
 
 export default function FeedbackForm() {
   return (
