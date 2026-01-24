@@ -1,5 +1,5 @@
-import {fetchReviews} from "@/lib/api/reviews";
-import ReviewsCarousel from "@/components/site/Reviews/ReviewsCarousel";
+import {fetchReviews} from "@/lib/api/reviews"
+import ReviewsCarousel from "@/components/site/Reviews/ReviewsCarousel"
 
 
 export default async function ReviewsContainer() {

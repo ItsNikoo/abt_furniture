@@ -1,5 +1,5 @@
 import {Material} from '@/types'
-import {apiRequest} from "@/lib/utils/apiRequest";
+import {apiRequest} from "@/lib/utils/apiRequest"
 
 // GET запрос
 export async function fetchMaterials() {

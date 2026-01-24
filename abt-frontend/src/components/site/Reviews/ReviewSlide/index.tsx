@@ -1,7 +1,7 @@
 import { Review } from '@/types'
-import {Star} from "lucide-react";
-import Link from "next/link";
-import {ROUTES} from "@/config/navigation";
+import {Star} from "lucide-react"
+import Link from "next/link"
+import {ROUTES} from "@/config/navigation"
 
 interface ReviewSlideProps {
   review: Review

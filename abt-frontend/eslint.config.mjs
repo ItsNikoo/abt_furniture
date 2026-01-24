@@ -7,39 +7,41 @@ import globals from 'globals'
 import tseslint from 'typescript-eslint'
 
 export default [
-  js.configs.recommended,
-  eslintConfigPrettier,
-  ...tseslint.configs.recommended,
-  {
-    ...pluginReact.configs.flat.recommended,
-    languageOptions: {
-      ...pluginReact.configs.flat.recommended.languageOptions,
-      globals: {
-        ...globals.serviceworker,
-      },
+    js.configs.recommended,
+    eslintConfigPrettier,
+    ...tseslint.configs.recommended,
+    {
+        ...pluginReact.configs.flat.recommended,
+        languageOptions: {
+            ...pluginReact.configs.flat.recommended.languageOptions,
+            globals: {
+                ...globals.serviceworker,
+            },
+        },
     },
-  },
-  {
-    plugins: {
-      '@next/next': pluginNext,
+    {
+        plugins: {
+            '@next/next': pluginNext,
+        },
+        rules: {
+            ...pluginNext.configs.recommended.rules,
+            ...pluginNext.configs['core-web-vitals'].rules,
+        },
     },
-    rules: {
-      ...pluginNext.configs.recommended.rules,
-      ...pluginNext.configs['core-web-vitals'].rules,
+    {
+        plugins: {
+            'react-hooks': pluginReactHooks,
+        },
+        settings: { react: { version: 'detect' } },
+        rules: {
+            ...pluginReactHooks.configs.recommended.rules,
+            // React scope no longer necessary with new JSX transform.
+            'react/react-in-jsx-scope': 'off',
+            // Запретить точки с запятой
+            'semi': ['error', 'never'],
+        },
     },
-  },
-  {
-    plugins: {
-      'react-hooks': pluginReactHooks,
+    {
+        ignores: ['.next/**/*', 'next.config.js'],
     },
-    settings: { react: { version: 'detect' } },
-    rules: {
-      ...pluginReactHooks.configs.recommended.rules,
-      // React scope no longer necessary with new JSX transform.
-      'react/react-in-jsx-scope': 'off',
-    },
-  },
-  {
-    ignores: ['.next/**/*', 'next.config.js'],
-  },
 ]

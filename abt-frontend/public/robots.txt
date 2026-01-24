@@ -11,7 +11,8 @@ User-agent: *
 # РАЗРЕШЕННЫЕ ДИРЕКТОРИИ (по умолчанию все разрешено)
 Allow: /
 Allow: /catalog/
-Allow: /products/
+Allow: /sales/
+Allow: /reviews/
 Allow: /about
 Allow: /contacts
 Allow: /services/
@@ -23,6 +24,7 @@ Allow: /blog/
 Disallow: /api/
 Disallow: /_next/
 Disallow: /_vercel/
+Disallow: /katalog/
 
 # Системные файлы Next.js
 Disallow: *.json$

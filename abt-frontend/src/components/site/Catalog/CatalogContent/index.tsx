@@ -1,9 +1,9 @@
 'use client'
 
-import {CatalogProps} from "@/components/shared/CatalogProps";
-import BaseCatalogContent from "@/components/shared/BaseCatalogContent";
-import {fetchProductById, fetchProducts} from "@/lib/api/products";
-import CatalogCard from "@/components/shared/CatalogCard";
+import {CatalogProps} from "@/components/shared/CatalogProps"
+import BaseCatalogContent from "@/components/shared/BaseCatalogContent"
+import {fetchProductById, fetchProducts} from "@/lib/api/products"
+import CatalogCard from "@/components/shared/CatalogCard"
 
 
 export default function CatalogContent(

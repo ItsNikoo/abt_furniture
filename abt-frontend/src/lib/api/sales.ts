@@ -1,8 +1,8 @@
 import {Sale, SaleData} from '@/types'
-import {apiRequest} from "@/lib/utils/apiRequest";
+import {apiRequest} from "@/lib/utils/apiRequest"
 
 export async function fetchSales(): Promise<Sale[]> {
-  return apiRequest<Sale[]>(`/sales/`, {method: 'GET'});
+  return apiRequest<Sale[]>(`/sales/`, {method: 'GET'})
 }
 
 export async function postSale(data: SaleData, token: string) {

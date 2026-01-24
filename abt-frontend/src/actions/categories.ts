@@ -2,8 +2,8 @@
 
 import {revalidatePath} from 'next/cache'
 import {CategoryData} from '@/types'
-import {deleteCategory, patchCategory, postCategory} from "@/lib/api/categories";
-import {ADMIN_ROUTES} from "@/config/navigation";
+import {deleteCategory, patchCategory, postCategory} from "@/lib/api/categories"
+import {ADMIN_ROUTES} from "@/config/navigation"
 
 const path = ADMIN_ROUTES.CATEGORIES.path
 

@@ -1,4 +1,4 @@
-import AddReviewContainer from "@/components/admin/reviews/AddReviewContainer";
+import AddReviewContainer from "@/components/admin/reviews/AddReviewContainer"
 
 export default function AddReviewPage(){
   return(

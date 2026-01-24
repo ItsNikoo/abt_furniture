@@ -1,7 +1,7 @@
 import MainGridContainer from '@/components/admin/products/MainGridContainer'
 import {Button} from '@/components/ui/button'
 import Link from 'next/link'
-import {ADMIN_ROUTES} from "@/config/navigation";
+import {ADMIN_ROUTES} from "@/config/navigation"
 
 export const dynamic = 'force-dynamic' // Отключает статическую генерацию
 export const revalidate = 0 // Отключает кэширование

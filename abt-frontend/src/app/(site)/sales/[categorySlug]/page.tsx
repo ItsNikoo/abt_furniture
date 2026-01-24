@@ -1,9 +1,9 @@
-import {fetchCategories} from "@/lib/api/categories";
-import {fetchStyles} from "@/lib/api/styles";
-import {fetchMaterials} from "@/lib/api/materials";
-import PromotionsComponent from "@/components/site/Promotions/PromotionsComponent";
+import {fetchCategories} from "@/lib/api/categories"
+import {fetchStyles} from "@/lib/api/styles"
+import {fetchMaterials} from "@/lib/api/materials"
+import PromotionsComponent from "@/components/site/Promotions/PromotionsComponent"
 import {Metadata} from 'next'
-import {Category} from "@/types"; // Assuming Category type exists
+import {Category} from "@/types" // Assuming Category type exists
 
 interface Props{
   params: Promise<{ categorySlug: string }>;

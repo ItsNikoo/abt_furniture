@@ -1,5 +1,5 @@
-import {Review, ReviewData} from "@/types";
-import {apiRequest} from "@/lib/utils/apiRequest";
+import {Review, ReviewData} from "@/types"
+import {apiRequest} from "@/lib/utils/apiRequest"
 
 export async function fetchReviews(): Promise<Review[]> {
   return apiRequest<Review[]>(`/reviews/`, {method: "GET"})

@@ -1,8 +1,8 @@
 import {Category, CategoryData} from '@/types'
-import {apiRequest} from "@/lib/utils/apiRequest";
+import {apiRequest} from "@/lib/utils/apiRequest"
 
 export async function fetchCategories(): Promise<Category[]> {
-  return apiRequest<Category[]>(`/categories/`, {method: 'GET'});
+  return apiRequest<Category[]>(`/categories/`, {method: 'GET'})
 }
 
 export async function postCategory(data: CategoryData, token: string) {
@@ -50,5 +50,5 @@ export async function deleteCategory(id: number, token: string) {
     {
       method: 'DELETE',
       token: token,
-    });
+    })
 }

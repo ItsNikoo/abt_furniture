@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import { useState } from 'react'
-import {ContactForm} from "@/components/shared/ContactForm";
+import {ContactForm} from "@/components/shared/ContactForm"
 
 export default function MainOrderContainer() {
   const [isOpen, setIsOpen] = useState(false)

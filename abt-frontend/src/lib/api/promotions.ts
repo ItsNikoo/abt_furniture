@@ -1,6 +1,6 @@
-import { Promotion, PromotionData} from "@/types";
-import {apiRequest} from "@/lib/utils/apiRequest";
-import {Filters} from "@/lib/api/filters";
+import { Promotion, PromotionData} from "@/types"
+import {apiRequest} from "@/lib/utils/apiRequest"
+import {Filters} from "@/lib/api/filters"
 
 export async function fetchPromotions(filters: Filters = {}): Promise<Promotion[]> {
   const params = new URLSearchParams()

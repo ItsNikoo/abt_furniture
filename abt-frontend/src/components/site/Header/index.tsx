@@ -8,8 +8,8 @@ import MainOrderContainer from '@/components/site/Orders/MainOrderContainer'
 import ServiceButton from '@/components/ui/ServiceButton'
 import { Button } from '@/components/ui/button'
 import { motion } from 'framer-motion'
-import {ROUTES} from "@/config/navigation";
-import SiteContainer from "@/components/SiteContainer";
+import {ROUTES} from "@/config/navigation"
+import SiteContainer from "@/components/SiteContainer"
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)

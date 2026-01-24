@@ -1,10 +1,20 @@
 import Contacts from '@/components/site/Contacts'
-import SiteContainer from "@/components/SiteContainer";
+import SiteContainer from "@/components/SiteContainer"
+import {Metadata} from "next"
 
-export async function generateMetadata() {
+export async function generateMetadata(): Promise<Metadata> {
   return {
     title: 'Контакты | АБТ мебель',
     description: 'Свяжитесь с нами для консультации, заказа или вопросов. Мы всегда рады помочь вам с выбором мебели от АБТ.',
+    keywords: [
+      "абт кухни",
+      "кухни абт",
+      "купить угловую кухню в москве",
+      "кухни в балашихе",
+      "кухни железнодорожный",
+      "кухни недорого в москве",
+      "кухни купить в москве недорого"
+    ],
     openGraph: {
       title: 'Контакты | АБТ мебель',
       description: 'Свяжитесь с нами для консультации, заказа или вопросов. Мы всегда рады помочь вам с выбором мебели от АБТ.',

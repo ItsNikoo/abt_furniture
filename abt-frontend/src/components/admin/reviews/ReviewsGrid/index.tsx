@@ -1,6 +1,6 @@
 import {Review} from "@/types"
-import {use} from "react";
-import ReviewCard from "@/components/admin/reviews/ReviewCard";
+import {use} from "react"
+import ReviewCard from "@/components/admin/reviews/ReviewCard"
 
 interface ReviewsGridProps {
   reviewsPromise: Promise<Review[]>

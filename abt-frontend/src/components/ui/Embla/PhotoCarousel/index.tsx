@@ -1,7 +1,7 @@
 'use client'
 
 import {Photo} from '@/types'
-import BasePhotoCarousel from "@/components/shared/BasePhotoCarousel";
+import BasePhotoCarousel from "@/components/shared/BasePhotoCarousel"
 
 export default function PhotoCarousel({photos, className}: { photos: Photo[]; className?: string }) {
   return (

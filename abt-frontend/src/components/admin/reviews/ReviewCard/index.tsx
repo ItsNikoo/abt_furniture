@@ -3,18 +3,18 @@
 import Image from 'next/image'
 import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card'
 import {Review} from '@/types'
-import {Button} from "@/components/ui/button";
-import Cookies from "js-cookie";
-import {useState} from "react";
-import {deleteReviewAction} from "@/actions/reviews";
-import UpdateReviewContainer from "@/components/admin/reviews/UpdateReviewContainer";
+import {Button} from "@/components/ui/button"
+import Cookies from "js-cookie"
+import {useState} from "react"
+import {deleteReviewAction} from "@/actions/reviews"
+import UpdateReviewContainer from "@/components/admin/reviews/UpdateReviewContainer"
 
 interface Props {
   review: Review,
 }
 
 export default function ReviewCard({review}: Props) {
-  const [showUpdateDialog, setShowUpdateDialog] = useState(false);
+  const [showUpdateDialog, setShowUpdateDialog] = useState(false)
 
   const mainPhoto = review.photos && review.photos.length > 0
     ? review.photos[0].photoUrl

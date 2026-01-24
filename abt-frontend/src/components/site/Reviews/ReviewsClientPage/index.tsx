@@ -1,11 +1,11 @@
 'use client'
 
-import {motion, AnimatePresence} from "framer-motion";
-import {useState, useCallback, useEffect} from "react";
-import ReactDOM from 'react-dom'; // Добавил для портала
-import {Review} from "@/types";
-import {Star, X} from "lucide-react";
-import Image from "next/image";
+import {motion} from "framer-motion"
+import {useState, useCallback, useEffect} from "react"
+import ReactDOM from 'react-dom' // Добавил для портала
+import {Review} from "@/types"
+import {Star, X} from "lucide-react"
+import Image from "next/image"
 
 interface ReviewProps {
   review: Review;
@@ -75,16 +75,16 @@ function ReviewCard({review, index, onImageClick}: ReviewProps) {
         </div>
       )}
     </motion.div>
-  );
+  )
 }
 
 // Модальное превью (адаптировано из ProductPhotoCarousel с добавлением кнопки закрытия и анимации)
 function ImagePreviewModal({previewUrl, onClose}: {previewUrl: string; onClose: () => void}) {
   useEffect(() => {
-    const handleEsc = (e: KeyboardEvent) => e.key === 'Escape' && onClose();
-    document.addEventListener('keydown', handleEsc);
-    return () => document.removeEventListener('keydown', handleEsc);
-  }, [onClose]);
+    const handleEsc = (e: KeyboardEvent) => e.key === 'Escape' && onClose()
+    document.addEventListener('keydown', handleEsc)
+    return () => document.removeEventListener('keydown', handleEsc)
+  }, [onClose])
 
   return (
     <div
@@ -110,19 +110,19 @@ function ImagePreviewModal({previewUrl, onClose}: {previewUrl: string; onClose: 
         />
       </div>
     </div>
-  );
+  )
 }
 
 export default function ReviewsClientPage({reviews}: ReviewPageProps) {
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null); // Состояние как в ProductPhotoCarousel
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null) // Состояние как в ProductPhotoCarousel
 
   const handleImageClick = useCallback((imageUrl: string) => {
-    setPreviewUrl(imageUrl);
-  }, []);
+    setPreviewUrl(imageUrl)
+  }, [])
 
   const closePreview = useCallback(() => {
-    setPreviewUrl(null);
-  }, []);
+    setPreviewUrl(null)
+  }, [])
 
   return (
     <div className="my-5 px-4">
@@ -157,5 +157,5 @@ export default function ReviewsClientPage({reviews}: ReviewPageProps) {
         document.body
       )}
     </div>
-  );
+  )
 }

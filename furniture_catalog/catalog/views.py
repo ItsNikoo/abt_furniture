@@ -1,6 +1,6 @@
 from datetime import timedelta
 
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMessage
 from rest_framework import viewsets, status
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.request import Request
@@ -161,10 +161,12 @@ class ContactAPI(APIView):
 
     def post(self, request):
         """Создание нового контактного запроса."""
-        serializer = ContactRequestSerializer(data=request.data)
+        # Обработка multipart/form-data (для файлов)
+        serializer_data = {k: v for k, v in request.data.items() if k != 'photos'}  # Исключаем файлы из сериализатора
+        serializer = ContactRequestSerializer(data=serializer_data)
 
         if serializer.is_valid():
-            # Сохраняем в базу данных
+            # Сохраняем в базу данных (без фото, фото только для email)
             contact_request = serializer.save()
 
             # Получаем IP-адрес для логирования
@@ -177,6 +179,7 @@ class ContactAPI(APIView):
 
             Имя: {contact_request.name}
             Номер телефона: {contact_request.phone}
+            Email: {contact_request.email or 'Не указан'}
             Комментарий: {contact_request.comment or 'Не указан'}
             Продукт: {contact_request.product or 'Не указан'}
             Согласие на обработку данных: {'Да' if contact_request.consent else 'Нет'}
@@ -189,14 +192,24 @@ class ContactAPI(APIView):
             recipient_list = ['info@kuhni-abt.ru']
 
             try:
-                # Отправляем email
-                send_mail(
-                    subject,
-                    message,
-                    from_email,
-                    recipient_list,
-                    fail_silently=False
+                # Отправляем email с вложениями (фото)
+                msg = EmailMessage(
+                    subject=subject,
+                    body=message,
+                    from_email=from_email,
+                    to=recipient_list,
                 )
+
+                # Прикрепляем файлы (только фото, проверяем MIME-тип)
+                photos = request.FILES.getlist('photos')
+                for photo in photos:
+                    if photo.content_type.startswith('image/'):
+                        msg.attach(photo.name, photo.read(), photo.content_type)
+                    else:
+                        # Логируем не-фото, но не прикрепляем
+                        print(f"Недопустимый файл: {photo.name} (не фото)")
+
+                msg.send(fail_silently=False)
 
                 return Response({
                     'message': 'Сообщение успешно отправлено',
@@ -229,7 +242,6 @@ class ContactAPI(APIView):
         contacts = ContactRequest.objects.all().order_by('-created_at')
         serializer = ContactRequestSerializer(contacts, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
-
 
 class HealthCheckView(APIView):
     permission_classes = []  # No authentication required

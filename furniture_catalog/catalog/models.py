@@ -82,14 +82,14 @@ class ContactRequest(models.Model):
     """Сущность контакт"""
     name = models.CharField(max_length=50)
     phone = models.CharField(max_length=20)
+    email = models.EmailField(max_length=254, blank=True)  # Добавлено: поле для email (необязательное)
     comment = models.TextField(blank=True)
     product = models.CharField(max_length=200, blank=True)  # Поле для продукта
     consent = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Request from {self.phone} for {self.product or 'no product'}"
-
+        return f"Request from {self.phone} ({self.email or 'no email'}) for {self.product or 'no product'}"
 
 class Promotion(models.Model):
     """Сущность спецпредложение"""

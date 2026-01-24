@@ -1,6 +1,6 @@
 import {Product, ProductData} from '@/types'
-import {apiRequest} from "@/lib/utils/apiRequest";
-import {Filters} from "@/lib/api/filters";
+import {apiRequest} from "@/lib/utils/apiRequest"
+import {Filters} from "@/lib/api/filters"
 
 
 export async function fetchProducts(filters: Filters = {}): Promise<Product[]> {
@@ -21,22 +21,22 @@ export async function fetchProductById(id: number): Promise<Product> {
 }
 
 export async function postProduct(data: ProductData, token: string): Promise<Product> {
-  const formData = new FormData();
-  formData.append('title', data.title);
-  formData.append('product_slug', data.productSlug);
-  formData.append('price', data.price.toString());
-  formData.append('description', data.description);
-  formData.append('category', data.category);
-  formData.append('material', data.material);
+  const formData = new FormData()
+  formData.append('title', data.title)
+  formData.append('product_slug', data.productSlug)
+  formData.append('price', data.price.toString())
+  formData.append('description', data.description)
+  formData.append('category', data.category)
+  formData.append('material', data.material)
 
   if (data.style) {
-    formData.append('style', data.style);
+    formData.append('style', data.style)
   }
 
   if (data.photoFiles && data.photoFiles.length > 0) {
     data.photoFiles.forEach((file) => {
-      formData.append('photo_files', file);
-    });
+      formData.append('photo_files', file)
+    })
   }
 
   return apiRequest<Product>('/products/', {
@@ -44,32 +44,32 @@ export async function postProduct(data: ProductData, token: string): Promise<Pro
     data: formData,
     token,
     isFormData: true,
-  });
+  })
 }
 
 export async function patchProduct(data: ProductData, id: number, token: string): Promise<Product> {
-  const formData = new FormData();
-  formData.append('title', data.title);
-  formData.append('product_slug', data.productSlug);
-  formData.append('price', data.price.toString());
-  formData.append('description', data.description);
-  formData.append('category', data.category);
-  formData.append('material', data.material);
+  const formData = new FormData()
+  formData.append('title', data.title)
+  formData.append('product_slug', data.productSlug)
+  formData.append('price', data.price.toString())
+  formData.append('description', data.description)
+  formData.append('category', data.category)
+  formData.append('material', data.material)
 
   if (data.style) {
-    formData.append('style', data.style);
+    formData.append('style', data.style)
   }
 
   if (data.deletePhotos && data.deletePhotos.length > 0) {
     data.deletePhotos.forEach((url) => {
-      formData.append('delete_photos', url);
-    });
+      formData.append('delete_photos', url)
+    })
   }
 
   if (data.photoFiles && data.photoFiles.length > 0) {
     data.photoFiles.forEach((file) => {
-      formData.append('photo_files', file);
-    });
+      formData.append('photo_files', file)
+    })
   }
 
   return apiRequest<Product>(`/products/${id}/`, {
@@ -77,7 +77,7 @@ export async function patchProduct(data: ProductData, id: number, token: string)
     data: formData,
     token,
     isFormData: true,
-  });
+  })
 }
 
 export async function deleteProduct(id: number, token: string) {

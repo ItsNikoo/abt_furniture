@@ -19,10 +19,10 @@ import {Check, ChevronsUpDown} from 'lucide-react'
 import {cn} from '@/lib/utils'
 import Image from 'next/image'
 import {PromotionData, Category, Style, Material} from '@/types'
-import {postPromotionAction} from "@/actions/promotions";
-import Cookies from "js-cookie";
-import {useRouter} from "next/navigation";
-import {ADMIN_ROUTES} from "@/config/navigation";
+import {postPromotionAction} from "@/actions/promotions"
+import Cookies from "js-cookie"
+import {useRouter} from "next/navigation"
+import {ADMIN_ROUTES} from "@/config/navigation"
 
 interface Props {
   categories: Category[]

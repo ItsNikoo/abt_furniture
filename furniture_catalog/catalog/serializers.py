@@ -621,7 +621,7 @@ class ContactRequestSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ContactRequest
-        fields = ['id', 'name', 'phone', 'comment', 'product', 'consent', 'created_at']
+        fields = ['id', 'name', 'phone', 'email', 'comment', 'product', 'consent', 'created_at']  # Добавлено 'email'
         read_only_fields = ['id', 'created_at']
 
     def validate_name(self, value):
@@ -634,6 +634,12 @@ class ContactRequestSerializer(serializers.ModelSerializer):
             )
         return value.strip()
 
+    def validate_email(self, value):
+        """Валидация email (необязательное поле)."""
+        if value and '@' not in value:
+            raise serializers.ValidationError("Введите корректный email адрес.")
+        return value.strip() if value else value
+
     def validate_consent(self, value):
         """Проверка согласия на обработку данных."""
         if not value:
@@ -641,7 +647,6 @@ class ContactRequestSerializer(serializers.ModelSerializer):
                 "Необходимо согласие на обработку персональных данных."
             )
         return value
-
 
 class ReviewSerializer(serializers.ModelSerializer):
     """Serializer для отзывов с логикой добавления фотографий."""

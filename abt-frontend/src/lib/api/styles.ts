@@ -1,5 +1,5 @@
 import {Style} from '@/types'
-import {apiRequest} from "@/lib/utils/apiRequest";
+import {apiRequest} from "@/lib/utils/apiRequest"
 
 export async function fetchStyles(): Promise<Style[]> {
   return apiRequest<Style[]>("/styles/", {method: "GET"})

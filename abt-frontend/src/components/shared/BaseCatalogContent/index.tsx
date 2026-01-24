@@ -1,16 +1,16 @@
 'use client'
 
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { use, useEffect, useState } from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { motion } from "framer-motion";
-import { Input } from "@/components/ui/input";
-import Link from "next/link";
-import LoadingPlaceholder from "@/components/placeholders/LoadingPlaceholder";
-import SortSelector from "@/components/ui/CatalogSelectors/SortSelector";
-import { GenericSelector } from "@/components/shared/GenericSelector";
-import {Category, Material, Style, Product, Promotion} from "@/types";
-import {Filters} from "@/lib/api/filters";
+import { useQuery, useQueryClient } from "@tanstack/react-query"
+import { use, useEffect, useState } from "react"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import { motion } from "framer-motion"
+import { Input } from "@/components/ui/input"
+import Link from "next/link"
+import LoadingPlaceholder from "@/components/placeholders/LoadingPlaceholder"
+import SortSelector from "@/components/ui/CatalogSelectors/SortSelector"
+import { GenericSelector } from "@/components/shared/GenericSelector"
+import {Category, Material, Style, Product, Promotion} from "@/types"
+import {Filters} from "@/lib/api/filters"
 
 type CatalogItem = Product | Promotion
 
@@ -41,69 +41,69 @@ export default function BaseCatalogContent({
                                              getItemLink,
                                              prefetchItem,
                                            }: BaseCatalogContentProps) {
-  const queryClient = useQueryClient();
+  const queryClient = useQueryClient()
   const categories = use(categoriesPromise)
 
-  const styles = use(stylesPromise);
+  const styles = use(stylesPromise)
   const transformedStyles = styles.map((style) => ({
     id: style.id,
     value: style.style,
-  }));
+  }))
 
-  const materials = use(materialsPromise);
+  const materials = use(materialsPromise)
   const transformedMaterials = materials.map((material) => ({
     id: material.id,
     value: material.material,
-  }));
+  }))
 
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const router = useRouter();
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+  const router = useRouter()
 
   const [currentCategory, setCurrentCategory] = useState<string>(
     selectedCategory ?? categories[0]?.categorySlug ?? ""
-  );
-  const [currentStyle, setCurrentStyle] = useState<string>("");
-  const [currentMaterial, setCurrentMaterial] = useState<string>("");
-  const [query, setQuery] = useState<string>("");
-  const [currentSort, setCurrentSort] = useState<"asc" | "desc" | "default">("default");
+  )
+  const [currentStyle, setCurrentStyle] = useState<string>("")
+  const [currentMaterial, setCurrentMaterial] = useState<string>("")
+  const [query, setQuery] = useState<string>("")
+  const [currentSort, setCurrentSort] = useState<"asc" | "desc" | "default">("default")
 
   // Флаг первой загрузки для предотвращения мерцания
-  const [isInitialized, setIsInitialized] = useState(false);
+  const [isInitialized, setIsInitialized] = useState(false)
 
   // Синхронизация с URL (query params) - только при первой загрузке
   useEffect(() => {
-    const styleFromUrl = searchParams.get("style") || "";
-    const materialFromUrl = searchParams.get("material") || "";
-    const queryFromUrl = searchParams.get("query") || "";
-    const sortFromUrl = searchParams.get("sort");
+    const styleFromUrl = searchParams.get("style") || ""
+    const materialFromUrl = searchParams.get("material") || ""
+    const queryFromUrl = searchParams.get("query") || ""
+    const sortFromUrl = searchParams.get("sort")
 
-    setCurrentStyle(styleFromUrl);
-    setCurrentMaterial(materialFromUrl);
-    setQuery(queryFromUrl);
+    setCurrentStyle(styleFromUrl)
+    setCurrentMaterial(materialFromUrl)
+    setQuery(queryFromUrl)
 
     const normalizedSort: "default" | "asc" | "desc" =
       sortFromUrl === "cheap" ? "asc" :
         sortFromUrl === "expensive" ? "desc" :
-          "default";
+          "default"
 
-    setCurrentSort(normalizedSort);
-    setIsInitialized(true);
-  }, [searchParams]);
+    setCurrentSort(normalizedSort)
+    setIsInitialized(true)
+  }, [searchParams])
 
   // Синхронизация категории из pathname
   useEffect(() => {
-    const pathParts = pathname.split("/");
-    const categorySlugFromUrl = pathParts[pathParts.length - 1];
+    const pathParts = pathname.split("/")
+    const categorySlugFromUrl = pathParts[pathParts.length - 1]
 
-    const categoryExists = categories.some((cat) => cat.categorySlug === categorySlugFromUrl);
+    const categoryExists = categories.some((cat) => cat.categorySlug === categorySlugFromUrl)
 
     if (categoryExists) {
-      setCurrentCategory(categorySlugFromUrl);
+      setCurrentCategory(categorySlugFromUrl)
     } else if (categories.length > 0) {
-      setCurrentCategory(categories[0].categorySlug);
+      setCurrentCategory(categories[0].categorySlug)
     }
-  }, [pathname, categories]);
+  }, [pathname, categories])
 
   // Обновление URL - ИСПРАВЛЕНО: теперь передаём все текущие фильтры
   const updateURL = (newFilters: Partial<{
@@ -113,43 +113,43 @@ export default function BaseCatalogContent({
     query: string;
     sort: "asc" | "desc" | "default";
   }>) => {
-    const params = new URLSearchParams();
+    const params = new URLSearchParams()
 
     // Используем новые значения или текущие
-    const style = newFilters.style !== undefined ? newFilters.style : currentStyle;
-    const material = newFilters.material !== undefined ? newFilters.material : currentMaterial;
-    const searchQuery = newFilters.query !== undefined ? newFilters.query : query;
-    const sort = newFilters.sort !== undefined ? newFilters.sort : currentSort;
-    const category = newFilters.category || currentCategory;
+    const style = newFilters.style !== undefined ? newFilters.style : currentStyle
+    const material = newFilters.material !== undefined ? newFilters.material : currentMaterial
+    const searchQuery = newFilters.query !== undefined ? newFilters.query : query
+    const sort = newFilters.sort !== undefined ? newFilters.sort : currentSort
+    const category = newFilters.category || currentCategory
 
     // Добавляем в URL только непустые параметры
-    if (style) params.set('style', style);
-    if (material) params.set('material', material);
-    if (searchQuery) params.set('query', searchQuery);
+    if (style) params.set('style', style)
+    if (material) params.set('material', material)
+    if (searchQuery) params.set('query', searchQuery)
 
     if (sort !== "default") {
-      params.set("sort", sort === "asc" ? "cheap" : "expensive");
+      params.set("sort", sort === "asc" ? "cheap" : "expensive")
     }
 
-    const queryString = params.toString();
-    const newUrl = `${basePath}/${category}${queryString ? `?${queryString}` : ''}`;
-    router.push(newUrl);
-  };
+    const queryString = params.toString()
+    const newUrl = `${basePath}/${category}${queryString ? `?${queryString}` : ''}`
+    router.push(newUrl)
+  }
 
   const handleStyleChange = (style: string) => {
-    setCurrentStyle(style);
-    updateURL({ style });
-  };
+    setCurrentStyle(style)
+    updateURL({ style })
+  }
 
   const handleMaterialChange = (material: string) => {
-    setCurrentMaterial(material);
-    updateURL({ material });
-  };
+    setCurrentMaterial(material)
+    updateURL({ material })
+  }
 
   const handleSortChange = (sort: "default" | "asc" | "desc") => {
-    setCurrentSort(sort);
-    updateURL({ sort });
-  };
+    setCurrentSort(sort)
+    updateURL({ sort })
+  }
 
   const { data: items, isLoading, isError } = useQuery({
     queryKey: [queryKeyPrefix, currentCategory, currentStyle, currentMaterial, currentSort],
@@ -162,14 +162,14 @@ export default function BaseCatalogContent({
           currentSort === "asc" ? "price" :
             currentSort === "desc" ? "-price" :
               undefined,
-      });
+      })
     },
     enabled: !!currentCategory && isInitialized, // Добавлен флаг инициализации
   })
 
   const filteredItems = items?.filter((item) =>
     item.title?.toLowerCase().includes(query.toLowerCase())
-  );
+  )
 
   return (
     <div>
@@ -271,7 +271,7 @@ export default function BaseCatalogContent({
                     queryClient.prefetchQuery({
                       queryKey: [queryKeyPrefix, "detail", item.id],
                       queryFn: () => prefetchItem(item.id),
-                    });
+                    })
                   }
                 }}
               >
@@ -286,5 +286,5 @@ export default function BaseCatalogContent({
         )}
       </div>
     </div>
-  );
+  )
 }

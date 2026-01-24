@@ -4,7 +4,7 @@ import {useState} from 'react'
 import ReactDOM from 'react-dom'
 import Image from 'next/image'
 import {Photo} from '@/types'
-import BasePhotoCarousel from "@/components/shared/BasePhotoCarousel";
+import BasePhotoCarousel from "@/components/shared/BasePhotoCarousel"
 
 export default function ProductPhotoCarousel({photos}: {photos: Photo[]}) {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null)

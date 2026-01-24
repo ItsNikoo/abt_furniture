@@ -2,7 +2,7 @@
 
 import { deleteMaterial, patchMaterial, postMaterial } from '@/lib/api/materials'
 import { revalidatePath } from 'next/cache'
-import {ADMIN_ROUTES} from "@/config/navigation";
+import {ADMIN_ROUTES} from "@/config/navigation"
 
 const path = ADMIN_ROUTES.MATERIALS.path
 

@@ -3,8 +3,8 @@
 import { useEffect, useState } from 'react'
 import { Sale } from '@/types'
 import SalesPlaceholder from '@/components/placeholders/SalesPlaceholder'
-import { fetchSales } from "@/lib/api/sales";
-import SalesCarousel from "@/components/ui/Embla/SalesCarousel";
+import { fetchSales } from "@/lib/api/sales"
+import SalesCarousel from "@/components/ui/Embla/SalesCarousel"
 
 export default function SalesContainer() {
   const [sales, setSales] = useState<Sale[]>([])

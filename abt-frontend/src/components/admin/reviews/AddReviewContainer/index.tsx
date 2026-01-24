@@ -8,10 +8,10 @@ import {Textarea} from '@/components/ui/textarea'
 import {Button} from '@/components/ui/button'
 import {ReviewData} from '@/types'
 import Image from 'next/image'
-import Cookies from "js-cookie";
-import {postReviewAction} from "@/actions/reviews";
-import {ADMIN_ROUTES} from "@/config/navigation";
-import {useRouter} from "next/navigation";
+import Cookies from "js-cookie"
+import {postReviewAction} from "@/actions/reviews"
+import {ADMIN_ROUTES} from "@/config/navigation"
+import {useRouter} from "next/navigation"
 
 export default function AddReviewContainer() {
   const [isLoading, setIsLoading] = useState(false)

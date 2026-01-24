@@ -1,7 +1,7 @@
-import SiteContainer from "@/components/SiteContainer";
-import ProductContainer from "@/components/site/ProductContainer";
-import {Promotion} from "@/types";
-import {fetchPromotionById} from "@/lib/api/promotions";
+import SiteContainer from "@/components/SiteContainer"
+import ProductContainer from "@/components/site/ProductContainer"
+import {Promotion} from "@/types"
+import {fetchPromotionById} from "@/lib/api/promotions"
 import {Metadata} from 'next'
 
 type Props = {

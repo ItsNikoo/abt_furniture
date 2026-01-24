@@ -1,32 +1,48 @@
 import {Contact} from '@/types'
-import {apiRequest} from "@/lib/utils/apiRequest";
+import {apiRequest} from "@/lib/utils/apiRequest"
 
-export async function postContact({name, phone, comment, consent, product = ''}: Contact) {
-  const formData = new FormData()
-  formData.append('name', name)
-  formData.append('phone', phone)
-  formData.append('comment', comment)
-  if (product !== '') {
-    formData.append('product', product)
+export async function postContact(formData: FormData) {
+  // Проверяем обязательные поля (дополнительная валидация)
+  const name = formData.get('name')?.toString().trim()
+  const phone = formData.get('phone')?.toString().trim()
+
+  if (!name || name.length < 2) {
+    throw new Error('Имя обязательно и должно содержать минимум 2 символа')
   }
-  if (!consent) {
-    throw new Error('Необходимо дать согласие на обработку данных')
+  const cleanedPhone = phone?.replace(/\D/g, '') || ''
+  if (!phone || cleanedPhone.length < 11) {
+    throw new Error('Введите корректный номер телефона')
   }
 
-  const data = {
-    name: name.trim(),
-    phone: phone.trim(),
-    comment: comment.trim(),
-    consent: consent,
-    product: product ? product.trim() : '',
+  // Добавляем consent если его нет (но оно должно быть)
+  if (!formData.has('consent')) {
+    formData.append('consent', 'true')
   }
+
+  // Email и comment опциональны, product тоже
+  const email = formData.get('email')?.toString().trim() || ''
+  const comment = formData.get('comment')?.toString().trim() || ''
+  const product = formData.get('product')?.toString().trim() || ''
+
+  // Если email пустой, не добавляем (но можно добавить пустым)
+  if (email) {
+    formData.set('email', email)
+  } else {
+    formData.delete('email')  // Не отправляем пустой
+  }
+  formData.set('comment', comment)
+  if (product) {
+    formData.set('product', product)
+  }
+
+  // Файлы уже в FormData как 'photos[]' или 'photos'
 
   return apiRequest<Contact>(
     `/contact/`,
     {
       method: 'POST',
-      data: data,
-      isFormData: false
+      data: formData,
+      isFormData: true  // Важно: для multipart/form-data
     }
   )
 }

@@ -2,7 +2,7 @@
 
 import { deleteStyle, patchStyle, postStyle } from '@/lib/api/styles'
 import { revalidatePath } from 'next/cache'
-import {ADMIN_ROUTES} from "@/config/navigation";
+import {ADMIN_ROUTES} from "@/config/navigation"
 
 const path = ADMIN_ROUTES.STYLES.path
 

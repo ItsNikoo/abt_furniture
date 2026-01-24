@@ -1,7 +1,9 @@
 import { NextResponse } from 'next/server'
 import {fetchProducts} from "@/lib/api/products"
 import {fetchCategories} from "@/lib/api/categories"
-import {Category} from "@/types"
+import {fetchPromotions} from "@/lib/api/promotions"
+import {Category, Product} from "@/types"
+import {Promotion} from "@/types"
 
 // Типы для данных
 type SitemapRoute = {
@@ -11,22 +13,11 @@ type SitemapRoute = {
 	priority: string
 }
 
-type Product = {
-	id: string | number
-	productSlug: string // ИСПРАВЛЕНО: было slug
-	title: string
-	updatedAt?: string
-	published?: boolean
-	category?: {
-		slug?: string
-	}
-}
-
-
 function generateSiteMapXML(
 	staticRoutes: SitemapRoute[],
 	productRoutes: SitemapRoute[],
-	categoryRoutes: SitemapRoute[]
+	categoryRoutes: SitemapRoute[],
+	promotionRoutes: SitemapRoute[]  // Добавлено: параметр для маршрутов промоакций
 ): string {
 	const baseUrl = process.env.NEXT_PUBLIC_DOMAIN || 'https://kuhni-abt.ru'
 
@@ -43,6 +34,7 @@ function generateSiteMapXML(
   ${staticRoutes.map(renderUrl).join('')}
   ${categoryRoutes.map(renderUrl).join('')}
   ${productRoutes.map(renderUrl).join('')}
+  ${promotionRoutes.map(renderUrl).join('')} 
 </urlset>`
 }
 
@@ -82,13 +74,30 @@ export async function GET() {
 				changefreq: 'weekly',
 				priority: '0.8',
 			},
+			{
+				url:'/reviews',
+				lastmod: currentDate,
+				changefreq: "weekly",
+				priority: '0.7',
+			}
 		]
 
 		// Данные из API
-		const [products, categories] = await Promise.all([
+		const [products, categories, promotions] = await Promise.all([  // Добавлено: fetchPromotions
 			fetchProducts(),
 			fetchCategories(),
+			fetchPromotions(),  // Получаем все промоакции (готовые решения)
 		])
+
+		// Создаём маппинг для категорий: от русского названия (category) к slug (categorySlug)
+		const categoryMap = new Map(
+			categories.map((category: Category) => [category.category, category.categorySlug])
+		)
+
+		// Функция для получения slug по названию категории (с fallback)
+		const getCategorySlug = (catName: string): string => {
+			return categoryMap.get(catName) || 'uncategorized'  // Fallback для неизвестных категорий
+		}
 
 		// Категории с корректным lastmod
 		const categoryRoutes: SitemapRoute[] = categories.map((category: Category) => ({
@@ -98,30 +107,36 @@ export async function GET() {
 			priority: '0.6',
 		}))
 
-		// Продукты с кодированием URL
+		// Продукты с кодированием URL (используем маппинг, если category — строка с русским названием)
 		const productRoutes: SitemapRoute[] = products
-			.filter((product: Product) => product.published !== false)
 			.map((product: Product) => {
-				// ИСПРАВЛЕНО: используем productSlug напрямую
-				const slug = product.productSlug || `product-${product.id}`
-
-				// Формируем URL без кодирования (slug уже на латинице)
-				const rawUrl = `/catalog/${product.category?.slug || 'products'}/${product.id}-${slug}`
+				const catSlug = typeof product.category === 'string'
+					? getCategorySlug(product.category)  // Если category — строка (русское название)
+					: product.category || 'uncategorized'  // Если объект или undefined
 
 				return {
-					url: rawUrl, // ИСПРАВЛЕНО: не нужно кодировать, slug уже латиница
-					lastmod: product.updatedAt
-						? new Date(product.updatedAt).toISOString()
-						: currentDate,
+					url: `/catalog/${catSlug}/${product.id}-${product.productSlug}`,
+					lastmod: currentDate,
 					changefreq: 'weekly',
-					priority: '0.5',
+					priority: '0.6',
 				}
 			})
+
+		// Добавлено: Маршруты для промоакций (готовых решений)
+		const promotionRoutes: SitemapRoute[] = promotions
+			.filter((promotion: Promotion) => promotion.id > 0)  // Базовый фильтр (предполагаем все активны; добавьте published, если есть)
+			.map((promotion: Promotion) => ({
+				url: `/sales/${getCategorySlug(promotion.category)}/${promotion.id}-${promotion.productSlug}`,  // ИСПРАВЛЕНО: используем slug через маппинг
+				lastmod: currentDate,
+				changefreq: 'weekly',
+				priority: '0.6',
+			}))
 
 		const sitemap = generateSiteMapXML(
 			staticRoutes,
 			productRoutes,
-			categoryRoutes
+			categoryRoutes,
+			promotionRoutes  // Добавлено: передача промоакций
 		)
 
 		return new NextResponse(sitemap, {
@@ -145,7 +160,8 @@ export async function GET() {
 				},
 			],
 			[],
-			[]
+			[],
+			[]  // Добавлено: пустой массив для promotionRoutes
 		)
 
 		return new NextResponse(basicSitemap, {

@@ -3,7 +3,7 @@
 import { deleteSale as deleteSaleApi, patchSale as patchSaleApi, postSale as postSaleApi } from '@/lib/api/sales'
 import { revalidatePath } from 'next/cache'
 import { SaleData } from '@/types'
-import {ADMIN_ROUTES} from "@/config/navigation";
+import {ADMIN_ROUTES} from "@/config/navigation"
 
 const path = ADMIN_ROUTES.SALES.path
 

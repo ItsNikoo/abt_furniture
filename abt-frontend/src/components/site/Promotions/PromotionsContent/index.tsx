@@ -1,9 +1,9 @@
 'use client'
 
-import {CatalogProps} from "@/components/shared/CatalogProps";
-import BaseCatalogContent from "@/components/shared/BaseCatalogContent";
-import {fetchPromotionById, fetchPromotions} from "@/lib/api/promotions";
-import CatalogCard from "@/components/shared/CatalogCard";
+import {CatalogProps} from "@/components/shared/CatalogProps"
+import BaseCatalogContent from "@/components/shared/BaseCatalogContent"
+import {fetchPromotionById, fetchPromotions} from "@/lib/api/promotions"
+import CatalogCard from "@/components/shared/CatalogCard"
 
 export default function PromotionsContent(
   {

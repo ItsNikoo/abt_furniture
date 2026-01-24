@@ -1,8 +1,8 @@
 import {Suspense} from 'react'
 import LoadingPlaceholder from '@/components/placeholders/LoadingPlaceholder'
-import {CatalogProps} from "@/components/shared/CatalogProps";
-import CatalogContent from "@/components/site/Catalog/CatalogContent";
-import SiteContainer from "@/components/SiteContainer";
+import {CatalogProps} from "@/components/shared/CatalogProps"
+import CatalogContent from "@/components/site/Catalog/CatalogContent"
+import SiteContainer from "@/components/SiteContainer"
 
 export default function CatalogComponent({
                                          categoriesPromise,

@@ -1,15 +1,15 @@
-import {ADMIN_ROUTES} from "@/config/navigation";
-import {Button} from "@/components/ui/button";
-import Link from "next/link";
-import PromotionsGrid from "@/components/admin/promotions/PromotionsGrid";
-import {Category, Material, Promotion, Style} from "@/types";
-import {fetchPromotions} from "@/lib/api/promotions";
-import {fetchCategories} from "@/lib/api/categories";
-import {fetchStyles} from "@/lib/api/styles";
-import {fetchMaterials} from "@/lib/api/materials";
+import {ADMIN_ROUTES} from "@/config/navigation"
+import {Button} from "@/components/ui/button"
+import Link from "next/link"
+import PromotionsGrid from "@/components/admin/promotions/PromotionsGrid"
+import {Category, Material, Promotion, Style} from "@/types"
+import {fetchPromotions} from "@/lib/api/promotions"
+import {fetchCategories} from "@/lib/api/categories"
+import {fetchStyles} from "@/lib/api/styles"
+import {fetchMaterials} from "@/lib/api/materials"
 
 export default function PromotionsPage() {
-  const promotionsPromise: Promise<Promotion[]> = fetchPromotions();
+  const promotionsPromise: Promise<Promotion[]> = fetchPromotions()
   const categoriesPromise: Promise<Category[]> = fetchCategories()
   const stylesPromise: Promise<Style[]> = fetchStyles()
   const materialsPromise: Promise<Material[]> = fetchMaterials()

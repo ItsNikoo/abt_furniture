@@ -1,22 +1,22 @@
 'use client'
 
-import {Photo, Review, ReviewData} from "@/types";
-import React, {useState, useEffect} from "react";
+import {Photo, Review, ReviewData} from "@/types"
+import React, {useState, useEffect, useRef} from "react"
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import {Label} from "@/components/ui/label";
-import {Input} from "@/components/ui/input";
-import {Textarea} from "@/components/ui/textarea";
-import Image from "next/image";
-import {Button} from "@/components/ui/button";
-import Cookies from "js-cookie";
-import {patchReviewAction} from "@/actions/reviews";
-import {Trash2} from "lucide-react";
+} from "@/components/ui/dialog"
+import {Label} from "@/components/ui/label"
+import {Input} from "@/components/ui/input"
+import {Textarea} from "@/components/ui/textarea"
+import Image from "next/image"
+import {Button} from "@/components/ui/button"
+import Cookies from "js-cookie"
+import {patchReviewAction} from "@/actions/reviews"
+import {Trash2} from "lucide-react"
 
 interface UpdateReviewContainerProps {
   review: Review,
@@ -30,10 +30,11 @@ export default function UpdateReviewContainer(
     isOpen,
     onCloseAction
   }: UpdateReviewContainerProps) {
-  const [success, setSuccess] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [photoPreviews, setPhotoPreviews] = useState<string[]>([]);
+  const [success, setSuccess] = useState<string | null>(null)
+  const [error, setError] = useState<string | null>(null)
+  const [isLoading, setIsLoading] = useState(false)
+  const [photoPreviews, setPhotoPreviews] = useState<string[]>([])
+  const photoPreviewsRef = useRef<string[]>([])  // Добавлено: ref для безопасного доступа в cleanup
 
   const [formData, setFormData] = useState<ReviewData>({
     name: review.name,
@@ -44,10 +45,15 @@ export default function UpdateReviewContainer(
     photos: review.photos ?? [],
     photoFiles: undefined,
     deletePhotos: undefined,
-  });
+  })
 
-  // Основной useEffect только для инициализации formData
+  // ИСПРАВЛЕНО: Объединили useEffect для инициализации и cleanup
   useEffect(() => {
+    // Cleanup старых превью перед инициализацией
+    photoPreviewsRef.current.forEach((url) => URL.revokeObjectURL(url))
+    setPhotoPreviews([])
+    photoPreviewsRef.current = []
+
     setFormData({
       name: review.name,
       review: review.review,
@@ -58,68 +64,68 @@ export default function UpdateReviewContainer(
       photoFiles: undefined,
       deletePhotos: undefined,
     })
-    // Очищаем превью при инициализации
-    photoPreviews.forEach((url) => URL.revokeObjectURL(url));
-    setPhotoPreviews([])
-  }, [review, isOpen])
 
-  useEffect(() => {
+    // Cleanup на unmount или при изменении зависимостей
     return () => {
-      photoPreviews.forEach((url) => URL.revokeObjectURL(url));
-    };
-  }, [])
+      photoPreviewsRef.current.forEach((url) => URL.revokeObjectURL(url))
+      photoPreviewsRef.current = []
+    }
+  }, [review, isOpen])  // Зависимости: review и isOpen
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
-    const {name, value} = e.target;
+    const {name, value} = e.target
     setFormData(prev => ({
       ...prev,
       [name]: name === "rank" ? (value === '' ? 0 : Number(value)) : value,
-    }));
+    }))
   }
 
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const files = e.target.files;
+    const files = e.target.files
     if (!files || files.length === 0) {
-      setFormData(prev => ({...prev, photoFiles: undefined}));
-      photoPreviews.forEach((url) => URL.revokeObjectURL(url));
-      setPhotoPreviews([]);
-      return;
+      setFormData(prev => ({...prev, photoFiles: undefined}))
+      photoPreviewsRef.current.forEach((url) => URL.revokeObjectURL(url))
+      setPhotoPreviews([])
+      photoPreviewsRef.current = []
+      return
     }
 
     // Очищаем старые превью
-    photoPreviews.forEach((url) => URL.revokeObjectURL(url));
+    photoPreviewsRef.current.forEach((url) => URL.revokeObjectURL(url))
+    photoPreviewsRef.current = []
 
-    const newFiles = Array.from(files);
-    const newPreviews = newFiles.map((file) => URL.createObjectURL(file));
+    const newFiles = Array.from(files)
+    const newPreviews = newFiles.map((file) => URL.createObjectURL(file))
 
-    setFormData(prev => ({...prev, photoFiles: newFiles}));
-    setPhotoPreviews(newPreviews);
+    setFormData(prev => ({...prev, photoFiles: newFiles}))
+    setPhotoPreviews(newPreviews)
+    photoPreviewsRef.current = [...newPreviews]  // Синхронизируем ref
   }
 
   // Переключение пометки на удаление для существующего фото
   function toggleDeletePhoto(photoUrl: string) {
     setFormData(prev => {
-      const currentDeletes = prev.deletePhotos || [];
+      const currentDeletes = prev.deletePhotos || []
       if (currentDeletes.includes(photoUrl)) {
         // снимаем пометку
-        return {...prev, deletePhotos: currentDeletes.filter(url => url !== photoUrl)};
+        return {...prev, deletePhotos: currentDeletes.filter(url => url !== photoUrl)}
       } else {
         // помечаем на удаление
-        return {...prev, deletePhotos: [...currentDeletes, photoUrl]};
+        return {...prev, deletePhotos: [...currentDeletes, photoUrl]}
       }
-    });
+    })
   }
 
   // Получаем URL фото (поддержка string и объекта с photoUrl)
   function getPhotoUrl(photo: Photo): string {
-    return photo.photoUrl;
+    return photo.photoUrl
   }
 
   async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setIsLoading(true);
-    setError(null);
-    setSuccess(null);
+    e.preventDefault()
+    setIsLoading(true)
+    setError(null)
+    setSuccess(null)
 
     try {
       if (
@@ -129,20 +135,20 @@ export default function UpdateReviewContainer(
         formData.rank <= 0 ||
         !formData.date.trim()
       ) {
-        setError("Заполните обязательные поля");
-        return;
+        setError("Заполните обязательные поля")
+        return
       }
 
-      const token = Cookies.get('token');
-      if (!token) throw new Error("Токен авторизации не найден");
+      const token = Cookies.get('token')
+      if (!token) throw new Error("Токен авторизации не найден")
 
-      await patchReviewAction(review.id, formData, token);
-      setSuccess("Отзыв успешно обновлен!");
-      setTimeout(() => onCloseAction(), 500);
+      await patchReviewAction(review.id, formData, token)
+      setSuccess("Отзыв успешно обновлен!")
+      setTimeout(() => onCloseAction(), 500)
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Произошла ошибка");
+      setError(err instanceof Error ? err.message : "Произошла ошибка")
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
   }
 
@@ -232,8 +238,8 @@ export default function UpdateReviewContainer(
               <Label>Текущие фотографии (кликните, чтобы удалить)</Label>
               <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4 mt-3">
                 {formData.photos.map((photo, index) => {
-                  const photoUrl = getPhotoUrl(photo);
-                  const isMarkedForDelete = formData.deletePhotos?.includes(photoUrl);
+                  const photoUrl = getPhotoUrl(photo)
+                  const isMarkedForDelete = formData.deletePhotos?.includes(photoUrl)
 
                   return (
                     <div
@@ -272,7 +278,7 @@ export default function UpdateReviewContainer(
                         {index + 1}
                       </span>
                     </div>
-                  );
+                  )
                 })}
               </div>
             </div>
@@ -330,5 +336,5 @@ export default function UpdateReviewContainer(
         </form>
       </DialogContent>
     </Dialog>
-  );
+  )
 }

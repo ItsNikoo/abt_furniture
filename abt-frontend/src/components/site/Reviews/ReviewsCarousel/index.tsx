@@ -1,10 +1,10 @@
 'use client'
 
-import React, { useCallback, useEffect, useState } from 'react';
-import useEmblaCarousel from 'embla-carousel-react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-import {Review} from "@/types";
-import ReviewSlide from "@/components/site/Reviews/ReviewSlide";
+import React, { useCallback, useEffect, useState } from 'react'
+import useEmblaCarousel from 'embla-carousel-react'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
+import {Review} from "@/types"
+import ReviewSlide from "@/components/site/Reviews/ReviewSlide"
 
 interface ReviewsCarouselProps {
   reviews: Review[]
@@ -12,7 +12,7 @@ interface ReviewsCarouselProps {
 
 export default function ReviewsCarousel({reviews}: ReviewsCarouselProps) {
   // Дублируем слайды для бесконечной прокрутки
-  const extendedReviews = [...reviews, ...reviews, ...reviews];
+  const extendedReviews = [...reviews, ...reviews, ...reviews]
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,
@@ -24,37 +24,37 @@ export default function ReviewsCarousel({reviews}: ReviewsCarouselProps) {
       '(min-width: 768px)': { slidesToScroll: 1 },
       '(min-width: 1024px)': { slidesToScroll: 1 }
     }
-  });
+  })
 
-  const [canScrollPrev, setCanScrollPrev] = useState(false);
-  const [canScrollNext, setCanScrollNext] = useState(false);
+  const [canScrollPrev, setCanScrollPrev] = useState(false)
+  const [canScrollNext, setCanScrollNext] = useState(false)
 
   const onSelect = useCallback(() => {
-    if (!emblaApi) return;
-    setCanScrollPrev(emblaApi.canScrollPrev());
-    setCanScrollNext(emblaApi.canScrollNext());
-  }, [emblaApi]);
+    if (!emblaApi) return
+    setCanScrollPrev(emblaApi.canScrollPrev())
+    setCanScrollNext(emblaApi.canScrollNext())
+  }, [emblaApi])
 
   const scrollPrev = useCallback(() => {
-    if (emblaApi) emblaApi.scrollPrev();
-  }, [emblaApi]);
+    if (emblaApi) emblaApi.scrollPrev()
+  }, [emblaApi])
 
   const scrollNext = useCallback(() => {
-    if (emblaApi) emblaApi.scrollNext();
-  }, [emblaApi]);
+    if (emblaApi) emblaApi.scrollNext()
+  }, [emblaApi])
 
   useEffect(() => {
-    if (!emblaApi) return;
+    if (!emblaApi) return
 
-    onSelect();
-    emblaApi.on('select', onSelect);
-    emblaApi.on('reInit', onSelect);
+    onSelect()
+    emblaApi.on('select', onSelect)
+    emblaApi.on('reInit', onSelect)
 
     return () => {
-      emblaApi.off('select', onSelect);
-      emblaApi.off('reInit', onSelect);
-    };
-  }, [emblaApi, onSelect]);
+      emblaApi.off('select', onSelect)
+      emblaApi.off('reInit', onSelect)
+    }
+  }, [emblaApi, onSelect])
 
   return (
     <div className="w-full py-6 px-4">
@@ -99,5 +99,5 @@ export default function ReviewsCarousel({reviews}: ReviewsCarouselProps) {
         </div>
       </div>
     </div>
-  );
+  )
 }

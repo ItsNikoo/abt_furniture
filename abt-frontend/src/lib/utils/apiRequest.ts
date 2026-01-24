@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { apiUrl } from './baseUrl';
+import axios from 'axios'
+import { apiUrl } from './baseUrl'
 
 type HttpMethod = 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE';
 
@@ -32,12 +32,12 @@ export async function apiRequest<T>(
           ? { 'Content-Type': 'application/json' }
           : {}),
       },
-    });
+    })
 
-    return response.data;
+    return response.data
   } catch (error: unknown) {
-    console.error('API error:', error);
+    console.error('API error:', error)
 
-    throw new Error('Произошла ошибка при выполнении запроса');
+    throw new Error('Произошла ошибка при выполнении запроса')
   }
 }

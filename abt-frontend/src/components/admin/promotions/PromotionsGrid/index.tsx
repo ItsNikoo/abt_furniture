@@ -1,6 +1,6 @@
-import {Category, Material, Promotion, Style} from "@/types";
-import {use} from "react";
-import PromotionCard from "@/components/admin/promotions/PromotionCard";
+import {Category, Material, Promotion, Style} from "@/types"
+import {use} from "react"
+import PromotionCard from "@/components/admin/promotions/PromotionCard"
 
 interface PromotionCardProps {
   promotionPromise: Promise<Promotion[]>,

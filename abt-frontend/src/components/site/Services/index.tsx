@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { Service } from '@/types'
 import { services } from '@/components/site/Services/services'
 import { motion } from 'framer-motion'
-import ServiceCard from "@/components/site/Services/ServiceCard";
+import ServiceCard from "@/components/site/Services/ServiceCard"
 
 export default function Services() {
   return (

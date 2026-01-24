@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import {Button} from '@/components/ui/button'
 import LogoutButton from '@/components/admin/authenticationLogic/LogoutButton'
-import {ADMIN_ROUTES} from "@/config/navigation";
+import {ADMIN_ROUTES} from "@/config/navigation"
 
 export default function AdminLayout({children}: { children: React.ReactNode }) {
   return (

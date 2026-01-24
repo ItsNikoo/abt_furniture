@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/dialog'
 import {useState} from 'react'
 import {Button} from '@/components/ui/button'
-import {ContactForm} from "@/components/shared/ContactForm";
+import {ContactForm} from "@/components/shared/ContactForm"
 
 export default function ProductOrderContainer({entity}: { entity: Product | Promotion }) {
   const [isOpen, setIsOpen] = useState(false)

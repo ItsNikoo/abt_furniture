@@ -17,7 +17,7 @@ import {queryClient} from '@/lib/react-query-client'
 import {useRouter} from 'next/navigation'
 import Cookies from 'js-cookie'
 import Image from 'next/image'
-import {ADMIN_ROUTES} from "@/config/navigation";
+import {ADMIN_ROUTES} from "@/config/navigation"
 
 interface Props {
   categories: Category[];
