@@ -1,7 +1,11 @@
-// app/sitemap.xml/route.ts
 import { NextResponse } from 'next/server'
 import {fetchProducts} from "@/lib/api/products"
 import {fetchCategories} from "@/lib/api/categories"
+import {fetchPromotions} from "@/lib/api/promotions"
+import {Category, Product} from "@/types"
+import {Promotion} from "@/types"
+
+export const dynamic = 'force-dynamic'
 
 // Типы для данных
 type SitemapRoute = {
@@ -11,26 +15,11 @@ type SitemapRoute = {
 	priority: string
 }
 
-type Category = {
-	slug: string
-	updatedAt?: string
-}
-
-type Product = {
-	id: string | number
-	slug?: string
-	title?: string
-	updatedAt?: string
-	published?: boolean
-	category?: {
-		slug?: string
-	}
-}
-
 function generateSiteMapXML(
 	staticRoutes: SitemapRoute[],
 	productRoutes: SitemapRoute[],
-	categoryRoutes: SitemapRoute[]
+	categoryRoutes: SitemapRoute[],
+	promotionRoutes: SitemapRoute[]  // Добавлено: параметр для маршрутов промоакций
 ): string {
 	const baseUrl = process.env.NEXT_PUBLIC_DOMAIN || 'https://kuhni-abt.ru'
 
@@ -47,6 +36,7 @@ function generateSiteMapXML(
   ${staticRoutes.map(renderUrl).join('')}
   ${categoryRoutes.map(renderUrl).join('')}
   ${productRoutes.map(renderUrl).join('')}
+  ${promotionRoutes.map(renderUrl).join('')} 
 </urlset>`
 }
 
@@ -86,57 +76,76 @@ export async function GET() {
 				changefreq: 'weekly',
 				priority: '0.8',
 			},
+			{
+				url:'/reviews',
+				lastmod: currentDate,
+				changefreq: "weekly",
+				priority: '0.7',
+			}
 		]
 
 		// Данные из API
-		const [products, categories] = await Promise.all([
+		const [products, categories, promotions] = await Promise.all([  // Добавлено: fetchPromotions
 			fetchProducts(),
 			fetchCategories(),
+			fetchPromotions(),  // Получаем все промоакции (готовые решения)
 		])
-		console.log("Products response:", products)
-		console.log("Categories response:", categories)
 
+		// Создаём маппинг для категорий: от русского названия (category) к slug (categorySlug)
+		const categoryMap = new Map(
+			categories.map((category: Category) => [category.category, category.categorySlug])
+		)
 
-		// Категории
+		// Функция для получения slug по названию категории (с fallback)
+		const getCategorySlug = (catName: string): string => {
+			return categoryMap.get(catName) || 'uncategorized'  // Fallback для неизвестных категорий
+		}
+
+		// Категории с корректным lastmod
 		const categoryRoutes: SitemapRoute[] = categories.map((category: Category) => ({
-			url: `/catalog/${category.slug}`,
-			lastmod: category.updatedAt
-				? new Date(category.updatedAt).toISOString()
-				: currentDate,
-			changefreq: 'weekly',
+			url: `/catalog/${category.categorySlug}`,
+			lastmod: currentDate,
+			changefreq: 'monthly',
 			priority: '0.6',
 		}))
 
-		// Продукты
+		// Продукты с кодированием URL (используем маппинг, если category — строка с русским названием)
 		const productRoutes: SitemapRoute[] = products
-			.filter((product: Product) => product.published !== false)
 			.map((product: Product) => {
-				const slug =
-					product.slug ||
-					product.title?.toLowerCase().replace(/\s+/g, '-') ||
-					'product'
+				const catSlug = typeof product.category === 'string'
+					? getCategorySlug(product.category)  // Если category — строка (русское название)
+					: product.category || 'uncategorized'  // Если объект или undefined
+
 				return {
-					url: `/catalog/${product.category?.slug || 'products'}/${product.id}-${slug}`,
-					lastmod: product.updatedAt
-						? new Date(product.updatedAt).toISOString()
-						: currentDate,
+					url: `/catalog/${catSlug}/${product.id}-${product.productSlug}`,
+					lastmod: currentDate,
 					changefreq: 'weekly',
-					priority: '0.5',
+					priority: '0.6',
 				}
 			})
+
+		// Добавлено: Маршруты для промоакций (готовых решений)
+		const promotionRoutes: SitemapRoute[] = promotions
+			.filter((promotion: Promotion) => promotion.id > 0)  // Базовый фильтр (предполагаем все активны; добавьте published, если есть)
+			.map((promotion: Promotion) => ({
+				url: `/sales/${getCategorySlug(promotion.category)}/${promotion.id}-${promotion.productSlug}`,  // ИСПРАВЛЕНО: используем slug через маппинг
+				lastmod: currentDate,
+				changefreq: 'weekly',
+				priority: '0.6',
+			}))
 
 		const sitemap = generateSiteMapXML(
 			staticRoutes,
 			productRoutes,
-			categoryRoutes
+			categoryRoutes,
+			promotionRoutes  // Добавлено: передача промоакций
 		)
 
 		return new NextResponse(sitemap, {
 			status: 200,
 			headers: {
-				'Content-Type': 'application/xml',
-				'Cache-Control':
-					'public, s-maxage=86400, stale-while-revalidate=43200',
+				'Content-Type': 'application/xml; charset=UTF-8',
+				'Cache-Control': 'public, s-maxage=86400, stale-while-revalidate=43200',
 			},
 		})
 	} catch (error) {
@@ -153,13 +162,14 @@ export async function GET() {
 				},
 			],
 			[],
-			[]
+			[],
+			[]  // Добавлено: пустой массив для promotionRoutes
 		)
 
 		return new NextResponse(basicSitemap, {
 			status: 200,
 			headers: {
-				'Content-Type': 'application/xml',
+				'Content-Type': 'application/xml; charset=UTF-8',
 			},
 		})
 	}

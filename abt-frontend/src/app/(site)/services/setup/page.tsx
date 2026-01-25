@@ -1,5 +1,5 @@
-import ContentWrapper from '@/components/ContentWrapper'
 import SetupPageComponent from '@/components/site/Services/SetupPageComponent'
+import SiteContainer from "@/components/SiteContainer"
 
 export async function generateMetadata() {
   return {
@@ -26,8 +26,8 @@ export async function generateMetadata() {
 
 export default function SetupPage() {
   return (
-    <ContentWrapper>
+    <SiteContainer>
       <SetupPageComponent/>
-    </ContentWrapper>
+    </SiteContainer>
   )
 }

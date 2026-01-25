@@ -1,9 +1,21 @@
 import AboutUs from '@/components/site/AboutUs'
+import SiteContainer from "@/components/SiteContainer"
+import {Metadata} from "next"
 
-export async function generateMetadata() {
+export async function generateMetadata(): Promise<Metadata> {
   return {
     title: 'О компании | АБТ мебель',
     description: 'Узнайте больше о мебельной компании АБТ, нашей миссии, ценностях и команде.',
+    keywords: [
+      'о компании абт',
+      'мебельная компания абт',
+      'производитель мебели абт',
+      'мебель на заказ от производителя',
+      'кухни абт',
+      'корпусная мебель абт',
+      'абт мебель Москва',
+      'абт мебель Балашиха'
+    ],
     openGraph: {
       title: 'О компании | АБТ мебель',
       description: 'АБТ мебель — мебельная компания, объединяющая качество, стиль и заботу о клиентах.',
@@ -17,6 +29,8 @@ export async function generateMetadata() {
 
 export default function AboutPage() {
   return (
-    <AboutUs/>
+    <SiteContainer>
+      <AboutUs/>
+    </SiteContainer>
   )
 }

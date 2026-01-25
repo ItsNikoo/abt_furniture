@@ -1,4 +1,4 @@
-import ProductsPage from "@/app/(admin)/admin/products/page";
+import ProductsPage from "@/app/(admin)/admin/products/page"
 
 export default async function AdminPage() {
 

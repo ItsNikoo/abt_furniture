@@ -6,7 +6,7 @@ import { motion } from 'framer-motion'
 
 export default function AboutUs() {
   return (
-    <div className="relative min-h-screen px-4 md:px-[50px] lg:px-[100px] py-[30px] flex flex-col gap-6 bg-white">
+    <div className="my-5">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

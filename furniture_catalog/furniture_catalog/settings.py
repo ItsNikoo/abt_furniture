@@ -1,3 +1,4 @@
+import os
 from datetime import timedelta
 from pathlib import Path
 from decouple import config
@@ -17,9 +18,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY', default='django-insecure-d90$&ig18i$-7_)w2h0^q4^o$xh-(ee6**n=7mz1pd1qow49%3')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=False, cast=bool)
+#DEBUG = config('DEBUG', default=False, cast=bool)
+DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'backend', 'frontend', 'nginx', '178.250.242.124','kuhni-abt.ru']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'backend', 'frontend', 'nginx', '178.250.242.124', 'kuhni-abt.ru']
 
 # Application definition
 
@@ -50,12 +52,11 @@ MIDDLEWARE = [
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (
         'djangorestframework_camel_case.render.CamelCaseJSONRenderer',
-        #   'rest_framework.renderers.BrowsableAPIRenderer',  # если используешь browsable API
     ),
     'DEFAULT_PARSER_CLASSES': (
         'djangorestframework_camel_case.parser.CamelCaseJSONParser',
-        'rest_framework.parsers.MultiPartParser',
-        'rest_framework.parsers.FormParser',
+        'djangorestframework_camel_case.parser.CamelCaseMultiPartParser',
+        'djangorestframework_camel_case.parser.CamelCaseFormParser',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'knox.auth.TokenAuthentication',
@@ -63,7 +64,8 @@ REST_FRAMEWORK = {
 }
 
 REST_KNOX = {
-    'TOKEN_TTL': timedelta(minutes=30),
+    'TOKEN_TTL': timedelta(hours=1),
+    'AUTO_REFRESH': False,
 }
 
 CORS_ALLOWED_ORIGINS = [
@@ -86,12 +88,11 @@ CSRF_TRUSTED_ORIGINS = [
 
 CSRF_COOKIE_SAMESITE = 'Lax'
 SESSION_COOKIE_SAMESITE = 'Lax'
-#CSRF_COOKIE_HTTPONLY = False
+# CSRF_COOKIE_HTTPONLY = False
 SESSION_COOKIE_HTTPONLY = True
 
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
-
 
 ROOT_URLCONF = 'furniture_catalog.urls'
 
@@ -116,18 +117,18 @@ WSGI_APPLICATION = 'furniture_catalog.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql',
-    #     'NAME': config('POSTGRES_DB', default='furniture_catalog'),
-    #     'USER': config('POSTGRES_USER', default='postgres'),
-    #     'PASSWORD': config('POSTGRES_PASSWORD', default='postgres'),
-    #     'HOST': config('DB_HOST', default='db'),
-    #     'PORT': config('DB_PORT', default='5432'),
-    # }
-    'default':{
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3'
-    }
+     'default': {
+         'ENGINE': 'django.db.backends.postgresql',
+         'NAME': config('POSTGRES_DB', default='furniture_catalog'),
+         'USER': config('POSTGRES_USER', default='postgres'),
+         'PASSWORD': config('POSTGRES_PASSWORD', default='postgres'),
+         'HOST': config('DB_HOST', default='db'),
+         'PORT': config('DB_PORT', default='5432'),
+     }
+    #'default': {
+    #    'ENGINE': 'django.db.backends.sqlite3',
+    #    'NAME': BASE_DIR / 'db.sqlite3'
+    #},
 }
 
 # Password validation
@@ -176,6 +177,27 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.majordomo.ru'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'info@kuhni-abt.ru'  # Ваш email
+EMAIL_HOST_USER = config("EMAIL_HOST_USER")  # Ваш email
 EMAIL_HOST_PASSWORD = config("EMAIL_PASSWORD", default="")
-DEFAULT_FROM_EMAIL = 'info@kuhni-abt.ru'
+DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL")
+
+#if DEBUG==True:
+    # Письма будут выводиться в консоль
+ #   EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+  #  DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
+    # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    # EMAIL_HOST = 'smtp.gmail.com'
+    # EMAIL_PORT = 587
+    # EMAIL_USE_TLS = True
+    # EMAIL_HOST_USER = os.getenv("DEV_MAIL")  # Ваш Gmail
+    # EMAIL_HOST_PASSWORD = os.getenv('DEV_PASSWORD')  # Пароль приложения (не обычный пароль!)
+    # DEFAULT_FROM_EMAIL = os.getenv("DEV_MAIL")  # Тот же email, что и выше
+#else:
+    # Реальная отправка через SMTP
+   # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+   # EMAIL_HOST = 'smtp.majordomo.ru'
+   # EMAIL_PORT = 587
+  #  EMAIL_USE_TLS = True
+  #  EMAIL_HOST_USER = config("EMAIL_HOST_USER")
+ #   EMAIL_HOST_PASSWORD = config("EMAIL_PASSWORD")
+#    DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL")

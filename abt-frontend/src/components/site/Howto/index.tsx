@@ -19,7 +19,6 @@ import {
   Users,
 } from 'lucide-react'
 import Link from 'next/link'
-import { ReactNode } from 'react'
 
 const steps = [
   {
@@ -127,10 +126,10 @@ const steps = [
   },
 ]
 
-export default function Howto(): ReactNode {
+export default function Howto() {
   return (
     <div
-      className="relative mt-[10px] px-4 md:px-[50px] lg:px-[100px] py-[30px] flex flex-col gap-6 min-h-[80vh] z-[1] bg-white">
+      className="my-5">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -171,7 +170,7 @@ export default function Howto(): ReactNode {
                   <div className="flex sm:flex-col items-center sm:items-start gap-4 sm:gap-2">
                     <div className="relative">
                       <div
-                        className="bg-mainPurple text-white rounded-full w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 flex items-center justify-center shadow-lg">
+                        className="bg-mainPurple text-white rounded-full w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 flex items-center justify-center shadow-lg ">
                         <IconComponent className="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7"/>
                       </div>
                       <div

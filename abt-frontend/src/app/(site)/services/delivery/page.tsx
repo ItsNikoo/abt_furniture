@@ -1,10 +1,20 @@
-import ContentWrapper from '@/components/ContentWrapper'
 import DeliveryPageComponent from '@/components/site/Services/DeliveryPageComponent'
+import SiteContainer from "@/components/SiteContainer"
+import {Metadata} from "next"
 
-export async function generateMetadata() {
+export async function generateMetadata(): Promise<Metadata> {
   return {
     title: 'Доставка | АБТ мебель',
     description: 'Узнайте о наших условиях доставки и оплаты мебели на заказ. АБТ мебель предлагает удобные и надежные варианты для вашего комфорта.',
+    keywords: [
+      'магазин мебели с доставкой',
+      "абт кухни доставка",
+      'кухни на заказ Москва',
+      'кухни на заказ Балашиха',
+      "абт кухни",
+      "кухни абт",
+      "купить угловую кухню в москве"
+    ],
     openGraph: {
       title: 'Доставка | АБТ мебель',
       description: 'Узнайте о наших условиях доставки и оплаты мебели на заказ. АБТ мебель предлагает удобные и надежные варианты для вашего комфорта.',
@@ -26,8 +36,8 @@ export async function generateMetadata() {
 
 export default function DeliveryPage() {
   return (
-    <ContentWrapper>
+    <SiteContainer>
       <DeliveryPageComponent/>
-    </ContentWrapper>
+    </SiteContainer>
   )
 }

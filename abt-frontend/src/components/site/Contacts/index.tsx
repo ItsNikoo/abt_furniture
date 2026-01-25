@@ -6,8 +6,7 @@ import Link from 'next/link'
 
 export default function Contacts() {
     return (
-        <div
-            className="relative mt-[10px] px-4 md:px-[50px] lg:px-[100px] py-[30px] flex flex-col gap-6 min-h-[80vh] z-[1] bg-white">
+        <div className="my-5">
             {/* Header */}
             <motion.div
                 initial={{opacity: 0, y: 20}}

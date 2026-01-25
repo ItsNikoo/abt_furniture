@@ -1,7 +1,7 @@
 // src/lib/axios.ts
 import axios from 'axios'
 import Cookies from 'js-cookie'
-import { getApiBaseUrl } from '@/lib/api/baseUrl'
+import { getApiBaseUrl } from '@/lib/utils/baseUrl'
 
 const axiosInstance = axios.create({
   baseURL: getApiBaseUrl(),

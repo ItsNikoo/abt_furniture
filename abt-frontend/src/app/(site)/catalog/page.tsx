@@ -1,13 +1,26 @@
-import ContentWrapper from '@/components/ContentWrapper'
-import Catalog from '../../../components/site/Catalog'
 import {fetchCategories} from '@/lib/api/categories'
 import {fetchStyles} from '@/lib/api/styles'
 import {fetchMaterials} from '@/lib/api/materials'
+import CatalogComponent from "../../../components/site/Catalog/CatalogComponent"
+import {Metadata} from "next"
 
-export async function generateMetadata() {
+export const revalidate = 60
+export const dynamic = 'force-dynamic'
+
+export async function generateMetadata(): Promise<Metadata> {
   return {
     title: 'Каталог мебели | АБТ мебель',
     description: 'Ознакомьтесь с нашим обширным каталогом мебели, включая кухни, шкафы и многое другое. Высокое качество и стильный дизайн от АБТ.',
+    keywords: [
+      "кухня сайт каталоги",
+      "каталог кухонь москва",
+      "кухни каталог москва цены",
+      "каталог готовых кухонь",
+      "абт кухни",
+      "кухни абт",
+      "кухни абт каталог",
+      "купить угловую кухню в москве"
+    ],
     openGraph: {
       title: 'Каталог мебели | АБТ мебель',
       description: 'АБТ мебель — мебельная компания, объединяющая качество, стиль и заботу о клиентах.',
@@ -25,10 +38,8 @@ export async function generateMetadata() {
       },
     }
   }
-}
 
-export const dynamic = 'force-dynamic' // Отключает статическую генерацию
-export const revalidate = 0 // Отключает кэширование
+}
 
 export default function CatalogPage() {
   const categoriesPromise = fetchCategories()
@@ -36,8 +47,7 @@ export default function CatalogPage() {
   const materialsPromise = fetchMaterials()
 
   return (
-    <ContentWrapper>
-      <Catalog categoriesPromise={categoriesPromise} stylesPromise={stylesPromise} materialsPromise={materialsPromise}/>
-    </ContentWrapper>
+    <CatalogComponent categoriesPromise={categoriesPromise} stylesPromise={stylesPromise}
+                      materialsPromise={materialsPromise}/>
   )
 }

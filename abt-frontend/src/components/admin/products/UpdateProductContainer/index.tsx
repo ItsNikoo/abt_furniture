@@ -113,7 +113,7 @@ export default function UpdateProductContainer({ categories, styles, materials, 
 
   return (
     <div className="flex items-center justify-center">
-      <Card className="w-full max-w-md shadow-lg rounded-lg border border-gray-200">
+      <Card className="w-full shadow-lg rounded-lg border border-gray-200">
         <CardHeader className="bg-gray-50 p-4 rounded-t-lg">
           <h2 className="text-2xl font-bold text-gray-800">Редактировать продукт {id}</h2>
         </CardHeader>
@@ -171,7 +171,7 @@ export default function UpdateProductContainer({ categories, styles, materials, 
                 value={formData.description}
                 onChange={handleInputChange}
                 placeholder="Введите описание"
-                className="mt-1 min-h-[120px]"
+                className="mt-1 min-h-[200px]"
               />
             </div>
             <div>

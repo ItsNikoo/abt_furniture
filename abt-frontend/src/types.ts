@@ -8,6 +8,11 @@ export interface Style {
   style: string;
 }
 
+export interface Material {
+  id: number;
+  material: string;
+}
+
 export interface Category {
   id: number;
   categorySlug: string;
@@ -22,10 +27,6 @@ export interface CategoryData {
   photoFile: File | null;
 }
 
-export interface Material {
-  id: number;
-  material: string;
-}
 
 export interface Product {
   id: number;
@@ -56,14 +57,18 @@ export interface Sale {
   id: string;
   description: string;
   photo: string | null;
+  mobilePhoto: string | null;
   link: string;
   photoFile: File | null;
+  mobilePhotoFile: File | null;
 }
 
 export interface SaleData {
   description: string;
   photo?: string | null;
+  mobilePhoto?: string | null;
   photoFile: File | null;
+  mobilePhotoFile: File | null;
   link: string;
 }
 
@@ -76,8 +81,57 @@ export interface Service {
 }
 
 export interface Contact {
+  name: string;
   phone: string;
   comment: string;
   consent: boolean;
   product?: string;
+}
+
+export interface Promotion {
+  id: number;
+  title: string;
+  productSlug: string;
+  price: number;
+  description: string;
+  size: string;
+  category: string;
+  material?: string;
+  style?: string;
+  photos?: Photo[];
+}
+
+export interface PromotionData {
+  title: string;
+  productSlug: string;
+  price: number;
+  description: string;
+  size: string;
+  category: string;
+  material?: string;
+  style?: string;
+  photos?: Photo[];
+  photoFiles?: File[];
+  deletePhotos?: string[];
+}
+
+export interface Review{
+  id: number
+  name: string
+  review: string
+  rank: number
+  date: string
+  location: string
+  photos?: Photo[]
+}
+
+export interface ReviewData {
+  name: string
+  review: string
+  rank: number
+  date: string
+  location: string
+  photos?: Photo[]
+  photoFiles?: File[]
+  deletePhotos?: string[]
 }

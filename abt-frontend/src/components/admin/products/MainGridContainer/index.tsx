@@ -22,7 +22,8 @@ export default function MainGridContainer() {
     return <div className="flex justify-center items-center h-screen text-lg text-red-500">Что-то пошло не так</div>
   }
 
-  const filtered = data.filter((product: Product) =>
+  // ИСПРАВЛЕНО: Добавлена проверка на undefined data (fallback на пустой массив)
+  const filtered = (data || []).filter((product: Product) =>
     product.title.toLowerCase().includes(search.toLowerCase()),
   )
 

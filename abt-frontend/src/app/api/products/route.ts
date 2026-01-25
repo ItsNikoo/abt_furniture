@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { apiUrl } from '@/lib/api/baseUrl'
+import { apiUrl } from '@/lib/utils/baseUrl'
 
 // Force dynamic rendering - prevents execution during build
 export const dynamic = 'force-dynamic'

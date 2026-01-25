@@ -34,7 +34,7 @@ export default function UpdateMaterialContainer({ material }: { material: Materi
       setTimeout(() => {
         setIsOpen(false)
         setSuccess(null)
-      }, 2000)
+      }, 500)
     } catch (error) {
       setError('Произошла ошибка при обновлении материала: ' + error)
     }
