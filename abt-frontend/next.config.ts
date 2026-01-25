@@ -1,16 +1,22 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Твои настройки
   output: 'standalone',
   images: {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'storage.yandexcloud.net', // для поддоменов
+        hostname: 'storage.yandexcloud.net',
         pathname: '/**',
-      }
-    ]
+      },
+    ],
+  },
+  // ИСПРАВЛЕНО: Лимит для Server Actions (10 MB)
+  experimental: {
+    serverActions: {
+      bodySizeLimit: '30mb',  
+    },
   },
 }
 

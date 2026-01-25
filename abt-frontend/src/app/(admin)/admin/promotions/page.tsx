@@ -8,6 +8,8 @@ import {fetchCategories} from "@/lib/api/categories"
 import {fetchStyles} from "@/lib/api/styles"
 import {fetchMaterials} from "@/lib/api/materials"
 
+export const dynamic = 'force-dynamic'
+
 export default function PromotionsPage() {
   const promotionsPromise: Promise<Promotion[]> = fetchPromotions()
   const categoriesPromise: Promise<Category[]> = fetchCategories()

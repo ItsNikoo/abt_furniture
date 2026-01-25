@@ -7,6 +7,8 @@ import FeedbackForm from "@/components/shared/FeedbackForm"
 import ReviewsContainer from "@/components/site/Reviews/ReviewsContainer"
 import {Metadata} from "next"
 
+export const dynamic = 'force-dynamic'
+
 export async function generateMetadata(): Promise<Metadata> {
   return {
     title: 'Купить мебель от производителя | АБТ мебель',

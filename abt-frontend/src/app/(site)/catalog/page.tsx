@@ -5,6 +5,7 @@ import CatalogComponent from "../../../components/site/Catalog/CatalogComponent"
 import {Metadata} from "next"
 
 export const revalidate = 60
+export const dynamic = 'force-dynamic'
 
 export async function generateMetadata(): Promise<Metadata> {
   return {

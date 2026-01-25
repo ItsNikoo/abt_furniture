@@ -5,6 +5,8 @@ import {fetchPromotions} from "@/lib/api/promotions"
 import {Category, Product} from "@/types"
 import {Promotion} from "@/types"
 
+export const dynamic = 'force-dynamic'
+
 // Типы для данных
 type SitemapRoute = {
 	url: string

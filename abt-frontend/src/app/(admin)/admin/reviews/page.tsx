@@ -5,6 +5,8 @@ import {ADMIN_ROUTES} from "@/config/navigation"
 import {Button} from "@/components/ui/button"
 import Link from "next/link"
 
+export const dynamic = 'force-dynamic'
+
 export default function ReviewsPage(){
   const reviewsPromise: Promise<Review[]> = fetchReviews()
   return(

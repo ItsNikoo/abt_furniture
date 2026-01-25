@@ -4,6 +4,8 @@ import { fetchMaterials } from "@/lib/api/materials"
 import PromotionsComponent from "@/components/site/Promotions/PromotionsComponent"
 import { Metadata } from "next"
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: 'Готовые решения | Кухни АБТ',
   description: 'Актуальные акции и готовые предложения на кухни и мебель на заказ. Эти решения помогут тем, кто не хочет индивидуальный проект',

@@ -18,7 +18,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY', default='django-insecure-d90$&ig18i$-7_)w2h0^q4^o$xh-(ee6**n=7mz1pd1qow49%3')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=False, cast=bool)
+#DEBUG = config('DEBUG', default=False, cast=bool)
+DEBUG = False
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'backend', 'frontend', 'nginx', '178.250.242.124', 'kuhni-abt.ru']
 
@@ -116,18 +117,18 @@ WSGI_APPLICATION = 'furniture_catalog.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql',
-    #     'NAME': config('POSTGRES_DB', default='furniture_catalog'),
-    #     'USER': config('POSTGRES_USER', default='postgres'),
-    #     'PASSWORD': config('POSTGRES_PASSWORD', default='postgres'),
-    #     'HOST': config('DB_HOST', default='db'),
-    #     'PORT': config('DB_PORT', default='5432'),
-    # }
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3'
-    },
+     'default': {
+         'ENGINE': 'django.db.backends.postgresql',
+         'NAME': config('POSTGRES_DB', default='furniture_catalog'),
+         'USER': config('POSTGRES_USER', default='postgres'),
+         'PASSWORD': config('POSTGRES_PASSWORD', default='postgres'),
+         'HOST': config('DB_HOST', default='db'),
+         'PORT': config('DB_PORT', default='5432'),
+     }
+    #'default': {
+    #    'ENGINE': 'django.db.backends.sqlite3',
+    #    'NAME': BASE_DIR / 'db.sqlite3'
+    #},
 }
 
 # Password validation
@@ -172,18 +173,18 @@ STATIC_ROOT = '/app/static'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Настройки для отправки на почту
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = 'smtp.majordomo.ru'
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
-# EMAIL_HOST_USER = 'info@kuhni-abt.ru'  # Ваш email
-# EMAIL_HOST_PASSWORD = config("EMAIL_PASSWORD", default="")
-# DEFAULT_FROM_EMAIL = 'info@kuhni-abt.ru'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.majordomo.ru'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = config("EMAIL_HOST_USER")  # Ваш email
+EMAIL_HOST_PASSWORD = config("EMAIL_PASSWORD", default="")
+DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL")
 
-if DEBUG==True:
+#if DEBUG==True:
     # Письма будут выводиться в консоль
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-    DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
+ #   EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+  #  DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
     # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
     # EMAIL_HOST = 'smtp.gmail.com'
     # EMAIL_PORT = 587
@@ -191,12 +192,12 @@ if DEBUG==True:
     # EMAIL_HOST_USER = os.getenv("DEV_MAIL")  # Ваш Gmail
     # EMAIL_HOST_PASSWORD = os.getenv('DEV_PASSWORD')  # Пароль приложения (не обычный пароль!)
     # DEFAULT_FROM_EMAIL = os.getenv("DEV_MAIL")  # Тот же email, что и выше
-else:
+#else:
     # Реальная отправка через SMTP
-    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-    EMAIL_HOST = 'smtp.majordomo.ru'
-    EMAIL_PORT = 587
-    EMAIL_USE_TLS = True
-    EMAIL_HOST_USER = config("EMAIL_HOST_USER")
-    EMAIL_HOST_PASSWORD = config("EMAIL_PASSWORD")
-    DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL")
+   # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+   # EMAIL_HOST = 'smtp.majordomo.ru'
+   # EMAIL_PORT = 587
+  #  EMAIL_USE_TLS = True
+  #  EMAIL_HOST_USER = config("EMAIL_HOST_USER")
+ #   EMAIL_HOST_PASSWORD = config("EMAIL_PASSWORD")
+#    DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL")

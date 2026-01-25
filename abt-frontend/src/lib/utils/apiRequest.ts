@@ -11,7 +11,7 @@ type ApiRequestOptions = {
 }
 
 const axiosInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
+//  baseURL: process.env.NEXT_PUBLIC_API_URL,
   proxy: false, // Отключаем proxy
   withCredentials: true,
 })

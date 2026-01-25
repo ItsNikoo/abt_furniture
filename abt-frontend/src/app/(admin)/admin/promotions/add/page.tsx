@@ -4,6 +4,8 @@ import {fetchCategories} from "@/lib/api/categories"
 import {fetchStyles} from "@/lib/api/styles"
 import {fetchMaterials} from "@/lib/api/materials"
 
+export const dynamic = 'force-dynamic'
+
 export default async function AddPromotionPage() {
   const categories: Category[] = await fetchCategories()
   const styles: Style[] = await fetchStyles()
