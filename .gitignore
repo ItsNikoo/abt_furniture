@@ -422,3 +422,5 @@ cython_debug/
 #.idea/
 
 certbot/
+
+abt-frontend/.lighthouseci
