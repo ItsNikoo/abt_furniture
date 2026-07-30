@@ -19,7 +19,7 @@ export default function CatalogCard({entity, isPromotion = false}: CatalogCardPr
           <div className="relative pointer-events-auto">
             <PhotoCarousel photos={entity.photos}/>
             <div
-              className="absolute top-3 left-3 bg-mainPurple text-white text-[14px] font-bold px-2 py-1 rounded-md z-20">
+              className="absolute top-3 left-3 bg-mainPurple text-white text-[14px] font-bold px-2 py-1 rounded-lg z-20">
               {entity.style}
             </div>
           </div>

@@ -77,7 +77,7 @@ export default function ReviewsCarousel({reviews}: ReviewsCarouselProps) {
           {/* Navigation Buttons - используем canScrollPrev/canScrollNext для disabled */}
           <button
             className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 md:-translate-x-4 z-10
-                       bg-white hover:bg-gray-50 rounded-full p-2 md:p-3
+                       bg-white hover:bg-gray-50 rounded-lg p-2 md:p-3
                        shadow-lg transition-all hover:scale-110 disabled:opacity-40 disabled:cursor-not-allowed"
             onClick={scrollPrev}
             disabled={!canScrollPrev} 
@@ -88,7 +88,7 @@ export default function ReviewsCarousel({reviews}: ReviewsCarouselProps) {
 
           <button
             className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 md:translate-x-4 z-10
-                       bg-white hover:bg-gray-50 rounded-full p-2 md:p-3
+                       bg-white hover:bg-gray-50 rounded-lg p-2 md:p-3
                        shadow-lg transition-all hover:scale-110 disabled:opacity-40 disabled:cursor-not-allowed"
             onClick={scrollNext}
             disabled={!canScrollNext}

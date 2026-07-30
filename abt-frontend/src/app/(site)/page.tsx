@@ -1,5 +1,4 @@
 import FirstPage from '@/components/site/FirstPage'
-import SalesContainer from '@/components/site/SalesContainer'
 import CategoriesGrid from '@/components/site/CategoriesGrid'
 import SiteContainer from "@/components/SiteContainer"
 import AdvantagesContainer from "@/components/site/AdvantagesContainer"
@@ -50,7 +49,6 @@ export default async function Home() {
 
   return (
     <>
-      <SalesContainer/>
       <FirstPage/>
       <SiteContainer>
         <AdvantagesContainer/>

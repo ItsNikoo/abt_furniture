@@ -6,7 +6,8 @@ export function getApiBaseUrl(): string {
      return process.env.NEXT_PUBLIC_API_URL || '/api'
    }
   // // Server (inside Docker network): prefer env, fallback to Docker DNS
-   return process.env.API_URL || process.env.NEXT_PUBLIC_API_URL || 'http://backend:8000/api'
+   const serverUrl = process.env.API_URL || process.env.NEXT_PUBLIC_API_URL || 'http://backend:8000/api'
+   return serverUrl.replace('http://localhost:', 'http://127.0.0.1:')
   //  return 'http://127.0.0.1:8000/api'
 }
 

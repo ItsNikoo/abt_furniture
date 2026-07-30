@@ -32,7 +32,7 @@ export default function Contacts() {
                     transition={{duration: 0.5, delay: 0.2}}
                     className="bg-white p-4 sm:p-6 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
                     <div className="flex items-center gap-3 mb-3">
-                        <div className="bg-mainPurple/90 p-2 rounded-full">
+                        <div className="bg-mainPurple/90 p-2 rounded-lg">
                             <Phone className="w-5 h-5 text-white"/>
                         </div>
                         <h3 className="text-mainPurple font-semibold text-lg sm:text-xl">Позвоните нам</h3>
@@ -69,7 +69,7 @@ export default function Contacts() {
                     transition={{duration: 0.5, delay: 0.2}}
                     className="bg-white p-4 sm:p-6 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
                     <div className="flex items-center gap-3 mb-3">
-                        <div className="bg-mainPurple/90 p-2 rounded-full">
+                        <div className="bg-mainPurple/90 p-2 rounded-lg">
                             <MessageCircle className="w-5 h-5 text-white"/>
                         </div>
                         <h3 className="text-mainPurple font-semibold text-lg sm:text-xl">Напишите в WhatsApp</h3>
@@ -107,7 +107,7 @@ export default function Contacts() {
                     transition={{duration: 0.5, delay: 0.4}}
                     className="bg-white p-4 sm:p-6 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow md:col-span-2">
                     <div className="flex items-center gap-3 mb-3">
-                        <div className="bg-mainPurple/90 p-2 rounded-full">
+                        <div className="bg-mainPurple/90 p-2 rounded-lg">
                             <Mail className="w-5 h-5 text-white"/>
                         </div>
                         <h3 className="text-mainPurple font-semibold text-lg sm:text-xl">Напишите на почту</h3>
@@ -131,7 +131,7 @@ export default function Contacts() {
                     transition={{duration: 0.5, delay: 0.5}}
                     className="bg-white p-4 sm:p-6 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow md:col-span-2">
                     <div className="flex items-center gap-3 mb-3">
-                        <div className="bg-mainPurple/90 p-2 rounded-full">
+                        <div className="bg-mainPurple/90 p-2 rounded-lg">
                             <UserRound className="w-5 h-5 text-white"/>
                         </div>
                         <h3 className="text-mainPurple font-semibold text-lg sm:text-xl">Посетите наши салоны</h3>

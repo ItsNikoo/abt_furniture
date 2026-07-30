@@ -93,14 +93,14 @@ export default function BasePhotoCarousel(
 
       {/* Навигационные кнопки */}
       <Button
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 w-10 h-10 opacity-0 group-hover:opacity-100 transition-opacity"
+        className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-black/50 hover:bg-black/70 text-white rounded-lg p-2 w-10 h-10 opacity-0 group-hover:opacity-100 transition-opacity"
         onClick={scrollPrev}
         aria-label="Предыдущий"
       >
         <Image src="/arrow-left.svg" alt="Назад" width={24} height={24}/>
       </Button>
       <Button
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 w-10 h-10 opacity-0 group-hover:opacity-100 transition-opacity"
+        className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-black/50 hover:bg-black/70 text-white rounded-lg p-2 w-10 h-10 opacity-0 group-hover:opacity-100 transition-opacity"
         onClick={scrollNext}
         aria-label="Следующий"
       >
@@ -114,7 +114,7 @@ export default function BasePhotoCarousel(
             <button
               key={index}
               onClick={(e) => scrollTo(index, e)}
-              className={`w-2 h-2 rounded-full transition-colors ${
+              className={`w-2 h-2 rounded-lg transition-colors ${
                 index === selectedIndex ? 'bg-mainPurple' : 'bg-gray-300'
               }`}
               aria-label={`Перейти к слайду ${index + 1}`}
@@ -130,7 +130,7 @@ export default function BasePhotoCarousel(
             <button
               key={photo.id}
               onClick={(e) => scrollTo(index, e)}
-              className={`relative w-20 h-14 rounded overflow-hidden border-2 transition-all ${
+              className={`relative w-20 h-14 rounded-lg overflow-hidden border-2 transition-all ${
                 index === selectedIndex ? 'border-mainPurple' : 'border-transparent'
               }`}
             >

@@ -9,7 +9,7 @@ from services.yandex_storage import (
     upload_to_yandex_storage,
     delete_from_yandex_storage
 )
-from catalog.models import Category, Style, Photo, Product, FirstPage, Material, Promotion, ContactRequest, Review
+from catalog.models import Category, Style, Photo, Product, Material, Promotion, ContactRequest, Review
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -303,141 +303,6 @@ class ProductSerializer(serializers.ModelSerializer):
         return instance
 
 
-class FirstPageSerializer(serializers.ModelSerializer):
-    """Serializer для акции."""
-
-    photo_file = serializers.FileField(write_only=True, required=False)
-    mobile_photo_file = serializers.FileField(write_only=True, required=False)
-
-    class Meta:
-        model = FirstPage
-        fields = [
-            'id',
-            'description',
-            'photo',
-            'mobile_photo',
-            'link',
-            'photo_file',
-            'mobile_photo_file'
-        ]
-        extra_kwargs = {
-            'photo': {'read_only': True},
-            'mobile_photo': {'read_only': True}
-        }
-
-    def validate(self, data):
-        """Валидация: при создании требуется хотя бы одно фото."""
-        if self.instance is None:  # Создание нового объекта
-            if not data.get('photo_file') and not data.get('mobile_photo_file'):
-                raise serializers.ValidationError(
-                    "Необходимо загрузить хотя бы одно фото (desktop или mobile)"
-                )
-        return data
-
-    def _get_folder_path(self, instance_id):
-        """Генерация пути к папке акции."""
-        return f"sales/sale_{instance_id}"
-
-    def create(self, validated_data):
-        """Создание акции."""
-        photo_file = validated_data.pop('photo_file', None)
-        mobile_photo_file = validated_data.pop('mobile_photo_file', None)
-
-        # Сначала создаем объект без фото
-        instance = super().create(validated_data)
-
-        try:
-            # Папка для этой конкретной акции
-            folder = self._get_folder_path(instance.id)
-
-            # Загружаем desktop фото
-            if photo_file:
-                file_url = upload_to_yandex_storage(
-                    photo_file,
-                    f"desktop_{photo_file.name}",
-                    folder
-                )
-                instance.photo = file_url
-
-            # Загружаем mobile фото
-            if mobile_photo_file:
-                mobile_url = upload_to_yandex_storage(
-                    mobile_photo_file,
-                    f"mobile_{mobile_photo_file.name}",
-                    folder
-                )
-                instance.mobile_photo = mobile_url
-
-            instance.save()
-
-        except Exception as e:
-            # Если произошла ошибка, удаляем созданный объект
-            instance.delete()
-            raise serializers.ValidationError(
-                {'file_upload': f"Ошибка загрузки файла: {str(e)}"}
-            )
-
-        return instance
-
-    def update(self, instance, validated_data):
-        """Обновление акции."""
-        photo_file = validated_data.pop('photo_file', None)
-        mobile_photo_file = validated_data.pop('mobile_photo_file', None)
-
-        # Папка для этой конкретной акции
-        folder = self._get_folder_path(instance.id)
-
-        # Обновление desktop фото
-        if photo_file:
-            # Удаляем старое desktop фото
-            if instance.photo:
-                try:
-                    delete_from_yandex_storage(instance.photo)
-                except Exception as e:
-                    raise serializers.ValidationError(
-                        {'old_photo': f"Ошибка удаления старого desktop файла: {str(e)}"}
-                    )
-
-            # Загружаем новое desktop фото
-            try:
-                file_url = upload_to_yandex_storage(
-                    photo_file,
-                    f"desktop_{photo_file.name}",
-                    folder
-                )
-                validated_data['photo'] = file_url
-            except Exception as e:
-                raise serializers.ValidationError(
-                    {'photo_file': f"Ошибка загрузки desktop файла: {str(e)}"}
-                )
-
-        # Обновление mobile фото
-        if mobile_photo_file:
-            # Удаляем старое mobile фото
-            if instance.mobile_photo:
-                try:
-                    delete_from_yandex_storage(instance.mobile_photo)
-                except Exception as e:
-                    raise serializers.ValidationError(
-                        {'old_mobile_photo': f"Ошибка удаления старого mobile файла: {str(e)}"}
-                    )
-
-            # Загружаем новое mobile фото
-            try:
-                mobile_url = upload_to_yandex_storage(
-                    mobile_photo_file,
-                    f"mobile_{mobile_photo_file.name}",
-                    folder
-                )
-                validated_data['mobile_photo'] = mobile_url
-            except Exception as e:
-                raise serializers.ValidationError(
-                    {'mobile_photo_file': f"Ошибка загрузки mobile файла: {str(e)}"}
-                )
-
-        return super().update(instance, validated_data)
-
-
 class PromotionSerializer(serializers.ModelSerializer):
     """Serializer для сущности спецпредложений с логикой добавления фотографий"""
     category = serializers.SlugRelatedField(
@@ -647,6 +512,7 @@ class ContactRequestSerializer(serializers.ModelSerializer):
                 "Необходимо согласие на обработку персональных данных."
             )
         return value
+
 
 class ReviewSerializer(serializers.ModelSerializer):
     """Serializer для отзывов с логикой добавления фотографий."""

@@ -53,25 +53,6 @@ export interface ProductData {
   deletePhotos?: string[];
 }
 
-export interface Sale {
-  id: string;
-  description: string;
-  photo: string | null;
-  mobilePhoto: string | null;
-  link: string;
-  photoFile: File | null;
-  mobilePhotoFile: File | null;
-}
-
-export interface SaleData {
-  description: string;
-  photo?: string | null;
-  mobilePhoto?: string | null;
-  photoFile: File | null;
-  mobilePhotoFile: File | null;
-  link: string;
-}
-
 export interface Service {
   id: number;
   title: string;

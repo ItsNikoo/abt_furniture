@@ -253,42 +253,6 @@
 },
 {
   "model": "auth.permission",
-  "pk": 29,
-  "fields": {
-    "name": "Can add Карусель на первой странице",
-    "content_type": 8,
-    "codename": "add_firstpage"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 30,
-  "fields": {
-    "name": "Can change Карусель на первой странице",
-    "content_type": 8,
-    "codename": "change_firstpage"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 31,
-  "fields": {
-    "name": "Can delete Карусель на первой странице",
-    "content_type": 8,
-    "codename": "delete_firstpage"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 32,
-  "fields": {
-    "name": "Can view Карусель на первой странице",
-    "content_type": 8,
-    "codename": "view_firstpage"
-  }
-},
-{
-  "model": "auth.permission",
   "pk": 33,
   "fields": {
     "name": "Can add Фото",
@@ -575,14 +539,6 @@
   "fields": {
     "app_label": "catalog",
     "model": "category"
-  }
-},
-{
-  "model": "contenttypes.contenttype",
-  "pk": 8,
-  "fields": {
-    "app_label": "catalog",
-    "model": "firstpage"
   }
 },
 {
@@ -1210,16 +1166,6 @@
     "photos": [
       23
     ]
-  }
-},
-{
-  "model": "catalog.firstpage",
-  "pk": 1,
-  "fields": {
-    "title": "Для новых покупателей",
-    "description": "Добро пожаловать в наш мебельный магазин! Закажите мебель прямо сейчас и получите скидку 10%!",
-    "photo": "https://storage.yandexcloud.net/abtfurniture/sales/Категории_кухня.jpeg",
-    "link": "https://kuhni-abt.ru/catalog"
   }
 },
 {

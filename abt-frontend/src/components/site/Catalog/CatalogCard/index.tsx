@@ -17,7 +17,7 @@ export default function CatalogCard({product}: { product: Product }) {
               className="h-full w-full" // Предполагаем, что PhotoCarousel принимает className пропс; если нет, добавьте в его код
             />
             <div
-              className="absolute top-3 left-3 bg-mainPurple text-white text-[14px] font-bold px-2 py-1 rounded-md z-20">
+              className="absolute top-3 left-3 bg-mainPurple text-white text-[14px] font-bold px-2 py-1 rounded-lg z-20">
               {product.style}
             </div>
           </div>

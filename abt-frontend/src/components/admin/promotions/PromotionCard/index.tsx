@@ -78,18 +78,18 @@ export default function PromotionCard({promotion, categories, styles, materials}
         <CardContent className="space-y-4">
           {/* Теги */}
           <div className="flex flex-wrap gap-2">
-          <span className="inline-block px-3 py-1 text-xs font-medium text-white bg-gray-800 rounded-full">
+          <span className="inline-block px-3 py-1 text-xs font-medium text-white bg-gray-800 rounded-lg">
             {promotion.category}
           </span>
 
             {promotion.material && (
-              <span className="inline-block px-3 py-1 text-xs font-medium text-gray-700 bg-gray-200 rounded-full">
+              <span className="inline-block px-3 py-1 text-xs font-medium text-gray-700 bg-gray-200 rounded-lg">
               {promotion.material}
             </span>
             )}
 
             {promotion.style && (
-              <span className="inline-block px-3 py-1 text-xs font-medium text-gray-700 bg-gray-200 rounded-full">
+              <span className="inline-block px-3 py-1 text-xs font-medium text-gray-700 bg-gray-200 rounded-lg">
               {promotion.style}
             </span>
             )}

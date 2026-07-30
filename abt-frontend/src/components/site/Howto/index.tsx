@@ -170,11 +170,11 @@ export default function Howto() {
                   <div className="flex sm:flex-col items-center sm:items-start gap-4 sm:gap-2">
                     <div className="relative">
                       <div
-                        className="bg-mainPurple text-white rounded-full w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 flex items-center justify-center shadow-lg ">
+                        className="bg-mainPurple text-white rounded-lg w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 flex items-center justify-center shadow-lg ">
                         <IconComponent className="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7"/>
                       </div>
                       <div
-                        className="absolute -top-2 -right-2 bg-white text-mainPurple rounded-full w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center text-xs sm:text-sm font-bold shadow-md">
+                        className="absolute -top-2 -right-2 bg-white text-mainPurple rounded-lg w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center text-xs sm:text-sm font-bold shadow-md">
                         {step.id}
                       </div>
                     </div>
@@ -198,7 +198,7 @@ export default function Howto() {
                             key={detailIndex}
                             className="flex items-start gap-3"
                           >
-                            <div className="bg-mainPurple/10 rounded-full p-1.5 sm:p-2 flex-shrink-0 mt-0.5">
+                            <div className="bg-mainPurple/10 rounded-lg p-1.5 sm:p-2 flex-shrink-0 mt-0.5">
                               <DetailIcon className="w-3 h-3 sm:w-4 sm:h-4 text-mainPurple"/>
                             </div>
                             <p className="text-xs sm:text-sm lg:text-base text-gray-700 leading-relaxed">
@@ -235,7 +235,7 @@ export default function Howto() {
         <div
           className="bg-gradient-to-r from-mainPurple to-mainPurple/80 rounded-xl sm:rounded-2xl p-6 sm:p-8 lg:p-10 text-white shadow-xl">
           <div className="flex justify-center mb-4 sm:mb-6">
-            <div className="bg-white/20 rounded-full p-3 sm:p-4">
+            <div className="bg-white/20 rounded-lg p-3 sm:p-4">
               <Star className="w-8 h-8 sm:w-10 sm:h-10"/>
             </div>
           </div>
@@ -249,13 +249,13 @@ export default function Howto() {
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
             <Link
               href="/catalog"
-              className="bg-white text-mainPurple px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold hover:bg-gray-100 transition-colors duration-200 text-sm sm:text-base w-full sm:w-auto"
+              className="bg-white text-mainPurple px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-200 text-sm sm:text-base w-full sm:w-auto"
             >
               Смотреть каталог
             </Link>
             <Link
               href="/contacts"
-              className="border-2 border-white text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold hover:bg-white hover:text-mainPurple transition-colors duration-200 text-sm sm:text-base w-full sm:w-auto"
+              className="border-2 border-white text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold hover:bg-white hover:text-mainPurple transition-colors duration-200 text-sm sm:text-base w-full sm:w-auto"
             >
               Связаться с нами
             </Link>

@@ -95,7 +95,7 @@ function ImagePreviewModal({previewUrl, onClose}: {previewUrl: string; onClose: 
         {/* Кнопка закрытия (опционально, если нужно; в оригинале нет, но полезно) */}
         <button
           onClick={onClose}
-          className="absolute -top-4 -right-4 z-10 bg-white rounded-full p-2 shadow-lg hover:bg-gray-100 transition-colors"
+          className="absolute -top-4 -right-4 z-10 bg-white rounded-lg p-2 shadow-lg hover:bg-gray-100 transition-colors"
           aria-label="Закрыть превью"
         >
           <X size={24} className="text-gray-800" />

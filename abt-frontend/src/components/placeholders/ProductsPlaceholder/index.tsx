@@ -17,7 +17,7 @@ export default function ProductsPlaceholder() {
                 <Skeleton className="h-4 w-24 mb-1"/>
                 <Skeleton className="h-4 w-20"/>
               </div>
-              <Skeleton className="h-8 w-8 rounded-full"/>
+              <Skeleton className="h-8 w-8 rounded-lg"/>
             </div>
             <div className="flex flex-col gap-2 pt-2">
               <div className="flex flex-col md:flex-row md:items-center gap-3">

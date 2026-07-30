@@ -30,7 +30,7 @@ export default function AboutUs() {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="bg-white/80 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 shadow-lg hover:shadow-xl flex items-start gap-4">
           <div
-            className="flex-shrink-0 flex items-center justify-center bg-mainPurple/10 rounded-full w-12 h-12 sm:w-14 sm:h-14 mr-2 mt-1">
+            className="flex-shrink-0 flex items-center justify-center bg-mainPurple/10 rounded-lg w-12 h-12 sm:w-14 sm:h-14 mr-2 mt-1">
             <BookOpen className="text-mainPurple w-6 h-6 sm:w-7 sm:h-7"/>
           </div>
           <div>
@@ -61,7 +61,7 @@ export default function AboutUs() {
           <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 items-start">
             <div className="hidden sm:flex flex-col items-center">
               <div
-                className="flex-shrink-0 flex items-center justify-center bg-mainPurple/10 rounded-full w-12 h-12 sm:w-14 sm:h-14 mr-2 mt-1">
+                className="flex-shrink-0 flex items-center justify-center bg-mainPurple/10 rounded-lg w-12 h-12 sm:w-14 sm:h-14 mr-2 mt-1">
                 <User className="text-mainPurple w-6 h-6 sm:w-7 sm:h-7"/>
               </div>
             </div>
@@ -72,7 +72,7 @@ export default function AboutUs() {
               <div className="space-y-3 sm:space-y-4">
                 <div className="flex gap-3 items-center">
                   <div
-                    className="bg-mainPurple/10 rounded-full flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10">
+                    className="bg-mainPurple/10 rounded-lg flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10">
                     <span className="text-mainPurple font-bold text-base sm:text-lg md:text-xl">✓</span>
                   </div>
                   <p className="text-xs sm:text-sm md:text-[18px] leading-relaxed">
@@ -82,7 +82,7 @@ export default function AboutUs() {
                 </div>
                 <div className="flex gap-3 items-center">
                   <div
-                    className="bg-mainPurple/10 rounded-full flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10">
+                    className="bg-mainPurple/10 rounded-lg flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10">
                     <span className="text-mainPurple font-bold text-base sm:text-lg md:text-xl">✓</span>
                   </div>
                   <p className="text-xs sm:text-sm md:text-[18px] leading-relaxed">
@@ -92,7 +92,7 @@ export default function AboutUs() {
                 </div>
                 <div className="flex gap-3 items-center">
                   <div
-                    className="bg-mainPurple/10 rounded-full flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10">
+                    className="bg-mainPurple/10 rounded-lg flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10">
                     <span className="text-mainPurple font-bold text-base sm:text-lg md:text-xl">✓</span>
                   </div>
                   <p className="text-xs sm:text-sm md:text-[18px] leading-relaxed">
@@ -111,7 +111,7 @@ export default function AboutUs() {
           transition={{ duration: 0.5, delay: 0.6 }}
           className="bg-white/80 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 shadow-lg hover:shadow-xl flex items-start gap-4">
           <div
-            className="flex-shrink-0 flex items-center justify-center bg-mainPurple/10 rounded-full w-12 h-12 sm:w-14 sm:h-14 mr-2 mt-1">
+            className="flex-shrink-0 flex items-center justify-center bg-mainPurple/10 rounded-lg w-12 h-12 sm:w-14 sm:h-14 mr-2 mt-1">
             <Handshake className="text-mainPurple w-6 h-6 sm:w-7 sm:h-7"/>
           </div>
           <div>

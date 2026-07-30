@@ -90,13 +90,13 @@ export default function ProductCard({product}: ProductCardProps) {
         {/* Теги */}
         <div className="flex flex-wrap gap-2">
           {product.material && (
-            <span className="inline-block px-3 py-1 text-xs font-medium text-gray-700 bg-gray-200 rounded-full">
+            <span className="inline-block px-3 py-1 text-xs font-medium text-gray-700 bg-gray-200 rounded-lg">
               {product.material}
             </span>
           )}
 
           {product.style && (
-            <span className="inline-block px-3 py-1 text-xs font-medium text-gray-700 bg-gray-200 rounded-full">
+            <span className="inline-block px-3 py-1 text-xs font-medium text-gray-700 bg-gray-200 rounded-lg">
               {product.style}
             </span>
           )}

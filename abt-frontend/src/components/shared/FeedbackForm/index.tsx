@@ -3,7 +3,7 @@ import {ContactForm} from "@/components/shared/ContactForm"
 
 export default function FeedbackForm() {
   return (
-    <div className="relative bg-orange-400 h-[750px] overflow-hidden">
+    <div id="calculation" className="relative bg-orange-400 h-[750px] scroll-mt-24 overflow-hidden">
       <Image
         src="/modern_kitchen.jpeg"
         alt="Modern kitchen"

@@ -36,14 +36,14 @@ export default function CategoriesGrid() {
   return (
     <section className="mb-10">
       {/* Заголовок */}
-      <motion.h1
+      <motion.h2
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
         className="text-3xl sm:text-5xl font-extrabold text-center md:mb-10 mb-6"
       >
         Каталог продукции
-      </motion.h1>
+      </motion.h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {categories.map((category, index) => (

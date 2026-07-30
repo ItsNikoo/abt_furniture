@@ -12,29 +12,51 @@ import {
 import { Button } from '@/components/ui/button'
 import { useState } from 'react'
 import {ContactForm} from "@/components/shared/ContactForm"
+import {cn} from "@/lib/utils"
 
-export default function MainOrderContainer() {
+type MainOrderContainerProps = {
+  triggerText?: string
+  title?: string
+  description?: string
+  submitText?: string
+  successMessage?: string
+  triggerClassName?: string
+}
+
+export default function MainOrderContainer({
+  triggerText = 'Заказать проект',
+  title = 'Заказать проект',
+  description = 'Мы готовы реализовать любой амбициозный проект. Оставьте заявку, и мы свяжемся с вами для обсуждения деталей.',
+  submitText = 'Заказать проект',
+  successMessage = 'Спасибо! Ваша заявка успешно отправлена.',
+  triggerClassName,
+}: MainOrderContainerProps) {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button className="bg-mainPurple font-bold rounded-xl px-4 py-4 text-sm w-full sm:w-auto sm:px-8 sm:py-6 sm:text-base md:px-15 md:py-7">
-          Заказать проект
+        <Button
+          className={cn(
+            'font-bold px-4 py-4 text-sm w-full sm:w-auto sm:px-8 sm:py-6 sm:text-base md:px-15 md:py-7',
+            triggerClassName,
+          )}
+        >
+          {triggerText}
         </Button>
       </DialogTrigger>
 
       <DialogContent className="mx-4 sm:mx-0">
         <DialogHeader>
-          <DialogTitle className="font-bold text-2xl">Заказать проект</DialogTitle>
+          <DialogTitle className="font-bold text-2xl">{title}</DialogTitle>
           <DialogDescription>
-            Мы готовы реализовать любой амбициозный проект. Оставьте заявку, и мы свяжемся с вами для обсуждения деталей.
+            {description}
           </DialogDescription>
         </DialogHeader>
 
         <ContactForm
-          submitText="Заказать проект"
-          successMessage="Спасибо! Ваша заявка успешно отправлена."
+          submitText={submitText}
+          successMessage={successMessage}
           onSuccess={() => setTimeout(() => setIsOpen(false), 3000)}
         />
 

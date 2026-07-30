@@ -6,13 +6,13 @@ export default function CategoriesPlaceholder() {
     <div
       className="px-4"
     >
-      <motion.h1
+      <motion.h2
         initial={{opacity: 0}}
         animate={{opacity: 1}}
         transition={{duration: 0.5, delay: 1}}
         className="sm:text-5xl text-3xl font-extrabold text-center my-10">
         Каталог продукции
-      </motion.h1>
+      </motion.h2>
 
       <div className="flex flex-wrap mx-auto justify-between gap-4">
         {[...Array(3)].map((_, index) => (
