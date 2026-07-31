@@ -3,7 +3,7 @@
 import {CatalogProps} from "@/components/shared/CatalogProps"
 import BaseCatalogContent from "@/components/shared/BaseCatalogContent"
 import {fetchPromotionById, fetchPromotions} from "@/lib/api/promotions"
-import CatalogCard from "@/components/shared/CatalogCard"
+import CatalogCard from "@/components/site/Catalog/CatalogCard"
 
 export default function PromotionsContent(
   {

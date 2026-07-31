@@ -1,12 +1,12 @@
 'use client'
 
-import { Category } from '@/types'
-import React, { useEffect, useState } from 'react'
+import {Category} from '@/types'
+import React, {useEffect, useState} from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { motion } from 'framer-motion'
+import {motion} from 'framer-motion'
 import CategoriesPlaceholder from '@/components/placeholders/CategoriesPlaceholder'
-import { fetchCategories } from '@/lib/api/categories'
+import {fetchCategories} from '@/lib/api/categories'
 
 export default function CategoriesGrid() {
   const [categories, setCategories] = useState<Category[]>([])
@@ -30,17 +30,17 @@ export default function CategoriesGrid() {
   }, [])
 
   if (loading || error || categories.length === 0) {
-    return <CategoriesPlaceholder />
+    return <CategoriesPlaceholder/>
   }
 
   return (
     <section className="mb-10">
       {/* Заголовок */}
       <motion.h2
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="text-3xl sm:text-5xl font-extrabold text-center md:mb-10 mb-6"
+        initial={{opacity: 0, y: 20}}
+        animate={{opacity: 1, y: 0}}
+        transition={{duration: 0.6}}
+        className="text-xl sm:text-3xl font-extrabold text-center md:mb-10 mb-6"
       >
         Каталог продукции
       </motion.h2>
@@ -49,9 +49,9 @@ export default function CategoriesGrid() {
         {categories.map((category, index) => (
           <motion.div
             key={category.id}
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
+            initial={{opacity: 0, y: 30}}
+            animate={{opacity: 1, y: 0}}
+            transition={{duration: 0.5, delay: index * 0.1}}
           >
             <Link href={`/catalog/${category.categorySlug}`}>
               <div className="group relative h-[420px] overflow-hidden shadow-lg">
@@ -63,14 +63,15 @@ export default function CategoriesGrid() {
                   className="object-cover transition-transform duration-700 "
                 />
 
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"/>
 
                 <div className="absolute bottom-0 p-6">
                   <h2 className="text-white text-2xl font-bold mb-2">
                     {category.category}
                   </h2>
 
-                  <span className="inline-block text-sm text-white/80 opacity-0 translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
+                  <span
+                    className="inline-block text-sm text-white/80 opacity-0 translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
                     Смотреть категорию →
                   </span>
                 </div>

@@ -50,14 +50,14 @@ export default function ProductContainer({entity, isPromotion = false}: Props) {
             <ProductOrderContainer entity={entity}/>
           </motion.div>
 
-          {/* Блок с ценой — обновлённый, с проверкой на isPromotion */}
+          {/* Блок с ценой — с проверкой на isPromotion */}
           <motion.div
             initial={{opacity: 0, y: 20}}
             animate={{opacity: 1, y: 0}}
             transition={{duration: 0.5, delay: 0.6}}
             className="flex flex-col gap-1 mb-6">
             {!isPromotion &&
-                <p className="text-gray-400 text-sm">Цена за погонный метр</p>}
+              <p className="text-gray-400 text-sm">Цена за погонный метр</p>}
 
             <div className="flex items-baseline gap-1">
               <p className="text-4xl font-bold">
@@ -73,24 +73,23 @@ export default function ProductContainer({entity, isPromotion = false}: Props) {
             transition={{duration: 0.5, delay: 0.8}}
             className="border-t border-b border-gray-200 py-4">
             <div className="flex gap-8">
-              <div className="flex-1">
-                <p className="text-gray-500 text-sm sm:text-base mb-2">Материал</p>
-                <p className="text-gray-500 text-sm sm:text-base mb-2">Стиль</p>
+              <div className="flex-1 flex flex-col gap-2">
+                <p className="text-gray-500 text-sm sm:text-base">Материал</p>
+                <p className="text-gray-500 text-sm sm:text-base">Стиль</p>
                 {isPromotion && <p className="text-gray-500 text-sm sm:text-base">Размер</p>}
               </div>
-              <div className="flex-1">
-                <p className="font-medium text-sm sm:text-base mb-2">{entity.material || 'Не указано'}</p>
-                <p className="font-medium text-sm sm:text-base mb-2">{entity.style || 'Не указано'}</p>
+              <div className="flex-1 flex flex-col gap-2">
+                <p className="font-medium text-sm sm:text-base">{entity.material || 'Не указано'}</p>
+                <p className="font-medium text-sm sm:text-base">{entity.style || 'Не указано'}</p>
                 {isPromotion &&
-                    <p className="font-medium text-sm sm:text-base">{"size" in entity && entity.size || 'Не указано'}</p>}
+                  <p className="font-medium text-sm sm:text-base">{"size" in entity && entity.size || 'Не указано'}</p>}
               </div>
             </div>
           </motion.div>
         </div>
       </div>
 
-      {/* Контейнер с описанием */
-      }
+      {/* Контейнер с описанием */}
       <motion.div
         initial={{opacity: 0, y: 20}}
         animate={{opacity: 1, y: 0}}

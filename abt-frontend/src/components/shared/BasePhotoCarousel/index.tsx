@@ -69,15 +69,15 @@ export default function BasePhotoCarousel(
   return (
     <div className={`relative w-full max-w-4xl mx-auto group overflow-hidden ${className}`}>
       {/* Карусель */}
-      <div className="overflow-hidden" ref={emblaRef}>
-        <div className="flex">
+      <div className="h-full overflow-hidden" ref={emblaRef}>
+        <div className="flex h-full">
           {photos.map((photo) => (
             <div
               key={photo.id}
-              className={`flex-[0_0_100%] min-w-0 ${slideClassName}`}
+              className={`flex-[0_0_100%] min-w-0 h-full ${slideClassName}`}
               onClick={() => handleSlideClick(photo)}
             >
-              <div className={`relative ${aspectRatio} h-fit ${showThumbnails ? '' : 'bg-gray-50'}`}>
+              <div className={`relative ${aspectRatio} ${showThumbnails ? '' : 'bg-gray-50'}`}>
                 <Image
                   src={photo.photoUrl}
                   alt={`Фото ${photo.id}`}

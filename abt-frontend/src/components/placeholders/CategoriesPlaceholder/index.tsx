@@ -10,7 +10,7 @@ export default function CategoriesPlaceholder() {
         initial={{opacity: 0}}
         animate={{opacity: 1}}
         transition={{duration: 0.5, delay: 1}}
-        className="sm:text-5xl text-3xl font-extrabold text-center my-10">
+        className="text-xl sm:text-3xl font-extrabold text-center my-10">
         Каталог продукции
       </motion.h2>
 

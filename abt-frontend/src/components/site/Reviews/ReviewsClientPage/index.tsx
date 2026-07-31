@@ -6,10 +6,10 @@ import ReactDOM from 'react-dom' // Добавил для портала
 import {Review} from "@/types"
 import {Star, X} from "lucide-react"
 import Image from "next/image"
+import { fadeInView } from '@/lib/animations'
 
 interface ReviewProps {
   review: Review;
-  index: number;
   onImageClick?: (imageUrl: string) => void; // Callback для открытия модала (как в ProductPhotoCarousel)
 }
 
@@ -17,13 +17,11 @@ interface ReviewPageProps {
   reviews: Review[];
 }
 
-function ReviewCard({review, index, onImageClick}: ReviewProps) {
+function ReviewCard({review, onImageClick}: ReviewProps) {
   return (
     <motion.div
-      initial={{opacity: 0, y: 30}}
-      animate={{opacity: 1, y: 0}}
-      transition={{duration: 0.5, delay: index * 0.1}}
-      className="bg-white p-6 border max-w-4xl mx-auto w-full"
+      {...fadeInView}
+      className="bg-white p-4 sm:p-6 border border-gray-100 rounded-lg shadow-sm max-w-4xl mx-auto w-full"
     >
       <div className="flex items-center justify-between mb-3">
         <div className="flex gap-1 mb-3">
@@ -95,7 +93,7 @@ function ImagePreviewModal({previewUrl, onClose}: {previewUrl: string; onClose: 
         {/* Кнопка закрытия (опционально, если нужно; в оригинале нет, но полезно) */}
         <button
           onClick={onClose}
-          className="absolute -top-4 -right-4 z-10 bg-white rounded-lg p-2 shadow-lg hover:bg-gray-100 transition-colors"
+          className="absolute -top-4 -right-4 z-10 bg-white rounded-lg p-2 shadow-sm hover:bg-gray-100 transition-colors"
           aria-label="Закрыть превью"
         >
           <X size={24} className="text-gray-800" />
@@ -125,13 +123,11 @@ export default function ReviewsClientPage({reviews}: ReviewPageProps) {
   }, [])
 
   return (
-    <div className="my-5 px-4">
+    <div className="py-8 md:py-12 lg:py-16">
       <motion.div
-        initial={{opacity: 0, y: 20}}
-        animate={{opacity: 1, y: 0}}
-        transition={{duration: 0.5}}
-        className="mb-8 sm:mb-12 max-w-4xl mx-auto">
-        <h1 className="text-mainPurple font-extrabold text-2xl sm:text-3xl md:text-4xl mb-4">
+        {...fadeInView}
+        className="mb-8 md:mb-12 max-w-4xl mx-auto">
+        <h1 className="text-gray-950 font-extrabold text-2xl sm:text-3xl md:text-4xl mb-4">
           Отзывы
         </h1>
         <p className="text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed">
@@ -142,11 +138,10 @@ export default function ReviewsClientPage({reviews}: ReviewPageProps) {
 
       {/* Колонка с отзывами */}
       <div className="flex flex-col gap-6">
-        {reviews.map((review, index) => (
+        {reviews.map((review) => (
           <ReviewCard
             key={review.id}
             review={review}
-            index={index}
             onImageClick={handleImageClick}
           />
         ))}

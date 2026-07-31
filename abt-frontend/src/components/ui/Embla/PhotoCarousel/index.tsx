@@ -3,13 +3,31 @@
 import {Photo} from '@/types'
 import BasePhotoCarousel from "@/components/shared/BasePhotoCarousel"
 
-export default function PhotoCarousel({photos, className}: { photos: Photo[]; className?: string }) {
+type PhotoCarouselProps = {
+  photos: Photo[]
+  className?: string
+  imageClassName?: string
+  slideClassName?: string
+  aspectRatio?: string
+  showDots?: boolean
+}
+
+export default function PhotoCarousel({
+                                        photos,
+                                        className,
+                                        imageClassName,
+                                        slideClassName = 'bg-gray-50',
+                                        aspectRatio = 'aspect-video',
+                                        showDots = true,
+                                      }: PhotoCarouselProps) {
   return (
     <BasePhotoCarousel
       photos={photos}
-      className={`aspect-video ${className || ''}`} // Добавляем aspect-video на корень
-      showDots={true} // Включаем dots
-      slideClassName="bg-gray-50" // Фон для слайдов, как в оригинале
+      className={`${aspectRatio} ${className || ''}`}
+      showDots={showDots}
+      slideClassName={slideClassName}
+      aspectRatio={aspectRatio}
+      imageClassName={imageClassName}
     />
   )
 }

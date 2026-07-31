@@ -25,8 +25,8 @@ export const metadata = {
 export default function PrivacyPolicyPage() {
   return (
     <ContentWrapper>
-      <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-lg p-6 sm:p-10 my-8">
-        <h1 className="text-mainPurple font-extrabold text-2xl sm:text-3xl md:text-4xl mb-6 text-center">
+      <div className="max-w-4xl mx-auto bg-white border border-gray-100 rounded-lg shadow-sm p-5 sm:p-8 lg:p-10 my-8 md:my-12 text-gray-700 leading-relaxed">
+        <h1 className="text-gray-950 font-extrabold text-2xl sm:text-3xl md:text-4xl mb-6">
           Политика конфиденциальности и обработки персональных данных
         </h1>
         <div className="text-gray-700 text-sm sm:text-base mb-6 text-right">
@@ -43,7 +43,7 @@ export default function PrivacyPolicyPage() {
             </p>
           </section>
           <section>
-            <h2 className="text-mainPurple font-bold text-lg mb-2 mt-4">1. Основные понятия</h2>
+            <h2 className="text-gray-950 font-bold text-lg mb-2 mt-4">1. Основные понятия</h2>
             <ul className="list-disc pl-5 space-y-2">
               <li>
                 <b>Оператор</b> — ИП «Колесникова Ольга Владимировна», расположенное по адресу: Балашиха,
@@ -71,7 +71,7 @@ export default function PrivacyPolicyPage() {
             </ul>
           </section>
           <section>
-            <h2 className="text-mainPurple font-bold text-lg mb-2 mt-4">2. Основные права и обязанности субъектов
+            <h2 className="text-gray-950 font-bold text-lg mb-2 mt-4">2. Основные права и обязанности субъектов
               персональных данных</h2>
             <p className="mb-2 font-semibold">Субъект персональных данных имеет право:</p>
             <ul className="list-disc pl-5 space-y-1 mb-3">
@@ -97,7 +97,7 @@ export default function PrivacyPolicyPage() {
             </ul>
           </section>
           <section>
-            <h2 className="text-mainPurple font-bold text-lg mb-2 mt-4">3. Какие персональные данные мы
+            <h2 className="text-gray-950 font-bold text-lg mb-2 mt-4">3. Какие персональные данные мы
               обрабатываем</h2>
             <p>
               Оператор обрабатывает следующие персональные данные, которые Пользователь предоставляет самостоятельно,
@@ -116,7 +116,7 @@ export default function PrivacyPolicyPage() {
             </p>
           </section>
           <section>
-            <h2 className="text-mainPurple font-bold text-lg mb-2 mt-4">4. Цели обработки персональных данных</h2>
+            <h2 className="text-gray-950 font-bold text-lg mb-2 mt-4">4. Цели обработки персональных данных</h2>
             <p>Оператор обрабатывает персональные данные Пользователей в следующих целях:</p>
             <ul className="list-disc pl-5 space-y-1">
               <li>Обратная связь с Пользователем для ответа на его запросы и вопросы, поступившие через формы на
@@ -129,7 +129,7 @@ export default function PrivacyPolicyPage() {
             </ul>
           </section>
           <section>
-            <h2 className="text-mainPurple font-bold text-lg mb-2 mt-4">5. Правовые основания обработки персональных
+            <h2 className="text-gray-950 font-bold text-lg mb-2 mt-4">5. Правовые основания обработки персональных
               данных</h2>
             <p>Правовыми основаниями обработки персональных данных Оператором являются:</p>
             <ul className="list-disc pl-5 space-y-1">
@@ -140,7 +140,7 @@ export default function PrivacyPolicyPage() {
             </ul>
           </section>
           <section>
-            <h2 className="text-mainPurple font-bold text-lg mb-2 mt-4">6. Срок обработки персональных данных</h2>
+            <h2 className="text-gray-950 font-bold text-lg mb-2 mt-4">6. Срок обработки персональных данных</h2>
             <p>
               Срок обработки персональных данных определяется достижением целей, для которых они были собраны.<br/>
               Согласие на обработку персональных данных действует до момента его отзыва субъектом персональных данных
@@ -150,7 +150,7 @@ export default function PrivacyPolicyPage() {
             </p>
           </section>
           <section>
-            <h2 className="text-mainPurple font-bold text-lg mb-2 mt-4">7. Условия передачи персональных данных третьим
+            <h2 className="text-gray-950 font-bold text-lg mb-2 mt-4">7. Условия передачи персональных данных третьим
               лицам</h2>
             <p>Оператор обязуется не передавать полученные персональные данные третьим лицам, за исключением следующих
               случаев:</p>
@@ -166,7 +166,7 @@ export default function PrivacyPolicyPage() {
             </ul>
           </section>
           <section>
-            <h2 className="text-mainPurple font-bold text-lg mb-2 mt-4">8. Безопасность персональных данных</h2>
+            <h2 className="text-gray-950 font-bold text-lg mb-2 mt-4">8. Безопасность персональных данных</h2>
             <p>
               Оператор принимает необходимые и достаточные организационные и технические меры для защиты персональных
               данных Пользователей от неправомерного или случайного доступа, уничтожения, изменения, блокирования,
@@ -174,7 +174,7 @@ export default function PrivacyPolicyPage() {
             </p>
           </section>
           <section>
-            <h2 className="text-mainPurple font-bold text-lg mb-2 mt-4">9. Обратная связь</h2>
+            <h2 className="text-gray-950 font-bold text-lg mb-2 mt-4">9. Обратная связь</h2>
             <p>
               Все предложения или вопросы по поводу настоящей Политики и обработки ваших персональных данных вы можете
               направлять по адресу электронной почты Оператора: info@kuhni-abt.ru или по почтовому адресу: Балашиха,
@@ -182,7 +182,7 @@ export default function PrivacyPolicyPage() {
             </p>
           </section>
           <section>
-            <h2 className="text-mainPurple font-bold text-lg mb-2 mt-4">10. Заключительные положения</h2>
+            <h2 className="text-gray-950 font-bold text-lg mb-2 mt-4">10. Заключительные положения</h2>
             <p>
               Настоящая Политика является общедоступной и подлежит размещению на Сайте Оператора в сети Интернет по
               адресу: [Прямая ссылка на страницу с этой Политикой].<br/>

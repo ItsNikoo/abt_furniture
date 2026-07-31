@@ -10,7 +10,7 @@ export default function AdvantagesContainer() {
   return (
     <section className="w-full bg-white py-10">
       <div className="mx-auto px-4 ">
-        <h2 className="text-3xl sm:text-5xl font-extrabold text-center md:mb-10 mb-6">Наши преимущества</h2>
+        <h2 className="text-xl sm:text-3xl font-extrabold text-center md:mb-10 mb-6">Наши преимущества</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {advantagesList.map((advantage: Advantage, index) => (
             <div

@@ -5,31 +5,28 @@ import { Service } from '@/types'
 import { services } from '@/components/site/Services/services'
 import { motion } from 'framer-motion'
 import ServiceCard from "@/components/site/Services/ServiceCard"
+import { fadeInView } from '@/lib/animations'
 
 export default function Services() {
   return (
-    <div className="my-4">
+    <div className="py-8">
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+        {...fadeInView}
+        className="mb-8 md:mb-12"
       >
-        <h1 className="text-mainPurple font-extrabold text-xl sm:text-2xl md:text-3xl mb-4">
+        <h1 className="text-gray-950 font-extrabold text-2xl sm:text-3xl md:text-4xl mb-4">
           Идеальная корпусная мебель на заказ — дизайн, изготовление, установка
         </h1>
-        <p className="mb-6">
+        <p className="max-w-4xl text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed">
           Помимо мебели разных фасонов и стилей{' '}
           <span className="font-bold">мы предоставляем обширный спектр услуг</span>, чтобы вы получили максимум
           удовольствия и минимум “рутины”.
         </p>
       </motion.div>
-      <div className="grid grid-cols-1 gap-8">
+      <div className="grid grid-cols-1 gap-5 md:gap-6">
         {services.map((service: Service) => (
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: service.id * 0.2 }}
-            viewport={{ once: true }}
+            {...fadeInView}
             key={service.id}>
             <ServiceCard service={service}/>
           </motion.div>
@@ -37,13 +34,10 @@ export default function Services() {
       </div>
       {/* Фиолетовый CTA контейнер */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
+        {...fadeInView}
         className="mt-8 sm:mt-12 text-center">
         <div
-          className="bg-gradient-to-r from-mainPurple to-mainPurple/80 rounded-xl sm:rounded-2xl p-6 sm:p-8 lg:p-10 text-white shadow-xl">
+          className="bg-mainPurple rounded-lg p-6 sm:p-8 lg:p-10 text-white shadow-sm">
           <h3 className="font-bold text-xl sm:text-2xl lg:text-3xl mb-3 sm:mb-4">
             Не нашли нужную услугу?
           </h3>

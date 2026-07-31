@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import SiteContainer from '@/components/SiteContainer'
 import FirstMainContainer from '@/components/site/FirstPage/FirstMainContainer'
+import { fadeInView } from '@/lib/animations'
 
 export default function FirstPage() {
   return (
@@ -14,10 +15,7 @@ export default function FirstPage() {
 
       <SiteContainer>
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true, amount: 0.5 }}
-          transition={{ duration: 1 }}
+          {...fadeInView}
           className="flex items-stretch xl:min-h-[calc(100vh-120px)]"
         >
           <FirstMainContainer />
