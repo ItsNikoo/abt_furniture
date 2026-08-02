@@ -5,6 +5,8 @@ import AdvantagesContainer from "@/components/site/AdvantagesContainer"
 import FeedbackForm from "@/components/shared/FeedbackForm"
 import ReviewsContainer from "@/components/site/Reviews/ReviewsContainer"
 import {Metadata} from "next"
+import Portfolio from "@/components/site/Portfolio";
+import MapSection from "@/components/site/MapSection";
 
 export const dynamic = 'force-dynamic'
 
@@ -55,7 +57,9 @@ export default async function Home() {
         <CategoriesGrid/>
         <FeedbackForm/>
       </SiteContainer>
+      <Portfolio />
       <ReviewsContainer/>
+      <MapSection/>
     </>
   )
 }

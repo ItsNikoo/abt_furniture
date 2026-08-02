@@ -29,7 +29,7 @@ export default function Header() {
   const navClassName = 'flex flex-wrap gap-4 py-4 border-y'
 
   return (
-    <header>
+    <header className="relative z-50 bg-white">
       <SiteContainer>
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -209,7 +209,7 @@ export default function Header() {
                       </Link>
                     ))}
                     <div className="py-3 border-b border-gray-100">
-                      <ServiceButton/>
+                      <ServiceButton onNavigate={() => setIsMenuOpen(false)}/>
                     </div>
                   </nav>
 
