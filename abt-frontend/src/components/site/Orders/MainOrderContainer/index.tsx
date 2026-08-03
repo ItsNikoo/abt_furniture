@@ -46,7 +46,7 @@ export default function MainOrderContainer({
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="mx-4 sm:mx-0">
+      <DialogContent>
         <DialogHeader>
           <DialogTitle className="font-bold text-2xl">{title}</DialogTitle>
           <DialogDescription>
