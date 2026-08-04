@@ -1,5 +1,5 @@
 import { Promotion, PromotionData} from "@/types"
-import {apiRequest} from "@/lib/utils/apiRequest"
+import {apiGet, apiRequest} from "@/lib/utils/apiRequest"
 import {Filters} from "@/lib/api/filters"
 
 export async function fetchPromotions(filters: Filters = {}): Promise<Promotion[]> {
@@ -12,11 +12,11 @@ export async function fetchPromotions(filters: Filters = {}): Promise<Promotion[
   const queryString = params.toString()
   const path = `/promotions/${queryString ? `?${queryString}` : ''}`
 
-  return apiRequest<Promotion[]>(path, {method: "GET"})
+  return apiGet<Promotion[]>(path, {fallback: []})
 }
 
 export async function fetchPromotionById(id: number): Promise<Promotion> {
-  return apiRequest<Promotion>(`/promotions/${id}/`, {method: 'GET'})
+  return apiGet<Promotion>(`/promotions/${id}/`)
 }
 
 export async function postPromotion(data: PromotionData, token: string): Promise<Promotion> {

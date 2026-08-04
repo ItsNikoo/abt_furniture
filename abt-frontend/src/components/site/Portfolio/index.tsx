@@ -1,6 +1,6 @@
 'use client'
 
-import PhotoWithPreview from "@/components/shared/PhotoWithPreview";
+import PhotoWithPreview from "@/components/shared/PhotoWithPreview"
 
 export default function Portfolio() {
   return (

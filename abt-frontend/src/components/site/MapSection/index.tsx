@@ -2,7 +2,7 @@
 
 import {motion} from "framer-motion"
 import {fadeInView} from '@/lib/animations'
-import Link from "next/link";
+import Link from "next/link"
 
 export default function MapSection() {
   return (

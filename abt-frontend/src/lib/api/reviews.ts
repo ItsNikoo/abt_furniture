@@ -1,8 +1,8 @@
 import {Review, ReviewData} from "@/types"
-import {apiRequest} from "@/lib/utils/apiRequest"
+import {apiGet, apiRequest} from "@/lib/utils/apiRequest"
 
 export async function fetchReviews(): Promise<Review[]> {
-  return apiRequest<Review[]>(`/reviews/`, {method: "GET"})
+  return apiGet<Review[]>(`/reviews/`, {fallback: []})
 }
 
 export async function postReview(data: ReviewData, token: string): Promise<Review> {

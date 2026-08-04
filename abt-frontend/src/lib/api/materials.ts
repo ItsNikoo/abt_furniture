@@ -1,9 +1,9 @@
 import {Material} from '@/types'
-import {apiRequest} from "@/lib/utils/apiRequest"
+import {apiGet, apiRequest} from "@/lib/utils/apiRequest"
 
 // GET запрос
 export async function fetchMaterials() {
-  return apiRequest<Material[]>('/materials/', {method: 'GET'})
+  return apiGet<Material[]>('/materials/', {fallback: []})
 }
 
 // POST запрос

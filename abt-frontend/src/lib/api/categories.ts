@@ -1,8 +1,8 @@
 import {Category, CategoryData} from '@/types'
-import {apiRequest} from "@/lib/utils/apiRequest"
+import {apiGet, apiRequest} from "@/lib/utils/apiRequest"
 
 export async function fetchCategories(): Promise<Category[]> {
-  return apiRequest<Category[]>(`/categories/`, {method: 'GET'})
+  return apiGet<Category[]>(`/categories/`, {fallback: []})
 }
 
 export async function postCategory(data: CategoryData, token: string) {
