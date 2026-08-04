@@ -1,9 +1,5 @@
-'use client'
-
-import { motion } from 'framer-motion'
 import SiteContainer from '@/components/SiteContainer'
 import FirstMainContainer from '@/components/site/FirstPage/FirstMainContainer'
-import { fadeInView } from '@/lib/animations'
 
 export default function FirstPage() {
   return (
@@ -14,12 +10,9 @@ export default function FirstPage() {
       />
 
       <SiteContainer>
-        <motion.div
-          {...fadeInView}
-          className="flex items-stretch xl:min-h-[calc(100vh-120px)]"
-        >
+        <div className="flex items-stretch xl:min-h-[calc(100vh-120px)]">
           <FirstMainContainer />
-        </motion.div>
+        </div>
       </SiteContainer>
     </section>
   )

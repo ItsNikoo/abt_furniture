@@ -1,25 +1,17 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { MapPin, Menu, Phone, X } from 'lucide-react'
 import MainOrderContainer from '@/components/site/Orders/MainOrderContainer'
 import ServiceButton from '@/components/ui/ServiceButton'
 import { Button } from '@/components/ui/button'
-import { motion } from 'framer-motion'
 import {ROUTES} from "@/config/navigation"
 import SiteContainer from "@/components/SiteContainer"
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  // Add state to ensure consistent rendering
-  const [isClient, setIsClient] = useState(false)
-
-  // Ensure client-side rendering consistency
-  useEffect(() => {
-    setIsClient(true)
-  }, [])
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen)
@@ -31,10 +23,7 @@ export default function Header() {
   return (
     <header className="relative z-50 bg-white">
       <SiteContainer>
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}>
+        <div>
           {/* Desktop Header (lg: ≥1024px) */}
           <div
             className="hidden lg:flex flex-row items-center justify-between max-w-[1400px] mx-auto gap-4">
@@ -77,20 +66,18 @@ export default function Header() {
           </div>
 
           {/* Desktop Navigation (lg: ≥1024px) */}
-          {isClient && (
-            <nav className="hidden lg:flex flex-row gap-4 py-4 border-y max-w-[1400px] mx-auto">
-              {Object.values(ROUTES).map((link) => (
-                <Link
-                  key={link.path}
-                  href={link.path}
-                  className="font-notosans"
-                >
-                  {link.name}
-                </Link>
-              ))}
-              <ServiceButton/>
-            </nav>
-          )}
+          <nav className="hidden lg:flex flex-row gap-4 py-4 border-y max-w-[1400px] mx-auto">
+            {Object.values(ROUTES).map((link) => (
+              <Link
+                key={link.path}
+                href={link.path}
+                className="font-notosans"
+              >
+                {link.name}
+              </Link>
+            ))}
+            <ServiceButton/>
+          </nav>
 
           {/* Tablet Header (md: 768px–1023px) */}
           <div className="hidden md:flex lg:hidden flex-col">
@@ -136,20 +123,18 @@ export default function Header() {
             </div>
 
             {/* Navigation */}
-            {isClient && (
-              <nav className={navClassName}>
-                {Object.values(ROUTES).map((link) => (
-                  <Link
-                    key={link.path}
-                    href={link.path}
-                    className="font-notosans"
-                  >
-                    {link.name}
-                  </Link>
-                ))}
-                <ServiceButton/>
-              </nav>
-            )}
+            <nav className={navClassName}>
+              {Object.values(ROUTES).map((link) => (
+                <Link
+                  key={link.path}
+                  href={link.path}
+                  className="font-notosans"
+                >
+                  {link.name}
+                </Link>
+              ))}
+              <ServiceButton/>
+            </nav>
           </div>
 
           {/* Mobile Header (sm: <768px) */}
@@ -221,7 +206,7 @@ export default function Header() {
               </div>
             )}
           </div>
-        </motion.div>
+        </div>
       </SiteContainer>
     </header>
   )

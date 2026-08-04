@@ -18,11 +18,11 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
       {/* Google Analytics */}
       <Script 
         src="https://www.googletagmanager.com/gtag/js?id=G-FTBKLVC334"
-        strategy="afterInteractive"
+        strategy="lazyOnload"
       />
       <Script
         id="google-analytics"
-        strategy="afterInteractive"
+        strategy="lazyOnload"
         dangerouslySetInnerHTML={{
           __html: `
             window.dataLayer = window.dataLayer || [];
@@ -36,7 +36,7 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
       {/* Яндекс Метрика */}
       <Script
         id="yandex-metrika"
-        strategy="afterInteractive"
+        strategy="lazyOnload"
         dangerouslySetInnerHTML={{
           __html: `
             (function(m,e,t,r,i,k,a){

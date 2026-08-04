@@ -14,7 +14,7 @@ import { Button } from '@/components/ui/button'
 import { Check, ChevronsUpDown } from 'lucide-react'
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command'
 import { cn } from '@/lib/utils'
-import { queryClient } from '@/lib/react-query-client'
+import { queryClient } from '@/providers/react-query-client'
 import Image from 'next/image'
 import Cookies from 'js-cookie'
 
