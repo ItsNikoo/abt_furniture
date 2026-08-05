@@ -67,7 +67,7 @@ export default function PhotoWithPreview({
           <button
             type="button"
             onClick={closePreview}
-            className="absolute top-4 right-4 text-white text-3xl leading-none w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/10"
+            className="absolute top-4 right-4 z-10 text-white text-3xl leading-none w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/10"
             aria-label="Закрыть">
             &times;
           </button>
