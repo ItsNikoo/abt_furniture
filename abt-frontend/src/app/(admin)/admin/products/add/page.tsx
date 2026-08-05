@@ -1,5 +1,5 @@
 import AddProductContainer from '@/components/admin/products/AddProductContainer'
-import { Category, Material, Style } from '@/types'
+import { Category, Material, Style } from '@/types/types'
 import { fetchCategories } from '@/lib/api/categories'
 import { fetchStyles } from '@/lib/api/styles'
 import { fetchMaterials } from '@/lib/api/materials'

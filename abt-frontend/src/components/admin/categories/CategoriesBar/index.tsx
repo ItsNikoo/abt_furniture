@@ -1,6 +1,6 @@
 'use client'
 
-import {Category} from '@/types'
+import {Category} from '@/types/types'
 import {use} from 'react'
 import CategoryCard from '@/components/admin/categories/CategoryCard'
 import {deleteCategoryAction} from '@/actions/categories'

@@ -18,7 +18,7 @@ import {
 import {Check, ChevronsUpDown} from 'lucide-react'
 import {cn} from '@/lib/utils'
 import Image from 'next/image'
-import {PromotionData, Category, Style, Material} from '@/types'
+import {PromotionData, Category, Style, Material} from '@/types/types'
 import {postPromotionAction} from "@/actions/promotions"
 import Cookies from "js-cookie"
 import {useRouter} from "next/navigation"

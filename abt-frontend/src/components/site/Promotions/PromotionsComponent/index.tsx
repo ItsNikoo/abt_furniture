@@ -3,6 +3,7 @@ import PromotionsContent from "@/components/site/Promotions/PromotionsContent"
 import SiteContainer from "@/components/SiteContainer"
 import LoadingPlaceholder from "@/components/placeholders/LoadingPlaceholder"
 import {CatalogProps} from "@/components/shared/CatalogProps"
+import ReactQueryProvider from "@/providers/react-query-provider"
 
 export default function PromotionsComponent({
                                               categoriesPromise,
@@ -11,15 +12,17 @@ export default function PromotionsComponent({
                                               selectedCategory,
                                             }: CatalogProps) {
   return (
-    <SiteContainer>
-      <Suspense fallback={<LoadingPlaceholder/>}>
-        <PromotionsContent
-          categoriesPromise={categoriesPromise}
-          stylesPromise={stylesPromise}
-          materialsPromise={materialsPromise}
-          selectedCategory={selectedCategory}
-        />
-      </Suspense>
-    </SiteContainer>
+    <ReactQueryProvider>
+      <SiteContainer>
+        <Suspense fallback={<LoadingPlaceholder/>}>
+          <PromotionsContent
+            categoriesPromise={categoriesPromise}
+            stylesPromise={stylesPromise}
+            materialsPromise={materialsPromise}
+            selectedCategory={selectedCategory}
+          />
+        </Suspense>
+      </SiteContainer>
+    </ReactQueryProvider>
   )
 }

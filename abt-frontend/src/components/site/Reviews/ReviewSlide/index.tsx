@@ -1,4 +1,4 @@
-import { Review } from '@/types'
+import { Review } from '@/types/types'
 import {Star} from "lucide-react"
 import Link from "next/link"
 import {ROUTES} from "@/config/navigation"

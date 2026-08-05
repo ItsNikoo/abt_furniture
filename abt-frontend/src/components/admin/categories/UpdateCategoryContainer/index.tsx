@@ -14,7 +14,7 @@ import {
 } from '@/components/ui/dialog'
 import { Pencil } from 'lucide-react'
 import { Label } from '@/components/ui/label'
-import { Category, CategoryData } from '@/types'
+import { Category, CategoryData } from '@/types/types'
 import Image from 'next/image'
 import { patchCategoryAction } from '@/actions/categories'
 import Cookies from 'js-cookie'

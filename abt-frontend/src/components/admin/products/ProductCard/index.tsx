@@ -1,6 +1,6 @@
 import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card'
 import Link from 'next/link'
-import {Photo, Product} from '@/types'
+import {Photo, Product} from '@/types/types'
 import {Button} from '@/components/ui/button'
 import Image from 'next/image'
 import {useMutation, useQueryClient} from '@tanstack/react-query'
@@ -90,13 +90,13 @@ export default function ProductCard({product}: ProductCardProps) {
         {/* Теги */}
         <div className="flex flex-wrap gap-2">
           {product.material && (
-            <span className="inline-block px-3 py-1 text-xs font-medium text-gray-700 bg-gray-200 rounded-full">
+            <span className="inline-block px-3 py-1 text-xs font-medium text-gray-700 bg-gray-200 rounded-lg">
               {product.material}
             </span>
           )}
 
           {product.style && (
-            <span className="inline-block px-3 py-1 text-xs font-medium text-gray-700 bg-gray-200 rounded-full">
+            <span className="inline-block px-3 py-1 text-xs font-medium text-gray-700 bg-gray-200 rounded-lg">
               {product.style}
             </span>
           )}

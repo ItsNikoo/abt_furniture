@@ -1,6 +1,6 @@
 'use client'
 
-import {Category, Material, Photo, Promotion, PromotionData, Style} from "@/types"
+import {Category, Material, Photo, Promotion, PromotionData, Style} from "@/types/types"
 import React, {useState, useEffect} from "react"
 import {
   Dialog,

@@ -17,10 +17,6 @@ export const ADMIN_ROUTES = {
     name: 'Материалы',
     path: `${ADMIN_URL}/materials`,
   },
-  SALES: {
-    name: 'Акции',
-    path: `${ADMIN_URL}/sales`,
-  },
   PROMOTIONS: {
     name: 'Спецпредложения',
     path: `${ADMIN_URL}/promotions`,

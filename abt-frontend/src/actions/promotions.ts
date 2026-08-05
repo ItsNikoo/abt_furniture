@@ -3,7 +3,7 @@
 import {ADMIN_ROUTES} from "@/config/navigation"
 import {revalidatePath} from "next/cache"
 import {deletePromotion, patchPromotion, postPromotion} from "@/lib/api/promotions"
-import {PromotionData} from "@/types"
+import {PromotionData} from "@/types/types"
 
 const path = ADMIN_ROUTES.PROMOTIONS.path
 

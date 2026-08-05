@@ -1,5 +1,5 @@
-import {Product, ProductData} from '@/types'
-import {apiRequest} from "@/lib/utils/apiRequest"
+import {Product, ProductData} from '@/types/types'
+import {apiGet, apiRequest} from "@/lib/utils/apiRequest"
 import {Filters} from "@/lib/api/filters"
 
 
@@ -13,11 +13,11 @@ export async function fetchProducts(filters: Filters = {}): Promise<Product[]> {
   const queryString = params.toString()
   const path = `/products/${queryString ? `?${queryString}` : ''}`
 
-  return apiRequest<Product[]>(path, {method: 'GET'})
+  return apiGet<Product[]>(path, {fallback: []})
 }
 
 export async function fetchProductById(id: number): Promise<Product> {
-  return apiRequest<Product>(`/products/${id}/`, {method: 'GET'})
+  return apiGet<Product>(`/products/${id}/`)
 }
 
 export async function postProduct(data: ProductData, token: string): Promise<Product> {

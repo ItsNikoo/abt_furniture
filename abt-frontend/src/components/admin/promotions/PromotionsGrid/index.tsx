@@ -1,4 +1,4 @@
-import {Category, Material, Promotion, Style} from "@/types"
+import {Category, Material, Promotion, Style} from "@/types/types"
 import {use} from "react"
 import PromotionCard from "@/components/admin/promotions/PromotionCard"
 

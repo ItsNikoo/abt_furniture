@@ -1,4 +1,4 @@
-import {Contact} from '@/types'
+import {Contact} from '@/types/types'
 import {apiRequest} from "@/lib/utils/apiRequest"
 
 export async function postContact(formData: FormData) {

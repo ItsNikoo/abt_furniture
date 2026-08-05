@@ -1,7 +1,7 @@
 import {fetchCategories} from '@/lib/api/categories'
 import {fetchStyles} from '@/lib/api/styles'
 import {fetchMaterials} from '@/lib/api/materials'
-import {Category} from "@/types"
+import {Category} from "@/types/types"
 import CatalogComponent from "../../../../components/site/Catalog/CatalogComponent"
 import {Metadata} from "next"
 
@@ -67,7 +67,7 @@ export async function generateMetadata({params}: Props): Promise<Metadata> {
       siteName: 'АБТ мебель - Фабрика мебели на заказ',
       images: [
         {
-          url: '/og-image.jpg', // Добавьте реальное изображение
+          url: 'https://kuhni-abt.ru/seo-image.jpg',
           width: 1200,
           height: 630,
           alt: `${category.category} от АБТ мебель`,
@@ -80,7 +80,7 @@ export async function generateMetadata({params}: Props): Promise<Metadata> {
       card: 'summary_large_image',
       title,
       description,
-      images: ['/og-image.jpg'],
+      images: ['https://kuhni-abt.ru/seo-image.jpg'],
     },
 
     // Robots

@@ -4,8 +4,8 @@ export const advantagesList = [
     icon: 'factory',
   },
   {
-    title: 'Гарантия на любую продукцию',
-    icon: 'shield',
+    title: 'Отсутствие скрытых переплат',
+    icon: 'dollar',
   },
   {
     title: 'Разнообразие материалов',

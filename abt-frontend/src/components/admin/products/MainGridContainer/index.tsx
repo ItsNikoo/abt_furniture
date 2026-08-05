@@ -2,7 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query'
 import { fetchProducts } from '@/lib/api/products'
-import { Product } from '@/types'
+import { Product } from '@/types/types'
 import ProductCard from '@/components/admin/products/ProductCard'
 import { useState } from 'react'
 

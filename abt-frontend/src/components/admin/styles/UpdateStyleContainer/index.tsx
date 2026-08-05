@@ -14,7 +14,7 @@ import {
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { useState } from 'react'
-import { Style } from '@/types'
+import { Style } from '@/types/types'
 import { patchStyleAction } from '@/actions/styles'
 import Cookies from 'js-cookie'
 

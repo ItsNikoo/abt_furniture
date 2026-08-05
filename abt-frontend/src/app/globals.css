@@ -132,3 +132,29 @@
         font-family: var(--font-montserrat), sans-serif;
     }
 }
+
+@layer utilities {
+    [data-animate-fade],
+    .animate-fade-in-fast {
+        animation: fade-in-fast 0.3s ease-out both;
+    }
+
+    @keyframes fade-in-fast {
+        from {
+            opacity: 0;
+            transform: translateY(8px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        [data-animate-fade],
+        .animate-fade-in-fast {
+            animation: none;
+        }
+    }
+}

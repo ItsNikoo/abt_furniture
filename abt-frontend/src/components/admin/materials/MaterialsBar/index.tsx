@@ -1,7 +1,7 @@
 'use client'
 
 import { use } from 'react'
-import { Material } from '@/types'
+import { Material } from '@/types/types'
 import MaterialCard from '@/components/admin/materials/MaterialCard'
 import { deleteMaterialAction } from '@/actions/materials'
 

@@ -1,43 +1,39 @@
 'use client'
 
-import {motion} from 'framer-motion'
 import {Clock, ExternalLink, Mail, MessageCircle, Phone, UserRound} from 'lucide-react'
 import Link from 'next/link'
+import { fadeInView } from '@/lib/animations'
 
 export default function Contacts() {
     return (
-        <div className="my-5">
+        <div className="py-8">
             {/* Header */}
-            <motion.div
-                initial={{opacity: 0, y: 20}}
-                animate={{opacity: 1, y: 0}}
-                transition={{duration: 0.5}}
-                className="mb-8 sm:mb-12">
-                <h1 className="text-mainPurple font-extrabold text-2xl sm:text-3xl md:text-4xl mb-4">
+            <div
+                {...fadeInView}
+                className="mb-8 md:mb-12">
+                <h1 className="text-gray-950 font-extrabold text-2xl sm:text-3xl md:text-4xl mb-4">
                     Контакты нашей компании
                 </h1>
-                <p className="text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed">
+                <p className="max-w-4xl text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed">
                     Мы всегда рады помочь Вам создать мебель Вашей мечты! Обращайтесь удобным способом – ответим быстро
                     и подробно
                     проконсультируем.
                 </p>
-            </motion.div>
+            </div>
 
             {/* Контактные карточки */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                 {/* Телефон */}
-                <motion.div
-                    initial={{opacity: 0, y: 20}}
-                    animate={{opacity: 1, y: 0}}
-                    transition={{duration: 0.5, delay: 0.2}}
+                <div
+                    {...fadeInView}
                     className="bg-white p-4 sm:p-6 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
                     <div className="flex items-center gap-3 mb-3">
-                        <div className="bg-mainPurple/90 p-2 rounded-full">
+                        <div className="bg-mainPurple/90 p-2 rounded-lg">
                             <Phone className="w-5 h-5 text-white"/>
                         </div>
-                        <h3 className="text-mainPurple font-semibold text-lg sm:text-xl">Позвоните нам</h3>
+                        <h3 className="text-gray-950 font-semibold text-lg sm:text-xl">Позвоните нам</h3>
                     </div>
-                    <div className="space-y-2">
+                    <div className="space-y-2 text-gray-700">
                         <span className="font-bold">Наши телефоны:</span>
                         <Link
                             href="tel:+79267232880"
@@ -60,21 +56,19 @@ export default function Contacts() {
                             <span>11:00 до 19:00 (без выходных)</span>
                         </div>
                     </div>
-                </motion.div>
+                </div>
 
                 {/* WhatsApp */}
-                <motion.div
-                    initial={{opacity: 0, y: 20}}
-                    animate={{opacity: 1, y: 0}}
-                    transition={{duration: 0.5, delay: 0.2}}
+                <div
+                    {...fadeInView}
                     className="bg-white p-4 sm:p-6 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
                     <div className="flex items-center gap-3 mb-3">
-                        <div className="bg-mainPurple/90 p-2 rounded-full">
+                        <div className="bg-mainPurple/90 p-2 rounded-lg">
                             <MessageCircle className="w-5 h-5 text-white"/>
                         </div>
-                        <h3 className="text-mainPurple font-semibold text-lg sm:text-xl">Напишите в WhatsApp</h3>
+                        <h3 className="text-gray-950 font-semibold text-lg sm:text-xl">Напишите в WhatsApp</h3>
                     </div>
-                    <div className="space-y-2 flex flex-col">
+                    <div className="space-y-2 flex flex-col text-gray-700">
                         <span className="font-bold">Наши телефоны:</span>
                         <Link
                             href="https://wa.me/79267232880"
@@ -98,21 +92,19 @@ export default function Contacts() {
                             Отправьте фото, эскиз или вопрос – обсудим Ваш проект в чате!
                         </p>
                     </div>
-                </motion.div>
+                </div>
 
                 {/* Email */}
-                <motion.div
-                    initial={{opacity: 0, y: 20}}
-                    animate={{opacity: 1, y: 0}}
-                    transition={{duration: 0.5, delay: 0.4}}
+                <div
+                    {...fadeInView}
                     className="bg-white p-4 sm:p-6 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow md:col-span-2">
                     <div className="flex items-center gap-3 mb-3">
-                        <div className="bg-mainPurple/90 p-2 rounded-full">
+                        <div className="bg-mainPurple/90 p-2 rounded-lg">
                             <Mail className="w-5 h-5 text-white"/>
                         </div>
-                        <h3 className="text-mainPurple font-semibold text-lg sm:text-xl">Напишите на почту</h3>
+                        <h3 className="text-gray-950 font-semibold text-lg sm:text-xl">Напишите на почту</h3>
                     </div>
-                    <div className="space-y-2">
+                    <div className="space-y-2 text-gray-700">
                         <Link
                             href="mailto:info@kuhni-abt.ru"
                             className="block text-sm sm:text-base md:text-[18px] hover:text-blue-600 transition-colors"
@@ -123,20 +115,18 @@ export default function Contacts() {
                             Прикрепляйте планировки, размеры и пожелания – мы подготовим расчет.
                         </p>
                     </div>
-                </motion.div>
+                </div>
                 {/* Шоурум */}
-                <motion.div
-                    initial={{opacity: 0, y: 20}}
-                    animate={{opacity: 1, y: 0}}
-                    transition={{duration: 0.5, delay: 0.5}}
+                <div
+                    {...fadeInView}
                     className="bg-white p-4 sm:p-6 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow md:col-span-2">
                     <div className="flex items-center gap-3 mb-3">
-                        <div className="bg-mainPurple/90 p-2 rounded-full">
+                        <div className="bg-mainPurple/90 p-2 rounded-lg">
                             <UserRound className="w-5 h-5 text-white"/>
                         </div>
-                        <h3 className="text-mainPurple font-semibold text-lg sm:text-xl">Посетите наши салоны</h3>
+                        <h3 className="text-gray-950 font-semibold text-lg sm:text-xl">Посетите наши салоны</h3>
                     </div>
-                    <div className="space-y-2">
+                    <div className="space-y-2 text-gray-700">
                         <span className='font-bold text-base'>Наши адреса:</span>
                         <p
                             className="block text-sm sm:text-base md:text-[18px] hover:text-mainPurple transition-colors cursor-pointer">Балашиха, Железнодорожный, Керамическая, 2Б</p>
@@ -146,7 +136,7 @@ export default function Contacts() {
                             Пожалуйста, согласуйте время, и мы будем ждать вас!.
                         </p>
                     </div>
-                </motion.div>
+                </div>
             </div>
         </div>
     )

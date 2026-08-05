@@ -1,15 +1,14 @@
 'use client'
 
-import { useQuery, useQueryClient } from "@tanstack/react-query"
-import { use, useEffect, useState } from "react"
-import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { motion } from "framer-motion"
-import { Input } from "@/components/ui/input"
+import {useQuery, useQueryClient} from "@tanstack/react-query"
+import {use, useEffect, useState} from "react"
+import {usePathname, useRouter, useSearchParams} from "next/navigation"
+import {Input} from "@/components/ui/input"
 import Link from "next/link"
 import LoadingPlaceholder from "@/components/placeholders/LoadingPlaceholder"
 import SortSelector from "@/components/ui/CatalogSelectors/SortSelector"
-import { GenericSelector } from "@/components/shared/GenericSelector"
-import {Category, Material, Style, Product, Promotion} from "@/types"
+import {GenericSelector} from "@/components/shared/GenericSelector"
+import {Category, Material, Style, Product, Promotion} from "@/types/types"
 import {Filters} from "@/lib/api/filters"
 
 type CatalogItem = Product | Promotion
@@ -138,20 +137,20 @@ export default function BaseCatalogContent({
 
   const handleStyleChange = (style: string) => {
     setCurrentStyle(style)
-    updateURL({ style })
+    updateURL({style})
   }
 
   const handleMaterialChange = (material: string) => {
     setCurrentMaterial(material)
-    updateURL({ material })
+    updateURL({material})
   }
 
   const handleSortChange = (sort: "default" | "asc" | "desc") => {
     setCurrentSort(sort)
-    updateURL({ sort })
+    updateURL({sort})
   }
 
-  const { data: items, isLoading, isError } = useQuery({
+  const {data: items, isError} = useQuery({
     queryKey: [queryKeyPrefix, currentCategory, currentStyle, currentMaterial, currentSort],
     queryFn: async () => {
       return await fetchFn({
@@ -173,15 +172,14 @@ export default function BaseCatalogContent({
 
   return (
     <div>
-      <motion.div
-        initial={{ opacity: 0, y: -40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.75, ease: "easeOut" }}
+      <div
+        data-animate-fade=""
         className="flex flex-col lg:flex-row lg:items-center gap-4 lg:gap-8 py-4 lg:py-6 bg-transparent" // Убрал bg-pink-300, сделал transparent для "невидимого" вида
       >
         {/* Заголовок слева */}
         <div className="flex-1">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold font-montserrat text-gray-900 leading-tight">
+          <h1
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold font-montserrat text-gray-900 leading-tight">
             {title}
           </h1>
         </div>
@@ -199,23 +197,21 @@ export default function BaseCatalogContent({
             {/* Опциональная иконка для подсказки, но "невидимая" (слабая) */}
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <svg className="w-5 h-5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
               </svg>
             </div>
           </div>
         </div>
-      </motion.div>
+      </div>
 
-      <motion.ul
-        initial="hidden"
-        animate="visible"
+      <ul
+        data-animate-fade=""
         className="flex flex-wrap sm:flex-row gap-4 sm:gap-8 font-medium text-sm sm:text-base mt-2 py-3"
       >
         {categories.map((category) => (
-          <motion.li
+          <li
             key={category.id}
-            variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }}
-            transition={{ duration: 1 }}
           >
             <Link
               href={`${basePath}/${category.categorySlug}`}
@@ -225,14 +221,12 @@ export default function BaseCatalogContent({
             >
               {category.category}
             </Link>
-          </motion.li>
+          </li>
         ))}
-      </motion.ul>
+      </ul>
 
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1 }}
+      <div
+        data-animate-fade=""
         className="flex flex-col sm:flex-row gap-2 sm:gap-3 mt-2"
       >
         <GenericSelector
@@ -249,18 +243,13 @@ export default function BaseCatalogContent({
           label="Материал"
           allLabel="Любой материал"
         />
-        <SortSelector currentSort={currentSort} setCurrentSort={handleSortChange} />
-      </motion.div>
+        <SortSelector currentSort={currentSort} setCurrentSort={handleSortChange}/>
+      </div>
 
       <div className="mt-3 sm:mt-5">
-        {isLoading && (
-          <div className="text-sm sm:text-base min-h-[60vh]">
-            <LoadingPlaceholder />
-          </div>
-        )}
         {isError && <p className="text-sm sm:text-base">Ошибка при загрузке</p>}
 
-        {filteredItems && filteredItems.length > 0 && (
+        {!isError && filteredItems && filteredItems.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-4 mt-4 sm:mt-6">
             {filteredItems.map((item: CatalogItem) => (
               <Link
@@ -279,10 +268,12 @@ export default function BaseCatalogContent({
               </Link>
             ))}
           </div>
-        )}
-
-        {filteredItems && filteredItems.length === 0 && !isLoading && (
-          <p className="text-sm sm:text-base min-h-[50vh]">Ничего не найдено.</p>
+        ) : (
+          !isError && (
+            <div className="text-sm sm:text-base min-h-[50vh]">
+              <LoadingPlaceholder/>
+            </div>
+          )
         )}
       </div>
     </div>

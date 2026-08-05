@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { useState } from 'react'
 import Image from 'next/image'
-import { CategoryData } from '@/types'
+import { CategoryData } from '@/types/types'
 import {
   Dialog,
   DialogContent,

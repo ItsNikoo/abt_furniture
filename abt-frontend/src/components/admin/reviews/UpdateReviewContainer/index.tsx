@@ -1,6 +1,6 @@
 'use client'
 
-import {Photo, Review, ReviewData} from "@/types"
+import {Photo, Review, ReviewData} from "@/types/types"
 import React, {useState, useEffect, useRef} from "react"
 import {
   Dialog,

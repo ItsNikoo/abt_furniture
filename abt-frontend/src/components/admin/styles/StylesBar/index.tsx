@@ -1,6 +1,6 @@
 'use client'
 
-import { Style } from '@/types'
+import { Style } from '@/types/types'
 import { use } from 'react'
 import StyleCard from '@/components/admin/styles/StyleCard'
 import { deleteStyleAction } from '@/actions/styles'

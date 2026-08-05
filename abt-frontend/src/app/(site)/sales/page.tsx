@@ -1,8 +1,8 @@
-import { fetchCategories } from "@/lib/api/categories"
-import { fetchStyles } from "@/lib/api/styles"
-import { fetchMaterials } from "@/lib/api/materials"
+import {fetchCategories} from "@/lib/api/categories"
+import {fetchStyles} from "@/lib/api/styles"
+import {fetchMaterials} from "@/lib/api/materials"
 import PromotionsComponent from "@/components/site/Promotions/PromotionsComponent"
-import { Metadata } from "next"
+import {Metadata} from "next"
 
 export const dynamic = 'force-dynamic'
 
@@ -20,11 +20,18 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Спецпредложения на кухни и мебель от производителя АБТ',
     description: 'Актуальные акции и специальные предложения на кухни на заказ. Скидки до 30%. Бесплатный замер и дизайн-проект от АБТ.',
-    images: [],
     siteName: 'АБТ мебель',
     locale: 'ru_RU',
     type: 'website',
-    url: 'https://kuhni-abt.ru/sales/'
+    url: 'https://kuhni-abt.ru/sales/',
+    images: [
+      {
+        url: 'https://kuhni-abt.ru/seo-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'АБТ мебель — кухни и мебель на заказ от производителя',
+      },
+    ],
   },
   robots: {
     index: true,

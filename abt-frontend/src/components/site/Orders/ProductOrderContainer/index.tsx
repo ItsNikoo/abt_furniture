@@ -1,6 +1,6 @@
 'use client'
 
-import {Product, Promotion} from '@/types'
+import {Product, Promotion} from '@/types/types'
 import {
   Dialog,
   DialogClose,
@@ -19,7 +19,7 @@ export default function ProductOrderContainer({entity}: { entity: Product | Prom
     return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button className={'my-3 font-bold rounded-xl text-base'}>Заказать проект</Button>
+        <Button className={'my-3 font-bold text-base'}>Заказать проект</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

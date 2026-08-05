@@ -1,13 +1,12 @@
 import FirstPage from '@/components/site/FirstPage'
-import SalesContainer from '@/components/site/SalesContainer'
 import CategoriesGrid from '@/components/site/CategoriesGrid'
 import SiteContainer from "@/components/SiteContainer"
 import AdvantagesContainer from "@/components/site/AdvantagesContainer"
 import FeedbackForm from "@/components/shared/FeedbackForm"
 import ReviewsContainer from "@/components/site/Reviews/ReviewsContainer"
 import {Metadata} from "next"
-
-export const dynamic = 'force-dynamic'
+import Portfolio from "@/components/site/Portfolio"
+import MapSection from "@/components/site/MapSection"
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -34,6 +33,15 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: 'АБТ мебель',
       locale: 'ru_RU',
       type: 'website',
+      images: [
+        {
+          url: 'https://kuhni-abt.ru/seo-image.jpg',
+          width: 1200,
+          height: 630,
+          alt: 'АБТ мебель — кухни и мебель на заказ от производителя',
+        },
+      ],
+
     },
     robots: {
       index: true,
@@ -50,14 +58,15 @@ export default async function Home() {
 
   return (
     <>
-      <SalesContainer/>
       <FirstPage/>
       <SiteContainer>
         <AdvantagesContainer/>
         <CategoriesGrid/>
         <FeedbackForm/>
       </SiteContainer>
+      <Portfolio />
       <ReviewsContainer/>
+      <MapSection/>
     </>
   )
 }

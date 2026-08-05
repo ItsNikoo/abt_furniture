@@ -1,6 +1,5 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import {
   Calculator,
   CheckCircle,
@@ -19,6 +18,7 @@ import {
   Users,
 } from 'lucide-react'
 import Link from 'next/link'
+import { fadeInView } from '@/lib/animations'
 
 const steps = [
   {
@@ -129,52 +129,48 @@ const steps = [
 export default function Howto() {
   return (
     <div
-      className="my-5">
+      className="py-8">
       {/* Header */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
-        className="mb-8 sm:mb-12">
-        <h1 className="text-mainPurple font-extrabold text-2xl sm:text-3xl md:text-4xl mb-4">
+      <div
+        {...fadeInView}
+        className="mb-8 md:mb-12">
+        <h1 className="text-gray-950 font-extrabold text-2xl sm:text-3xl md:text-4xl mb-4">
           Как совершить заказ
         </h1>
-        <p className="text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed">
+        <p className="max-w-3xl text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed">
           Простой и понятный процесс заказа мебели от выбора до установки. Мы
           сопровождаем вас на каждом этапе для получения идеального результата.
         </p>
-      </motion.div>
+      </div>
 
       {/* Steps */}
       <div className="space-y-6 sm:space-y-8">
         {steps.map((step, index) => {
           const IconComponent = step.icon
           return (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.2 }}
+            <div
+              {...fadeInView}
               key={step.id} className="relative">
               {/* Connecting line */}
               {index < steps.length - 1 && (
                 <div
+                  key={`${step.id}-line`}
                   className="hidden sm:block absolute left-6 lg:left-8 top-16 w-0.5 h-16 bg-gradient-to-b from-mainPurple to-mainPurple/30 z-10"/>
               )}
 
               <div
-                className="bg-white/80 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 shadow-lg hover:shadow-xl transition-all duration-300">
+                key={`${step.id}-card`}
+                className="bg-white border border-gray-100 rounded-lg p-4 sm:p-6 lg:p-7 shadow-sm hover:shadow-md transition-shadow duration-300">
                 <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
                   {/* Step number and icon */}
                   <div className="flex sm:flex-col items-center sm:items-start gap-4 sm:gap-2">
                     <div className="relative">
                       <div
-                        className="bg-mainPurple text-white rounded-full w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 flex items-center justify-center shadow-lg ">
+                        className="bg-mainPurple text-white rounded-lg w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 flex items-center justify-center shadow-sm ">
                         <IconComponent className="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7"/>
                       </div>
                       <div
-                        className="absolute -top-2 -right-2 bg-white text-mainPurple rounded-full w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center text-xs sm:text-sm font-bold shadow-md">
+                        className="absolute -top-2 -right-2 bg-white text-mainPurple rounded-lg w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center text-xs sm:text-sm font-bold shadow-md">
                         {step.id}
                       </div>
                     </div>
@@ -182,7 +178,7 @@ export default function Howto() {
 
                   {/* Content */}
                   <div className="flex-1">
-                    <h3 className="text-mainPurple font-bold text-lg sm:text-xl lg:text-2xl mb-2 sm:mb-3">
+                    <h3 className="text-gray-950 font-bold text-lg sm:text-xl lg:text-2xl mb-2 sm:mb-3">
                       {step.title}
                     </h3>
                     <p className="text-sm sm:text-base lg:text-lg text-gray-700 leading-relaxed mb-4 sm:mb-6">
@@ -198,7 +194,7 @@ export default function Howto() {
                             key={detailIndex}
                             className="flex items-start gap-3"
                           >
-                            <div className="bg-mainPurple/10 rounded-full p-1.5 sm:p-2 flex-shrink-0 mt-0.5">
+                            <div className="bg-mainPurple/10 rounded-lg p-1.5 sm:p-2 flex-shrink-0 mt-0.5">
                               <DetailIcon className="w-3 h-3 sm:w-4 sm:h-4 text-mainPurple"/>
                             </div>
                             <p className="text-xs sm:text-sm lg:text-base text-gray-700 leading-relaxed">
@@ -220,22 +216,19 @@ export default function Howto() {
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </div>
           )
         })}
       </div>
 
       {/* Final CTA section */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5, delay: steps.length * 0.2 }}
+      <div
+        {...fadeInView}
         className="mt-8 sm:mt-12 text-center">
         <div
-          className="bg-gradient-to-r from-mainPurple to-mainPurple/80 rounded-xl sm:rounded-2xl p-6 sm:p-8 lg:p-10 text-white shadow-xl">
+          className="bg-mainPurple rounded-lg p-6 sm:p-8 lg:p-10 text-white shadow-sm">
           <div className="flex justify-center mb-4 sm:mb-6">
-            <div className="bg-white/20 rounded-full p-3 sm:p-4">
+            <div className="bg-white/20 rounded-lg p-3 sm:p-4">
               <Star className="w-8 h-8 sm:w-10 sm:h-10"/>
             </div>
           </div>
@@ -249,19 +242,19 @@ export default function Howto() {
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
             <Link
               href="/catalog"
-              className="bg-white text-mainPurple px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold hover:bg-gray-100 transition-colors duration-200 text-sm sm:text-base w-full sm:w-auto"
+              className="bg-white text-mainPurple px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-200 text-sm sm:text-base w-full sm:w-auto"
             >
               Смотреть каталог
             </Link>
             <Link
               href="/contacts"
-              className="border-2 border-white text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold hover:bg-white hover:text-mainPurple transition-colors duration-200 text-sm sm:text-base w-full sm:w-auto"
+              className="border-2 border-white text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold hover:bg-white hover:text-mainPurple transition-colors duration-200 text-sm sm:text-base w-full sm:w-auto"
             >
               Связаться с нами
             </Link>
           </div>
         </div>
-      </motion.div>
+      </div>
     </div>
   )
 }

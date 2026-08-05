@@ -2,8 +2,8 @@ import { NextResponse } from 'next/server'
 import {fetchProducts} from "@/lib/api/products"
 import {fetchCategories} from "@/lib/api/categories"
 import {fetchPromotions} from "@/lib/api/promotions"
-import {Category, Product} from "@/types"
-import {Promotion} from "@/types"
+import {Category, Product} from "@/types/types"
+import {Promotion} from "@/types/types"
 
 export const dynamic = 'force-dynamic'
 

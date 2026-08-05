@@ -1,6 +1,6 @@
 import {fetchReviews} from "@/lib/api/reviews"
 import ReviewsGrid from "@/components/admin/reviews/ReviewsGrid"
-import {Review} from "@/types"
+import {Review} from "@/types/types"
 import {ADMIN_ROUTES} from "@/config/navigation"
 import {Button} from "@/components/ui/button"
 import Link from "next/link"

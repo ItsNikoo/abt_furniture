@@ -3,7 +3,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import useEmblaCarousel from 'embla-carousel-react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import {Review} from "@/types"
+import {Review} from "@/types/types"
 import ReviewSlide from "@/components/site/Reviews/ReviewSlide"
 
 interface ReviewsCarouselProps {
@@ -77,8 +77,8 @@ export default function ReviewsCarousel({reviews}: ReviewsCarouselProps) {
           {/* Navigation Buttons - используем canScrollPrev/canScrollNext для disabled */}
           <button
             className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 md:-translate-x-4 z-10
-                       bg-white hover:bg-gray-50 rounded-full p-2 md:p-3
-                       shadow-lg transition-all hover:scale-110 disabled:opacity-40 disabled:cursor-not-allowed"
+                       bg-white hover:bg-gray-50 rounded-lg p-2 md:p-3
+                       shadow-sm transition-all hover:scale-105 disabled:opacity-40 disabled:cursor-not-allowed"
             onClick={scrollPrev}
             disabled={!canScrollPrev} 
             aria-label="Previous slide"
@@ -88,8 +88,8 @@ export default function ReviewsCarousel({reviews}: ReviewsCarouselProps) {
 
           <button
             className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 md:translate-x-4 z-10
-                       bg-white hover:bg-gray-50 rounded-full p-2 md:p-3
-                       shadow-lg transition-all hover:scale-110 disabled:opacity-40 disabled:cursor-not-allowed"
+                       bg-white hover:bg-gray-50 rounded-lg p-2 md:p-3
+                       shadow-sm transition-all hover:scale-105 disabled:opacity-40 disabled:cursor-not-allowed"
             onClick={scrollNext}
             disabled={!canScrollNext}
             aria-label="Next slide"

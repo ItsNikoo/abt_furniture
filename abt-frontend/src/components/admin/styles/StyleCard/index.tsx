@@ -1,6 +1,6 @@
 'use client'
 
-import { Style } from '@/types'
+import { Style } from '@/types/types'
 import { Card, CardHeader } from '@/components/ui/card'
 import UpdateStyleContainer from '@/components/admin/styles/UpdateStyleContainer'
 import { Button } from '@/components/ui/button'

@@ -7,9 +7,9 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
-from catalog.models import Category, Style, Product, Material, FirstPage, ContactRequest, Promotion
+from catalog.models import Category, Style, Product, Material, ContactRequest, Promotion
 from catalog.serializers import CategorySerializer, StyleSerializer, ProductSerializer, MaterialSerializer, \
-    FirstPageSerializer, PromotionSerializer, ContactRequestSerializer
+    PromotionSerializer, ContactRequestSerializer
 from furniture_catalog import settings
 from services.yandex_storage import delete_from_yandex_storage
 
@@ -21,6 +21,9 @@ from rest_framework.views import APIView
 from rest_framework import permissions
 
 from rest_framework.filters import OrderingFilter
+
+from catalog.models import Review
+from catalog.serializers import ReviewSerializer
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
@@ -94,36 +97,6 @@ class MaterialViewSet(ModelViewSet):
     serializer_class = MaterialSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
     lookup_field = 'id'
-
-
-class FirstPageViewSet(ModelViewSet):
-    queryset = FirstPage.objects.all()
-    serializer_class = FirstPageSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
-    lookup_field = 'id'
-
-    def destroy(self, request, *args, **kwargs):
-        instance = self.get_object()
-        photo_url = instance.photo
-        mobile_photo_url = instance.mobile_photo
-
-        response = super().destroy(request, *args, **kwargs)
-
-        # Удаляем desktop фото
-        if photo_url:
-            try:
-                delete_from_yandex_storage(photo_url)
-            except Exception as e:
-                print(f"Ошибка удаления desktop фото: {str(e)}")
-
-        # Удаляем mobile фото
-        if mobile_photo_url:
-            try:
-                delete_from_yandex_storage(mobile_photo_url)
-            except Exception as e:
-                print(f"Ошибка удаления mobile фото: {str(e)}")
-
-        return response
 
 
 # knox views
@@ -243,6 +216,7 @@ class ContactAPI(APIView):
         serializer = ContactRequestSerializer(contacts, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+
 class HealthCheckView(APIView):
     permission_classes = []  # No authentication required
 
@@ -290,8 +264,6 @@ class PromotionViewSet(ModelViewSet):
 
         return base_qs
 
-from catalog.models import Review
-from catalog.serializers import ReviewSerializer
 
 class ReviewViewSet(ModelViewSet):
     queryset = Review.objects.all()

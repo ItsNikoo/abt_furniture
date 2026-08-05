@@ -8,6 +8,10 @@ interface ServiceProps {
   link: string;
 }
 
+interface ServiceButtonProps {
+  onNavigate?: () => void;
+}
+
 const services: ServiceProps[] = [
   {
     title: 'Дизайн-проект',
@@ -27,31 +31,43 @@ const services: ServiceProps[] = [
   },
 ]
 
-export default function ServiceButton() {
+export default function ServiceButton({ onNavigate }: ServiceButtonProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false)
+
+  const closeMenu = () => {
+    setIsOpen(false)
+    onNavigate?.()
+  }
 
   return (
     <div
-      className="relative inline-block"
+      className="relative z-[70] inline-block"
       onMouseEnter={() => setIsOpen(true)}
       onMouseLeave={() => setIsOpen(false)}
+      onFocus={() => setIsOpen(true)}
+      onBlur={(event) => {
+        const nextFocusedElement = event.relatedTarget
+
+        if (!(nextFocusedElement instanceof Node) || !event.currentTarget.contains(nextFocusedElement)) {
+          setIsOpen(false)
+        }
+      }}
     >
       <Link
         className="font-notosans"
         href="/services"
+        onClick={closeMenu}
       >
         Услуги
       </Link>
       {isOpen && (
-        <div
-          className="absolute top-full left-0 bg-white shadow-lg rounded-md min-w-[150px] z-10 transform transition-all duration-300 opacity-0 translate-y-2 pointer-events-none data-[open=true]:opacity-100 data-[open=true]:translate-y-0 data-[open=true]:pointer-events-auto pt-2"
-          data-open={isOpen}
-        >
-          {services.map((service: ServiceProps, index) => (
+        <div className="hidden min-w-[220px] overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md lg:absolute lg:left-0 lg:top-full lg:z-[80] lg:mt-0 lg:block">
+          {services.map((service: ServiceProps) => (
             <Link
-              key={index}
+              key={service.link}
               href={service.link}
-              className="font-notosans block px-4 py-2 hover:bg-mainPurple hover:text-white transition-colors duration-300 font-overpass"
+              onClick={closeMenu}
+              className="font-notosans block px-4 py-3 text-sm text-gray-900 transition-colors duration-200 hover:bg-mainPurple hover:text-white focus:bg-mainPurple focus:text-white focus:outline-none"
             >
               {service.title}
             </Link>
