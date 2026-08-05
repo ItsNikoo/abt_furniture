@@ -3,7 +3,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import useEmblaCarousel from 'embla-carousel-react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import {Review} from "@/types"
+import {Review} from "@/types/types"
 import ReviewSlide from "@/components/site/Reviews/ReviewSlide"
 
 interface ReviewsCarouselProps {

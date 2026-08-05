@@ -1,10 +1,9 @@
 'use client'
 
-import {Category} from '@/types'
+import {Category} from '@/types/types'
 import React, {useEffect, useState} from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import {motion} from 'framer-motion'
 import CategoriesPlaceholder from '@/components/placeholders/CategoriesPlaceholder'
 import {fetchCategories} from '@/lib/api/categories'
 
@@ -36,22 +35,18 @@ export default function CategoriesGrid() {
   return (
     <section className="mb-10">
       {/* Заголовок */}
-      <motion.h2
-        initial={{opacity: 0, y: 20}}
-        animate={{opacity: 1, y: 0}}
-        transition={{duration: 0.6}}
+      <h2
+        data-animate-fade=""
         className="text-xl sm:text-3xl font-extrabold text-center md:mb-10 mb-6"
       >
         Каталог продукции
-      </motion.h2>
+      </h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        {categories.map((category, index) => (
-          <motion.div
+        {categories.map((category) => (
+          <div
             key={category.id}
-            initial={{opacity: 0, y: 30}}
-            animate={{opacity: 1, y: 0}}
-            transition={{duration: 0.5, delay: index * 0.1}}
+            data-animate-fade=""
           >
             <Link href={`/catalog/${category.categorySlug}`}>
               <div className="group relative h-[420px] overflow-hidden shadow-lg">
@@ -77,7 +72,7 @@ export default function CategoriesGrid() {
                 </div>
               </div>
             </Link>
-          </motion.div>
+          </div>
         ))}
       </div>
     </section>

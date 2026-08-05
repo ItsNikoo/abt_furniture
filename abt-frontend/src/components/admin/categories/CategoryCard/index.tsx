@@ -3,7 +3,7 @@
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import Image from 'next/image'
-import { Category } from '@/types'
+import { Category } from '@/types/types'
 import { Trash2 } from 'lucide-react'
 import UpdateCategoryContainer from '@/components/admin/categories/UpdateCategoryContainer'
 import Cookies from 'js-cookie'

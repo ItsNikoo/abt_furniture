@@ -11,8 +11,17 @@ import {
 } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import { useState } from 'react'
-import {ContactForm} from "@/components/shared/ContactForm"
+import dynamic from 'next/dynamic'
 import {cn} from "@/lib/utils"
+
+const ContactForm = dynamic(
+  () => import('@/components/shared/ContactForm').then((mod) => mod.ContactForm),
+  {
+    loading: () => (
+      <div className="h-48 animate-pulse rounded-lg bg-gray-100" />
+    ),
+  },
+)
 
 type MainOrderContainerProps = {
   triggerText?: string

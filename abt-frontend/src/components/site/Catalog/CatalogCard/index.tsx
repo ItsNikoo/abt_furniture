@@ -1,6 +1,5 @@
 import PhotoCarousel from '@/components/ui/Embla/PhotoCarousel'
-import {Product, Promotion} from '@/types'
-import {motion} from 'framer-motion'
+import {Product, Promotion} from '@/types/types'
 
 interface CatalogCardProps {
   entity: Promotion | Product,
@@ -9,10 +8,8 @@ interface CatalogCardProps {
 
 export default function CatalogCard({entity, isPromotion = false}: CatalogCardProps) {
   return (
-    <motion.div
-      initial={{opacity: 0}}
-      animate={{opacity: 1}}
-      transition={{duration: 0.5}}
+    <div
+      data-animate-fade=""
       className="group overflow-hidden bg-white rounded-lg border border-gray-200">
       {entity.photos && (
         <div className="relative overflow-hidden aspect-video bg-gray-100">
@@ -58,6 +55,6 @@ export default function CatalogCard({entity, isPromotion = false}: CatalogCardPr
           </div>
         </div>
       </div>
-    </motion.div>
+    </div>
   )
 }

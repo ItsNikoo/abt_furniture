@@ -1,6 +1,6 @@
 import {fetchReviews} from "@/lib/api/reviews"
 import ReviewsCarousel from "@/components/site/Reviews/ReviewsCarousel"
-import {Review} from "@/types"
+import {Review} from "@/types/types"
 
 
 export default async function ReviewsContainer() {

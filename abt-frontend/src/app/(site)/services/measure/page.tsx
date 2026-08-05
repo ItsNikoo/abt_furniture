@@ -28,6 +28,14 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: 'АБТ мебель',
       locale: 'ru_RU',
       type: 'website',
+      images: [
+        {
+          url: 'https://kuhni-abt.ru/seo-image.jpg',
+          width: 1200,
+          height: 630,
+          alt: 'АБТ мебель — кухни и мебель на заказ от производителя',
+        },
+      ],
     },
     robots: {
       index: true,

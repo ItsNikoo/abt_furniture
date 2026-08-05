@@ -1,6 +1,6 @@
 import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card'
 import Link from 'next/link'
-import {Photo, Product} from '@/types'
+import {Photo, Product} from '@/types/types'
 import {Button} from '@/components/ui/button'
 import Image from 'next/image'
 import {useMutation, useQueryClient} from '@tanstack/react-query'

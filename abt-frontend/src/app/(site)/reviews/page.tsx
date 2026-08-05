@@ -42,10 +42,10 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: 'АБТ мебель - Фабрика мебели на заказ',
       images: [
         {
-          url: '/og-reviews.jpg',
+          url: 'https://kuhni-abt.ru/seo-image.jpg',
           width: 1200,
           height: 630,
-          alt: 'Отзывы клиентов АБТ мебель',
+          alt: 'АБТ мебель — кухни и мебель на заказ от производителя',
         },
       ],
     },
@@ -54,7 +54,7 @@ export async function generateMetadata(): Promise<Metadata> {
       card: 'summary_large_image',
       title,
       description,
-      images: ['/og-reviews.jpg'],
+      images: ['https://kuhni-abt.ru/seo-image.jpg'],
     },
 
     robots: {

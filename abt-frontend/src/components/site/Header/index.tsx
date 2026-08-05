@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import Link from 'next/link'
 import { MapPin, Menu, Phone, X } from 'lucide-react'
@@ -9,20 +8,7 @@ import ServiceButton from '@/components/ui/ServiceButton'
 import { Button } from '@/components/ui/button'
 import {ROUTES} from "@/config/navigation"
 import SiteContainer from "@/components/SiteContainer"
-
-const MainOrderContainer = dynamic(
-  () => import('@/components/site/Orders/MainOrderContainer'),
-  {
-    loading: () => (
-      <Button
-        className="font-bold px-4 py-4 text-sm w-full sm:w-auto sm:px-8 sm:py-6 sm:text-base md:px-15 md:py-7"
-        disabled
-      >
-        Р—Р°РєР°Р·Р°С‚СЊ РїСЂРѕРµРєС‚
-      </Button>
-    ),
-  },
-)
+import MainOrderContainer from '@/components/site/Orders/MainOrderContainer'
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)

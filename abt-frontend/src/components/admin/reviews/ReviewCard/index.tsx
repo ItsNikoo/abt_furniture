@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card'
-import {Review} from '@/types'
+import {Review} from '@/types/types'
 import {Button} from "@/components/ui/button"
 import Cookies from "js-cookie"
 import {useState} from "react"

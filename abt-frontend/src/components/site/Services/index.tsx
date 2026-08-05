@@ -1,16 +1,15 @@
 'use client'
 
 import Link from 'next/link'
-import { Service } from '@/types'
+import { Service } from '@/types/types'
 import { services } from '@/components/site/Services/services'
-import { motion } from 'framer-motion'
 import ServiceCard from "@/components/site/Services/ServiceCard"
 import { fadeInView } from '@/lib/animations'
 
 export default function Services() {
   return (
     <div className="py-8">
-      <motion.div
+      <div
         {...fadeInView}
         className="mb-8 md:mb-12"
       >
@@ -22,18 +21,18 @@ export default function Services() {
           <span className="font-bold">мы предоставляем обширный спектр услуг</span>, чтобы вы получили максимум
           удовольствия и минимум “рутины”.
         </p>
-      </motion.div>
+      </div>
       <div className="grid grid-cols-1 gap-5 md:gap-6">
         {services.map((service: Service) => (
-          <motion.div
+          <div
             {...fadeInView}
             key={service.id}>
             <ServiceCard service={service}/>
-          </motion.div>
+          </div>
         ))}
       </div>
       {/* Фиолетовый CTA контейнер */}
-      <motion.div
+      <div
         {...fadeInView}
         className="mt-8 sm:mt-12 text-center">
         <div
@@ -60,7 +59,7 @@ export default function Services() {
             </Link>
           </div>
         </div>
-      </motion.div>
+      </div>
     </div>
   )
 }

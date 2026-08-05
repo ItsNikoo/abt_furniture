@@ -1,4 +1,4 @@
-import {Category, CategoryData} from '@/types'
+import {Category, CategoryData} from '@/types/types'
 import {apiGet, apiRequest} from "@/lib/utils/apiRequest"
 
 export async function fetchCategories(): Promise<Category[]> {

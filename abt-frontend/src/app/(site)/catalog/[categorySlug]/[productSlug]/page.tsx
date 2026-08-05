@@ -1,5 +1,5 @@
 import {fetchProductById} from '@/lib/api/products'
-import {Product} from '@/types'
+import {Product} from '@/types/types'
 import ProductContainer from '@/components/site/ProductContainer'
 import {Metadata} from 'next'
 import SiteContainer from "@/components/SiteContainer"

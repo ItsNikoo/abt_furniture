@@ -1,4 +1,4 @@
-import {Material} from '@/types'
+import {Material} from '@/types/types'
 import {apiGet, apiRequest} from "@/lib/utils/apiRequest"
 
 // GET запрос

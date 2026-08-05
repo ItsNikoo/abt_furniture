@@ -3,13 +3,12 @@
 import {useQuery, useQueryClient} from "@tanstack/react-query"
 import {use, useEffect, useState} from "react"
 import {usePathname, useRouter, useSearchParams} from "next/navigation"
-import {motion} from "framer-motion"
 import {Input} from "@/components/ui/input"
 import Link from "next/link"
 import LoadingPlaceholder from "@/components/placeholders/LoadingPlaceholder"
 import SortSelector from "@/components/ui/CatalogSelectors/SortSelector"
 import {GenericSelector} from "@/components/shared/GenericSelector"
-import {Category, Material, Style, Product, Promotion} from "@/types"
+import {Category, Material, Style, Product, Promotion} from "@/types/types"
 import {Filters} from "@/lib/api/filters"
 
 type CatalogItem = Product | Promotion
@@ -173,10 +172,8 @@ export default function BaseCatalogContent({
 
   return (
     <div>
-      <motion.div
-        initial={{opacity: 0, y: -40}}
-        animate={{opacity: 1, y: 0}}
-        transition={{duration: 0.75, ease: "easeOut"}}
+      <div
+        data-animate-fade=""
         className="flex flex-col lg:flex-row lg:items-center gap-4 lg:gap-8 py-4 lg:py-6 bg-transparent" // Убрал bg-pink-300, сделал transparent для "невидимого" вида
       >
         {/* Заголовок слева */}
@@ -206,18 +203,15 @@ export default function BaseCatalogContent({
             </div>
           </div>
         </div>
-      </motion.div>
+      </div>
 
-      <motion.ul
-        initial="hidden"
-        animate="visible"
+      <ul
+        data-animate-fade=""
         className="flex flex-wrap sm:flex-row gap-4 sm:gap-8 font-medium text-sm sm:text-base mt-2 py-3"
       >
         {categories.map((category) => (
-          <motion.li
+          <li
             key={category.id}
-            variants={{hidden: {opacity: 0}, visible: {opacity: 1}}}
-            transition={{duration: 1}}
           >
             <Link
               href={`${basePath}/${category.categorySlug}`}
@@ -227,14 +221,12 @@ export default function BaseCatalogContent({
             >
               {category.category}
             </Link>
-          </motion.li>
+          </li>
         ))}
-      </motion.ul>
+      </ul>
 
-      <motion.div
-        initial={{opacity: 0}}
-        animate={{opacity: 1}}
-        transition={{duration: 1}}
+      <div
+        data-animate-fade=""
         className="flex flex-col sm:flex-row gap-2 sm:gap-3 mt-2"
       >
         <GenericSelector
@@ -252,7 +244,7 @@ export default function BaseCatalogContent({
           allLabel="Любой материал"
         />
         <SortSelector currentSort={currentSort} setCurrentSort={handleSortChange}/>
-      </motion.div>
+      </div>
 
       <div className="mt-3 sm:mt-5">
         {isError && <p className="text-sm sm:text-base">Ошибка при загрузке</p>}

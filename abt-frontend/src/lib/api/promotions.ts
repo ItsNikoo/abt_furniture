@@ -1,4 +1,4 @@
-import { Promotion, PromotionData} from "@/types"
+import { Promotion, PromotionData} from "@/types/types"
 import {apiGet, apiRequest} from "@/lib/utils/apiRequest"
 import {Filters} from "@/lib/api/filters"
 

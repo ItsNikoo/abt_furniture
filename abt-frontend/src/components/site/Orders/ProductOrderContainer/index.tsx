@@ -1,6 +1,6 @@
 'use client'
 
-import {Product, Promotion} from '@/types'
+import {Product, Promotion} from '@/types/types'
 import {
   Dialog,
   DialogClose,

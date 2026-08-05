@@ -1,6 +1,5 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import { fadeInView } from '@/lib/animations'
@@ -10,7 +9,7 @@ export default function MeasureServiceComponent() {
     <div className="relative py-8 md:py-12 lg:py-16 flex flex-col gap-8 bg-white">
       <div className="flex flex-col md:flex-row items-center gap-8">
         <div className="w-full md:w-[350px] flex-shrink-0">
-          <motion.div
+          <div
             {...fadeInView}
             className="relative w-full h-56 md:h-[300px]">
             <Image
@@ -23,15 +22,15 @@ export default function MeasureServiceComponent() {
               style={{ width: '100%', height: '100%' }}
               priority
             />
-          </motion.div>
+          </div>
         </div>
         <div className="flex-1">
-          <motion.h1
+          <h1
             {...fadeInView}
             className="font-extrabold text-gray-950 text-2xl sm:text-3xl md:text-4xl mb-4">
             Замер помещения
-          </motion.h1>
-          <motion.p
+          </h1>
+          <p
             {...fadeInView}
             className="text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed mb-4">
             <span className="font-bold">Точный замер — залог идеальной мебели</span>
@@ -40,8 +39,8 @@ export default function MeasureServiceComponent() {
             помещение, учесть все особенности стен, углов, выступов и
             коммуникаций. Это гарантирует, что мебель встанет на своё место без
             зазоров и перекосов.
-          </motion.p>
-          <motion.p
+          </p>
+          <p
             {...fadeInView}
             className="text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed">
             <span className="font-bold">Всё продумано до миллиметра</span>
@@ -49,11 +48,11 @@ export default function MeasureServiceComponent() {
             Замер позволяет нам спланировать проект максимально точно — без
             переделок и сюрпризов. Это важный этап, который обеспечивает плотную
             посадку, надёжность конструкции и идеальную интеграцию в интерьер.
-          </motion.p>
+          </p>
         </div>
       </div>
       {/* CTA Section */}
-      <motion.div
+      <div
         {...fadeInView}
         className="mt-8 sm:mt-12 text-center">
         <div
@@ -80,7 +79,7 @@ export default function MeasureServiceComponent() {
             </Link>
           </div>
         </div>
-      </motion.div>
+      </div>
     </div>
   )
 }

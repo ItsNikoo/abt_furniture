@@ -2,13 +2,12 @@
 
 import Link from 'next/link'
 import { BookOpen, Handshake, User } from 'lucide-react'
-import { motion } from 'framer-motion'
 import { fadeInView } from '@/lib/animations'
 
 export default function AboutUs() {
   return (
     <div className="py-8">
-      <motion.div
+      <div
         {...fadeInView}
         className="mb-8 md:mb-12"
       >
@@ -20,11 +19,11 @@ export default function AboutUs() {
           создания
           уникального продукта, который будет ценным для покупателя и решит его проблемы.
         </p>
-      </motion.div>
+      </div>
 
       <div className="space-y-5 md:space-y-6">
         {/* История с иконкой */}
-        <motion.div
+        <div
           {...fadeInView}
           className="bg-white border border-gray-100 rounded-lg p-4 sm:p-6 lg:p-7 shadow-sm hover:shadow-md transition-shadow flex items-start gap-4">
           <div
@@ -48,10 +47,10 @@ export default function AboutUs() {
               функциональную мебель.
             </p>
           </div>
-        </motion.div>
+        </div>
 
         {/* Наши принципы с иконкой */}
-        <motion.div
+        <div
           {...fadeInView}
           className="bg-white border border-gray-100 rounded-lg p-4 sm:p-6 lg:p-7 shadow-sm hover:shadow-md transition-shadow">
           <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 items-start">
@@ -98,10 +97,10 @@ export default function AboutUs() {
               </div>
             </div>
           </div>
-        </motion.div>
+        </div>
 
         {/* Партнерство и развитие с иконкой */}
-        <motion.div
+        <div
           {...fadeInView}
           className="bg-white border border-gray-100 rounded-lg p-4 sm:p-6 lg:p-7 shadow-sm hover:shadow-md transition-shadow flex items-start gap-4">
           <div
@@ -126,10 +125,10 @@ export default function AboutUs() {
               </Link>
             </p>
           </div>
-        </motion.div>
+        </div>
 
         {/* Финальный блок без иконки */}
-        <motion.div
+        <div
           {...fadeInView}
           className="bg-white border border-gray-100 rounded-lg p-4 sm:p-6 lg:p-7 shadow-sm hover:shadow-md transition-shadow">
           <p className="text-xs xs:text-sm sm:text-base md:text-[18px] text-gray-700 leading-relaxed mb-3">
@@ -139,7 +138,7 @@ export default function AboutUs() {
           <h3 className="text-gray-950 font-bold text-lg sm:text-xl md:text-2xl mb-3">
             Спасибо, что выбираете нас!
           </h3>
-        </motion.div>
+        </div>
       </div>
     </div>
   )

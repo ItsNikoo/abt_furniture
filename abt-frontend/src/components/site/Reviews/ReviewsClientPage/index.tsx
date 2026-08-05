@@ -1,7 +1,6 @@
 'use client'
 
-import {motion} from "framer-motion"
-import {Review} from "@/types"
+import {Review} from "@/types/types"
 import {Star} from "lucide-react"
 import {fadeInView} from '@/lib/animations'
 import PhotoWithPreview from "@/components/shared/PhotoWithPreview"
@@ -16,7 +15,7 @@ interface ReviewPageProps {
 
 function ReviewCard({review}: ReviewProps) {
   return (
-    <motion.div
+    <div
       {...fadeInView}
       className="bg-white p-4 sm:p-6 border border-gray-100 rounded-lg shadow-sm max-w-4xl mx-auto w-full">
       <div className="flex items-center justify-between mb-3">
@@ -56,14 +55,14 @@ function ReviewCard({review}: ReviewProps) {
           ))}
         </div>
       )}
-    </motion.div>
+    </div>
   )
 }
 
 export default function ReviewsClientPage({reviews}: ReviewPageProps) {
   return (
     <div className="py-8 md:py-12 lg:py-16">
-      <motion.div
+      <div
         {...fadeInView}
         className="mb-8 md:mb-12 max-w-4xl mx-auto">
         <h1 className="text-gray-950 font-extrabold text-2xl sm:text-3xl md:text-4xl mb-4">
@@ -73,7 +72,7 @@ export default function ReviewsClientPage({reviews}: ReviewPageProps) {
           Реальные мнения и отзывы от тех, кто уже выбрал нашу мебель для своего дома. Убедитесь в качестве на
           примерах реальных проектов.
         </p>
-      </motion.div>
+      </div>
 
       <div className="flex flex-col gap-6">
         {reviews.map((review) => (

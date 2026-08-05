@@ -1,6 +1,6 @@
 import UpdateProductContainer from '@/components/admin/products/UpdateProductContainer'
 import { fetchCategories } from '@/lib/api/categories'
-import { Category, Material, Product, Style } from '@/types'
+import { Category, Material, Product, Style } from '@/types/types'
 import { fetchStyles } from '@/lib/api/styles'
 import { fetchMaterials } from '@/lib/api/materials'
 import { fetchProductById } from '@/lib/api/products'

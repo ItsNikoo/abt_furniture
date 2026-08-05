@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card'
-import {Category, Material, Promotion, Style} from '@/types'
+import {Category, Material, Promotion, Style} from '@/types/types'
 import {Button} from "@/components/ui/button"
 import {deletePromotionAction} from "@/actions/promotions"
 import Cookies from "js-cookie"

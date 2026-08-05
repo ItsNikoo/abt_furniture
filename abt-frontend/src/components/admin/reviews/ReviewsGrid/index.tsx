@@ -1,4 +1,4 @@
-import {Review} from "@/types"
+import {Review} from "@/types/types"
 import {use} from "react"
 import ReviewCard from "@/components/admin/reviews/ReviewCard"
 

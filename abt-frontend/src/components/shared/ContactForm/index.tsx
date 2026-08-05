@@ -174,9 +174,19 @@ export function ContactForm(
 
     startTransition(async () => {
       try {
-        await postContactAction(submitFormData)
+        const result = await postContactAction(submitFormData)
+
+        if (!result.success) {
+          setError(result.error || 'Произошла ошибка при отправке. Пожалуйста, попробуйте позже.')
+          return
+        }
 
         setSuccess(successMessage)
+
+        // Не учитываем ботов, пойманных honeypot'ом, в аналитике
+        if (!result.isBot && typeof window !== 'undefined' && window.ym) {
+          window.ym(106436886, 'reachGoal', 'form_done')
+        }
 
         // Очистка формы
         setFormData({name: '', phone: '', email: '', comment: '', honeypot: ''})

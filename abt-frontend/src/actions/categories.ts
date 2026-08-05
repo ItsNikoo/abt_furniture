@@ -1,7 +1,7 @@
 'use server'
 
 import {revalidatePath} from 'next/cache'
-import {CategoryData} from '@/types'
+import {CategoryData} from '@/types/types'
 import {deleteCategory, patchCategory, postCategory} from "@/lib/api/categories"
 import {ADMIN_ROUTES} from "@/config/navigation"
 

@@ -1,12 +1,11 @@
 'use client'
 
-import {motion} from "framer-motion"
 import {fadeInView} from '@/lib/animations'
 import Link from "next/link"
 
 export default function MapSection() {
   return (
-    <motion.div
+    <div
       {...fadeInView}
       className="flex flex-col items-center gap-4 py-6 px-4">
       <div className="text-center mb-4">
@@ -22,6 +21,6 @@ export default function MapSection() {
                 className="absolute inset-0 w-full h-full border-0 rounded-lg"
                 allowFullScreen></iframe>
       </div>
-    </motion.div>
+    </div>
   )
 }

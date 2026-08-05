@@ -4,7 +4,7 @@ import {useCallback, useEffect, useState} from 'react'
 import useEmblaCarousel from 'embla-carousel-react'
 import Image from 'next/image'
 import {Button} from '@/components/ui/button'
-import {Photo} from '@/types'
+import {Photo} from '@/types/types'
 
 interface BasePhotoCarouselProps {
   photos: Photo[]

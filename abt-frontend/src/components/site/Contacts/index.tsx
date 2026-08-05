@@ -1,6 +1,5 @@
 'use client'
 
-import {motion} from 'framer-motion'
 import {Clock, ExternalLink, Mail, MessageCircle, Phone, UserRound} from 'lucide-react'
 import Link from 'next/link'
 import { fadeInView } from '@/lib/animations'
@@ -9,7 +8,7 @@ export default function Contacts() {
     return (
         <div className="py-8">
             {/* Header */}
-            <motion.div
+            <div
                 {...fadeInView}
                 className="mb-8 md:mb-12">
                 <h1 className="text-gray-950 font-extrabold text-2xl sm:text-3xl md:text-4xl mb-4">
@@ -20,12 +19,12 @@ export default function Contacts() {
                     и подробно
                     проконсультируем.
                 </p>
-            </motion.div>
+            </div>
 
             {/* Контактные карточки */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                 {/* Телефон */}
-                <motion.div
+                <div
                     {...fadeInView}
                     className="bg-white p-4 sm:p-6 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
                     <div className="flex items-center gap-3 mb-3">
@@ -57,10 +56,10 @@ export default function Contacts() {
                             <span>11:00 до 19:00 (без выходных)</span>
                         </div>
                     </div>
-                </motion.div>
+                </div>
 
                 {/* WhatsApp */}
-                <motion.div
+                <div
                     {...fadeInView}
                     className="bg-white p-4 sm:p-6 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
                     <div className="flex items-center gap-3 mb-3">
@@ -93,10 +92,10 @@ export default function Contacts() {
                             Отправьте фото, эскиз или вопрос – обсудим Ваш проект в чате!
                         </p>
                     </div>
-                </motion.div>
+                </div>
 
                 {/* Email */}
-                <motion.div
+                <div
                     {...fadeInView}
                     className="bg-white p-4 sm:p-6 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow md:col-span-2">
                     <div className="flex items-center gap-3 mb-3">
@@ -116,9 +115,9 @@ export default function Contacts() {
                             Прикрепляйте планировки, размеры и пожелания – мы подготовим расчет.
                         </p>
                     </div>
-                </motion.div>
+                </div>
                 {/* Шоурум */}
-                <motion.div
+                <div
                     {...fadeInView}
                     className="bg-white p-4 sm:p-6 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow md:col-span-2">
                     <div className="flex items-center gap-3 mb-3">
@@ -137,7 +136,7 @@ export default function Contacts() {
                             Пожалуйста, согласуйте время, и мы будем ждать вас!.
                         </p>
                     </div>
-                </motion.div>
+                </div>
             </div>
         </div>
     )

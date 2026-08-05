@@ -1,6 +1,6 @@
 'use client'
 
-import {Photo} from '@/types'
+import {Photo} from '@/types/types'
 import BasePhotoCarousel from "@/components/shared/BasePhotoCarousel"
 
 type PhotoCarouselProps = {

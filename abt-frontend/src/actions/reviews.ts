@@ -1,7 +1,7 @@
 'use server'
 
 import {ADMIN_ROUTES} from "@/config/navigation"
-import {ReviewData} from "@/types"
+import {ReviewData} from "@/types/types"
 import {deleteReview, patchReview, postReview} from "@/lib/api/reviews"
 import {revalidatePath} from "next/cache"
 

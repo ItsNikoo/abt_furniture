@@ -1,4 +1,4 @@
-import {Service} from "@/types"
+import {Service} from "@/types/types"
 import Image from 'next/image'
 import Link from "next/link"
 

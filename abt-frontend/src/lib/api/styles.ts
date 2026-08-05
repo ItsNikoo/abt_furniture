@@ -1,4 +1,4 @@
-import {Style} from '@/types'
+import {Style} from '@/types/types'
 import {apiGet, apiRequest} from "@/lib/utils/apiRequest"
 
 export async function fetchStyles(): Promise<Style[]> {

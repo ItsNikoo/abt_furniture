@@ -3,7 +3,7 @@
 import { redirect, useParams } from 'next/navigation'
 import { useMutation } from '@tanstack/react-query'
 import { patchProduct } from '@/lib/api/products'
-import { Category, Material, Photo, Product, ProductData, Style } from '@/types'
+import { Category, Material, Photo, Product, ProductData, Style } from '@/types/types'
 import { useEffect, useState } from 'react'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Label } from '@/components/ui/label'

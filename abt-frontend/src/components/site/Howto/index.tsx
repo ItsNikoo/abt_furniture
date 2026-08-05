@@ -1,6 +1,5 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import {
   Calculator,
   CheckCircle,
@@ -132,7 +131,7 @@ export default function Howto() {
     <div
       className="py-8">
       {/* Header */}
-      <motion.div
+      <div
         {...fadeInView}
         className="mb-8 md:mb-12">
         <h1 className="text-gray-950 font-extrabold text-2xl sm:text-3xl md:text-4xl mb-4">
@@ -142,14 +141,14 @@ export default function Howto() {
           Простой и понятный процесс заказа мебели от выбора до установки. Мы
           сопровождаем вас на каждом этапе для получения идеального результата.
         </p>
-      </motion.div>
+      </div>
 
       {/* Steps */}
       <div className="space-y-6 sm:space-y-8">
         {steps.map((step, index) => {
           const IconComponent = step.icon
           return (
-            <motion.div
+            <div
               {...fadeInView}
               key={step.id} className="relative">
               {/* Connecting line */}
@@ -217,13 +216,13 @@ export default function Howto() {
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </div>
           )
         })}
       </div>
 
       {/* Final CTA section */}
-      <motion.div
+      <div
         {...fadeInView}
         className="mt-8 sm:mt-12 text-center">
         <div
@@ -255,7 +254,7 @@ export default function Howto() {
             </Link>
           </div>
         </div>
-      </motion.div>
+      </div>
     </div>
   )
 }

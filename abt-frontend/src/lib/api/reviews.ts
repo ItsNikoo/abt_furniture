@@ -1,4 +1,4 @@
-import {Review, ReviewData} from "@/types"
+import {Review, ReviewData} from "@/types/types"
 import {apiGet, apiRequest} from "@/lib/utils/apiRequest"
 
 export async function fetchReviews(): Promise<Review[]> {

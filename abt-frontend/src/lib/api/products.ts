@@ -1,4 +1,4 @@
-import {Product, ProductData} from '@/types'
+import {Product, ProductData} from '@/types/types'
 import {apiGet, apiRequest} from "@/lib/utils/apiRequest"
 import {Filters} from "@/lib/api/filters"
 
