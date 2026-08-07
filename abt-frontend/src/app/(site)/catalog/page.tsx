@@ -6,9 +6,11 @@ import {Metadata} from "next"
 import FeedbackForm from "@/components/site/FeedbackForm"
 import SiteContainer from "@/components/SiteContainer"
 import KitchensPage from "@/components/site/pages/Kitchens/KitchensPage"
+import LoadingPlaceholder from "@/components/placeholders/LoadingPlaceholder"
+import LazyMount from "@/components/shared/LazyMount"
 
 export const revalidate = 60
-export const dynamic = 'force-dynamic'
+// export const dynamic = 'force-dynamic'
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -61,11 +63,16 @@ export default function CatalogPage() {
   return (
     <>
       <KitchensPage/>
-      <CatalogComponent
-        categoriesPromise={categoriesPromise}
-        stylesPromise={stylesPromise}
-        materialsPromise={materialsPromise}
-      />
+      <LazyMount
+        fallback={<LoadingPlaceholder/>}
+        rootMargin={"0px 0px 600px 0px"}
+      >
+        <CatalogComponent
+          categoriesPromise={categoriesPromise}
+          stylesPromise={stylesPromise}
+          materialsPromise={materialsPromise}
+        />
+      </LazyMount>
       <SiteContainer className="mt-4">
         <FeedbackForm/>
       </SiteContainer>
