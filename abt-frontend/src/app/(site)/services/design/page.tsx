@@ -1,4 +1,4 @@
-import DesignPageComponent from '@/components/site/Services/DesignPageComponent'
+import DesignPageComponent from '@/components/site/pages/Services/DesignPageComponent'
 import SiteContainer from "@/components/SiteContainer"
 import {Metadata} from "next"
 

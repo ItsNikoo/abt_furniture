@@ -2,11 +2,22 @@ import {fetchCategories} from '@/lib/api/categories'
 import {fetchStyles} from '@/lib/api/styles'
 import {fetchMaterials} from '@/lib/api/materials'
 import {Category} from "@/types/types"
-import CatalogComponent from "../../../../components/site/Catalog/CatalogComponent"
+import CatalogComponent from "@/components/site/pages/Catalog/CatalogComponent"
 import {Metadata} from "next"
+import KitchensPage from "@/components/site/pages/Kitchens/KitchensPage"
+import WardrobesPage from "@/components/site/pages/Wardrobes/WardrobesPage"
+import FeedbackForm from "@/components/site/FeedbackForm"
+import SiteContainer from "@/components/SiteContainer"
+import HallwaysPage from "@/components/site/pages/Hallways/HallwaysPage"
 
-interface Props{
+interface Props {
   params: Promise<{ categorySlug: string }>
+}
+
+const CATEGORY_PAGES: Record<string, React.ComponentType> = {
+  kitchens: KitchensPage,
+  closets: WardrobesPage,
+  prihozjie: HallwaysPage,
 }
 
 export async function generateMetadata({params}: Props): Promise<Metadata> {
@@ -98,7 +109,7 @@ export async function generateMetadata({params}: Props): Promise<Metadata> {
 
     // Дополнительные мета-теги
     other: {
-      'og:phone_number': '+7 (XXX) XXX-XX-XX', // Добавьте реальный номер
+      'og:phone_number': '+7 (926) 723-28-80', // Добавьте реальный номер
       'og:email': 'info@kuhni-abt.ru', // Добавьте реальный email
       'og:locality': 'Москва',
       'og:region': 'Московская область',
@@ -113,12 +124,22 @@ export default async function ProductCategoryPage({params}: Props) {
   const stylesPromise = fetchStyles()
   const materialsPromise = fetchMaterials()
 
+  const CustomCategoryPage = CATEGORY_PAGES[categorySlug]
+
+
   return (
-    <CatalogComponent
-      categoriesPromise={categoriesPromise}
-      stylesPromise={stylesPromise}
-      materialsPromise={materialsPromise}
-      selectedCategory={categorySlug}
-    />
+    <>
+      {CustomCategoryPage && <CustomCategoryPage/>}
+
+      <CatalogComponent
+        categoriesPromise={categoriesPromise}
+        stylesPromise={stylesPromise}
+        materialsPromise={materialsPromise}
+        selectedCategory={categorySlug}
+      />
+      <SiteContainer className="mt-4">
+        <FeedbackForm/>
+      </SiteContainer>
+    </>
   )
 }

@@ -1,8 +1,11 @@
 import {fetchCategories} from '@/lib/api/categories'
 import {fetchStyles} from '@/lib/api/styles'
 import {fetchMaterials} from '@/lib/api/materials'
-import CatalogComponent from "../../../components/site/Catalog/CatalogComponent"
+import CatalogComponent from "@/components/site/pages/Catalog/CatalogComponent"
 import {Metadata} from "next"
+import FeedbackForm from "@/components/site/FeedbackForm"
+import SiteContainer from "@/components/SiteContainer"
+import KitchensPage from "@/components/site/pages/Kitchens/KitchensPage"
 
 export const revalidate = 60
 export const dynamic = 'force-dynamic'
@@ -54,8 +57,18 @@ export default function CatalogPage() {
   const stylesPromise = fetchStyles()
   const materialsPromise = fetchMaterials()
 
+
   return (
-    <CatalogComponent categoriesPromise={categoriesPromise} stylesPromise={stylesPromise}
-                      materialsPromise={materialsPromise}/>
+    <>
+      <KitchensPage/>
+      <CatalogComponent
+        categoriesPromise={categoriesPromise}
+        stylesPromise={stylesPromise}
+        materialsPromise={materialsPromise}
+      />
+      <SiteContainer className="mt-4">
+        <FeedbackForm/>
+      </SiteContainer>
+    </>
   )
 }

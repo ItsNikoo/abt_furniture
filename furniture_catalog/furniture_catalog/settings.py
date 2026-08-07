@@ -19,7 +19,7 @@ SECRET_KEY = config('SECRET_KEY', default='django-insecure-d90$&ig18i$-7_)w2h0^q
 
 # SECURITY WARNING: don't run with debug turned on in production!
 #DEBUG = config('DEBUG', default=False, cast=bool)
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'backend', 'frontend', 'nginx', '178.250.242.124', 'kuhni-abt.ru']
 
@@ -117,18 +117,18 @@ WSGI_APPLICATION = 'furniture_catalog.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-     'default': {
-         'ENGINE': 'django.db.backends.postgresql',
-         'NAME': config('POSTGRES_DB', default='furniture_catalog'),
-         'USER': config('POSTGRES_USER', default='postgres'),
-         'PASSWORD': config('POSTGRES_PASSWORD', default='postgres'),
-         'HOST': config('DB_HOST', default='db'),
-         'PORT': config('DB_PORT', default='5432'),
-     }
-    #'default': {
-    #    'ENGINE': 'django.db.backends.sqlite3',
-    #    'NAME': BASE_DIR / 'db.sqlite3'
-    #},
+     # 'default': {
+     #     'ENGINE': 'django.db.backends.postgresql',
+     #     'NAME': config('POSTGRES_DB', default='furniture_catalog'),
+     #     'USER': config('POSTGRES_USER', default='postgres'),
+     #     'PASSWORD': config('POSTGRES_PASSWORD', default='postgres'),
+     #     'HOST': config('DB_HOST', default='db'),
+     #     'PORT': config('DB_PORT', default='5432'),
+     # }
+    'default': {
+       'ENGINE': 'django.db.backends.sqlite3',
+       'NAME': BASE_DIR / 'db.sqlite3'
+    },
 }
 
 # Password validation

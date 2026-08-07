@@ -2,7 +2,7 @@
 
 import {Product, Promotion} from '@/types/types'
 import ProductPhotoCarousel from '@/components/ui/Embla/ProductPhotoCarousel'
-import ProductOrderContainer from '@/components/site/Orders/ProductOrderContainer'
+import ProductOrderForm from '@/components/shared/Forms/ProductOrderForm'
 
 interface Props {
   entity: Product | Promotion,
@@ -38,7 +38,7 @@ export default function ProductContainer({entity, isPromotion = false}: Props) {
           <div
             data-animate-fade=""
             className="mb-6">
-            <ProductOrderContainer entity={entity}/>
+            <ProductOrderForm entity={entity}/>
           </div>
 
           {/* Блок с ценой — с проверкой на isPromotion */}
@@ -50,7 +50,7 @@ export default function ProductContainer({entity, isPromotion = false}: Props) {
 
             <div className="flex items-baseline gap-1">
               <p className="text-4xl font-bold">
-                {entity.price.toLocaleString('ru-RU')}
+                от {entity.price.toLocaleString('ru-RU')}
               </p>
               <span className="text-gray-500 text-xl">₽</span>
             </div>

@@ -8,7 +8,7 @@ import ServiceButton from '@/components/ui/ServiceButton'
 import { Button } from '@/components/ui/button'
 import {ROUTES} from "@/config/navigation"
 import SiteContainer from "@/components/SiteContainer"
-import MainOrderContainer from '@/components/site/Orders/MainOrderContainer'
+import MainOrderForm from '@/components/shared/Forms/MainOrderForm'
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -61,7 +61,7 @@ export default function Header() {
             </div>
 
             <div className="flex items-center gap-3 min-w-0">
-              <MainOrderContainer/>
+              <MainOrderForm/>
             </div>
           </div>
 
@@ -94,7 +94,7 @@ export default function Header() {
                 />
               </Link>
               <div className="flex items-center gap-3 min-w-0">
-                <MainOrderContainer/>
+                <MainOrderForm/>
               </div>
             </div>
 
@@ -200,7 +200,7 @@ export default function Header() {
 
                   {/* Order button in mobile menu */}
                   <div className="py-4">
-                    <MainOrderContainer/>
+                    <MainOrderForm/>
                   </div>
                 </div>
               </div>

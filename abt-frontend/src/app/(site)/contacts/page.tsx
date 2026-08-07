@@ -1,4 +1,4 @@
-import Contacts from '@/components/site/Contacts'
+import Contacts from '@/components/site/pages/Contacts'
 import SiteContainer from "@/components/SiteContainer"
 import {Metadata} from "next"
 

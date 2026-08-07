@@ -1,0 +1,19 @@
+import SiteContainer from '@/components/SiteContainer'
+import FirstMainContainer from '@/components/site/pages/Main/FirstPage/FirstMainContainer'
+
+export default function FirstPage() {
+  return (
+    <section className="relative z-10 overflow-hidden py-3 md:py-4 xl:min-h-[calc(100vh-80px)] xl:py-5">
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-25 -z-10"
+        style={{ backgroundImage: "url('/background_image.webp')" }}
+      />
+
+      <SiteContainer>
+        <div className="flex items-stretch xl:min-h-[calc(100vh-120px)]">
+          <FirstMainContainer />
+        </div>
+      </SiteContainer>
+    </section>
+  )
+}

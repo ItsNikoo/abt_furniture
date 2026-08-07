@@ -1,4 +1,4 @@
-import MeasureServiceComponent from '@/components/site/Services/MeasureServiceComponent'
+import MeasureServiceComponent from '@/components/site/pages/Services/MeasureServiceComponent'
 import SiteContainer from "@/components/SiteContainer"
 import {Metadata} from "next"
 
