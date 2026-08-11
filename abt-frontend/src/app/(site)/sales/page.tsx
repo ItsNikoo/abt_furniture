@@ -1,7 +1,7 @@
 import {fetchCategories} from "@/lib/api/categories"
 import {fetchStyles} from "@/lib/api/styles"
 import {fetchMaterials} from "@/lib/api/materials"
-import PromotionsComponent from "@/components/site/Promotions/PromotionsComponent"
+import PromotionsComponent from "@/components/site/pages/Promotions/PromotionsComponent"
 import {Metadata} from "next"
 
 export const dynamic = 'force-dynamic'

@@ -1,4 +1,4 @@
-import Howto from '@/components/site/Howto'
+import Howto from '@/components/site/pages/Howto'
 import SiteContainer from "@/components/SiteContainer"
 import {Metadata} from "next"
 

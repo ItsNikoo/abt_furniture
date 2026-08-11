@@ -1,12 +1,13 @@
-import FirstPage from '@/components/site/FirstPage'
-import CategoriesGrid from '@/components/site/CategoriesGrid'
+import FirstPage from '@/components/site/pages/Main/FirstPage'
+import CategoriesGrid from '@/components/site/pages/Main/CategoriesGrid'
 import SiteContainer from "@/components/SiteContainer"
 import AdvantagesContainer from "@/components/site/AdvantagesContainer"
-import FeedbackForm from "@/components/shared/FeedbackForm"
+import FeedbackForm from "@/components/site/FeedbackForm"
 import ReviewsContainer from "@/components/site/Reviews/ReviewsContainer"
 import {Metadata} from "next"
-import Portfolio from "@/components/site/Portfolio"
-import MapSection from "@/components/site/MapSection"
+import Portfolio from "@/components/site/pages/Main/Portfolio"
+import MapSection from "@/components/site/pages/Main/MapSection"
+import ServicesContainer from "@/components/site/ServicesContainer"
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -62,6 +63,7 @@ export default async function Home() {
       <SiteContainer>
         <AdvantagesContainer/>
         <CategoriesGrid/>
+        <ServicesContainer/>
         <FeedbackForm/>
       </SiteContainer>
       <Portfolio />

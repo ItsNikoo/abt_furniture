@@ -1,4 +1,4 @@
-import AboutUs from '@/components/site/AboutUs'
+import AboutUs from '@/components/site/pages/AboutUs'
 import SiteContainer from "@/components/SiteContainer"
 import {Metadata} from "next"
 

@@ -1,4 +1,4 @@
-import ContentWrapper from '@/components/ContentWrapper'
+import SiteContainer from "@/components/SiteContainer"
 
 export const metadata = {
   title: 'Политика конфиденциальности | АБТ мебель',
@@ -24,8 +24,9 @@ export const metadata = {
 
 export default function PrivacyPolicyPage() {
   return (
-    <ContentWrapper>
-      <div className="max-w-4xl mx-auto bg-white border border-gray-100 rounded-lg shadow-sm p-5 sm:p-8 lg:p-10 my-8 md:my-12 text-gray-700 leading-relaxed">
+    <SiteContainer>
+      <div
+        className="max-w-4xl mx-auto bg-white border border-gray-100 rounded-lg shadow-sm p-5 sm:p-8 lg:p-10 my-8 md:my-12 text-gray-700 leading-relaxed">
         <h1 className="text-gray-950 font-extrabold text-2xl sm:text-3xl md:text-4xl mb-6">
           Политика конфиденциальности и обработки персональных данных
         </h1>
@@ -193,6 +194,6 @@ export default function PrivacyPolicyPage() {
           </section>
         </div>
       </div>
-    </ContentWrapper>
+    </SiteContainer>
   )
 }

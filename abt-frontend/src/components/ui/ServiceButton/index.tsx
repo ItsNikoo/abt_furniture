@@ -2,34 +2,36 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import {services} from "@/lib/services"
 
 interface ServiceProps {
-  title: string;
-  link: string;
+  title: string
+  link: string
+  image: string
 }
 
 interface ServiceButtonProps {
   onNavigate?: () => void;
 }
 
-const services: ServiceProps[] = [
-  {
-    title: 'Дизайн-проект',
-    link: '/services/design',
-  },
-  {
-    title: 'Замер',
-    link: '/services/measure',
-  },
-  {
-    title: 'Доставка',
-    link: '/services/delivery',
-  },
-  {
-    title: 'Установка',
-    link: '/services/setup',
-  },
-]
+// const services: ServiceProps[] = [
+//   {
+//     title: 'Дизайн-проект',
+//     link: '/services/design',
+//   },
+//   {
+//     title: 'Замер',
+//     link: '/services/measure',
+//   },
+//   {
+//     title: 'Доставка',
+//     link: '/services/delivery',
+//   },
+//   {
+//     title: 'Установка',
+//     link: '/services/setup',
+//   },
+// ]
 
 export default function ServiceButton({ onNavigate }: ServiceButtonProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false)

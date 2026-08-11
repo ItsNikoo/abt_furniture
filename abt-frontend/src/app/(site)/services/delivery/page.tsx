@@ -1,4 +1,4 @@
-import DeliveryPageComponent from '@/components/site/Services/DeliveryPageComponent'
+import DeliveryPageComponent from '@/components/site/pages/Services/DeliveryPageComponent'
 import SiteContainer from "@/components/SiteContainer"
 import {Metadata} from "next"
 

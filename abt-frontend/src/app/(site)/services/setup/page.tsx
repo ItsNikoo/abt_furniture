@@ -1,4 +1,4 @@
-import SetupPageComponent from '@/components/site/Services/SetupPageComponent'
+import SetupPageComponent from '@/components/site/pages/Services/SetupPageComponent'
 import SiteContainer from "@/components/SiteContainer"
 
 export async function generateMetadata() {
