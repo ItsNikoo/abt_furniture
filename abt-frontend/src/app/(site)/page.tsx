@@ -9,6 +9,8 @@ import Portfolio from "@/components/site/pages/Main/Portfolio"
 import MapSection from "@/components/site/pages/Main/MapSection"
 import ServicesContainer from "@/components/site/ServicesContainer"
 
+export const dynamic = 'force-dynamic'
+
 export async function generateMetadata(): Promise<Metadata> {
   return {
     title: 'Купить мебель от производителя | АБТ мебель',
