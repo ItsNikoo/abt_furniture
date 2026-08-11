@@ -6,7 +6,7 @@ export default function FirstMainContainer() {
     <div className="flex flex-col w-full items-center justify-center">
       <div className="z-10 flex flex-col items-center justify-center w-full max-w-[1280px] px-4 py-12 gap-4">
         <h1 className="text-3xl md:text-5xl lg:text-7xl font-black leading-tight opacity-85 text-center">
-          Корпусная мебель на заказ напрямую от производителя
+          Корпусная мебель на заказ напрямую от производителя в Москве и области
         </h1>
         <div>
           <p className="text-base lg:text-lg mt-3 opacity-80 text-center">

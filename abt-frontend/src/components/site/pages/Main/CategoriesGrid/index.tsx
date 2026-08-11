@@ -33,8 +33,7 @@ export default function CategoriesGrid() {
   }
 
   return (
-    <section className="mb-10">
-      {/* Заголовок */}
+    <section>
       <h2
         data-animate-fade=""
         className="text-xl sm:text-3xl font-extrabold text-center md:mb-10 mb-6"

@@ -1,6 +1,8 @@
 import SiteContainer from "@/components/SiteContainer"
-import AdvantagesContainer from "@/components/site/pages/Main/AdvantagesContainer"
+import AdvantagesContainer from "@/components/site/AdvantagesContainer"
 import KitchenMainContainer from "@/components/site/pages/Kitchens/KitchenMainContainer"
+import KitchensPortfolio from "@/components/site/pages/Kitchens/KitchensPortfolio"
+import ServicesContainer from "@/components/site/ServicesContainer"
 
 export default function KitchensPage() {
   return (
@@ -8,6 +10,11 @@ export default function KitchensPage() {
       <KitchenMainContainer/>
       <SiteContainer>
         <AdvantagesContainer/>
-      </SiteContainer></>
+      </SiteContainer>
+      <KitchensPortfolio/>
+      <SiteContainer>
+        <ServicesContainer/>
+      </SiteContainer>
+    </>
   )
 }

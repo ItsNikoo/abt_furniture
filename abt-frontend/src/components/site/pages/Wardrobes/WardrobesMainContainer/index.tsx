@@ -20,7 +20,7 @@ export default function WardrobesMainContainer() {
 
       <div className="z-10 flex flex-col items-center justify-center w-full max-w-[1280px] px-4 py-12 gap-4">
         <h1 className="text-3xl md:text-5xl lg:text-7xl font-black leading-tight text-white text-center">
-          Шкафы на заказ напрямую от производителя
+          Шкафы на заказ напрямую от производителя в Москве и МО
         </h1>
         <div>
           <p className="text-base lg:text-lg mt-3 text-white/90 text-center">

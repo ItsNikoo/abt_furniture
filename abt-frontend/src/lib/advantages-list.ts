@@ -5,7 +5,7 @@ export const advantagesList = [
   },
   {
     title: 'Отсутствие скрытых переплат',
-    icon: 'dollar',
+    icon: 'ruble',
   },
   {
     title: 'Разнообразие материалов',
