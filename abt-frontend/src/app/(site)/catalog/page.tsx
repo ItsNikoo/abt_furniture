@@ -9,8 +9,7 @@ import KitchensPage from "@/components/site/pages/Kitchens/KitchensPage"
 import LoadingPlaceholder from "@/components/placeholders/LoadingPlaceholder"
 import LazyMount from "@/components/shared/LazyMount"
 
-export const revalidate = 60
-// export const dynamic = 'force-dynamic'
+export const dynamic = 'force-dynamic'
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
