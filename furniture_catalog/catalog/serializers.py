@@ -2,6 +2,7 @@
 
 import uuid
 import re
+from pathlib import Path
 
 from rest_framework import serializers
 
@@ -10,6 +11,38 @@ from services.yandex_storage import (
     delete_from_yandex_storage
 )
 from catalog.models import Category, Style, Photo, Product, Material, Promotion, ContactRequest, Review
+
+
+CYRILLIC_TRANSLITERATION = str.maketrans({
+    'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd', 'е': 'e',
+    'ё': 'e', 'ж': 'zh', 'з': 'z', 'и': 'i', 'й': 'y', 'к': 'k',
+    'л': 'l', 'м': 'm', 'н': 'n', 'о': 'o', 'п': 'p', 'р': 'r',
+    'с': 's', 'т': 't', 'у': 'u', 'ф': 'f', 'х': 'h', 'ц': 'ts',
+    'ч': 'ch', 'ш': 'sh', 'щ': 'sch', 'ъ': '', 'ы': 'y', 'ь': '',
+    'э': 'e', 'ю': 'yu', 'я': 'ya',
+    'А': 'a', 'Б': 'b', 'В': 'v', 'Г': 'g', 'Д': 'd', 'Е': 'e',
+    'Ё': 'e', 'Ж': 'zh', 'З': 'z', 'И': 'i', 'Й': 'y', 'К': 'k',
+    'Л': 'l', 'М': 'm', 'Н': 'n', 'О': 'o', 'П': 'p', 'Р': 'r',
+    'С': 's', 'Т': 't', 'У': 'u', 'Ф': 'f', 'Х': 'h', 'Ц': 'ts',
+    'Ч': 'ch', 'Ш': 'sh', 'Щ': 'sch', 'Ъ': '', 'Ы': 'y', 'Ь': '',
+    'Э': 'e', 'Ю': 'yu', 'Я': 'ya',
+})
+
+
+def make_storage_folder_name(value, fallback):
+    translated = str(value or '').translate(CYRILLIC_TRANSLITERATION).lower()
+    folder_name = re.sub(r'[^a-z0-9]+', '-', translated).strip('-')
+    return folder_name or fallback
+
+
+def make_storage_filename(photo_file):
+    extension = Path(photo_file.name).suffix.lower()
+    return f"{uuid.uuid4()}{extension}"
+
+
+def make_nested_storage_filename(folder_name, fallback, photo_file):
+    safe_folder_name = make_storage_folder_name(folder_name, fallback)
+    return f"{safe_folder_name}/{make_storage_filename(photo_file)}"
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -64,7 +97,7 @@ class CategorySerializer(serializers.ModelSerializer):
         if photo_file:
             try:
                 # Генерируем уникальное имя файла
-                filename = f"{uuid.uuid4()}_{photo_file.name}"
+                filename = make_storage_filename(photo_file)
                 file_url = upload_to_yandex_storage(
                     photo_file.file, filename, "categories"
                 )
@@ -92,7 +125,7 @@ class CategorySerializer(serializers.ModelSerializer):
         if photo_file:
             try:
                 # Генерируем уникальное имя файла
-                filename = f"{uuid.uuid4()}_{photo_file.name}"
+                filename = make_storage_filename(photo_file)
                 file_url = upload_to_yandex_storage(
                     photo_file.file, filename, "categories"
                 )
@@ -222,15 +255,13 @@ class ProductSerializer(serializers.ModelSerializer):
         product = Product.objects.create(**validated_data)
 
         # Получаем очищенное название продукта для папки
-        cleaned_title = re.sub(
-            r'[^\w\s-]', '', product.title
-        ).strip().replace(' ', '_')
-
         # Обработка загрузки фотографий
         for photo_file in photo_files:
             try:
                 # Формируем путь с папкой products/ и именем продукта
-                filename = f"{cleaned_title}/{uuid.uuid4()}_{photo_file.name}"
+                filename = make_nested_storage_filename(
+                    product.title, f"product-{product.id}", photo_file
+                )
                 file_url = upload_to_yandex_storage(
                     photo_file.file, filename, "products"
                 )
@@ -281,10 +312,9 @@ class ProductSerializer(serializers.ModelSerializer):
         # Обработка загрузки новых фото (если есть)
         for photo_file in photo_files:
             try:
-                cleaned_title = re.sub(
-                    r'[^\w\s-]', '', instance.title
-                ).strip().replace(' ', '_')
-                filename = f"{cleaned_title}/{uuid.uuid4()}_{photo_file.name}"
+                filename = make_nested_storage_filename(
+                    instance.title, f"product-{instance.id}", photo_file
+                )
                 file_url = upload_to_yandex_storage(
                     photo_file.file, filename, "products"
                 )
@@ -400,15 +430,13 @@ class PromotionSerializer(serializers.ModelSerializer):
         promotion = Promotion.objects.create(**validated_data)
 
         # Получаем очищенное название продукта для папки
-        cleaned_title = re.sub(
-            r'[^\w\s-]', '', promotion.title
-        ).strip().replace(' ', '_')
-
         # Обработка загрузки фотографий
         for photo_file in photo_files:
             try:
                 # Формируем путь с папкой promotions/ и именем продукта
-                filename = f"{cleaned_title}/{uuid.uuid4()}_{photo_file.name}"
+                filename = make_nested_storage_filename(
+                    promotion.title, f"promotion-{promotion.id}", photo_file
+                )
                 file_url = upload_to_yandex_storage(
                     photo_file.file, filename, "promotions"
                 )
@@ -459,10 +487,9 @@ class PromotionSerializer(serializers.ModelSerializer):
         # Обработка загрузки новых фото (если есть)
         for photo_file in photo_files:
             try:
-                cleaned_title = re.sub(
-                    r'[^\w\s-]', '', instance.title
-                ).strip().replace(' ', '_')
-                filename = f"{cleaned_title}/{uuid.uuid4()}_{photo_file.name}"
+                filename = make_nested_storage_filename(
+                    instance.title, f"promotion-{instance.id}", photo_file
+                )
                 file_url = upload_to_yandex_storage(
                     photo_file.file, filename, "promotions"
                 )
@@ -578,15 +605,13 @@ class ReviewSerializer(serializers.ModelSerializer):
         review = Review.objects.create(**validated_data)
 
         # Получаем очищенное имя для папки
-        cleaned_name = re.sub(
-            r'[^\w\s-]', '', review.name
-        ).strip().replace(' ', '_')
-
         # Обработка загрузки фотографий
         for photo_file in photo_files:
             try:
                 # Формируем путь с папкой reviews/ и именем автора
-                filename = f"{cleaned_name}/{uuid.uuid4()}_{photo_file.name}"
+                filename = make_nested_storage_filename(
+                    review.name, f"review-{review.id}", photo_file
+                )
                 file_url = upload_to_yandex_storage(
                     photo_file.file, filename, "reviews"
                 )
@@ -637,10 +662,9 @@ class ReviewSerializer(serializers.ModelSerializer):
         # Обработка загрузки новых фото (если есть)
         for photo_file in photo_files:
             try:
-                cleaned_name = re.sub(
-                    r'[^\w\s-]', '', instance.name
-                ).strip().replace(' ', '_')
-                filename = f"{cleaned_name}/{uuid.uuid4()}_{photo_file.name}"
+                filename = make_nested_storage_filename(
+                    instance.name, f"review-{instance.id}", photo_file
+                )
                 file_url = upload_to_yandex_storage(
                     photo_file.file, filename, "reviews"
                 )
