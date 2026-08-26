@@ -9,6 +9,7 @@ import WardrobesPage from "@/components/site/pages/Wardrobes/WardrobesPage"
 import FeedbackForm from "@/components/site/FeedbackForm"
 import SiteContainer from "@/components/SiteContainer"
 import HallwaysPage from "@/components/site/pages/Hallways/HallwaysPage"
+import ReviewsContainer from "@/components/site/Reviews/ReviewsContainer"
 
 interface Props {
   params: Promise<{ categorySlug: string }>
@@ -137,6 +138,7 @@ export default async function ProductCategoryPage({params}: Props) {
         materialsPromise={materialsPromise}
         selectedCategory={categorySlug}
       />
+      <ReviewsContainer/>
       <SiteContainer className="mt-4">
         <FeedbackForm/>
       </SiteContainer>

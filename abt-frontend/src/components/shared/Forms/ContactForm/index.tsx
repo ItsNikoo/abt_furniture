@@ -246,41 +246,47 @@ export function ContactForm(
         {formErrors.phone && <p className="text-red-500 text-xs mt-1">{formErrors.phone}</p>}
       </div>
 
-      {/* Добавлено: поле для email (необязательное) */}
-      <div>
-        <Input
-          name="email"
-          type="email"
-          value={formData.email}
-          onChange={handleInputChange}
-          placeholder="Email (опционально)"
-          className="py-5"
-        />
-        {formErrors.email && <p className="text-red-500 text-xs mt-1">{formErrors.email}</p>}
-      </div>
+      <details className="group">
+        <summary className="cursor-pointer list-none text-sm text-gray-500 underline underline-offset-4 transition-colors hover:text-gray-800 [&::-webkit-details-marker]:hidden">
+          Дополнительная информация (необязательно)
+        </summary>
 
-      <Textarea
-        name="comment"
-        value={formData.comment}
-        onChange={handleInputChange}
-        placeholder="Комментарий"
-        rows={4}
-      />
+        <div className="mt-4 flex flex-col gap-4">
+          <div>
+            <Input
+              name="email"
+              type="email"
+              value={formData.email}
+              onChange={handleInputChange}
+              placeholder="Email"
+              className="py-5"
+            />
+            {formErrors.email && <p className="text-red-500 text-xs mt-1">{formErrors.email}</p>}
+          </div>
 
-      {/* Добавлено: поле для файлов (необязательное, только фото) */}
-      <div>
-        <Input
-          type="file"
-          accept="image/*"
-          multiple
-          onChange={handleFileChange}
-        />
-        {files.length > 0 && (
-          <p className="text-sm text-gray-600 mt-1">
-            Выбрано файлов: {files.length} {files.length === 1 ? 'фото' : 'фото'}
-          </p>
-        )}
-      </div>
+          <Textarea
+            name="comment"
+            value={formData.comment}
+            onChange={handleInputChange}
+            placeholder="Комментарий"
+            rows={4}
+          />
+
+          <div>
+            <Input
+              type="file"
+              accept="image/*"
+              multiple
+              onChange={handleFileChange}
+            />
+            {files.length > 0 && (
+              <p className="text-sm text-gray-600 mt-1">
+                Выбрано файлов: {files.length} {files.length === 1 ? 'фото' : 'фото'}
+              </p>
+            )}
+          </div>
+        </div>
+      </details>
 
       <div>
         <label className="flex items-start gap-2 text-sm text-gray-600">

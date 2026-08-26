@@ -27,6 +27,11 @@ export default function PromotionsContent(
         `/sales/${categorySlug}/${promotion.id}-${promotion.productSlug}`
       }
       prefetchItem={fetchPromotionById}
+      emptyState={
+        <p className="py-12 text-center text-base text-gray-600 sm:text-lg">
+          Новые предложения скоро будут доступны для заказа...
+        </p>
+      }
     />
   )
 }

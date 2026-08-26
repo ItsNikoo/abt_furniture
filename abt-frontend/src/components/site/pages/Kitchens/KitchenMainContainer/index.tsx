@@ -17,12 +17,12 @@ export default function KitchenMainContainer() {
       {/* Затемняющий оверлей для читаемости текста */}
       <div className="absolute inset-0 bg-black/50"/>
 
-      <div className="z-10 flex flex-col items-center justify-center w-full max-w-[1280px] px-4 py-12 gap-4">
+      <div className="z-10 flex flex-col items-center justify-center w-full max-w-[1280px] px-2 py-12 md:gap-4 gap-2">
         <h1 className="text-3xl md:text-5xl lg:text-7xl font-black leading-tight text-white text-center">
           Кухни на заказ напрямую от производителя в Москве и МО
         </h1>
         <div>
-          <p className="text-base lg:text-lg mt-3 text-white/90 text-center">
+          <p className="text-base lg:text-lg md:mt-3 text-white/90 text-center">
             Создадим кухню любых цветов и размеров! Множество материалов на выбор.
           </p>
         </div>

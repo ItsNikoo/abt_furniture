@@ -3,7 +3,7 @@ import {ContactForm} from "@/components/shared/Forms/ContactForm"
 
 export default function FeedbackForm() {
   return (
-    <div id="calculation" className="relative bg-orange-400 h-[750px] scroll-mt-24 overflow-hidden">
+    <div id="calculation" className="relative bg-orange-400 scroll-mt-24 overflow-hidden">
       <Image
         src="/modern_kitchen.jpeg"
         alt="Modern kitchen"
@@ -13,8 +13,8 @@ export default function FeedbackForm() {
       />
       <div className="absolute inset-0 bg-black/40" />
 
-      <div className="relative z-10 h-full flex items-center justify-center lg:justify-start px-6 lg:px-16">
-        <div className="h-full flex flex-col justify-center max-w-md w-full">
+      <div className="relative z-10 flex justify-center px-6 py-12 lg:justify-start lg:px-16 lg:py-16">
+        <div className="max-w-md w-full">
           <div className="mb-6 lg:mb-8">
             <h2 className="text-white text-2xl lg:text-3xl xl:text-4xl font-bold mb-2 lg:mb-3 leading-tight">
               Поможем создать <span className="underline">вашу уютную мебель</span>
