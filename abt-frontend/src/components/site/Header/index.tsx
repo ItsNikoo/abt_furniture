@@ -10,6 +10,29 @@ import {ROUTES} from "@/config/navigation"
 import SiteContainer from "@/components/SiteContainer"
 import MainOrderForm from '@/components/shared/Forms/MainOrderForm'
 
+type TrackedPhoneLinkProps = {
+  href: string
+  children: React.ReactNode
+}
+
+function TrackedPhoneLink({href, children}: TrackedPhoneLinkProps) {
+  const handleClick = () => {
+    if (window.ym) {
+      window.ym(106436886, 'reachGoal', 'phone_click')
+    }
+  }
+
+  return (
+    <a
+      href={href}
+      onClick={handleClick}
+      className="font-notosans transition-colors hover:text-mainPurple focus-visible:outline-none focus-visible:underline"
+    >
+      {children}
+    </a>
+  )
+}
+
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
@@ -45,7 +68,7 @@ export default function Header() {
                 </div>
                 <div className="flex items-center gap-2">
                   <Phone className="w-4 h-4 flex-shrink-0"/>
-                  <span className="font-notosans">+7 (926) 723-28-80</span>
+                  <TrackedPhoneLink href="tel:+79267232880">+7 (926) 723-28-80</TrackedPhoneLink>
                 </div>
               </div>
               <div className="flex items-center gap-4">
@@ -55,7 +78,7 @@ export default function Header() {
                 </div>
                 <div className="flex items-center gap-2">
                   <Phone className="w-4 h-4 flex-shrink-0"/>
-                  <span className="font-notosans">+7 (919) 762-66-55</span>
+                  <TrackedPhoneLink href="tel:+79197626655">+7 (919) 762-66-55</TrackedPhoneLink>
                 </div>
               </div>
             </div>
@@ -107,7 +130,7 @@ export default function Header() {
                 </div>
                 <div className="flex items-center gap-2">
                   <Phone className="w-4 h-4 flex-shrink-0"/>
-                  <span className="font-notosans">+7 (926) 723-28-80</span>
+                  <TrackedPhoneLink href="tel:+79267232880">+7 (926) 723-28-80</TrackedPhoneLink>
                 </div>
               </div>
               <div className="flex items-center gap-4">
@@ -117,7 +140,7 @@ export default function Header() {
                 </div>
                 <div className="flex items-center gap-2">
                   <Phone className="w-4 h-4 flex-shrink-0"/>
-                  <span className="font-notosans">+7 (919) 762-66-55</span>
+                  <TrackedPhoneLink href="tel:+79197626655">+7 (919) 762-66-55</TrackedPhoneLink>
                 </div>
               </div>
             </div>
@@ -169,7 +192,7 @@ export default function Header() {
                     </div>
                     <div className="flex items-center gap-2">
                       <Phone className="w-3 h-3 flex-shrink-0"/>
-                      <span className="font-notosans">+7 (926) 723-28-80</span>
+                      <TrackedPhoneLink href="tel:+79267232880">+7 (926) 723-28-80</TrackedPhoneLink>
                     </div>
                     <div className="flex items-center gap-2 mt-1">
                       <MapPin className="w-3 h-3 flex-shrink-0"/>
@@ -177,7 +200,7 @@ export default function Header() {
                     </div>
                     <div className="flex items-center gap-2">
                       <Phone className="w-3 h-3 flex-shrink-0"/>
-                      <span className="font-notosans">+7 (919) 762-66-55</span>
+                      <TrackedPhoneLink href="tel:+79197626655">+7 (919) 762-66-55</TrackedPhoneLink>
                     </div>
                   </div>
 

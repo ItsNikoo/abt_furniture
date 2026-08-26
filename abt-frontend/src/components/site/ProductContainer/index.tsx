@@ -25,7 +25,7 @@ export default function ProductContainer({entity, isPromotion = false}: Props) {
         <div className="flex-1 w-full">
           <p
             data-animate-fade=""
-            className="text-gray-400 text-sm sm:text-base mb-2">
+            className="text-mainPurple text-sm sm:text-base mb-1">
             {entity.category}
           </p>
 
@@ -35,25 +35,25 @@ export default function ProductContainer({entity, isPromotion = false}: Props) {
             {entity.title}
           </h1>
 
-          <div
-            data-animate-fade=""
-            className="mb-6">
-            <ProductOrderForm entity={entity}/>
-          </div>
-
           {/* Блок с ценой — с проверкой на isPromotion */}
           <div
             data-animate-fade=""
-            className="flex flex-col gap-1 mb-6">
+            className="flex flex-col mb-6">
             {!isPromotion &&
               <p className="text-gray-400 text-sm">Цена за погонный метр</p>}
 
             <div className="flex items-baseline gap-1">
-              <p className="text-4xl font-bold">
+              <p className="text-4xl font-extrabold">
                 от {entity.price.toLocaleString('ru-RU')}
               </p>
               <span className="text-gray-500 text-xl">₽</span>
             </div>
+          </div>
+
+          <div
+            data-animate-fade=""
+            className="mb-6">
+            <ProductOrderForm entity={entity}/>
           </div>
 
           <div
