@@ -248,7 +248,7 @@ export function ContactForm(
 
       <details className="group">
         <summary className="cursor-pointer list-none text-sm text-gray-500 underline underline-offset-4 transition-colors hover:text-gray-800 [&::-webkit-details-marker]:hidden">
-          Добавить детали к заявке (необязательно)
+          Дополнительная информация (необязательно)
         </summary>
 
         <div className="mt-4 flex flex-col gap-4">
