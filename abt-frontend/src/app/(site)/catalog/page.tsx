@@ -8,7 +8,7 @@ import SiteContainer from "@/components/SiteContainer"
 import KitchensPage from "@/components/site/pages/Kitchens/KitchensPage"
 import LoadingPlaceholder from "@/components/placeholders/LoadingPlaceholder"
 import LazyMount from "@/components/shared/LazyMount"
-import ReviewsContainer from "@/components/site/Reviews/ReviewsContainer";
+import ReviewsContainer from "@/components/site/Reviews/ReviewsContainer"
 
 export const dynamic = 'force-dynamic'
 
