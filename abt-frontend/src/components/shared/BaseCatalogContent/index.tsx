@@ -25,6 +25,7 @@ interface BaseCatalogContentProps {
   renderCard: (item: CatalogItem) => React.ReactNode;
   getItemLink: (item: CatalogItem, categorySlug: string) => string;
   prefetchItem?: (id: number) => Promise<CatalogItem>;
+  emptyState?: React.ReactNode;
 }
 
 export default function BaseCatalogContent({
@@ -39,6 +40,7 @@ export default function BaseCatalogContent({
                                              renderCard,
                                              getItemLink,
                                              prefetchItem,
+                                             emptyState,
                                            }: BaseCatalogContentProps) {
   const queryClient = useQueryClient()
   const categories = use(categoriesPromise)
@@ -150,7 +152,7 @@ export default function BaseCatalogContent({
     updateURL({sort})
   }
 
-  const {data: items, isError} = useQuery({
+  const {data: items, isError, isPending} = useQuery({
     queryKey: [queryKeyPrefix, currentCategory, currentStyle, currentMaterial, currentSort],
     queryFn: async () => {
       return await fetchFn({
@@ -249,7 +251,9 @@ export default function BaseCatalogContent({
       <div className="mt-3 sm:mt-5">
         {isError && <p className="text-sm sm:text-base">Ошибка при загрузке</p>}
 
-        {!isError && filteredItems && filteredItems.length > 0 ? (
+        {!isError && isPending && <LoadingPlaceholder/>}
+
+        {!isError && !isPending && filteredItems && filteredItems.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-4 mt-4 sm:mt-6">
             {filteredItems.map((item: CatalogItem) => (
               <Link
@@ -269,9 +273,9 @@ export default function BaseCatalogContent({
             ))}
           </div>
         ) : (
-          !isError && (
+          !isError && !isPending && (
             <div className="text-sm sm:text-base min-h-[50vh]">
-              <LoadingPlaceholder/>
+              {emptyState ?? <LoadingPlaceholder/>}
             </div>
           )
         )}
